@@ -1,5 +1,5 @@
 #include <globals.h>
-#include <ladderInstructions.h>
+#include <ladder/ladderInstructions.h>
 
 //--------------------------------------------------------------------------------
 // PLC instructions  
@@ -346,16 +346,6 @@ void execNOT (int n, int c, int r, int f){
     SetDataValue(r+1, c, n, ~GetDataValue(r, c, n));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
-}
-
-/******************************************************/
-/*** BARS Management **********************************/
-/******************************************************/
-void execBars (int n, int c){
-  for (int i=0; i<NET_ROWS-1; i++){
-    NetworkFlags[c] = NetworkFlags[c] | ((NetworkFlags[c] & Networks[n].Bars[c]) << 1);
-    NetworkFlags[c] = NetworkFlags[c] | ((NetworkFlags[c] & (Networks[n].Bars[c] << 1)) >> 1);
-  }
 }
 
 /******************************************************/

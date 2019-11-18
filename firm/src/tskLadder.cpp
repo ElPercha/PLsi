@@ -1,7 +1,6 @@
 // RTOS Ladder processing Task Running on Code 1
 //#include <Arduino.h>
 #include <globals.h>
-#include "EEPROM.h"
 #include <tskLadder.h>
 
 void TaskLadder(void *pvParameters)
@@ -9,46 +8,16 @@ void TaskLadder(void *pvParameters)
 
   (void) pvParameters;
 
-  Serial.println("Flash Memory initialization: Starts");
-
-  //Settings Flash Block Init
-  if (!Settings.begin(0x1000)) {
-    Serial.println("Failed to initialise Settings");
-    delay(1000);
-    ESP.restart();
-  }  
-  else{
-    Serial.println("Settings Flash Sector Initialised.");
-  } 
-
-  //20 Networks blocks of 0x1000 bytes are inizializated on Flash
-  for(int b=0; b<NETWORKS_BLOCKS; b++){
-    if (!FlashNetworks[b].begin(sizeof(Networks))) {
-      Serial.print("Failed to initialise Networks Flash Sector: ");
-      Serial.println(b);
-      delay(1000);
-      ESP.restart();
-    }
-    else{
-      Serial.print("Networks Flash Sector Initialised: ");
-      Serial.println(b);
-    } 
-  }
-  
-  Serial.println("Flash Memory initialization: Done");
-
-
-
   configureIO();
   clearMemory();
   firstRunSettings();
 
   uint16_t foo;
   Serial.print("Setting Value 0 at booting: "); // Debug Lucas
-  Serial.println(Settings.get(0, foo)); // Debug Lucas
+  //Serial.println(Settings.get(0, foo)); // Debug Lucas
 
   Serial.print("Flash Networks Value 0 at booting: "); // Debug Lucas
-  Serial.println(FlashNetworks[0].get(0, foo)); // Debug Lucas
+  //Serial.println(FlashNetworks[0].get(0, foo)); // Debug Lucas
 
   delay(2000); // Debug Lucas
   
@@ -104,111 +73,6 @@ void writeOutputsRemote(void){
 }
 
 // --------------------------------------------------------------------------------
-// Ladder Logic Scanning ----------------------------------------------------------
-// --------------------------------------------------------------------------------
-void execScanPLC(void){
-  typedef void (*LadderLogic) (int n, int c, int r, int f);
-  LadderLogic execLadder [] =
-  {
-    execNop,    
-    execConn,   
-    execNeg,
-    execNO,
-    execNC,
-    execRE,
-    execFE,
-    execCoil,
-    execCoilL,
-    execCoilU,
-    execTON,
-    execTOFF,
-    execTP,
-    execCTU,
-    execCTD,
-    execMOVE,
-    execSUB,
-    execADD,
-    execMUL,
-    execDIV,
-    execMOD,
-    execSHL,
-    execSHR,
-    execROL,
-    execROR,
-    execAND,
-    execOR,
-    execXOR,
-    execNOT
-  };
-  
-  for (int b=0; b<NETWORKS_BLOCKS; b++){
-    FlashNetworks[b].get(0, Networks);
-    for (int n=0; n<NETWORKS_x_BLOCK; n++){
-      // Resets Dynamic Flags before to start 
-      for (int f=0; f<NET_COLUMNS-1; f++){NetworkFlags[f] = 0;}
-      
-      // Call Ladder Instructions 
-      for (int c=0; c<NET_COLUMNS; c++){
-        for (int r=0; r<NET_ROWS; r++){
-          if (Networks[n].Cells[r][c].Code >=  FIRST_INVALID_CODE){
-            Serial.println("TASK LADDER - CORE 1 - INSTRUCTION CODE INVALID: ");
-            Serial.print("   - Block: ");
-            Serial.println(b);
-            Serial.print("   - Network: ");
-            Serial.println(n);
-            Serial.print("   - Code: ");
-            Serial.println(Networks[n].Cells[r][c].Code);
-            Serial.print("   - Data: ");
-            Serial.println(Networks[n].Cells[r][c].Data);
-            Serial.print("   - Type: ");
-            Serial.println(Networks[n].Cells[r][c].Type);
-            Networks[n].Cells[r][c].Code = 0;
-          }  
-          if (Networks[n].Cells[r][c].Code != 0) {
-            if (c == 0) {
-              if(PLCstate == RUNNING){execLadder[Networks[n].Cells[r][c].Code](n,c,r,1);}
-              else                   {execLadder[Networks[n].Cells[r][c].Code](n,c,r,0);}
-            } 
-            else{
-              execLadder[Networks[n].Cells[r][c].Code](n,c,r,(NetworkFlags[c-1] & FlagsMask[r]));
-            }
-          }  
-        } 
-        //Update dynamic Flags vs Bars (not for column 5)
-        if((c < 5) && (NetworkFlags[c] != 0 )){execBars(n, c);}
-      }
-      // Copy Network Info for Online Visualization
-      if ((b * NETWORKS_x_BLOCK) + n == ShowingNetwork){
-        OnlineNetwork = Networks[n];
-        for (int ff=0; ff<NET_COLUMNS-1; ff++){NetworkFlagsOnline[ff]= NetworkFlags[ff];}
-      }
-    }
-  }
-}
-
-// --------------------------------------------------------------------------------
-// Copy values to history for RE and FE instructions ------------------------------
-// --------------------------------------------------------------------------------
-void savePreviousValues(void){
-  for (int i=0; i<QTY_M; i++){
-    Mh[i] = M[i]; 
-  }
-  for (int i=0; i<QTY_I; i++){
-    Ih[i] = I[i]; 
-  }
-  for (int i=0; i<QTY_Q; i++){
-    Qh[i] = Q[i]; 
-  }
-  for (int i=0; i<QTY_C; i++){
-    Crh[i] = Cr[i]; 
-    Cdh[i] = Cd[i]; 
-  }
-  for (int i=0; i<QTY_T; i++){
-    Tdh[i] = Td[i]; 
-    Trh[i] = Tr[i]; 
-  }
-}
-// --------------------------------------------------------------------------------
 // IO physical assignment ---------------------------------------------------------
 // --------------------------------------------------------------------------------
 void configureIO(void){
@@ -238,11 +102,9 @@ void scanTime(void){
   StartTime      = ScanTimeMicros;  
 }
 
-
-
 void firstRunSettings (void){
   uint16_t firstRun = 1;
-  Settings.get(0, firstRun);
+//  Settings.get(0, firstRun);
 
   if (firstRun == 65535){
     Serial.println ("This is the first Run of your PLC. Default Values are going to be loaded...");
@@ -259,8 +121,8 @@ void firstRunSettings (void){
 void clearSettings (void){
   uint16_t clearSettings = 123;
   //for (int i = 0; i < 204; i++){clearSettings[i] = 0;}
-  Settings.put(0, clearSettings);
-  Settings.commit();
+  //Settings.put(0, clearSettings);
+  //Settings.commit();
   //Settings.end();
   Serial.println("First Run Setting cleared.");
 }
@@ -284,8 +146,8 @@ void clearProgram (void){
       }
     }
     // Copy the empty block to every Flash Block
-    FlashNetworks[b].put(0, Networks);
-    FlashNetworks[b].commit();
+    //FlashNetworks[b].put(0, Networks);
+    //FlashNetworks[b].commit();
     //FlashNetworks[b].end();
     Serial.print("User Program block ");
     Serial.print(b);
@@ -716,8 +578,8 @@ void DebugCreateNetworks(void){
   Networks[11].Cells[4][3].Data = 303;
   Networks[11].Cells[4][3].Type =  11;
 
-  FlashNetworks[0].put(0, Networks);
-  FlashNetworks[0].commit();
+  //FlashNetworks[0].put(0, Networks);
+  //FlashNetworks[0].commit();
   //FlashNetworks[0].end();
   Serial.println("Testing program loaded...");
 }

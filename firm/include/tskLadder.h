@@ -28,22 +28,9 @@ void clearMemory(void);
 void firstRunSettings(void);
 
 
-extern uint16_t ShowingNetwork;
-extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 
 unsigned long ActualScanTime = 0;
 unsigned long StartTime = 0;
-
-
-// Instantiate Flash memory objects
-// Library supports blocks of 0x1000 bytes (4096 bytes)
-// "spiffs" must be declared on Flash partition, it is a default definition on Arduino "Default" Partition Scheme.
-
-EEPROMClass  Settings("nvs", 0x9000);
-EEPROMClass  FlashNetworks[] = {EEPROMClass("nvs", 0x9100),
-                                EEPROMClass("nvs", 0x9200),
-                                EEPROMClass("nvs", 0x9300),
-                                EEPROMClass("nvs", 0x9400) };
 
 void scanTime(void);
 void readInputsLocal(void);
@@ -52,11 +39,10 @@ void execScanPLC(void);
 void savePreviousValues(void);
 void writeOutputsLocal(void);
 void writeOutputsRemote(void);
-
+void execBars (int n, int c);
 void clearProgram(void);
 void clearSettings(void);
 void DebugCreateNetworks(void);
-
 
 
 

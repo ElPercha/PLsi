@@ -29,7 +29,6 @@ void execAND (int n, int c, int r, int f);
 void execOR (int n, int c, int r, int f);
 void execXOR (int n, int c, int r, int f);
 void execNOT (int n, int c, int r, int f);
-void execBars (int n, int c);
 int GetDataValue (int r, int c, int n);
 int GetPreviousValue (int r, int c, int NetworkNumber);
 void SetDataValue(int r, int c, int NetworkNumber, int Value);
