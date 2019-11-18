@@ -23,23 +23,29 @@
 #define AN_OUTPUT_00  26
 #define AN_OUTPUT_01  25
 
-void configureIO(void);
-void clearMemory(void);
-void firstRunSettings(void);
-
-
-
 unsigned long ActualScanTime = 0;
 unsigned long StartTime = 0;
 
-void scanTime(void);
+void configureIO(void);
+void clearMemory(void);
+void loadUserProgram(void);
+
+
 void readInputsLocal(void);
 void readInputsRemote(void);
+
+void scanTime(void);
 void execScanPLC(void);
 void savePreviousValues(void);
+
 void writeOutputsLocal(void);
 void writeOutputsRemote(void);
-void execBars (int n, int c);
+
+
+
+
+
+
 void clearProgram(void);
 void clearSettings(void);
 void DebugCreateNetworks(void);

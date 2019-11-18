@@ -10,9 +10,9 @@ void TaskLadder(void *pvParameters)
 
   configureIO();
   clearMemory();
-  firstRunSettings();
+  loadUserProgram();
 
-  uint16_t foo;
+  //uint16_t foo;
   Serial.print("Setting Value 0 at booting: "); // Debug Lucas
   //Serial.println(Settings.get(0, foo)); // Debug Lucas
 
@@ -102,7 +102,7 @@ void scanTime(void){
   StartTime      = ScanTimeMicros;  
 }
 
-void firstRunSettings (void){
+void loadUserProgram (void){
   uint16_t firstRun = 1;
 //  Settings.get(0, firstRun);
 
@@ -119,7 +119,7 @@ void firstRunSettings (void){
 
 // Set all Settings to Default
 void clearSettings (void){
-  uint16_t clearSettings = 123;
+  //uint16_t clearSettings = 123;
   //for (int i = 0; i < 204; i++){clearSettings[i] = 0;}
   //Settings.put(0, clearSettings);
   //Settings.commit();
