@@ -96,12 +96,7 @@ extern unsigned short int AGLOBAL; // no value in here!
 // PLC Network Logic Definitions [units]
 #define NET_COLUMNS 6     
 #define NET_ROWS 5
-
-// Networks distribution in Flash. Block size 4096 bytes
-#define NETWORKS_x_BLOCK 20       // 4096/sizeof(Networks)
-//#define NETWORKS_BLOCKS 20       // Defined on Flash 
-#define NETWORKS_BLOCKS  4       // Defined on Flash 
-#define MAX_NETWORKS (NETWORKS_x_BLOCK * NETWORKS_BLOCKS)
+#define TOTAL_NETWORKS 500
 
 // Masks for Bar and Flags analisys
 //extern const int FlagsMask[NET_ROWS] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010};
@@ -122,10 +117,9 @@ typedef struct
   uint16_t Bars [NET_COLUMNS - 1];
 } Network;
 
-extern Network OnlineNetwork;
-//Network auxNetworks[NETWORKS_x_BLOCK];
-extern Network Networks[NETWORKS_x_BLOCK];
-
+extern Network diskNetwork;
+extern Network execNetwork;
+extern Network onlineNetwork;
 
 // Bits declarations
 extern byte           M[QTY_M];

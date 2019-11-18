@@ -5,29 +5,32 @@
 
 void TaskLadder(void *pvParameters)
 {
-
   (void) pvParameters;
+  
+  Network Networks[TOTAL_NETWORKS];
 
   configureIO();
   clearMemory();
-  loadUserProgram();
+  //loadUserProgram();
 
-  //uint16_t foo;
-  Serial.print("Setting Value 0 at booting: "); // Debug Lucas
-  //Serial.println(Settings.get(0, foo)); // Debug Lucas
+  clearProgram(Networks);
+  DebugCreateNetworks(Networks);
 
-  Serial.print("Flash Networks Value 0 at booting: "); // Debug Lucas
-  //Serial.println(FlashNetworks[0].get(0, foo)); // Debug Lucas
-
-  delay(2000); // Debug Lucas
-  
   while(1){
     scanTime();
     
     readInputsLocal();
     readInputsRemote();
 
-    execScanPLC();
+    for (int n=0; n<TOTAL_NETWORKS; n++){
+      execNetwork = Networks[n];
+      execScanPLC(); 
+      if (n == ShowingNetwork){
+        onlineNetwork = Networks[n];
+        for (int ff=0; ff<NET_COLUMNS-1; ff++){NetworkFlagsOnline[ff]= NetworkFlags[ff];}
+      }
+    }
+
     savePreviousValues();
 
     writeOutputsLocal();
@@ -108,13 +111,23 @@ void loadUserProgram (void){
 
   if (firstRun == 65535){
     Serial.println ("This is the first Run of your PLC. Default Values are going to be loaded...");
-    clearProgram();
+    //clearProgram();
     clearSettings();
-    DebugCreateNetworks(); // LUCAS DEBUG LOGIC. TO BE DELETED
+    //DebugCreateNetworks(); // LUCAS DEBUG LOGIC. TO BE DELETED
   }  
   else{
     Serial.println ("This is not the first Run of your PLC. Your user program will be loaded...");
   }
+
+
+    //uint16_t foo;
+  Serial.print("Setting Value 0 at booting: "); // Debug Lucas
+  //Serial.println(Settings.get(0, foo)); // Debug Lucas
+
+  Serial.print("Flash Networks Value 0 at booting: "); // Debug Lucas
+  //Serial.println(FlashNetworks[0].get(0, foo)); // Debug Lucas
+
+
 }
 
 // Set all Settings to Default
@@ -128,29 +141,27 @@ void clearSettings (void){
 }
 
 // Deletes all Networks (all values to 0)    
-void clearProgram (void){
+void clearProgram (Network Networks[]){
   // Creates a empty block of Networks that fits in Flash block size
-  for (int b=0; b<NETWORKS_BLOCKS; b++){
-    for (int i=0; i<NETWORKS_x_BLOCK; i++){
-      Networks[i].Bars[0] = 0;
-      Networks[i].Bars[1] = 0;
-      Networks[i].Bars[2] = 0;  
-      Networks[i].Bars[3] = 0;  
-      Networks[i].Bars[4] = 0;  
-      for (int c=0 ; c<NET_COLUMNS; c++){
-        for (int r=0 ; r<NET_ROWS; r++){
-          Networks[i].Cells[r][c].Code = 0;
-          Networks[i].Cells[r][c].Data = 0;
-          Networks[i].Cells[r][c].Type = 0;
-        }
+  for (int n=0; n<TOTAL_NETWORKS; n++){
+    Networks[n].Bars[0] = 0;
+    Networks[n].Bars[1] = 0;
+    Networks[n].Bars[2] = 0;  
+    Networks[n].Bars[3] = 0;  
+    Networks[n].Bars[4] = 0;  
+    for (int c=0 ; c<NET_COLUMNS; c++){
+      for (int r=0 ; r<NET_ROWS; r++){
+        Networks[n].Cells[r][c].Code = 0;
+        Networks[n].Cells[r][c].Data = 0;
+        Networks[n].Cells[r][c].Type = 0;
       }
     }
     // Copy the empty block to every Flash Block
-    //FlashNetworks[b].put(0, Networks);
-    //FlashNetworks[b].commit();
-    //FlashNetworks[b].end();
-    Serial.print("User Program block ");
-    Serial.print(b);
+    // FlashNetworks[b].put(0, Networks);
+    // FlashNetworks[b].commit();
+    // FlashNetworks[b].end();
+    Serial.print("User Program Action - Network: ");
+    Serial.print(n);
     Serial.println(" cleared.");
   }
 }
@@ -208,7 +219,7 @@ void saveNetworkFlash(uint16_t NetworkNumber){
 
 
 
-void DebugCreateNetworks(void){
+void DebugCreateNetworks(Network Networks[]){
   Networks[0].Cells[0][0].Code = 4;
   Networks[0].Cells[0][0].Data = 77;
   Networks[0].Cells[0][0].Type = 0;
@@ -578,9 +589,9 @@ void DebugCreateNetworks(void){
   Networks[11].Cells[4][3].Data = 303;
   Networks[11].Cells[4][3].Type =  11;
 
-  //FlashNetworks[0].put(0, Networks);
-  //FlashNetworks[0].commit();
-  //FlashNetworks[0].end();
+  // FlashNetworks[0].put(0, Networks);
+  // FlashNetworks[0].commit();
+  // FlashNetworks[0].end();
   Serial.println("Testing program loaded...");
 }
 

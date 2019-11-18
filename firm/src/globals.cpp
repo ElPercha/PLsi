@@ -18,10 +18,9 @@ const int FlagsMask[NET_ROWS] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010};
 //   uint16_t Bars [NET_COLUMNS - 1];
 // } Network;
 
-Network OnlineNetwork;
-//Network auxNetworks[NETWORKS_x_BLOCK];
-Network Networks[NETWORKS_x_BLOCK];
-
+Network diskNetwork;
+Network execNetwork;
+Network onlineNetwork;
 
 // Bits declarations
 byte           M[QTY_M];

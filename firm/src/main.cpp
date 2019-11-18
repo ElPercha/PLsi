@@ -17,7 +17,7 @@ void setup() {
   xTaskCreatePinnedToCore(
     TaskWeb
     ,  "WebServer"
-    ,  100000 // up to 113000
+    ,  4096 // up to 113000
     ,  NULL
     ,  1
     ,  NULL 
@@ -26,7 +26,7 @@ void setup() {
   xTaskCreatePinnedToCore(
     TaskLadder
     ,  "LadderLogic"
-    ,  8196
+    ,  110000
     ,  NULL
     ,  3
     ,  NULL 

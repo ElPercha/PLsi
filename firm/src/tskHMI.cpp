@@ -474,11 +474,11 @@ void drawNetwork (void){
   // Draw / Update Ladder instructions  
   for (int c=0; c<NET_COLUMNS; c++){
     for (int r=0; r<NET_ROWS; r++){
-      if (OnlineNetwork.Cells[r][c].Code > 0) {
+      if (onlineNetwork.Cells[r][c].Code > 0) {
         //Data  = GetData(r, c);
         //Flag  = GetFlag(r, c);
 
-        if (OnlineNetwork.Cells[r][c].Code >=    FIRST_INVALID_CODE){
+        if (onlineNetwork.Cells[r][c].Code >=    FIRST_INVALID_CODE){
           Serial.println("TASK HMI - CORE 0 - INSTRUCTION CODE INVALID: ");
           Serial.print("   - Network (absolute number): ");
           Serial.println(ShowingNetwork);
@@ -487,18 +487,18 @@ void drawNetwork (void){
           Serial.print("   - Column: ");
           Serial.println(c);
           Serial.print("   - Code: ");
-          Serial.println(OnlineNetwork.Cells[r][c].Code);
-          OnlineNetwork.Cells[r][c].Code = 0;
+          Serial.println(onlineNetwork.Cells[r][c].Code);
+          onlineNetwork.Cells[r][c].Code = 0;
         }
      
-        drawLadder [OnlineNetwork.Cells[r][c].Code](r, c, GetFlag(r, c), GetData(r, c));
+        drawLadder [onlineNetwork.Cells[r][c].Code](r, c, GetFlag(r, c), GetData(r, c));
       } 
     } 
   }
   // Draw / Update Ladder bars
   for (int c=0; c<NET_COLUMNS-1; c++){
     for (int r=0; r<NET_ROWS-1; r++){
-      if (OnlineNetwork.Bars[c] & FlagsMask[r]){
+      if (onlineNetwork.Bars[c] & FlagsMask[r]){
         if (NetworkFlagsOnline[c] & FlagsMask[r]){
           drawBar (r, c, COLOR_ON);   
         }
@@ -512,48 +512,48 @@ void drawNetwork (void){
 
 int GetData (int r, int c){
   int returnData = 0;
-  switch (OnlineNetwork.Cells[r][c].Type) {
+  switch (onlineNetwork.Cells[r][c].Type) {
     case TypeM:
-      returnData = int(M[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(M[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeQ:
-      returnData = int(Q[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(Q[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeI:
-      returnData = int(I[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(I[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeCd:
-      returnData = int(Cd[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(Cd[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeCr:
-      returnData = int(Cr[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(Cr[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeTd:
-      returnData = int(Td[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(Td[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeTr:
-      returnData = int(Tr[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(Tr[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeIW:
-      returnData = int(IW[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(IW[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeQW:
-      returnData = int(QW[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(QW[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeC:
-      returnData = int(C[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(C[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeD:
-      returnData = int(D[OnlineNetwork.Cells[r][c].Data]);
+      returnData = int(D[onlineNetwork.Cells[r][c].Data]);
       break;
     case TypeT:
-      returnData = int(Timers[OnlineNetwork.Cells[r][c].Data].ACC);
+      returnData = int(Timers[onlineNetwork.Cells[r][c].Data].ACC);
       break;
     case TypeK:
-      returnData = int(OnlineNetwork.Cells[r][c].Data);
+      returnData = int(onlineNetwork.Cells[r][c].Data);
       break;
 //    case TypeR:
-//      returnData = R[OnlineNetwork.Cells[r][c].Data];
+//      returnData = R[onlineNetwork.Cells[r][c].Data];
 //      break;
     default:
       ;
@@ -582,7 +582,7 @@ void drawTagBit (int Row, int Column, int Color){
   int Xbase = Column * NET_COL_WIDTH + POWER_BAR_WIDTH; 
   int Ybase = Row * NET_ROW_HEIGTH + MENU_HEIGTH;
   
-  String tagString = MnemonicsTypes[OnlineNetwork.Cells[Row][Column].Type] + String(OnlineNetwork.Cells[Row][Column].Data);
+  String tagString = MnemonicsTypes[onlineNetwork.Cells[Row][Column].Type] + String(onlineNetwork.Cells[Row][Column].Data);
 
   tft.setCursor(((7-tagString.length())*3)+5+Xbase, 4+Ybase);
   tft.setTextColor(Color);
@@ -597,7 +597,7 @@ void drawBoxTag (int Row, int Column, int Color){
   int Xbase = Column * NET_COL_WIDTH + POWER_BAR_WIDTH; 
   int Ybase = Row * NET_ROW_HEIGTH + MENU_HEIGTH;
   
-  String tagString1 = MnemonicsCodes[OnlineNetwork.Cells[Row][Column].Code];
+  String tagString1 = MnemonicsCodes[onlineNetwork.Cells[Row][Column].Code];
 
   tft.setTextColor(Color);
   tft.setTextSize(1);
@@ -614,8 +614,8 @@ void drawBox2Tags (int Row, int Column, int Color){
   String tagString2;
   
   //First Row of tags
-  String tagString1 = MnemonicsTypes[OnlineNetwork.Cells[Row][Column].Type] + String(OnlineNetwork.Cells[Row][Column].Data); 
-  if(OnlineNetwork.Cells[Row][Column].Code >= SHL && OnlineNetwork.Cells[Row][Column].Code <= NOT){
+  String tagString1 = MnemonicsTypes[onlineNetwork.Cells[Row][Column].Type] + String(onlineNetwork.Cells[Row][Column].Data); 
+  if(onlineNetwork.Cells[Row][Column].Code >= SHL && onlineNetwork.Cells[Row][Column].Code <= NOT){
     tagString2 =  "0x" + String(uint16_t(GetData(Row, Column)), HEX);    
   }
   else{
@@ -632,8 +632,8 @@ void drawBox2Tags (int Row, int Column, int Color){
   tft.print(tagString2);
 
   //Second Row of tags
-  tagString1 = MnemonicsTypes[OnlineNetwork.Cells[Row+1][Column].Type] + String(OnlineNetwork.Cells[Row+1][Column].Data); 
-  if(OnlineNetwork.Cells[Row][Column].Code >= SHL && OnlineNetwork.Cells[Row][Column].Code <= NOT){
+  tagString1 = MnemonicsTypes[onlineNetwork.Cells[Row+1][Column].Type] + String(onlineNetwork.Cells[Row+1][Column].Data); 
+  if(onlineNetwork.Cells[Row][Column].Code >= SHL && onlineNetwork.Cells[Row][Column].Code <= NOT){
     tagString2 =  "0x" + String(uint16_t(GetData(Row+1, Column)), HEX);    
   }
   else{
@@ -657,8 +657,8 @@ void drawBox3Tags (int Row, int Column, int Color){
   int Ybase = Row * NET_ROW_HEIGTH + MENU_HEIGTH;
   String tagString2;
   //First Row of tags
-  String tagString1 = MnemonicsTypes[OnlineNetwork.Cells[Row][Column].Type] + String(OnlineNetwork.Cells[Row][Column].Data); 
-  if(OnlineNetwork.Cells[Row][Column].Code >= SHL && OnlineNetwork.Cells[Row][Column].Code <= NOT){
+  String tagString1 = MnemonicsTypes[onlineNetwork.Cells[Row][Column].Type] + String(onlineNetwork.Cells[Row][Column].Data); 
+  if(onlineNetwork.Cells[Row][Column].Code >= SHL && onlineNetwork.Cells[Row][Column].Code <= NOT){
     tagString2 =  "0x" + String(uint16_t(GetData(Row, Column)), HEX);    
   }
   else{
@@ -675,8 +675,8 @@ void drawBox3Tags (int Row, int Column, int Color){
   tft.print(tagString2);
 
   //Second Row of tags
-  tagString1 = MnemonicsTypes[OnlineNetwork.Cells[Row+1][Column].Type] + String(OnlineNetwork.Cells[Row+1][Column].Data); 
-  if(OnlineNetwork.Cells[Row][Column].Code >= SHL && OnlineNetwork.Cells[Row][Column].Code <= NOT){
+  tagString1 = MnemonicsTypes[onlineNetwork.Cells[Row+1][Column].Type] + String(onlineNetwork.Cells[Row+1][Column].Data); 
+  if(onlineNetwork.Cells[Row][Column].Code >= SHL && onlineNetwork.Cells[Row][Column].Code <= NOT){
     tagString2 =  "0x" + String(uint16_t(GetData(Row+1, Column)), HEX);    
   }
   else{
@@ -692,8 +692,8 @@ void drawBox3Tags (int Row, int Column, int Color){
   tft.print(tagString2);
 
   //Third Row of tags
-  tagString1 = MnemonicsTypes[OnlineNetwork.Cells[Row+2][Column].Type] + String(OnlineNetwork.Cells[Row+2][Column].Data); 
-  if(OnlineNetwork.Cells[Row][Column].Code >= SHL && OnlineNetwork.Cells[Row][Column].Code <= NOT){
+  tagString1 = MnemonicsTypes[onlineNetwork.Cells[Row+2][Column].Type] + String(onlineNetwork.Cells[Row+2][Column].Data); 
+  if(onlineNetwork.Cells[Row][Column].Code >= SHL && onlineNetwork.Cells[Row][Column].Code <= NOT){
     tagString2 =  "0x" + String(uint16_t(GetData(Row+2, Column)), HEX);    
   }
   else{
@@ -722,13 +722,13 @@ void drawTimerTags (int Row, int Column, int Color){
   tft.setTextColor(Color);
   tft.setTextSize(1);
 
-  tagString1 =  "T" + String(OnlineNetwork.Cells[Row][Column].Data);
+  tagString1 =  "T" + String(onlineNetwork.Cells[Row][Column].Data);
 
   tft.setCursor(((7-tagString1.length())*3)+5+Xbase, 11+Ybase);
   tft.print(tagString1);
 
   //Second Row of tags --> SET + Scale + Setpoint
-  switch (uint16_t(OnlineNetwork.Cells[Row+1][Column].Type)) {
+  switch (uint16_t(onlineNetwork.Cells[Row+1][Column].Type)) {
     case 1:
       tagString1 = "SET ms";
       break;
@@ -749,7 +749,7 @@ void drawTimerTags (int Row, int Column, int Color){
       Serial.println("Error in Timer configuration");
       break;
   }
-  tagString2 = String(OnlineNetwork.Cells[Row+1][Column].Data);
+  tagString2 = String(onlineNetwork.Cells[Row+1][Column].Data);
 
   tft.setCursor(((7-tagString1.length())*3)+5+Xbase, 27+Ybase);
   tft.print(tagString1);
@@ -758,7 +758,7 @@ void drawTimerTags (int Row, int Column, int Color){
 
   // Third Row of tags --> ACC + Accumulator value (ET)
   tagString1 = "ACC";
-  tagString2 = String(Timers[OnlineNetwork.Cells[Row][Column].Data].ACC);
+  tagString2 = String(Timers[onlineNetwork.Cells[Row][Column].Data].ACC);
 
   tft.setCursor(((7-tagString1.length())*3)+5+Xbase, 53+Ybase);
   tft.print(tagString1);
@@ -780,13 +780,13 @@ void drawCounterTags (int Row, int Column, int Color){
   tft.setTextColor(Color);
   tft.setTextSize(1);
 
-  tagString1 =  "C" + String(OnlineNetwork.Cells[Row][Column].Data);
+  tagString1 =  "C" + String(onlineNetwork.Cells[Row][Column].Data);
 
   tft.setCursor(((7-tagString1.length())*3)+5+Xbase, 11+Ybase);
   tft.print(tagString1);
 
   tagString1 = "SET";
-  tagString2 = String(OnlineNetwork.Cells[Row+1][Column].Data);
+  tagString2 = String(onlineNetwork.Cells[Row+1][Column].Data);
 
   tft.setCursor(((7-tagString1.length())*3)+5+Xbase, 27+Ybase);
   tft.print(tagString1);
@@ -795,7 +795,7 @@ void drawCounterTags (int Row, int Column, int Color){
 
   // Third Row of tags --> ACC + Accumulator value (ET)
   tagString1 = "ACC";
-  tagString2 = String(C[OnlineNetwork.Cells[Row][Column].Data]);
+  tagString2 = String(C[onlineNetwork.Cells[Row][Column].Data]);
 
   tft.setCursor(((7-tagString1.length())*3)+5+Xbase, 53+Ybase);
   tft.print(tagString1);
@@ -1487,7 +1487,7 @@ void touchMainLadder(float X, float Y){
   if(HMI_Touched.Menu == 2){
     HMI_Touched.Menu = 0;
     editionMode = 0;
-    if (ShowingNetwork == 0){ShowingNetwork=MAX_NETWORKS-1;}
+    if (ShowingNetwork == 0){ShowingNetwork=TOTAL_NETWORKS-1;}
     else{ShowingNetwork--;}
   }
   if(HMI_Touched.Menu == 3){
@@ -1501,7 +1501,7 @@ void touchMainLadder(float X, float Y){
     HMI_Touched.Menu = 0;
     editionMode = 0;
     ShowingNetwork++;
-    if (ShowingNetwork >= MAX_NETWORKS-1){ShowingNetwork=0;}
+    if (ShowingNetwork >= TOTAL_NETWORKS-1){ShowingNetwork=0;}
   }
   if(HMI_Touched.Menu == 5){
     HMI_Touched.Menu = 0;

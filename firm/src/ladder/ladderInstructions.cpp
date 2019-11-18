@@ -5,231 +5,231 @@
 // PLC instructions  
 //--------------------------------------------------------------------------------
 
-void execNop (int n, int c, int r, int f){
+void execNop (int c, int r, int f){
   ;
 }
 
-void execConn (int n, int c, int r, int f){
+void execConn (int c, int r, int f){
   if (f){
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
 }
 
-void execNeg (int n, int c, int r, int f){
+void execNeg (int c, int r, int f){
   if (!f){
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
 }
 
-void execNO (int n, int c, int r, int f){
-  if ((f) && (GetDataValue(r, c, n))){
+void execNO (int c, int r, int f){
+  if ((f) && (GetDataValue(r, c))){
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
 }
 
-void execNC (int n, int c, int r, int f){
-  if ((f) && !(GetDataValue(r, c, n))){
+void execNC (int c, int r, int f){
+  if ((f) && !(GetDataValue(r, c))){
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
 }
 
-void execRE (int n, int c, int r, int f){
-  if ((f) && (GetDataValue(r, c, n)) && !(GetPreviousValue(r, c, n))){
+void execRE (int c, int r, int f){
+  if ((f) && (GetDataValue(r, c)) && !(GetPreviousValue(r, c))){
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
 }
 
-void execFE (int n, int c, int r, int f){
-  if ((f) && !(GetDataValue(r, c, n)) && (GetPreviousValue(r, c, n))){
+void execFE (int c, int r, int f){
+  if ((f) && !(GetDataValue(r, c)) && (GetPreviousValue(r, c))){
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
 }
 
-void execCoil (int n, int c, int r, int f){
+void execCoil (int c, int r, int f){
   if (f){
-    SetDataValue(r, c, n, 1);
+    SetDataValue(r, c, 1);
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
-  else  {SetDataValue(r, c, n, 0);}
+  else  {SetDataValue(r, c, 0);}
 }
 
-void execCoilL (int n, int c, int r, int f){
+void execCoilL (int c, int r, int f){
   if (f){
-    SetDataValue(r, c, n, 1);
+    SetDataValue(r, c, 1);
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }  
 }
 
-void execCoilU (int n, int c, int r, int f){
+void execCoilU (int c, int r, int f){
   if (f){
-    SetDataValue(r, c, n, 0);
+    SetDataValue(r, c, 0);
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];      
   }
 }
 
-void execTON (int n, int c, int r, int f){
+void execTON (int c, int r, int f){
   // Timer is not active --> Reset
   if(!f){
-    Timers[Networks[n].Cells[r][c].Data].ACC = 0;
-    Tr[Networks[n].Cells[r][c].Data] = 0;
-    Td[Networks[n].Cells[r][c].Data] = 0;
+    Timers[execNetwork.Cells[r][c].Data].ACC = 0;
+    Tr[execNetwork.Cells[r][c].Data] = 0;
+    Td[execNetwork.Cells[r][c].Data] = 0;
   }
   // Timer is activated in this Scan, set timer Running flag and snapshot the TimeStamp
-  if(f && !Td[Networks[n].Cells[r][c].Data] && !Tr[Networks[n].Cells[r][c].Data]){
-    Tr[Networks[n].Cells[r][c].Data] = 1;
-    Timers[Networks[n].Cells[r][c].Data].TimeStamp = millis();    
+  if(f && !Td[execNetwork.Cells[r][c].Data] && !Tr[execNetwork.Cells[r][c].Data]){
+    Tr[execNetwork.Cells[r][c].Data] = 1;
+    Timers[execNetwork.Cells[r][c].Data].TimeStamp = millis();    
   }
   // Timer is running, update ACC value
-  if (Tr[Networks[n].Cells[r][c].Data]){
-    Timers[Networks[n].Cells[r][c].Data].ACC = uint16_t((millis() - Timers[Networks[n].Cells[r][c].Data].TimeStamp)/Networks[n].Cells[r+1][c].Type);    
+  if (Tr[execNetwork.Cells[r][c].Data]){
+    Timers[execNetwork.Cells[r][c].Data].ACC = uint16_t((millis() - Timers[execNetwork.Cells[r][c].Data].TimeStamp)/execNetwork.Cells[r+1][c].Type);    
   }
   // Timer Done --> Activate Timer Done flag and set ACC value to his setpoint
-  if (Tr[Networks[n].Cells[r][c].Data] &&
-     ((millis() - Timers[Networks[n].Cells[r][c].Data].TimeStamp) >= (Networks[n].Cells[r+1][c].Data * Networks[n].Cells[r+1][c].Type))){  
-    Tr[Networks[n].Cells[r][c].Data] = 0;
-    Td[Networks[n].Cells[r][c].Data] = 1;
-    Timers[Networks[n].Cells[r][c].Data].ACC = Networks[n].Cells[r+1][c].Data;
+  if (Tr[execNetwork.Cells[r][c].Data] &&
+     ((millis() - Timers[execNetwork.Cells[r][c].Data].TimeStamp) >= (execNetwork.Cells[r+1][c].Data * execNetwork.Cells[r+1][c].Type))){  
+    Tr[execNetwork.Cells[r][c].Data] = 0;
+    Td[execNetwork.Cells[r][c].Data] = 1;
+    Timers[execNetwork.Cells[r][c].Data].ACC = execNetwork.Cells[r+1][c].Data;
   }
   // Copy Timer Flags to Dynamic flags on Network
-  if(Td[Networks[n].Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
-  if(Tr[Networks[n].Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
+  if(Td[execNetwork.Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
+  if(Tr[execNetwork.Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
 }
 
-void execTOFF (int n, int c, int r, int f){
+void execTOFF (int c, int r, int f){
   // Timer is activated
-  if(f && !Td[Networks[n].Cells[r][c].Data] && !Tr[Networks[n].Cells[r][c].Data]){
-    Td[Networks[n].Cells[r][c].Data] = 1;
+  if(f && !Td[execNetwork.Cells[r][c].Data] && !Tr[execNetwork.Cells[r][c].Data]){
+    Td[execNetwork.Cells[r][c].Data] = 1;
   }
   // Timer reactivated while Running --> Reset
-  if(f && Tr[Networks[n].Cells[r][c].Data]){
-    Tr[Networks[n].Cells[r][c].Data] = 0;
+  if(f && Tr[execNetwork.Cells[r][c].Data]){
+    Tr[execNetwork.Cells[r][c].Data] = 0;
   }
   // Timer is activated in this Scan, set timer Running flag and snapshot the TimeStamp
-  if(!f && Td[Networks[n].Cells[r][c].Data] && !Tr[Networks[n].Cells[r][c].Data]){
-    Tr[Networks[n].Cells[r][c].Data] = 1;
-    Timers[Networks[n].Cells[r][c].Data].TimeStamp = millis();    
+  if(!f && Td[execNetwork.Cells[r][c].Data] && !Tr[execNetwork.Cells[r][c].Data]){
+    Tr[execNetwork.Cells[r][c].Data] = 1;
+    Timers[execNetwork.Cells[r][c].Data].TimeStamp = millis();    
   }
   // Timer is running, update ACC value
-  if (Tr[Networks[n].Cells[r][c].Data]){
-    Timers[Networks[n].Cells[r][c].Data].ACC = uint16_t((millis() - Timers[Networks[n].Cells[r][c].Data].TimeStamp)/Networks[n].Cells[r+1][c].Type);    
+  if (Tr[execNetwork.Cells[r][c].Data]){
+    Timers[execNetwork.Cells[r][c].Data].ACC = uint16_t((millis() - Timers[execNetwork.Cells[r][c].Data].TimeStamp)/execNetwork.Cells[r+1][c].Type);    
   }
   // Timer Done --> Activate Timer Done flag and set ACC value to his setpoint
-  if (Tr[Networks[n].Cells[r][c].Data] &&
-     ((millis() - Timers[Networks[n].Cells[r][c].Data].TimeStamp) >= (Networks[n].Cells[r+1][c].Data * Networks[n].Cells[r+1][c].Type))){  
-    Tr[Networks[n].Cells[r][c].Data] = 0;
-    Td[Networks[n].Cells[r][c].Data] = 0;
-    Timers[Networks[n].Cells[r][c].Data].ACC = Networks[n].Cells[r+1][c].Data;
+  if (Tr[execNetwork.Cells[r][c].Data] &&
+     ((millis() - Timers[execNetwork.Cells[r][c].Data].TimeStamp) >= (execNetwork.Cells[r+1][c].Data * execNetwork.Cells[r+1][c].Type))){  
+    Tr[execNetwork.Cells[r][c].Data] = 0;
+    Td[execNetwork.Cells[r][c].Data] = 0;
+    Timers[execNetwork.Cells[r][c].Data].ACC = execNetwork.Cells[r+1][c].Data;
   }
   // Copy Timer Flags to Dynamic flags on Network
-  if(Td[Networks[n].Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
-  if(Tr[Networks[n].Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
+  if(Td[execNetwork.Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
+  if(Tr[execNetwork.Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
 }
 
-void execTP (int n, int c, int r, int f){
+void execTP (int c, int r, int f){
   // Timer is activated in this Scan, set timer Running flag and snapshot the TimeStamp
-  if(f && !Td[Networks[n].Cells[r][c].Data] && !Tr[Networks[n].Cells[r][c].Data]){
-    Td[Networks[n].Cells[r][c].Data] = 1;
-    Tr[Networks[n].Cells[r][c].Data] = 1;
-    Timers[Networks[n].Cells[r][c].Data].TimeStamp = millis();    
+  if(f && !Td[execNetwork.Cells[r][c].Data] && !Tr[execNetwork.Cells[r][c].Data]){
+    Td[execNetwork.Cells[r][c].Data] = 1;
+    Tr[execNetwork.Cells[r][c].Data] = 1;
+    Timers[execNetwork.Cells[r][c].Data].TimeStamp = millis();    
   }
   // Reset Timer Running when Input goes False to avoid continously running the timer if input stays True
-  if(!f && !Td[Networks[n].Cells[r][c].Data] && Tr[Networks[n].Cells[r][c].Data]){
-    Tr[Networks[n].Cells[r][c].Data] = 0;
+  if(!f && !Td[execNetwork.Cells[r][c].Data] && Tr[execNetwork.Cells[r][c].Data]){
+    Tr[execNetwork.Cells[r][c].Data] = 0;
   }
   // Timer is running, update ACC value
-  if (Td[Networks[n].Cells[r][c].Data]){
-    Timers[Networks[n].Cells[r][c].Data].ACC = uint16_t((millis() - Timers[Networks[n].Cells[r][c].Data].TimeStamp)/Networks[n].Cells[r+1][c].Type);    
+  if (Td[execNetwork.Cells[r][c].Data]){
+    Timers[execNetwork.Cells[r][c].Data].ACC = uint16_t((millis() - Timers[execNetwork.Cells[r][c].Data].TimeStamp)/execNetwork.Cells[r+1][c].Type);    
   }
   // Timer Done --> Activate Timer Done flag and set ACC value to his setpoint
-  if (Td[Networks[n].Cells[r][c].Data] &&
-     ((millis() - Timers[Networks[n].Cells[r][c].Data].TimeStamp) >= (Networks[n].Cells[r+1][c].Data * Networks[n].Cells[r+1][c].Type))){  
-    Td[Networks[n].Cells[r][c].Data] = 0;
-    Timers[Networks[n].Cells[r][c].Data].ACC = Networks[n].Cells[r+1][c].Data;
+  if (Td[execNetwork.Cells[r][c].Data] &&
+     ((millis() - Timers[execNetwork.Cells[r][c].Data].TimeStamp) >= (execNetwork.Cells[r+1][c].Data * execNetwork.Cells[r+1][c].Type))){  
+    Td[execNetwork.Cells[r][c].Data] = 0;
+    Timers[execNetwork.Cells[r][c].Data].ACC = execNetwork.Cells[r+1][c].Data;
   }
   // Copy Timer Flags to Dynamic flags on Network
-  if(Td[Networks[n].Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
-  if(Tr[Networks[n].Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
+  if(Td[execNetwork.Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
+  if(Tr[execNetwork.Cells[r][c].Data]){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
 }
 
-void execCTU (int n, int c, int r, int f){
+void execCTU (int c, int r, int f){
  // Reset Counter
   if (c == 0){
     if(PLCstate == RUNNING){
-      C[Networks[n].Cells[r][c].Data] = 0;    
-      Cd[Networks[n].Cells[r][c].Data] = 0;
-      Cr[Networks[n].Cells[r][c].Data] = 0;
+      C[execNetwork.Cells[r][c].Data] = 0;    
+      Cd[execNetwork.Cells[r][c].Data] = 0;
+      Cr[execNetwork.Cells[r][c].Data] = 0;
     }
   }
   else{
     if (NetworkFlags[c-1] & FlagsMask[r+1]){
-      C[Networks[n].Cells[r][c].Data] = 0;    
-      Cd[Networks[n].Cells[r][c].Data] = 0;
-      Cr[Networks[n].Cells[r][c].Data] = 0;
+      C[execNetwork.Cells[r][c].Data] = 0;    
+      Cd[execNetwork.Cells[r][c].Data] = 0;
+      Cr[execNetwork.Cells[r][c].Data] = 0;
     }    
   }
  // Counter is activated in this Scan, change count
-  if(f && !Cr[Networks[n].Cells[r][c].Data] && !Cd[Networks[n].Cells[r][c].Data]){
-    Cr[Networks[n].Cells[r][c].Data] = 1;
-    C[Networks[n].Cells[r][c].Data]++;    
+  if(f && !Cr[execNetwork.Cells[r][c].Data] && !Cd[execNetwork.Cells[r][c].Data]){
+    Cr[execNetwork.Cells[r][c].Data] = 1;
+    C[execNetwork.Cells[r][c].Data]++;    
   }
   // Reset Counter edge detection
   if(!f){
-    Cr[Networks[n].Cells[r][c].Data] = 0;
+    Cr[execNetwork.Cells[r][c].Data] = 0;
   }
  // Counter Done 
-  if (C[Networks[n].Cells[r][c].Data] >= Networks[n].Cells[r+1][c].Data){
-    Cd[Networks[n].Cells[r][c].Data] = 1;
+  if (C[execNetwork.Cells[r][c].Data] >= execNetwork.Cells[r+1][c].Data){
+    Cd[execNetwork.Cells[r][c].Data] = 1;
   }
  // Copy Counter Flags to Dynamic flags on Network
-  if(Cd[Networks[n].Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
-  if(Cr[Networks[n].Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
+  if(Cd[execNetwork.Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
+  if(Cr[execNetwork.Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
 }
 
-void execCTD (int n, int c, int r, int f){
+void execCTD (int c, int r, int f){
  // Reset Counter
   if (c == 0){
     if(PLCstate == RUNNING){
-      C[Networks[n].Cells[r][c].Data] = Networks[n].Cells[r+1][c].Data;    
-      Cd[Networks[n].Cells[r][c].Data] = 0;
-      Cr[Networks[n].Cells[r][c].Data] = 0;
+      C[execNetwork.Cells[r][c].Data] = execNetwork.Cells[r+1][c].Data;    
+      Cd[execNetwork.Cells[r][c].Data] = 0;
+      Cr[execNetwork.Cells[r][c].Data] = 0;
     }
   }
   else{
     if (NetworkFlags[c-1] & FlagsMask[r+1]){
-      C[Networks[n].Cells[r][c].Data] = Networks[n].Cells[r+1][c].Data;    
-      Cd[Networks[n].Cells[r][c].Data] = 0;
-      Cr[Networks[n].Cells[r][c].Data] = 0;
+      C[execNetwork.Cells[r][c].Data] = execNetwork.Cells[r+1][c].Data;    
+      Cd[execNetwork.Cells[r][c].Data] = 0;
+      Cr[execNetwork.Cells[r][c].Data] = 0;
     }    
   }
  // Counter is activated in this Scan, change count
-  if(f && !Cr[Networks[n].Cells[r][c].Data] && !Cd[Networks[n].Cells[r][c].Data]){
-    Cr[Networks[n].Cells[r][c].Data] = 1;
-    C[Networks[n].Cells[r][c].Data]--;    
+  if(f && !Cr[execNetwork.Cells[r][c].Data] && !Cd[execNetwork.Cells[r][c].Data]){
+    Cr[execNetwork.Cells[r][c].Data] = 1;
+    C[execNetwork.Cells[r][c].Data]--;    
   }
   // Reset Counter edge detection
   if(!f){
-    Cr[Networks[n].Cells[r][c].Data] = 0;
+    Cr[execNetwork.Cells[r][c].Data] = 0;
   }
  // Counter Done 
-  if (C[Networks[n].Cells[r][c].Data] == 0){
-    Cd[Networks[n].Cells[r][c].Data] = 1;
+  if (C[execNetwork.Cells[r][c].Data] == 0){
+    Cd[execNetwork.Cells[r][c].Data] = 1;
   }
  // Copy Counter Flags to Dynamic flags on Network
-  if(Cd[Networks[n].Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
-  if(Cr[Networks[n].Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
+  if(Cd[execNetwork.Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];}
+  if(Cr[execNetwork.Cells[r][c].Data] && f){NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+1];}
 }
 
-void execMOVE (int n, int c, int r, int f){
+void execMOVE (int c, int r, int f){
   if(f){
-    SetDataValue(r+1, c, n, GetDataValue (r, c, n));
+    SetDataValue(r+1, c, GetDataValue (r, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execSUB (int n, int c, int r, int f){
+void execSUB (int c, int r, int f){
   if(f){
-    int16_t auxValue1 = GetDataValue(r, c, n);
-    int16_t auxValue2 = GetDataValue(r+1, c, n);
+    int16_t auxValue1 = GetDataValue(r, c);
+    int16_t auxValue2 = GetDataValue(r+1, c);
 
     if(auxValue1 > auxValue2){
       NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
@@ -240,110 +240,110 @@ void execSUB (int n, int c, int r, int f){
     else{
       NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+2];
     }
-    SetDataValue(r+2, c, n, auxValue1 - auxValue2);
+    SetDataValue(r+2, c, auxValue1 - auxValue2);
   }
 }
 
-void execADD (int n, int c, int r, int f){
+void execADD (int c, int r, int f){
   if(f){
-    SetDataValue(r+2, c, n, GetDataValue (r, c, n) + GetDataValue(r+1, c, n));
+    SetDataValue(r+2, c, GetDataValue (r, c) + GetDataValue(r+1, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execMUL (int n, int c, int r, int f){
+void execMUL (int c, int r, int f){
   if(f){
-    SetDataValue(r+2, c, n, GetDataValue(r, c, n) * GetDataValue(r+1, c, n));
+    SetDataValue(r+2, c, GetDataValue(r, c) * GetDataValue(r+1, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execDIV (int n, int c, int r, int f){
+void execDIV (int c, int r, int f){
   if(f){
-    if(GetDataValue (r+1, c, n) == 0){
-      SetDataValue(r+2, c, n, 0);
+    if(GetDataValue (r+1, c) == 0){
+      SetDataValue(r+2, c, 0);
       NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r+2];
     }  
     else{  
-      SetDataValue(r+2, c, n, GetDataValue (r, c, n) / GetDataValue (r+1, c, n));
+      SetDataValue(r+2, c, GetDataValue (r, c) / GetDataValue (r+1, c));
       NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
     }  
   }
 }
 
-void execMOD (int n, int c, int r, int f){
+void execMOD (int c, int r, int f){
   if(f){
-    SetDataValue(r+2, c, n, GetDataValue(r, c, n) % GetDataValue(r+1, c, n));
+    SetDataValue(r+2, c, GetDataValue(r, c) % GetDataValue(r+1, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execSHL (int n, int c, int r, int f){
+void execSHL (int c, int r, int f){
   if(f){
-    SetDataValue(r+1, c, n, GetDataValue (r, c, n) << 1);
+    SetDataValue(r+1, c, GetDataValue (r, c) << 1);
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execSHR (int n, int c, int r, int f){
+void execSHR (int c, int r, int f){
   if(f){
-    SetDataValue(r+1, c, n, GetDataValue (r, c, n) >> 1);
+    SetDataValue(r+1, c, GetDataValue (r, c) >> 1);
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execROL (int n, int c, int r, int f){
+void execROL (int c, int r, int f){
   if(f){
     uint16_t auxCarryBit, auxValue;
     
-    auxValue = GetDataValue (r, c, n);
+    auxValue = GetDataValue (r, c);
     auxCarryBit = auxValue & 0x8000;
     auxValue = auxValue << 1;
     if (auxCarryBit){auxValue = auxValue | 0x0001;}
-    SetDataValue(r+1, c, n, auxValue);
+    SetDataValue(r+1, c, auxValue);
     
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execROR (int n, int c, int r, int f){
+void execROR (int c, int r, int f){
   if(f){
     uint16_t auxCarryBit, auxValue;
     
-    auxValue = GetDataValue (r, c, n);
+    auxValue = GetDataValue (r, c);
     auxCarryBit = auxValue & 0x0001;
     auxValue = auxValue >> 1;
     if (auxCarryBit){auxValue = auxValue | 0x8000;}
-    SetDataValue(r+1, c, n, auxValue);
+    SetDataValue(r+1, c, auxValue);
     
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execAND (int n, int c, int r, int f){
+void execAND (int c, int r, int f){
   if(f){
-    SetDataValue(r+2, c, n, GetDataValue(r, c, n) & GetDataValue(r+1, c, n));
+    SetDataValue(r+2, c, GetDataValue(r, c) & GetDataValue(r+1, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execOR (int n, int c, int r, int f){
+void execOR (int c, int r, int f){
   if(f){
-    SetDataValue(r+2, c, n, GetDataValue(r, c, n) | GetDataValue(r+1, c, n));
+    SetDataValue(r+2, c, GetDataValue(r, c) | GetDataValue(r+1, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execXOR (int n, int c, int r, int f){
+void execXOR (int c, int r, int f){
   if(f){
-    SetDataValue(r+2, c, n, GetDataValue(r, c, n) ^ GetDataValue(r+1, c, n));
+    SetDataValue(r+2, c, GetDataValue(r, c) ^ GetDataValue(r+1, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
 
-void execNOT (int n, int c, int r, int f){
+void execNOT (int c, int r, int f){
   if(f){
-    SetDataValue(r+1, c, n, ~GetDataValue(r, c, n));
+    SetDataValue(r+1, c, ~GetDataValue(r, c));
     NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
   }  
 }
@@ -352,29 +352,29 @@ void execNOT (int n, int c, int r, int f){
 // GET and SET Memory Values
 //--------------------------------------------------------------------------------
 
-int GetPreviousValue (int r, int c, int NetworkNumber){
+int GetPreviousValue (int r, int c){
   int returnData = 0;
-  switch (Networks[NetworkNumber].Cells[r][c].Type) {
+  switch (execNetwork.Cells[r][c].Type) {
     case TypeM:
-      returnData = int(Mh[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Mh[execNetwork.Cells[r][c].Data]);
       break;
     case TypeQ:
-      returnData = int(Qh[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Qh[execNetwork.Cells[r][c].Data]);
       break;
     case TypeI:
-      returnData = int(Ih[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Ih[execNetwork.Cells[r][c].Data]);
       break;
     case TypeCd:
-      returnData = int(Cdh[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Cdh[execNetwork.Cells[r][c].Data]);
       break;
     case TypeCr:
-      returnData = int(Crh[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Crh[execNetwork.Cells[r][c].Data]);
       break;
     case TypeTd:
-      returnData = int(Tdh[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Tdh[execNetwork.Cells[r][c].Data]);
       break;
     case TypeTr:
-      returnData = int(Trh[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Trh[execNetwork.Cells[r][c].Data]);
       break;
     default:
       ;
@@ -382,50 +382,50 @@ int GetPreviousValue (int r, int c, int NetworkNumber){
   }
   return returnData;
 }
-int GetDataValue (int r, int c, int NetworkNumber){
+int GetDataValue (int r, int c) {
   int returnData = 0;
-  switch (Networks[NetworkNumber].Cells[r][c].Type) {
+  switch (execNetwork.Cells[r][c].Type) {
     case TypeM:
-      returnData = int(M[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(M[execNetwork.Cells[r][c].Data]);
       break;
     case TypeQ:
-      returnData = int(Q[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Q[execNetwork.Cells[r][c].Data]);
       break;
     case TypeI:
-      returnData = int(I[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(I[execNetwork.Cells[r][c].Data]);
       break;
     case TypeCd:
-      returnData = int(Cd[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Cd[execNetwork.Cells[r][c].Data]);
       break;
     case TypeCr:
-      returnData = int(Cr[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Cr[execNetwork.Cells[r][c].Data]);
       break;
     case TypeTd:
-      returnData = int(Td[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Td[execNetwork.Cells[r][c].Data]);
       break;
     case TypeTr:
-      returnData = int(Tr[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(Tr[execNetwork.Cells[r][c].Data]);
       break;
     case TypeIW:
-      returnData = int(IW[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(IW[execNetwork.Cells[r][c].Data]);
       break;
     case TypeQW:
-      returnData = int(QW[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(QW[execNetwork.Cells[r][c].Data]);
       break;
     case TypeC:
-      returnData = int(C[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(C[execNetwork.Cells[r][c].Data]);
       break;
     case TypeD:
-      returnData = int(D[Networks[NetworkNumber].Cells[r][c].Data]);
+      returnData = int(D[execNetwork.Cells[r][c].Data]);
       break;
     case TypeT:
-      returnData = int(Timers[Networks[NetworkNumber].Cells[r][c].Data].ACC);
+      returnData = int(Timers[execNetwork.Cells[r][c].Data].ACC);
       break;
     case TypeK:
-      returnData = int(Networks[NetworkNumber].Cells[r][c].Data);
+      returnData = int(execNetwork.Cells[r][c].Data);
       break;
 //    case TypeR:
-//      returnData = R[Networks[NetworkNumber].Cells[r][c].Data];
+//      returnData = R[execNetwork.Cells[r][c].Data];
 //      break;
     default:
       ;
@@ -434,46 +434,46 @@ int GetDataValue (int r, int c, int NetworkNumber){
   return returnData;
 }
 
-void SetDataValue(int r, int c, int NetworkNumber, int Value){
-  switch (Networks[NetworkNumber].Cells[r][c].Type) {
+void SetDataValue(int r, int c, int Value){
+  switch (execNetwork.Cells[r][c].Type) {
     case TypeM:
-      M[Networks[NetworkNumber].Cells[r][c].Data] = byte(Value);
+      M[execNetwork.Cells[r][c].Data] = byte(Value);
       break;
     case TypeQ:
-      Q[Networks[NetworkNumber].Cells[r][c].Data] = byte(Value);
+      Q[execNetwork.Cells[r][c].Data] = byte(Value);
       break;
     case TypeI:
-      I[Networks[NetworkNumber].Cells[r][c].Data] = byte(Value);
+      I[execNetwork.Cells[r][c].Data] = byte(Value);
       break;
     case TypeCd:
-      Cd[Networks[NetworkNumber].Cells[r][c].Data] = byte(Value);
+      Cd[execNetwork.Cells[r][c].Data] = byte(Value);
       break;
     case TypeCr:
-      Cr[Networks[NetworkNumber].Cells[r][c].Data] = byte(Value);
+      Cr[execNetwork.Cells[r][c].Data] = byte(Value);
       break;
     case TypeTd:
-      Td[Networks[NetworkNumber].Cells[r][c].Data] = byte(Value);
+      Td[execNetwork.Cells[r][c].Data] = byte(Value);
       break;
     case TypeTr:
-      Tr[Networks[NetworkNumber].Cells[r][c].Data] = byte(Value);
+      Tr[execNetwork.Cells[r][c].Data] = byte(Value);
       break;
     case TypeIW:
-      IW[Networks[NetworkNumber].Cells[r][c].Data] = uint16_t(Value);
+      IW[execNetwork.Cells[r][c].Data] = uint16_t(Value);
       break;
     case TypeQW:
-      QW[Networks[NetworkNumber].Cells[r][c].Data] = uint16_t(Value);
+      QW[execNetwork.Cells[r][c].Data] = uint16_t(Value);
       break;
     case TypeC:
-      C[Networks[NetworkNumber].Cells[r][c].Data] = uint16_t(Value);
+      C[execNetwork.Cells[r][c].Data] = uint16_t(Value);
       break;
     case TypeD:
-      D[Networks[NetworkNumber].Cells[r][c].Data] = uint16_t(Value);
+      D[execNetwork.Cells[r][c].Data] = uint16_t(Value);
       break;
     case TypeT:
-      Timers[Networks[NetworkNumber].Cells[r][c].Data].ACC = uint16_t(Value);
+      Timers[execNetwork.Cells[r][c].Data].ACC = uint16_t(Value);
       break;
 //    case TypeR:
-//      R[Networks[NetworkNumber].Cells[r][c].Data] = Value;
+//      R[execNetwork.Cells[r][c].Data] = Value;
 //      break;
     default:
       Serial.println("SetDataValue ERROR in SwitchCase index");
