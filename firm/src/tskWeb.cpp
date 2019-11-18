@@ -2,13 +2,15 @@
 #include <globals.h>
 #include <tskWeb.h>
 
+
 void TaskWeb(void *pvParameters)
 {
   (void) pvParameters;
 
   // Setup
+  Network NetworksTesting[500];
 
-  Network NetworksTesting[100];
+
   
   //pwm1.begin();
   //pwm1.setPWMFreq(1600);  // This is the maximum PWM frequency
@@ -59,10 +61,10 @@ void TaskWeb(void *pvParameters)
       else{
         NetworksTesting[0]   = OnlineNetwork;
         NetworksTesting[99]  = OnlineNetwork;
-//        NetworksTesting[199] = OnlineNetwork;
-//        NetworksTesting[299] = OnlineNetwork;
-//        NetworksTesting[399] = OnlineNetwork;
-//        NetworksTesting[499] = OnlineNetwork;
+        NetworksTesting[199] = OnlineNetwork;
+        NetworksTesting[299] = OnlineNetwork;
+        NetworksTesting[399] = OnlineNetwork;
+        NetworksTesting[499] = OnlineNetwork;
 
         StartTime = micros();
         f.write((uint8_t *)&NetworksTesting, sizeof(NetworksTesting));
@@ -137,37 +139,45 @@ void TaskWeb(void *pvParameters)
         Serial.println(NetworksTesting[99].Cells[3][3].Data);
         Serial.println(NetworksTesting[99].Cells[3][3].Type); 
 
-//        Serial.println("Network 199");
-//        Serial.println(NetworksTesting[199].Cells[0][0].Code);
-//        Serial.println(NetworksTesting[199].Cells[0][0].Data);
-//        Serial.println(NetworksTesting[199].Cells[0][0].Type);
-//        Serial.println(NetworksTesting[199].Cells[3][3].Code);
-//        Serial.println(NetworksTesting[199].Cells[3][3].Data);
-//        Serial.println(NetworksTesting[199].Cells[3][3].Type); 
-//
-//        Serial.println("Network 299");
-//        Serial.println(NetworksTesting[299].Cells[0][0].Code);
-//        Serial.println(NetworksTesting[299].Cells[0][0].Data);
-//        Serial.println(NetworksTesting[299].Cells[0][0].Type);
-//        Serial.println(NetworksTesting[299].Cells[3][3].Code);
-//        Serial.println(NetworksTesting[299].Cells[3][3].Data);
-//        Serial.println(NetworksTesting[299].Cells[3][3].Type); 
-//
-//        Serial.println("Network 399");
-//        Serial.println(NetworksTesting[399].Cells[0][0].Code);
-//        Serial.println(NetworksTesting[399].Cells[0][0].Data);
-//        Serial.println(NetworksTesting[399].Cells[0][0].Type);
-//        Serial.println(NetworksTesting[399].Cells[3][3].Code);
-//        Serial.println(NetworksTesting[399].Cells[3][3].Data);
-//        Serial.println(NetworksTesting[399].Cells[3][3].Type); 
-//
-//        Serial.println("Last Network");
-//        Serial.println(NetworksTesting[499].Cells[0][0].Code);
-//        Serial.println(NetworksTesting[499].Cells[0][0].Data);
-//        Serial.println(NetworksTesting[499].Cells[0][0].Type);
-//        Serial.println(NetworksTesting[499].Cells[3][3].Code);
-//        Serial.println(NetworksTesting[499].Cells[3][3].Data);
-//        Serial.println(NetworksTesting[499].Cells[3][3].Type); 
+       Serial.println("Network 199");
+       Serial.println(NetworksTesting[199].Cells[0][0].Code);
+       Serial.println(NetworksTesting[199].Cells[0][0].Data);
+       Serial.println(NetworksTesting[199].Cells[0][0].Type);
+       Serial.println(NetworksTesting[199].Cells[3][3].Code);
+       Serial.println(NetworksTesting[199].Cells[3][3].Data);
+       Serial.println(NetworksTesting[199].Cells[3][3].Type); 
+
+       Serial.println("Network 299");
+       Serial.println(NetworksTesting[299].Cells[0][0].Code);
+       Serial.println(NetworksTesting[299].Cells[0][0].Data);
+       Serial.println(NetworksTesting[299].Cells[0][0].Type);
+       Serial.println(NetworksTesting[299].Cells[3][3].Code);
+       Serial.println(NetworksTesting[299].Cells[3][3].Data);
+       Serial.println(NetworksTesting[299].Cells[3][3].Type); 
+
+       Serial.println("Network 399");
+       Serial.println(NetworksTesting[399].Cells[0][0].Code);
+       Serial.println(NetworksTesting[399].Cells[0][0].Data);
+       Serial.println(NetworksTesting[399].Cells[0][0].Type);
+       Serial.println(NetworksTesting[399].Cells[3][3].Code);
+       Serial.println(NetworksTesting[399].Cells[3][3].Data);
+       Serial.println(NetworksTesting[399].Cells[3][3].Type); 
+
+       Serial.println("Last Network");
+       Serial.println(NetworksTesting[499].Cells[0][0].Code);
+       Serial.println(NetworksTesting[499].Cells[0][0].Data);
+       Serial.println(NetworksTesting[499].Cells[0][0].Type);
+       Serial.println(NetworksTesting[499].Cells[3][3].Code);
+       Serial.println(NetworksTesting[499].Cells[3][3].Data);
+       Serial.println(NetworksTesting[499].Cells[3][3].Type); 
+
+      //  Serial.println("Last Network");
+      //  Serial.println(NetworksTesting[999].Cells[0][0].Code);
+      //  Serial.println(NetworksTesting[999].Cells[0][0].Data);
+      //  Serial.println(NetworksTesting[999].Cells[0][0].Type);
+      //  Serial.println(NetworksTesting[999].Cells[3][3].Code);
+      //  Serial.println(NetworksTesting[999].Cells[3][3].Data);
+      //  Serial.println(NetworksTesting[999].Cells[3][3].Type); 
       }
       delay(2000);
     }

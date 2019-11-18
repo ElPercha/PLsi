@@ -17,7 +17,7 @@ void setup() {
   xTaskCreatePinnedToCore(
     TaskWeb
     ,  "WebServer"
-    ,  100000
+    ,  100000 // up to 113000
     ,  NULL
     ,  1
     ,  NULL 
