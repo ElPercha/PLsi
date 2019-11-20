@@ -1,5 +1,5 @@
 #include <globals.h>
-#include <ladder/ladderInstructions.h>
+#include <ladder.h>
 
 //--------------------------------------------------------------------------------
 // PLC instructions  

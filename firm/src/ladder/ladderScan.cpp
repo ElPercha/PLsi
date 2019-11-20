@@ -1,5 +1,5 @@
 #include <globals.h>
-#include <ladder/ladderScan.h>
+#include <ladder.h>
 
 //--------------------------------------------------------------------------------
 // Ladder Logic Scanning 
