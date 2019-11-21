@@ -2,9 +2,10 @@
 #include <ladder.h>
 
 //--------------------------------------------------------------------------------
-// Ladder Logic Scanning 
+// Ladder Logic execution main function
 //--------------------------------------------------------------------------------
-void execScanPLC(void){
+
+void execScanPLC(uint16_t n){
   typedef void (*LadderLogic) (int c, int r, int f);
   LadderLogic execLadder [] =
   {
@@ -47,8 +48,8 @@ void execScanPLC(void){
     for (int r=0; r<NET_ROWS; r++){
       if (execNetwork.Cells[r][c].Code >=  FIRST_INVALID_CODE){
         Serial.println("TASK LADDER - CORE 1 - INSTRUCTION CODE INVALID: ");
-        // Serial.print("   - Network: ");
-        // Serial.println(n);
+        Serial.print("   - Network: ");
+        Serial.println(n);
         Serial.print("   - Code: ");
         Serial.println(execNetwork.Cells[r][c].Code);
         Serial.print("   - Data: ");
@@ -68,10 +69,10 @@ void execScanPLC(void){
       }  
     } 
     //Update dynamic Flags vs Bars (not for column 5)
-    if((c < 5) && (NetworkFlags[c] != 0 )){execBars(c);}
+    if((c < 5) && (NetworkFlags[c] != 0 )){
+      execBars (c);
+    }
   }
-  // Copy Network Info for Online Visualization
-
 }
 
 //--------------------------------------------------------------------------------

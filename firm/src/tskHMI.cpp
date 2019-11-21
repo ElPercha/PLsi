@@ -1,7 +1,5 @@
-// RTOS HMI Task Running on Code 0
 #include <globals.h>
-//#include <Arduino.h>
-//#include <main.h>
+#include <plsi.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_ILI9341.h>
 #include <XPT2046_Touchscreen.h>
@@ -26,7 +24,7 @@ void TaskHMI(void *pvParameters)
   HMI_Touched.Logic.Col = 0;
 
   while(1){
-  //Check for command from Touch Screen
+  // Check for command from Touch Screen
     if (ts.touched() && !AuxTouched){
       AuxTouched = 1;
       parseTouchScreen();

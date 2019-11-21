@@ -1,26 +1,9 @@
 #include <globals.h>
 
-// Masks for Bar and Flags analisys
-const int FlagsMask[NET_ROWS] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010};
 
-
-// Ladder Logic Network Map in RAM (only one Networks Block)
-// typedef struct
-// {
-//   uint16_t Code;
-//   int16_t Data;
-//   int16_t Type;
-// } Cell;
-
-// typedef struct
-// {
-//   Cell Cells[NET_ROWS][NET_COLUMNS];
-//   uint16_t Bars [NET_COLUMNS - 1];
-// } Network;
-
-Network diskNetwork;
-Network execNetwork;
-Network onlineNetwork;
+//--------------------------------------------------------------------------------
+// Globals to share Networks between Tasks 
+//--------------------------------------------------------------------------------
 
 // Bits declarations
 byte           M[QTY_M];
@@ -44,22 +27,23 @@ uint16_t       QW[QTY_QW];
 uint16_t       C[QTY_C];
 int16_t        D[QTY_D];
 float          R[QTY_R];
-//unsigned long  T[QTY_T]; // 32bits same as unsigned int
 
-// Timers struct
-// typedef struct {
-//   unsigned long TimeStamp; // 32bits same as unsigned int
-//   uint16_t            ACC;
-// } Timer;
 
 Timer Timers[QTY_T];
 
-// Global variables
 int StepDebug = 0; //LUCAS
 
 // Main PLC status 1=Running 0=Stopped >1 Error Codes
 uint16_t PLCstate    = 1; 
 
-// Flags for Logic processing 
-int NetworkFlags[NET_COLUMNS - 1];
+Network diskNetwork;
+Network execNetwork;
+Network onlineNetwork;
+
+
+//--------------------------------------------------------------------------------
+// Masks and Flags for Bar and Flags analisys
+//--------------------------------------------------------------------------------
+const int FlagsMask[NET_ROWS] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010};
+//int NetworkFlags[NET_COLUMNS - 1];
 

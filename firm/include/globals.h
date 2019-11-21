@@ -1,49 +1,21 @@
-#ifndef GlobalsH
-#define GlobalsH
-extern unsigned short int AGLOBAL; // no value in here!
+#ifndef GLOBALS_H
+#define GLOBALS_H
 
+#include <arduino.h>
+#include <plsi.h>
 
-// Basic Libraries
-#include <SPI.h>
-
-// File System
-#include "FS.h"
-#include "SPIFFS.h"
-
-// I2C
-#include <Wire.h>
-
-// PCA9685 Adafruit Servo controller 12 channels
-#include <Adafruit_PWMServoDriver.h>
-
-// Web Server
-//#include <WiFi.h>
-//#include <WiFiClient.h>
-//#include <WebServer.h>
-
-
-/////////////////////////////////////////////////////
-
-#define FIRMWARE    0
-
-//PLC Running status
+//--------------------------------------------------------------------------------
+// PLC Running status
+//--------------------------------------------------------------------------------
 #define STOPPED        0 
 #define RUNNING        1 
 #define PLCERROR       2
 
-// PLC Memory Areas (amount)
-#define QTY_M 12000    // Marks
-#define QTY_I   200    // Digital Inputs
-#define QTY_Q   200    // Digital Outputs
-#define QTY_IW   50    // Analog Inputs
-#define QTY_QW   50    // Analog Outputs 
-#define QTY_C   300    // Counter registers
-#define QTY_T   300    // Timer registers in usec
-#define QTY_D 10000    // Regular registers
-#define QTY_R  2000    // Float registers
 
+//--------------------------------------------------------------------------------
 // PLC Data Types Codes
 // Must match with 'MnemonicsTypes' array
+//--------------------------------------------------------------------------------
 #define TypeM    0
 #define TypeQ    1
 #define TypeI    2
@@ -160,6 +132,6 @@ extern int StepDebug; //LUCAS
 extern uint16_t PLCstate; 
 
 // Flags for Logic processing 
-extern int NetworkFlags[NET_COLUMNS - 1];
+// extern int NetworkFlags[NET_COLUMNS - 1];
 
 #endif

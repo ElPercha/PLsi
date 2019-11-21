@@ -1,6 +1,8 @@
 // RTOS Web Server Task Running on Code 0
 #include <globals.h>
 #include <tskWeb.h>
+#include "FS.h"
+#include "SPIFFS.h"
 
 
 void TaskWeb(void *pvParameters)

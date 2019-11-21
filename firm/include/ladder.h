@@ -1,7 +1,17 @@
-#ifndef ladder_H
-#define ladder_H
+#ifndef LADDER_H
+#define LADDER_H
 
+//--------------------------------------------------------------------------------
+// Used variables in ladder scope
+//--------------------------------------------------------------------------------
+extern int NetworkFlags[NET_COLUMNS - 1];
+
+// extern uint16_t ShowingNetwork;
+// extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
+
+//--------------------------------------------------------------------------------
 // Ladder logic instructions 
+//--------------------------------------------------------------------------------
 void execNop (int c, int r, int f);
 void execConn (int c, int r, int f);
 void execNeg (int c, int r, int f);
@@ -34,8 +44,9 @@ void execNOT (int c, int r, int f);
 
 void execBars (int c);
 
-
+//--------------------------------------------------------------------------------
 // Aux functions for ladder logic instructions
+//--------------------------------------------------------------------------------
 int GetDataValue (int r, int c);
 int GetPreviousValue (int r, int c);
 void SetDataValue(int r, int c, int Value);

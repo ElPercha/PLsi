@@ -1,9 +1,5 @@
-// RTOS Ladder processing Task Running on Code 1
-//#include <Arduino.h>
 #include <globals.h>
 #include <tskLadder.h>
-//#include <ladder.h>
-#include <plsi.h>
 
 void TaskLadder(void *pvParameters)
 {
@@ -23,16 +19,15 @@ void TaskLadder(void *pvParameters)
     
     readInputsLocal();
     readInputsRemote();
-
+  
     for (int n=0; n<TOTAL_NETWORKS; n++){
       execNetwork = Networks[n];
-      execScanPLC(); 
+      execScanPLC(n); 
       if (n == ShowingNetwork){
         onlineNetwork = Networks[n];
         for (int ff=0; ff<NET_COLUMNS-1; ff++){NetworkFlagsOnline[ff]= NetworkFlags[ff];}
       }
     }
-
     savePreviousValues();
 
     writeOutputsLocal();

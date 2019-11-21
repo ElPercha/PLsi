@@ -1,7 +1,31 @@
-#ifndef plsi_H
-#define plsi_H
+#ifndef PLSI_H
+#define PLSI_H
 
+//--------------------------------------------------------------------------------
+// Main congigurations for PLsi CPU 
+//--------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------
+// Firmware version 
+//--------------------------------------------------------------------------------
+#define FIRMWARE       0
+
+//--------------------------------------------------------------------------------
+// PLC Memory Areas (amount)
+//--------------------------------------------------------------------------------
+#define QTY_M 12000    // Marks
+#define QTY_I   200    // Digital Inputs
+#define QTY_Q   200    // Digital Outputs
+#define QTY_IW   50    // Analog Inputs
+#define QTY_QW   50    // Analog Outputs 
+#define QTY_C   300    // Counter registers
+#define QTY_T   300    // Timer registers in usec
+#define QTY_D 10000    // Regular registers
+#define QTY_R  2000    // Float registers
+
+//--------------------------------------------------------------------------------
 // PLC Physical I/O assignment. GPIO number on ESP WROVER datasheet
+//--------------------------------------------------------------------------------
 #define INPUT_00      34  
 #define INPUT_01      35 
 #define INPUT_02      32
