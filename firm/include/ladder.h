@@ -2,15 +2,21 @@
 #define LADDER_H
 
 //--------------------------------------------------------------------------------
+// Used variables Globals for Ladder "scope"
+//--------------------------------------------------------------------------------
+extern unsigned long ActualScanTime;
+extern unsigned long StartTime;
+
+//--------------------------------------------------------------------------------
 // Used variables in ladder scope
 //--------------------------------------------------------------------------------
 extern int NetworkFlags[NET_COLUMNS - 1];
 
-// extern uint16_t ShowingNetwork;
-// extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
+extern uint16_t ShowingNetwork;
+extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 
 //--------------------------------------------------------------------------------
-// Ladder logic instructions 
+// Ladder logic instructions prototipes
 //--------------------------------------------------------------------------------
 void execNop (int c, int r, int f);
 void execConn (int c, int r, int f);
@@ -42,10 +48,8 @@ void execOR (int c, int r, int f);
 void execXOR (int c, int r, int f);
 void execNOT (int c, int r, int f);
 
-void execBars (int c);
-
 //--------------------------------------------------------------------------------
-// Aux functions for ladder logic instructions
+// Aux functions for ladder logic instructions data management
 //--------------------------------------------------------------------------------
 int GetDataValue (int r, int c);
 int GetPreviousValue (int r, int c);

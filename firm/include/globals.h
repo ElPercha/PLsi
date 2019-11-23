@@ -126,7 +126,7 @@ typedef struct {
 extern Timer Timers[QTY_T];
 
 // Global variables
-extern int StepDebug; //LUCAS
+//extern int StepDebug; //LUCAS
 
 // Main PLC status 1=Running 0=Stopped >1 Error Codes
 extern uint16_t PLCstate; 
