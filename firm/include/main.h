@@ -4,9 +4,9 @@
 //--------------------------------------------------------------------------------
 // RTOS tasks definition  
 //--------------------------------------------------------------------------------
-void TaskHMI   ( void *pvParameters );
-void TaskLadder( void *pvParameters );
-void TaskWeb   ( void *pvParameters );
+void TaskHMI    ( void *pvParameters ); // Core 0
+void TaskDisk   ( void *pvParameters ); // Core 0
+void TaskLadder ( void *pvParameters ); // Core 1
 
 //--------------------------------------------------------------------------------
 // Wi Fi initial setup  

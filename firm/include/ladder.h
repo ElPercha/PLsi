@@ -2,22 +2,42 @@
 #define LADDER_H
 
 //--------------------------------------------------------------------------------
-// Used variables Globals for Ladder "scope"
+// Globals variables for Ladder "scope"
 //--------------------------------------------------------------------------------
+
+extern uint16_t NetworkFlags[NET_COLUMNS - 1];
 extern unsigned long ActualScanTime;
 extern unsigned long StartTime;
 
 //--------------------------------------------------------------------------------
-// Used variables in ladder scope
+// Used Global variables in ladder scope declared in another task
 //--------------------------------------------------------------------------------
-extern int NetworkFlags[NET_COLUMNS - 1];
 
+extern uint16_t NetworkFlagsOnline [NET_COLUMNS - 1];
 extern uint16_t ShowingNetwork;
-extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 
 //--------------------------------------------------------------------------------
-// Ladder logic instructions prototipes
+// PLC Scan main functions
 //--------------------------------------------------------------------------------
+
+void configureLocal_IO(void);
+void clearMemory(void);
+void loadUserProgram(void);
+
+void readInputsLocal(void);
+void readInputsRemote(void);
+
+void scanTime(void);
+void execScanPLC(Network Networks[]);
+void savePreviousValues(void);
+
+void writeOutputsLocal(void);
+void writeOutputsRemote(void);
+
+//--------------------------------------------------------------------------------
+// Ladder logic instructions prototypes
+//--------------------------------------------------------------------------------
+
 void execNop (int c, int r, int f);
 void execConn (int c, int r, int f);
 void execNeg (int c, int r, int f);
@@ -51,8 +71,17 @@ void execNOT (int c, int r, int f);
 //--------------------------------------------------------------------------------
 // Aux functions for ladder logic instructions data management
 //--------------------------------------------------------------------------------
+
 int GetDataValue (int r, int c);
 int GetPreviousValue (int r, int c);
 void SetDataValue(int r, int c, int Value);
+
+//--------------------------------------------------------------------------------
+// PLC program management functions
+//--------------------------------------------------------------------------------
+
+void clearProgram(Network Networks[]);
+void clearSettings(void);
+void DebugCreateNetworks(Network Networks[]);
 
 #endif

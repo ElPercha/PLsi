@@ -8,22 +8,22 @@ void setup() {
   xTaskCreatePinnedToCore(
     TaskHMI
     ,  "HMIDisplay"
-    ,  4096   // Stack size
+    ,  4096   // Stack size up to 113000
     ,  NULL
     ,  3      // Priority 3=highest 0=lowest
     ,  NULL 
     ,  0);    // Processor Core 
   
   xTaskCreatePinnedToCore(
-    TaskWeb
-    ,  "WebServer"
-    ,  4096 // up to 113000
+    TaskDisk
+    ,  "Disk management"
+    ,  4096 
     ,  NULL
     ,  1
     ,  NULL 
     ,  0);
 
-  xTaskCreatePinnedToCore(
+  xTaskCreatePinnedToCore( 
     TaskLadder
     ,  "LadderLogic"
     ,  110000
