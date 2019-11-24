@@ -8,9 +8,11 @@ void TaskLadder(void *pvParameters)
   
   Network Networks[TOTAL_NETWORKS];
 
+  firstRun();
   configureLocal_IO();
   clearMemory();
   clearProgram(Networks);
+  
   //loadUserProgram();
   DebugCreateNetworks(Networks);
 

@@ -6,7 +6,8 @@
 //--------------------------------------------------------------------------------
 
 uint16_t NetworkFlags[NET_COLUMNS - 1];
-unsigned long ActualScanTime = 0;
-unsigned long StartTime = 0;
+unsigned long actualScanTime = 0;
+unsigned long longerScanTime = 0;
+unsigned long startTime = 0;
 
 #endif

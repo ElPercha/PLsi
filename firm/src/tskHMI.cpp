@@ -242,7 +242,7 @@ void printPLCstate(void){
   tft.fillRect     (  100,   0, 320, 34,    DARKGREY);
   if (PLCstate == RUNNING){
     tft.setTextColor(GREEN);
-    String auxString = "RUNNING " + String(float(ActualScanTime)/1000.0, 1) + " ms";
+    String auxString = "RUNNING " + String(float(actualScanTime)/1000.0, 1) + " ms";
     tft.setCursor(315 - auxString.length() * 12, 10);
     tft.print(auxString);
   }
@@ -285,7 +285,7 @@ uint16_t PLCstateChange(void) {
   else {return 0;}
 }
 uint16_t ScanTimeChange(void) {
-  unsigned int auxScanTime = ActualScanTime/100;
+  unsigned int auxScanTime = actualScanTime/100;
   if (auxOldScanTime != auxScanTime){
     auxOldScanTime = auxScanTime;
     return 1;

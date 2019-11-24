@@ -110,9 +110,9 @@ int networkColorBack = COLOR_BACK_NET;
 int networkColorGrid = DARKGREY;
 
 // Scan Time calculation
-extern unsigned long ActualScanTime;
-extern unsigned long StartTime;
-unsigned int  auxOldScanTime = 0;
+extern unsigned long actualScanTime;
+//extern unsigned long startTime;
+unsigned long  auxOldScanTime = 0;
 
 //Network to show under Online animation
 uint16_t ShowingNetwork = 0;

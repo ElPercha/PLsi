@@ -5,9 +5,9 @@
 // Calculate Scan Time in us 
 //--------------------------------------------------------------------------------
 void scanTime(void){
-  unsigned long    ScanTimeMicros = micros();
-  ActualScanTime = ScanTimeMicros - StartTime;
-  StartTime      = ScanTimeMicros;  
+  unsigned long    scanTimeMicros = micros();
+  actualScanTime = scanTimeMicros - startTime;
+  startTime      = scanTimeMicros;  
 }
 
 //--------------------------------------------------------------------------------
@@ -62,9 +62,11 @@ void loadUserProgram (void){
 
 
 }
-
+//--------------------------------------------------------------------------------
 // Set all Settings to Default
-void clearSettings (void){
+// to be called on first Run of PLC or after user request
+//--------------------------------------------------------------------------------
+void firstRun (void){
   //uint16_t clearSettings = 123;
   //for (int i = 0; i < 204; i++){clearSettings[i] = 0;}
   //Settings.put(0, clearSettings);
