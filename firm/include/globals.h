@@ -145,6 +145,42 @@ typedef struct {
 extern Timer       Timers[QTY_T];
 
 //--------------------------------------------------------------------------------
+// General PLC Configuration struct
+//--------------------------------------------------------------------------------
+
+typedef struct
+{
+  uint16_t firstRun;
+  uint16_t verbosityLevel;
+  uint16_t baudRate;
+  uint16_t value2;
+} generalSettings;
+
+typedef struct
+{
+  uint16_t PLCbootState;
+  uint16_t NetworksQuantity;
+  uint16_t value2;
+} ladderSettings;
+
+typedef struct
+{
+  generalSettings   general;
+  ladderSettings    ladderLogic;
+} userSettings;
+
+extern userSettings settings;
+
+//--------------------------------------------------------------------------------
+// Manage the boot secuence between tasks.
+// Booting state = 0
+// User config loaded = 1
+// 
+//--------------------------------------------------------------------------------
+
+extern uint16_t bootSequence;
+
+//--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys
 //--------------------------------------------------------------------------------
 

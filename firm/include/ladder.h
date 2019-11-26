@@ -20,6 +20,7 @@ extern uint16_t ShowingNetwork;
 // PLC Scan main functions
 //--------------------------------------------------------------------------------
 
+void waitSettings(void);
 void configureLocal_IO(void);
 void clearMemory(void);
 void loadUserProgram(void);
@@ -81,7 +82,6 @@ void SetDataValue     (int r, int c, int Value);
 // PLC program management functions
 //--------------------------------------------------------------------------------
 
-void firstRun (void);
 void clearProgram (Network Networks[]);
 void DebugCreateNetworks (Network Networks[]);
 

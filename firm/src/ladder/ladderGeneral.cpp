@@ -35,7 +35,17 @@ void savePreviousValues(void){
 }
 
 //--------------------------------------------------------------------------------
-// Copy values to history for RE and FE instructions 
+// Wait for tskDisk to load the User Settings  
+//--------------------------------------------------------------------------------
+
+void waitSettings (void){
+  Serial.println("Waiting for Settings to be loaded");
+  while (bootSequence != 1){}
+  Serial.println("Settings loaded correctly");
+}
+
+//--------------------------------------------------------------------------------
+// 
 //--------------------------------------------------------------------------------
 
 void loadUserProgram (void){
@@ -91,14 +101,8 @@ void clearProgram (Network Networks[]){
         Networks[n].Cells[r][c].Type = 0;
       }
     }
-    // Copy the empty block to every Flash Block
-    // FlashNetworks[b].put(0, Networks);
-    // FlashNetworks[b].commit();
-    // FlashNetworks[b].end();
-    Serial.print("User Program Action - Network: ");
-    Serial.print(n);
-    Serial.println(" cleared.");
   }
+  Serial.println("RAM PROGRAM CLEARED");
 }
 
 // Deletes PLC Memory Areas

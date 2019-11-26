@@ -10,20 +10,25 @@ void TaskDisk(void *pvParameters)
 {
   (void) pvParameters;
 
-  Network NetworksTesting[10];
-
   SPIFFS.begin();
+
+
 
 
   while(1){
 
+    Network NetworksTesting[10];
 
     if (I[4]){
-      unsigned long StartTime = micros();
-      SPIFFS.format();
-      unsigned long CurrentTime = micros();
-      Serial.print  ("Time taken to Format 1Mb: ");
-      Serial.println(CurrentTime - StartTime);
+
+      loadSettings();
+
+      // Serial.print  ("Time taken to Format 1Mb: ");
+      // unsigned long StartTime = micros();
+      // SPIFFS.format();
+      // unsigned long CurrentTime = micros();
+      // Serial.print  ("Time taken to Format 1Mb: ");
+      // Serial.println(CurrentTime - StartTime);
       delay(2000);
     }
     if (I[5]){
@@ -234,5 +239,32 @@ void TaskDisk(void *pvParameters)
   }
 }
 
+//--------------------------------------------------------------------------------
+// Load user settings at boot.
+// If first boot of PLC:
+//    Load default settings
+//    Format SPIFSS memory
+//    Load demo program
+//--------------------------------------------------------------------------------
+
+void loadSettings (void) {
+
+// Chequear si el archivo "Settings.PLsi" existe
+// si no existe se formatea la memoria y se crea con los defaults
+// Tambien se carga demo program y se crea en memoria
+
+// Si en cambio "Settings.PLsi" existe cuando se entra en esta funcion se carga en la estructura "settings" y nada mas
+
+//  SPIFFS.format();
+
+      Serial.print  ("Time taken to Format 1Mb: ");
+      unsigned long StartTime = micros();
+      SPIFFS.format();
+      unsigned long CurrentTime = micros();
+      Serial.print  ("Time taken to Format 1Mb: ");
+      Serial.println(CurrentTime - StartTime);
+
+
+}
 
   
