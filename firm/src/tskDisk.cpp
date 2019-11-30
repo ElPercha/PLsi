@@ -10,25 +10,16 @@ void TaskDisk(void *pvParameters)
 {
   (void) pvParameters;
 
-  SPIFFS.begin();
-
-
-
+  Serial.println  ("TskDisk - Started.");
+  loadSettings();
 
   while(1){
 
     Network NetworksTesting[10];
 
     if (I[4]){
-
+      Serial.println  ("TskDisk - Input 4 activated");
       loadSettings();
-
-      // Serial.print  ("Time taken to Format 1Mb: ");
-      // unsigned long StartTime = micros();
-      // SPIFFS.format();
-      // unsigned long CurrentTime = micros();
-      // Serial.print  ("Time taken to Format 1Mb: ");
-      // Serial.println(CurrentTime - StartTime);
       delay(2000);
     }
     if (I[5]){
@@ -256,15 +247,20 @@ void loadSettings (void) {
 // Si en cambio "Settings.PLsi" existe cuando se entra en esta funcion se carga en la estructura "settings" y nada mas
 
 //  SPIFFS.format();
-
-      Serial.print  ("Time taken to Format 1Mb: ");
-      unsigned long StartTime = micros();
-      SPIFFS.format();
-      unsigned long CurrentTime = micros();
-      Serial.print  ("Time taken to Format 1Mb: ");
-      Serial.println(CurrentTime - StartTime);
-
-
+  if (!SPIFFS.begin()){
+    Serial.println("TskDisk - Mount SPIFFS failed. Will retry with FormatOnFail = true ...");
+    unsigned long StartTime = micros();
+    SPIFFS.begin(true);
+    unsigned long CurrentTime = micros();
+    Serial.println("TskDisk - Disk formatted because regualar mount failed.");
+    Serial.print  ("TskDisk - Time taken to Format 1Mb: ");
+    Serial.println(CurrentTime - StartTime);
+    bootSequence = 1;
+  }
+  else{
+    Serial.println("TskDisk - SPIFFS Disk successfully mounted");
+    bootSequence = 1;
+  }
 }
 
   

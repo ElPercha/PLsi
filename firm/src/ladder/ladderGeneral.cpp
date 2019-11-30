@@ -39,9 +39,11 @@ void savePreviousValues(void){
 //--------------------------------------------------------------------------------
 
 void waitSettings (void){
-  Serial.println("Waiting for Settings to be loaded");
-  while (bootSequence != 1){}
-  Serial.println("Settings loaded correctly");
+  Serial.println("TskLadder - Waiting for Settings to be loaded");
+  while (bootSequence != 1){
+    delay(10); // forces to update bootSequence variable
+  }
+  Serial.println("TskLadder - Settings loaded correctly");
 }
 
 //--------------------------------------------------------------------------------
