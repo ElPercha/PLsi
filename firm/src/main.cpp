@@ -18,7 +18,7 @@ void setup() {
     ,  "HMI display"
     ,  4096   // Stack size up to 113000
     ,  NULL
-    ,  3      // Priority 3=highest 0=lowest
+    ,  2      // Priority 3=highest 0=lowest
     ,  NULL 
     ,  0);    // Processor Core 
 
@@ -28,6 +28,15 @@ void setup() {
     ,  4096 
     ,  NULL
     ,  0
+    ,  NULL 
+    ,  0);
+
+  xTaskCreatePinnedToCore(
+    TaskWiFi
+    ,  "WiFi communications"
+    ,  4096 
+    ,  NULL
+    ,  1
     ,  NULL 
     ,  0);
 

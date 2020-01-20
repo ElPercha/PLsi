@@ -1,13 +1,13 @@
 
 // TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO
-#define TFT_CS 14  
-#define TFT_DC 27  
-#define TFT_RST 33 
-#define TS_CS  12 
+#define TFT_CS        14  
+#define TFT_DC        27  
+#define TFT_RST       33 
+#define TS_CS         12 
 
 // TFT Display and TouchScreen Rotation
-#define TFT_ROTATION 3
-#define TS_ROTATION  1
+#define TFT_ROTATION   3
+#define TS_ROTATION    1
 
 // TFT Display Dimmensions
 #define TFT_PIXELS_X 320 // width
@@ -48,13 +48,13 @@
 #define WHITE2   0xC6F8
 
 // Main Menu and Body dimmensions [pixels]
-#define MENU_HEIGTH   40
-#define MENU_WIDTH    53
-#define BODY_WIDTH    TFT_PIXELS_X
-#define BODY_HEIGTH   TFT_PIXELS_Y - MENU_HEIGTH
+#define MENU_HEIGTH       40
+#define MENU_WIDTH        53
+#define BODY_WIDTH        TFT_PIXELS_X
+#define BODY_HEIGTH       TFT_PIXELS_Y - MENU_HEIGTH
 
 // Network dimmensions [pixels]
-#define POWER_BAR_WIDTH  2
+#define POWER_BAR_WIDTH    2
 
 #define NET_BODY_HEIGTH   BODY_HEIGTH
 #define NET_BODY_WIDTH    BODY_WIDTH - POWER_BAR_WIDTH
@@ -136,7 +136,9 @@ const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "", "", "", "", "", "", "
                                                    "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
                                                    "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT"};
 
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
+//Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
+TFT_eSPI tft = TFT_eSPI(); /* TFT instance */
+
 XPT2046_Touchscreen ts(TS_CS);
 
 

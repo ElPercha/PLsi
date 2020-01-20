@@ -47,50 +47,25 @@ void waitSettings (void){
 }
 
 //--------------------------------------------------------------------------------
-// 
+// Load user program to local Networks[] array 
+// Using the global variable diskNetwork and bootSequence sync variable
 //--------------------------------------------------------------------------------
 
-void loadUserProgram (void){
-  uint16_t firstRun = 1;
-//  Settings.get(0, firstRun);
-
-  if (firstRun == 65535){
-    Serial.println ("This is the first Run of your PLC. Default Values are going to be loaded...");
-    //clearProgram();
-    //clearSettings();
-    //DebugCreateNetworks(); // LUCAS DEBUG LOGIC. TO BE DELETED
-  }  
-  else{
-    Serial.println ("This is not the first Run of your PLC. Your user program will be loaded...");
+void waitUserProgram (void){
+  Serial.println("TskLadder - Start loading user program");
+  while (bootSequence != 1000){
+    delay(10); 
   }
-
-
-    //uint16_t foo;
-  Serial.print("Setting Value 0 at booting: "); // Debug Lucas
-  //Serial.println(Settings.get(0, foo)); // Debug Lucas
-
-  Serial.print("Flash Networks Value 0 at booting: "); // Debug Lucas
-  //Serial.println(FlashNetworks[0].get(0, foo)); // Debug Lucas
-
-
-}
-//--------------------------------------------------------------------------------
-// Set all Settings to Default
-// to be called on first Run of PLC or after user request
-//--------------------------------------------------------------------------------
-void firstRun (void){
-  //uint16_t clearSettings = 123;
-  //for (int i = 0; i < 204; i++){clearSettings[i] = 0;}
-  //Settings.put(0, clearSettings);
-  //Settings.commit();
-  //Settings.end();
-  Serial.println("First Run Setting cleared.");
+  Serial.println("TskLadder - Finished loading user program");
 }
 
+//--------------------------------------------------------------------------------
 // Deletes all Networks (all values to 0)    
+//--------------------------------------------------------------------------------
+
 void clearProgram (Network Networks[]){
   // Creates a empty block of Networks that fits in Flash block size
-  for (int n=0; n<TOTAL_NETWORKS; n++){
+  for (int n = 0; n < TOTAL_NETWORKS; n++){
     Networks[n].Bars[0] = 0;
     Networks[n].Bars[1] = 0;
     Networks[n].Bars[2] = 0;  
@@ -104,10 +79,13 @@ void clearProgram (Network Networks[]){
       }
     }
   }
-  Serial.println("RAM PROGRAM CLEARED");
+  Serial.println("Tsk General - RAM PROGRAM CLEARED");
 }
 
+//--------------------------------------------------------------------------------
 // Deletes PLC Memory Areas
+//--------------------------------------------------------------------------------
+
 void clearMemory (void){
   for (int i=0; i<QTY_M; i++){
     Mh[i] = 0;
@@ -134,27 +112,3 @@ void clearMemory (void){
     Tr[i] = 0; 
   }
 }
-
-// Saves current network unedr edition to Flash
-void saveNetworkFlash(uint16_t NetworkNumber){
-  Serial.print  ("Network ");
-  Serial.print  (NetworkNumber);
-  Serial.println(" saved to Flash");
-}
-
-
-//// Loads one Networks Block from Networks (RAM to RAM)
-//void LoadNetworkAuxBlock (int Index){
-//  for (int i=0; i<NETWORKS_x_BLOCK; i++){
-//    Networks[i+(Index*NETWORKS_x_BLOCK)] = Networks[i];
-//  }
-//}
-//
-//// NO SE USARIA!!!
-//// Loads Networks Block from a Networks Block (RAM to RAM)
-//void LoadNetworks (int Index){
-//  for (int i=0; i<NETWORKS_x_BLOCK; i++){
-//    Networks[i+(Index*NETWORKS_x_BLOCK)] = Networks[i];
-//  }
-//}
-

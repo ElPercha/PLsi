@@ -1,4 +1,3 @@
-// RTOS Web Server Task Running on Code 0
 #include <globals.h>
 #include <tskDisk.h>
 #include "FS.h"
@@ -10,8 +9,9 @@ void TaskDisk(void *pvParameters)
 {
   (void) pvParameters;
 
-  Serial.println  ("TskDisk - Started.");
+  Serial.println  ("TskDisk - running.");
   loadSettings();
+  loadUserProgram();
 
   while(1){
 
@@ -263,4 +263,17 @@ void loadSettings (void) {
   }
 }
 
-  
+//--------------------------------------------------------------------------------
+// Load user program at boot.
+// If first boot of PLC:
+//    Create an empty program using MAX_NETWORKS quantity
+//    load testing program
+//    Copy program to RAM
+//--------------------------------------------------------------------------------
+
+void loadUserProgram (void) {
+  delay(10000);
+  bootSequence = 1000;
+}
+
+

@@ -8,12 +8,12 @@ void TaskLadder(void *pvParameters)
   
   Network Networks[TOTAL_NETWORKS];
 
-  waitSettings();
   configureLocal_IO();
   clearMemory();
-  clearProgram(Networks);
-  
-  //loadUserProgram();
+  clearProgram(Networks); //not really needed 
+
+  waitSettings();      
+  waitUserProgram();
   DebugCreateNetworks(Networks);
 
   while(1){

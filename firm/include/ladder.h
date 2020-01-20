@@ -20,10 +20,10 @@ extern uint16_t ShowingNetwork;
 // PLC Scan main functions
 //--------------------------------------------------------------------------------
 
-void waitSettings(void);
 void configureLocal_IO(void);
 void clearMemory(void);
-void loadUserProgram(void);
+void waitSettings(void);
+void waitUserProgram(void);
 
 void readInputsLocal(void);
 void readInputsRemote(void);
