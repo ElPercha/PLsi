@@ -1,58 +1,20 @@
 #include <globals.h>
 #include <plsi.h>
-//#include <Adafruit_GFX.h>
-//#include <Adafruit_ILI9341.h>
 
-#include <lvgl.h>
-#include <Ticker.h>
+// #include <Wire.h>
+// #include <Adafruit_GFX.h>
+// #include <Adafruit_ILI9341.h>
+
+
 #include <TFT_eSPI.h> // LUCAS
+
 #include <XPT2046_Touchscreen.h>
 #include <tskHMI.h>
-
-void lv_ex_kb_1(void);
-void lv_kb_def_event_cb1(lv_obj_t * kb, lv_event_t event);
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
-bool read_touchscreen(lv_indev_drv_t * indev, lv_indev_data_t * data);
-static void lv_tick_handler(void);
-/* Objects*/
-lv_obj_t * kb;
-lv_obj_t * ta;
-Ticker tick; /* timer for interrupt handler */
 
 void TaskHMI(void *pvParameters)
 {
   (void) pvParameters;
   
-  //////////////////////////////////////////////////////////////////////////////// New logic
-  #define LVGL_TICK_PERIOD 20  
-
-  static lv_disp_buf_t disp_buf;
-  static lv_color_t buf[LV_HOR_RES_MAX * 10];
-
-  lv_init();
-  lv_disp_buf_init(&disp_buf, buf, NULL, LV_HOR_RES_MAX * 10);
-
-  /*Initialize the display*/
-  lv_disp_drv_t disp_drv;
-  lv_disp_drv_init(&disp_drv);
-  disp_drv.hor_res = TFT_PIXELS_X;
-  disp_drv.ver_res = TFT_PIXELS_Y;
-  disp_drv.flush_cb = my_disp_flush;
-  disp_drv.buffer = &disp_buf;
-  lv_disp_drv_register(&disp_drv);
-
-  /*Initialize the touch pad*/
-  lv_indev_drv_t indev_drv;
-  lv_indev_drv_init(&indev_drv);
-  indev_drv.type = LV_INDEV_TYPE_POINTER;
-  indev_drv.read_cb = read_touchscreen;
-  lv_indev_drv_register(&indev_drv);
-
-  /*Initialize the graphics library's tick*/
-  tick.attach_ms(LVGL_TICK_PERIOD, lv_tick_handler);
- 
-  //////////////////////////////////////////////////////////////////////////////// New logic
-
   // Touch Screen initializations
   ts.begin();
   ts.setRotation(TS_ROTATION);
@@ -68,7 +30,6 @@ void TaskHMI(void *pvParameters)
   HMI_Touched.Logic.Col = 0;
 
   while(1){
-    lv_task_handler();
     // Check for command from Touch Screen
     if (ts.touched() && !AuxTouched){
       AuxTouched = 1;
@@ -78,7 +39,7 @@ void TaskHMI(void *pvParameters)
       AuxTouched = 0;
     }
   // Draw pages selector
-    if (lv_task_get_idle() == 100){
+    if (true){
       switch (HMI_Page) {
       case PAGE_MainMenu: 
         drawMainMenu();
@@ -197,15 +158,12 @@ void drawLadderOnline (void){
 }
 
 void drawSelectNumber (void){
-  lv_ex_kb_1();
   HMI_Page = PAGE_InputNumber;
 }
 
 void drawInputNumber (){
-  // HMI_Page = PAGE_MainLadder;
-  // lv_kb_set_ta(kb, NULL);  /*De-assign the text area  to hide it cursor if needed*/
-  // lv_obj_del(kb);
-  // lv_obj_del(ta);
+
+
 }
 
 /******************************************************/
@@ -1569,112 +1527,25 @@ void touchConfigWait(float X, float Y){
   HMI_Page = 0;
 }
 
-/******************************************************/
-/*** NEW KEYBARD **************************************/
-/******************************************************/
 
-void lv_ex_kb_1(void){
- /*Create styles for the keyboard*/
-  static lv_style_t rel_style, pr_style;
+// /* Reading input device (simulated encoder here) */
+// bool read_touchscreen(lv_indev_drv_t * indev, lv_indev_data_t * data)
+// {
+//   /* Read the touchpad */
+//   float TS_PixelX = 0; 
+//   float TS_PixelY = 0; 
 
-  lv_style_copy(&rel_style, &lv_style_btn_rel);
-  rel_style.body.radius = 0;
-  rel_style.body.border.width = 1;
-
-  lv_style_copy(&pr_style, &lv_style_btn_pr);
-  pr_style.body.radius = 0;
-  pr_style.body.border.width = 1;
-
-  /*Create a keyboard and apply the styles*/
-  kb = lv_kb_create(lv_scr_act(), NULL);    
-  lv_obj_set_event_cb(kb, lv_kb_def_event_cb1);         /*Assign an event function*/
-
-  lv_kb_set_mode(kb, LV_KB_MODE_NUM);
-
-  lv_kb_set_cursor_manage(kb, true);
-  lv_kb_set_style(kb, LV_KB_STYLE_BG, &lv_style_transp_tight);
-  lv_kb_set_style(kb, LV_KB_STYLE_BTN_REL, &rel_style);
-  lv_kb_set_style(kb, LV_KB_STYLE_BTN_PR, &pr_style);
-
-  /*Create a text area. The keyboard will write here*/
-  ta = lv_ta_create(lv_scr_act(), NULL);
-  lv_obj_align(ta, NULL, LV_ALIGN_IN_TOP_MID, 0, 10);
-  lv_ta_set_text(ta, "");
-
-  /*Assign the text area to the keyboard*/
-  lv_kb_set_ta(kb, ta);
-}
-
-/******************************************************/
-/*** NEW KEYBARD EVENT ********************************/
-/******************************************************/
-
-void lv_kb_def_event_cb1(lv_obj_t * kb, lv_event_t event)
-{
-  lv_kb_def_event_cb(kb, event);
-  if(event == LV_EVENT_CANCEL) {
-    lv_kb_set_ta(kb, NULL);  /*De-assign the text area  to hide it cursor if needed*/
-    lv_obj_del(ta);
-    lv_obj_del(kb);
-    HMI_Page = PAGE_MainLadder;
-    return;
-  }
-  if(event == LV_EVENT_APPLY) {
-    int taNumber = atoi(lv_ta_get_text(ta));
-    
-    if (taNumber >= 0 && taNumber < TOTAL_NETWORKS){
-      ShowingNetwork = taNumber;      
-    }
-    lv_kb_set_ta(kb, NULL);  /*De-assign the text area  to hide it cursor if needed*/
-    lv_obj_del(ta);
-    lv_obj_del(kb);
-    HMI_Page = PAGE_MainLadder;
-    return;
-  }
-}
-
-/* Display flushing */
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
-{
-  uint16_t c;
-
-  tft.startWrite(); /* Start new TFT transaction */
-  tft.setAddrWindow(area->x1, area->y1, (area->x2 - area->x1 + 1), (area->y2 - area->y1 + 1)); /* set the working window */
-  for (int y = area->y1; y <= area->y2; y++) {
-    for (int x = area->x1; x <= area->x2; x++) {
-      c = color_p->full;
-      tft.writeColor(c, 1);
-      color_p++;
-    }
-  }
-  tft.endWrite(); /* terminate TFT transaction */
-  lv_disp_flush_ready(disp); /* tell lvgl that flushing is done */
-}
-
-/* Interrupt driven periodic handler */
-static void lv_tick_handler(void)
-{
-  lv_tick_inc(LVGL_TICK_PERIOD);
-}
-
-/* Reading input device (simulated encoder here) */
-bool read_touchscreen(lv_indev_drv_t * indev, lv_indev_data_t * data)
-{
-  /* Read the touchpad */
-  float TS_PixelX = 0; 
-  float TS_PixelY = 0; 
-
-  if (ts.touched()) {
-    data->state = LV_INDEV_STATE_PR;
-    TS_Point p = ts.getPoint();
-    TS_PixelX = abs((float(p.x) - TS_LEFT_X)/(TS_RIGHT_X - TS_LEFT_X)* TFT_PIXELS_X);
-    TS_PixelY = abs((1 - (float(p.y) - TS_BOTTOM_Y)/(TS_TOP_Y - TS_BOTTOM_Y))* TFT_PIXELS_Y);
-  } 
-  else {
-    data->state = LV_INDEV_STATE_REL;
-  }
-  data->point.x = TS_PixelX;
-  data->point.y = TS_PixelY;
-  return false;   /*false: no more data to read because we are no buffering*/
-}
+//   if (ts.touched()) {
+//     data->state = LV_INDEV_STATE_PR;
+//     TS_Point p = ts.getPoint();
+//     TS_PixelX = abs((float(p.x) - TS_LEFT_X)/(TS_RIGHT_X - TS_LEFT_X)* TFT_PIXELS_X);
+//     TS_PixelY = abs((1 - (float(p.y) - TS_BOTTOM_Y)/(TS_TOP_Y - TS_BOTTOM_Y))* TFT_PIXELS_Y);
+//   } 
+//   else {
+//     data->state = LV_INDEV_STATE_REL;
+//   }
+//   data->point.x = TS_PixelX;
+//   data->point.y = TS_PixelY;
+//   return false;   /*false: no more data to read because we are no buffering*/
+// }
 

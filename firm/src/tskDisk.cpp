@@ -233,8 +233,8 @@ void TaskDisk(void *pvParameters)
 //--------------------------------------------------------------------------------
 // Load user settings at boot.
 // If first boot of PLC:
-//    Load default settings
 //    Format SPIFSS memory
+//    Load default settings
 //    Load demo program
 //--------------------------------------------------------------------------------
 
@@ -252,7 +252,7 @@ void loadSettings (void) {
     unsigned long StartTime = micros();
     SPIFFS.begin(true);
     unsigned long CurrentTime = micros();
-    Serial.println("TskDisk - Disk formatted because regualar mount failed.");
+    Serial.println("TskDisk - Disk formatted because regular mount failed.");
     Serial.print  ("TskDisk - Time taken to Format 1Mb: ");
     Serial.println(CurrentTime - StartTime);
     bootSequence = 1;
