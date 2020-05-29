@@ -136,17 +136,8 @@ const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "", "", "", "", "", "", "
                                                    "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
                                                    "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT"};
 
-//Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_RST);
-TFT_eSPI tft = TFT_eSPI(); /* TFT instance */
-
-XPT2046_Touchscreen ts(TS_CS);
-
-
-
-
-
-
-
+// TFT Instance
+TFT_eSPI tft = TFT_eSPI();
 
 
 // Task Functions prototypes
@@ -238,7 +229,7 @@ void drawBoxOutputPin2 (int Row, int Column);
 void drawBoxOutputPin3 (int Row, int Column);
 
 
-void parseTouchScreen(void);
+void parseTouchScreen(uint16_t ts_x, uint16_t ts_y);
 void touchMainMenu(float X, float Y);
 void touchMainLadder(float X, float Y);
 void touchInputNumber(float X, float Y);

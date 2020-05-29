@@ -1,0 +1,44 @@
+{
+    "name": "TFT_eSPI", 
+    "repository": {
+        "url": "https://github.com/Bodmer/TFT_eSPI", 
+        "type": "git"
+    }, 
+    "platforms": [
+        "espressif32", 
+        "ststm32", 
+        "espressif8266"
+    ], 
+    "frameworks": [
+        "arduino"
+    ], 
+    "version": "2.2.8", 
+    "authors": [
+        {
+            "maintainer": true, 
+            "name": "Bodmer", 
+            "url": null, 
+            "email": "bodmer@anola.net"
+        }
+    ], 
+    "keywords": [
+        "st7735", 
+        "ili9486", 
+        "esp8266", 
+        "arduino", 
+        "esp32", 
+        "epaper", 
+        "stm32", 
+        "st7789", 
+        "nodemcu", 
+        "m5stack", 
+        "ili9163", 
+        "tft", 
+        "s6d02a1", 
+        "display", 
+        "ili9341", 
+        "rm68140"
+    ], 
+    "id": 1559, 
+    "description": "A TFT and ePaper SPI graphics library with optimisation for ESP8266, ESP32 and STM32"
+}

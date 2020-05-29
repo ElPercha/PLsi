@@ -2,6 +2,11 @@
 #include <tskLadder.h>
 #include <ladder.h>
 
+//--------------------------------------------------------------------------------
+// Ladder logic execution Task 
+// Running on Core 1 
+//--------------------------------------------------------------------------------
+
 void TaskLadder(void *pvParameters)
 {
   (void) pvParameters;

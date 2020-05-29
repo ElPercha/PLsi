@@ -1,27 +1,23 @@
 #include <globals.h>
 #include <plsi.h>
-
-// #include <Wire.h>
-// #include <Adafruit_GFX.h>
-// #include <Adafruit_ILI9341.h>
-
-
-#include <TFT_eSPI.h> // LUCAS
-
-#include <XPT2046_Touchscreen.h>
+#include <TFT_eSPI.h>
 #include <tskHMI.h>
+
+//--------------------------------------------------------------------------------
+// HMI Task 
+// Display (tft) and Touch Screen (ts) management
+// Running on Core 0
+//--------------------------------------------------------------------------------
 
 void TaskHMI(void *pvParameters)
 {
   (void) pvParameters;
   
-  // Touch Screen initializations
-  ts.begin();
-  ts.setRotation(TS_ROTATION);
-
-  // TFT Display initializations
-  tft.begin();
+  // TFT and TS Display initializations
+  tft.init();
   tft.setRotation(TFT_ROTATION);
+  uint16_t calData[5] = { TS_LEFT_X, TS_RIGHT_X, TS_TOP_Y, TS_BOTTOM_Y, TS_ROTATION};
+  tft.setTouch(calData);
   
   // HMI Touch Screen Global Variables init
   HMI_Touched.Menu = 0;
@@ -30,14 +26,16 @@ void TaskHMI(void *pvParameters)
   HMI_Touched.Logic.Col = 0;
 
   while(1){
-    // Check for command from Touch Screen
-    if (ts.touched() && !AuxTouched){
+    uint16_t ts_x = 0, ts_y = 0; 
+    // if (tft.getTouch(&t_x, &t_y)) {parseTouchScreen(t_x, t_y);}
+    if (tft.getTouch(&ts_x, &ts_y) && !AuxTouched){
       AuxTouched = 1;
-      parseTouchScreen();
+      parseTouchScreen(ts_x, ts_y);
     }
-    if (!ts.touched()){
+    if (!tft.getTouch(&ts_x, &ts_y)){
       AuxTouched = 0;
     }
+
   // Draw pages selector
     if (true){
       switch (HMI_Page) {
@@ -1388,11 +1386,7 @@ void drawBoxOutputPin3 (int Row, int Column){
 /******************************************************/
 /*** TOUCH SCREEN MAIN SELECTOR ***********************/
 /******************************************************/
-void parseTouchScreen(void){
-  TS_Point p = ts.getPoint();
-  float TS_PixelX = abs((float(p.x) - TS_LEFT_X)/(TS_RIGHT_X - TS_LEFT_X)* TFT_PIXELS_X);
-  float TS_PixelY = abs((1 - (float(p.y) - TS_BOTTOM_Y)/(TS_TOP_Y - TS_BOTTOM_Y))* TFT_PIXELS_Y);
-
+void parseTouchScreen(uint16_t TS_PixelX, uint16_t TS_PixelY){
   switch (HMI_Page) {
     case PAGE_MenuWait: //PAGE_MainMenu or 
       touchMainMenu(TS_PixelX, TS_PixelY); 
