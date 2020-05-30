@@ -11,6 +11,39 @@ extern uint16_t HMI_PagePrevious;
 extern uint16_t PLCstateOld; 
 extern unsigned long  auxOldScanTime;
 
+extern unsigned long  auxOldScanTime;
+extern int networkColorBack;
+extern int networkColorGrid;
+
+//Network to show under Online animation
+extern uint16_t ShowingNetwork;
+extern uint16_t ShowingNetworkOld;
+
+extern uint16_t editionMode;
+extern uint16_t editionModeOld;
+
+// Flags for Logic Online animation
+extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
+
+// Datatypes Strings
+extern const String MnemonicsTypes[FIRST_INVALID_TYPE];
+extern const String MnemonicsCodes[FIRST_INVALID_CODE];
+
+// Touch Screen areas for Ladder edition
+typedef struct {
+  int Value;
+  int Row;
+  int Col;
+} LogicTouched;
+
+typedef struct {
+  int Menu;
+  LogicTouched Logic;
+} AreaTouched;
+
+extern AreaTouched HMI_Touched;
+extern uint16_t pressedAux;
+
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task
 //--------------------------------------------------------------------------------
@@ -22,12 +55,10 @@ extern unsigned long actualScanTime;
 //--------------------------------------------------------------------------------
 
 #define PAGE_MainMenu           0
-#define PAGE_MainLadder        10  
-#define PAGE_LadderOnline      11
+#define PAGE_MainLadder        10
 #define PAGE_MainHMI           20
 #define PAGE_MainConfig        30
-#define PAGE_SelectNumber     100
-#define PAGE_InputNumber      101
+#define PAGE_InputNumber      100
 
 //--------------------------------------------------------------------------------
 // TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO
@@ -140,22 +171,22 @@ extern unsigned long actualScanTime;
 //--------------------------------------------------------------------------------
 
 void pageMainMenu(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
-void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 
-void parseTouchScreen(void); //to be deleted
+void touch_calibrate(void);
+void touchMainMenu(uint16_t ts_x, uint16_t ts_y);
+void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
+void touchMainHMI(uint16_t ts_x, uint16_t ts_y);
+void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
+void touchInputNumber(uint16_t ts_x, uint16_t ts_y);
+  
+void drawNumericKeyboard(void);
 void drawMainMenu(void);
 void drawMainHMI(void);
 void drawMainConfig(void);
-
-void parseTouchScreen(uint16_t ts_x, uint16_t ts_y);
-void touch_calibrate(void);
-void touchMainMenu(uint16_t ts_x, uint16_t ts_y);
-      void touchMainLadder(float ts_x, float ts_y);
-void touchMainHMI(uint16_t ts_x, uint16_t ts_y);
-void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
-      void touchInputNumber(float ts_x, float ts_y);
-
 void drawMainLadder(void);
   void drawLadderMenuBut1(void);
   void drawLadderMenuBut2(void);
@@ -180,9 +211,6 @@ void drawLadderOnline(void);
   uint16_t PLCstateChange(void);
   void printPLCstateSmall (void);
 
-void drawSelectNumber(void);
-void drawInputNumber(void);
-
 void printPLCstate(void);
 uint16_t ScanTimeChange(void);
 
@@ -192,7 +220,6 @@ void printSAVE(void);
 int GetData (int r, int c);
 int GetFlag (int r, int c);
 void drawTagBit (int Row, int Column, int Color);
-
 
 void drawBox2 (int Row, int Column, int boxcolor);
 void drawBox3 (int Row, int Column, int boxcolor);
