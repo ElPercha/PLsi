@@ -377,8 +377,8 @@ int GetPreviousValue (int r, int c){
       returnData = int(Trh[execNetwork.Cells[r][c].Data]);
       break;
     default:
-      ;
-    break;
+      Serial.println("GetPreviousValue ERROR in SwitchCase index");
+      break;
   }
   return returnData;
 }
@@ -428,7 +428,7 @@ int GetDataValue (int r, int c) {
 //      returnData = R[execNetwork.Cells[r][c].Data];
 //      break;
     default:
-      ;
+      Serial.println("GetDataValue ERROR in SwitchCase index");
       break;
   }
   return returnData;

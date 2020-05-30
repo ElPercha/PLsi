@@ -4,6 +4,7 @@
 //--------------------------------------------------------------------------------
 // Calculate Scan Time in us 
 //--------------------------------------------------------------------------------
+
 void scanTime(void){
   unsigned long    scanTimeMicros = micros();
   actualScanTime = scanTimeMicros - startTime;

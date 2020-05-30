@@ -4,6 +4,11 @@
 #include "SD.h"
 #include "SPIFFS.h"
 
+//--------------------------------------------------------------------------------
+// Disk Task 
+// Controls SPIFSS memory and SD Card files
+// Running on Core 0
+//--------------------------------------------------------------------------------
 
 void TaskDisk(void *pvParameters)
 {

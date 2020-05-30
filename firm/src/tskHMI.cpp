@@ -1,6 +1,7 @@
 #include <globals.h>
 #include <plsi.h>
 #include <TFT_eSPI.h>
+#include <hmi.h>
 #include <tskHMI.h>
 
 //--------------------------------------------------------------------------------
@@ -12,56 +13,86 @@
 void TaskHMI(void *pvParameters)
 {
   (void) pvParameters;
+    
+  //----------------------------------------------------
+  // Task global variables
+  //----------------------------------------------------
+
+  uint16_t ts_x, ts_y, touchType, pressed, firstLoad;
+  uint16_t calData[5] = {TS_LEFT_X, TS_RIGHT_X, TS_TOP_Y, TS_BOTTOM_Y, TS_ROTATION};
+
+  //----------------------------------------------------
+  // TFT and TS Display configuration
+  //----------------------------------------------------
   
-  // TFT and TS Display initializations
   tft.init();
   tft.setRotation(TFT_ROTATION);
-  uint16_t calData[5] = { TS_LEFT_X, TS_RIGHT_X, TS_TOP_Y, TS_BOTTOM_Y, TS_ROTATION};
-  tft.setTouch(calData);
   
+  tft.setTouch(calData);
+  //touch_calibrate();
+
+  //----------------------------------------------------
   // HMI Touch Screen Global Variables init
+  //----------------------------------------------------
+
   HMI_Touched.Menu = 0;
   HMI_Touched.Logic.Value = 0;
   HMI_Touched.Logic.Row = 0;
   HMI_Touched.Logic.Col = 0;
 
+  //----------------------------------------------------
+  // Task Main loop 
+  //----------------------------------------------------
+
   while(1){
-    uint16_t ts_x = 0, ts_y = 0; 
-    // if (tft.getTouch(&t_x, &t_y)) {parseTouchScreen(t_x, t_y);}
-    if (tft.getTouch(&ts_x, &ts_y) && !AuxTouched){
-      AuxTouched = 1;
+    
+    //----------------------------------------------------
+    // Touch Screen press type detection
+    //----------------------------------------------------
+
+    pressed = tft.getTouch(&ts_x, &ts_y);
+    touchType = 0;
+
+    if (pressed && !pressedAux){
+      pressedAux = 1;
+      touchType = ONECLICK;
       parseTouchScreen(ts_x, ts_y);
+      // Serial.print("Point X: "); 
+      // Serial.println(ts_x); 
+      // Serial.print("Point Y: "); 
+      // Serial.println(ts_y); 
     }
-    if (!tft.getTouch(&ts_x, &ts_y)){
-      AuxTouched = 0;
+    if (!pressed){
+      pressedAux = 0;
     }
 
-  // Draw pages selector
-    if (true){
-      switch (HMI_Page) {
+    //----------------------------------------------------
+    // Page selection management
+    //----------------------------------------------------
+    
+    firstLoad = 0; 
+    if (HMI_Page != HMI_PagePrevious){
+      firstLoad = 1;
+      HMI_PagePrevious = HMI_Page;
+    }
+
+    // Draw pages selector
+    switch (HMI_Page) {
       case PAGE_MainMenu: 
-        drawMainMenu();
+        pageMainMenu(firstLoad, touchType, ts_x, ts_y);
         break;
-      case PAGE_MenuWait:
-        drawMenuWait();
+      case PAGE_MainHMI:
+        pageMainHMI(firstLoad, touchType, ts_x, ts_y);
         break;
+      case PAGE_MainConfig:
+        pageMainConfig(firstLoad, touchType, ts_x, ts_y);
+        break;
+
       case PAGE_MainLadder:
         drawMainLadder();
         break;
       case PAGE_LadderOnline:
         drawLadderOnline();
-        break;
-      case PAGE_MainHMI:
-        drawMainHMI();
-        break;
-      case PAGE_HMImenu:
-        drawHMImenu();
-        break;
-      case PAGE_MainConfig:
-        drawMainConfig();
-        break;
-      case PAGE_ConfigWait:
-        drawConfigWait();
         break;
       case PAGE_SelectNumber:
         drawSelectNumber();
@@ -72,49 +103,11 @@ void TaskHMI(void *pvParameters)
       default:
         ;
       break;
-      }
     }
     delay(5); 
   }
 }
 
-/******************************************************/
-/*** MAIN MENU ****************************************/
-/******************************************************/
-void drawMainMenu (void){
-  tft.fillScreen(BLACK);
-   
-  tft.fillRect     (  0,   0, 320, 34,    DARKGREY); // Header
-  tft.fillRoundRect( 20,  48, 280, 55, 6, WHITE);    // Button 1
-  tft.fillRoundRect( 20, 111, 280, 55, 6, CYAN);     // Button 2
-  tft.fillRoundRect( 20, 174, 280, 55, 6, AQUA);     // Button 3
-
-  tft.setTextColor(WHITE);
-  tft.setCursor(10, 10);
-  tft.setTextSize(2);
-  tft.print("PLsi v" + String(FIRMWARE));
-
-  printPLCstate();
-
-  tft.setTextColor(BLACK);
-  tft.setTextSize(4);
-  tft.setCursor(90, 61);
-  tft.print("LADDER");
-  
-  tft.setCursor(130, 124);
-  tft.print("HMI");
-
-  tft.setTextSize(3);
-  tft.setCursor(43, 191);
-  tft.print("CONFIGURATION");
-
-  HMI_Page = PAGE_MenuWait;
-}
-
-void drawMenuWait (void){
-//Update Values RUN, STOP, etc  
-  if(PLCstateChange() || ScanTimeChange()){printPLCstate();}
-}
 /******************************************************/
 /*** LADDER *******************************************/
 /******************************************************/
@@ -164,69 +157,13 @@ void drawInputNumber (){
 
 }
 
-/******************************************************/
-/*** LADDER EDITOR ************************************/
-/******************************************************/
 
 
 
-
-/******************************************************/
-/*** HMI **********************************************/
-/******************************************************/
-void drawMainHMI (void){
-  tft.fillScreen(YELLOW);
-   
-  tft.setTextColor(BLACK);
-  tft.setCursor(10, 10);
-  tft.setTextSize(2);
-  tft.print("HMI Not available");
-
-  HMI_Page = PAGE_HMImenu;
-}
-
-void drawHMImenu (void){
-}
-
-/******************************************************/
-/*** CONFIG *******************************************/
-/******************************************************/
-void drawMainConfig (void){
-  tft.fillScreen(MAGENTA);
-  tft.setTextColor(WHITE);
-  tft.setCursor(10, 10);
-  tft.setTextSize(2);
-  tft.print("CONFIG Not available");
-
-  HMI_Page = PAGE_ConfigWait;
-}
-
-void drawConfigWait (void){
-}
 
 /******************************************************/
 /*** AUX FUNCTIONS ************************************/
 /******************************************************/
-void printPLCstate(void){
-  tft.setTextSize(2);
-  tft.fillRect     (  100,   0, 320, 34,    DARKGREY);
-  if (PLCstate == RUNNING){
-    tft.setTextColor(GREEN);
-    String auxString = "RUNNING " + String(float(actualScanTime)/1000.0, 1) + " ms";
-    tft.setCursor(315 - auxString.length() * 12, 10);
-    tft.print(auxString);
-  }
-  else if (PLCstate == STOPPED){
-    tft.setCursor(220, 10);
-    tft.setTextColor(YELLOW);
-    tft.print("STOPPED");
-  }
-  else if (PLCstate == PLCERROR){
-    tft.setCursor(240, 10);
-    tft.setTextColor(RED);
-    tft.print("ERROR");
-  }
-}
 
 void printPLCstateSmall(void){
   tft.setTextSize(2);
@@ -247,21 +184,6 @@ void printPLCstateSmall(void){
   }
 }
 
-uint16_t PLCstateChange(void) {
-  if (PLCstateOld != PLCstate){
-    PLCstateOld = PLCstate;
-    return 1;
-  }
-  else {return 0;}
-}
-uint16_t ScanTimeChange(void) {
-  unsigned int auxScanTime = actualScanTime/100;
-  if (auxOldScanTime != auxScanTime){
-    auxOldScanTime = auxScanTime;
-    return 1;
-  }
-  else {return 0;}
-}
 
 uint16_t NetworkChanged(void) {
   if (ShowingNetworkOld != ShowingNetwork){
@@ -1388,39 +1310,16 @@ void drawBoxOutputPin3 (int Row, int Column){
 /******************************************************/
 void parseTouchScreen(uint16_t TS_PixelX, uint16_t TS_PixelY){
   switch (HMI_Page) {
-    case PAGE_MenuWait: //PAGE_MainMenu or 
-      touchMainMenu(TS_PixelX, TS_PixelY); 
-      break;
     case PAGE_LadderOnline: //PAGE_MainLadder or 
       touchMainLadder(TS_PixelX, TS_PixelY);
       break;
-    case PAGE_HMImenu:
-      touchHMImenu(TS_PixelX, TS_PixelY);
-      break;
-    case PAGE_ConfigWait:
-      touchConfigWait(TS_PixelX, TS_PixelY);
-      break;
     case PAGE_InputNumber:
-      touchInputNumber(TS_PixelX, TS_PixelY);
+      //touchInputNumber(TS_PixelX, TS_PixelY);
       break;
-
     default:
       ;
     break;
   }
-}
-
-/******************************************************/
-/*** MAIN MENU COMMANDS *******************************/
-/******************************************************/
-void touchMainMenu(float X, float Y){
-  if      (Y <= 40) {
-    PLCstate++;
-    if (PLCstate > 2){PLCstate = 0;}
-  }
-  else if (Y >  40 && Y < 111) {HMI_Page = PAGE_MainLadder;}
-  else if (Y <  174)           {HMI_Page = PAGE_MainHMI;}  
-  else                         {HMI_Page = PAGE_MainConfig;}
 }
 
 /******************************************************/
@@ -1457,8 +1356,6 @@ void touchMainLadder(float X, float Y){
   if(HMI_Touched.Menu == 3){
     HMI_Touched.Menu = 0;
     editionMode = 0;
-
-    HMI_PagePrevious = HMI_Page;
     HMI_Page = PAGE_SelectNumber;
   }
   if(HMI_Touched.Menu == 4){
@@ -1506,40 +1403,7 @@ void touchInputNumber(float X, float Y){
   //agarrar donde toco y actuar sobre el numero a crear
 }
 
-/******************************************************/
-/*** MAIN HMI MENU ************************************/
-/******************************************************/
-void touchHMImenu(float X, float Y){
-  HMI_Page = 0;
-}
-
-/******************************************************/
-/*** MAIN CONFIG MENU *********************************/
-/******************************************************/
-
-void touchConfigWait(float X, float Y){
-  HMI_Page = 0;
-}
 
 
-// /* Reading input device (simulated encoder here) */
-// bool read_touchscreen(lv_indev_drv_t * indev, lv_indev_data_t * data)
-// {
-//   /* Read the touchpad */
-//   float TS_PixelX = 0; 
-//   float TS_PixelY = 0; 
 
-//   if (ts.touched()) {
-//     data->state = LV_INDEV_STATE_PR;
-//     TS_Point p = ts.getPoint();
-//     TS_PixelX = abs((float(p.x) - TS_LEFT_X)/(TS_RIGHT_X - TS_LEFT_X)* TFT_PIXELS_X);
-//     TS_PixelY = abs((1 - (float(p.y) - TS_BOTTOM_Y)/(TS_TOP_Y - TS_BOTTOM_Y))* TFT_PIXELS_Y);
-//   } 
-//   else {
-//     data->state = LV_INDEV_STATE_REL;
-//   }
-//   data->point.x = TS_PixelX;
-//   data->point.y = TS_PixelY;
-//   return false;   /*false: no more data to read because we are no buffering*/
-// }
 

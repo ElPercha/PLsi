@@ -10,7 +10,7 @@ extern unsigned long actualScanTime;
 extern unsigned long startTime;
 
 //--------------------------------------------------------------------------------
-// Used Global variables in ladder scope declared in another task
+// Used Global variables in ladder scope, declared in another task
 //--------------------------------------------------------------------------------
 
 extern uint16_t NetworkFlagsOnline [NET_COLUMNS - 1];

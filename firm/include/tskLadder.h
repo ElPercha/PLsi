@@ -2,7 +2,7 @@
 #define TSKLADDER_H
 
 //--------------------------------------------------------------------------------
-// Globals variables for Ladder "scope"
+// Globals variables used in this specific task 
 //--------------------------------------------------------------------------------
 
 uint16_t NetworkFlags[NET_COLUMNS - 1];

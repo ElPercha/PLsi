@@ -38,7 +38,7 @@
 #define QTY_R       2000    // Float or Real registers
 
 //--------------------------------------------------------------------------------
-// PLC Physical I/O assignment. GPIO number on ESP WROVER datasheet
+// PLC Physical I/O assignment. GPIO number on ESP 32 datasheet
 //--------------------------------------------------------------------------------
 
 #define INPUT_00      34  
