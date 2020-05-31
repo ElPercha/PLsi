@@ -7,19 +7,14 @@
 //--------------------------------------------------------------------------------
 
 void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+  
   //-------------------------------
   // capture input Value command
   //-------------------------------
-    if(firstLoad){
-      Serial.print("Value accepted: ");
-      Serial.println(numericValueAccepted);
-      Serial.print("Network Value Changed to: ");
-      Serial.println(numericValue);
-    }
+
     if(numericValueAccepted && numericValue >= 0 && numericValue < TOTAL_NETWORKS){
       showingNetwork = uint16_t(numericValue);
       numericValueAccepted = 0;
-      Serial.println("Network Value Changed correctly!");
     }
 
   //-------------------------------
