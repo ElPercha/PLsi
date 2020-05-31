@@ -79,7 +79,7 @@ void execScanPLC(Network Networks[]){
         }
       }
     }
-    if (n == ShowingNetwork){
+    if (n == showingNetwork){
       onlineNetwork = Networks[n];
       for (int ff=0; ff<NET_COLUMNS-1; ff++){NetworkFlagsOnline[ff]= NetworkFlags[ff];}
     }

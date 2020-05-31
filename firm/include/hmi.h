@@ -7,7 +7,8 @@
 
 extern TFT_eSPI tft; // TFT Display Instance
 extern uint16_t HMI_Page;
-extern uint16_t HMI_PagePrevious;
+extern uint16_t HMI_PageMemory;
+
 extern uint16_t PLCstateOld; 
 extern unsigned long  auxOldScanTime;
 
@@ -15,34 +16,43 @@ extern unsigned long  auxOldScanTime;
 extern int networkColorBack;
 extern int networkColorGrid;
 
-//Network to show under Online animation
-extern uint16_t ShowingNetwork;
-extern uint16_t ShowingNetworkOld;
+//----------------------------------------------------
+// Network to show under Online animation
+//----------------------------------------------------
+
+extern uint16_t showingNetwork;
+extern uint16_t showingNetworkOld;
 
 extern uint16_t editionMode;
 extern uint16_t editionModeOld;
 
+//----------------------------------------------------
 // Flags for Logic Online animation
+//----------------------------------------------------
+
 extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 
+//----------------------------------------------------
 // Datatypes Strings
+//----------------------------------------------------
+
 extern const String MnemonicsTypes[FIRST_INVALID_TYPE];
 extern const String MnemonicsCodes[FIRST_INVALID_CODE];
 
-// Touch Screen areas for Ladder edition
-typedef struct {
-  int Value;
-  int Row;
-  int Col;
-} LogicTouched;
+//----------------------------------------------------
+// Invoke the TFT_eSPI button class and 
+// create all the numeric button objects
+//----------------------------------------------------
 
-typedef struct {
-  int Menu;
-  LogicTouched Logic;
-} AreaTouched;
+#define NUM_KEY_LEN 16
+extern char numberBuffer[NUM_KEY_LEN + 1];
+extern uint8_t numberIndex;  
 
-extern AreaTouched HMI_Touched;
-extern uint16_t pressedAux;
+extern TFT_eSPI_Button numericKeys[16];
+
+extern double numericValue;            // Variable to use as return value of numeric keyboard
+extern uint16_t numericValueAccepted;  // Variable to use as return value of numeric keyboard
+
 
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task

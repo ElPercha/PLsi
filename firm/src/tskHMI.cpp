@@ -18,7 +18,8 @@ void TaskHMI(void *pvParameters)
   // Task global variables
   //----------------------------------------------------
 
-  uint16_t ts_x, ts_y, touchType, pressed, firstLoad;
+  uint16_t ts_x, ts_y, touchType, firstLoad, pressed, pressedAux = 0;
+  uint16_t HMI_PagePrevious = 1; // To force Main Manu Load at fist boot
   uint16_t calData[5] = {TS_LEFT_X, TS_RIGHT_X, TS_TOP_Y, TS_BOTTOM_Y, TS_ROTATION};
 
   //----------------------------------------------------
@@ -30,15 +31,6 @@ void TaskHMI(void *pvParameters)
   
   tft.setTouch(calData);
   //touch_calibrate();
-
-  //----------------------------------------------------
-  // HMI Touch Screen Global Variables init
-  //----------------------------------------------------
-
-  HMI_Touched.Menu = 0;
-  HMI_Touched.Logic.Value = 0;
-  HMI_Touched.Logic.Row = 0;
-  HMI_Touched.Logic.Col = 0;
 
   //----------------------------------------------------
   // Task Main loop 

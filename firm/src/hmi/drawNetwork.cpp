@@ -52,7 +52,7 @@ void drawNetwork (void){
         if (onlineNetwork.Cells[r][c].Code >=    FIRST_INVALID_CODE){
           Serial.println("TASK HMI - CORE 0 - INSTRUCTION CODE INVALID: ");
           Serial.print("   - Network (absolute number): ");
-          Serial.println(ShowingNetwork);
+          Serial.println(showingNetwork);
           Serial.print("   - Row: ");
           Serial.println(r);
           Serial.print("   - Column: ");

@@ -8,6 +8,21 @@
 
 void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
   //-------------------------------
+  // capture input Value command
+  //-------------------------------
+    if(firstLoad){
+      Serial.print("Value accepted: ");
+      Serial.println(numericValueAccepted);
+      Serial.print("Network Value Changed to: ");
+      Serial.println(numericValue);
+    }
+    if(numericValueAccepted && numericValue >= 0 && numericValue < TOTAL_NETWORKS){
+      showingNetwork = uint16_t(numericValue);
+      numericValueAccepted = 0;
+      Serial.println("Network Value Changed correctly!");
+    }
+
+  //-------------------------------
   // draw full Page on first load
   //-------------------------------
     
@@ -77,74 +92,100 @@ void drawLadderOnline (void){
 //--------------------------------------------------------------------------------
 // Main Configuration Page
 // Touch Screen parsing
+//
+//     ladderTouched.Menu = 0        -> No Main Menu selection
+//     ladderTouched.Menu = 1 to 6   -> 1 = Left button ... 6 = Right button
+//     ladderTouched.Logic.Value = 0 -> No Logic cell selected
+//     ladderTouched.Logic.Value = 1 -> Logic cell selected, check Row and Col values 
+//     ladderTouched.Logic.Row = 0 to NET_ROWS-1 
+//     ladderTouched.Logic.Col = 0 to NET_COLUMNS-1 
+//
 //--------------------------------------------------------------------------------
 
 void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
-// HMI_Touched.Menu = 0        -> No Main Menu selection
-// HMI_Touched.Menu = 1 to 6   -> 1 = Left button ... 6 = Right button
-// HMI_Touched.Logic.Value = 0 -> No Logic cell selected
-// HMI_Touched.Logic.Value = 1 -> Logic cell selected, check Row and Col values 
-// HMI_Touched.Logic.Row = 0 to NET_ROWS-1 
-// HMI_Touched.Logic.Col = 0 to NET_COLUMNS-1 
+typedef struct {
+  int Value;
+  int Row;
+  int Col;
+} LogicTouched;
+
+typedef struct {
+  int Menu;
+  LogicTouched Logic;
+} AreaTouched;
+
+AreaTouched ladderTouched;
+  ladderTouched.Menu = 0;
+  ladderTouched.Logic.Value = 0;
+  ladderTouched.Logic.Row = 0;
+  ladderTouched.Logic.Col = 0;
+
   if (ts_y < MENU_HEIGTH){
-    HMI_Touched.Menu = abs(ts_x/MENU_WIDTH)+1;    
+    ladderTouched.Menu = abs(ts_x/MENU_WIDTH)+1;    
   }
   else{
-    HMI_Touched.Logic.Row   = abs((ts_y-MENU_HEIGTH)/NET_ROW_HEIGTH);    
-    HMI_Touched.Logic.Col   = abs((ts_x-POWER_BAR_WIDTH)/NET_COL_WIDTH);    
-    HMI_Touched.Logic.Value = 1;
+    ladderTouched.Logic.Row   = abs((ts_y-MENU_HEIGTH)/NET_ROW_HEIGTH);    
+    ladderTouched.Logic.Col   = abs((ts_x-POWER_BAR_WIDTH)/NET_COL_WIDTH);    
+    ladderTouched.Logic.Value = 1;
   }
 
-//Execute Menu Function from 1 to 6
-  if(HMI_Touched.Menu == 1){
-    HMI_Touched.Menu = 0;
+  //-------------------------------------------
+  // Execute Menu Function from 1 to 6
+  //-------------------------------------------
+
+  if(ladderTouched.Menu == 1){ // HOME
+    ladderTouched.Menu = 0;
     editionMode = 0;
     HMI_Page = PAGE_MainMenu;
   }
-  if(HMI_Touched.Menu == 2){
-    HMI_Touched.Menu = 0;
+  if(ladderTouched.Menu == 2){ // LEFT ARROW
+    ladderTouched.Menu = 0;
     editionMode = 0;
-    if (ShowingNetwork == 0){ShowingNetwork=TOTAL_NETWORKS-1;}
-    else{ShowingNetwork--;}
+    if (showingNetwork == 0){showingNetwork=TOTAL_NETWORKS-1;}
+    else{showingNetwork--;}
   }
-  if(HMI_Touched.Menu == 3){
-    HMI_Touched.Menu = 0;
+  if(ladderTouched.Menu == 3){ // GO TO
+    ladderTouched.Menu = 0;
     editionMode = 0;
+    HMI_PageMemory = HMI_Page;
     HMI_Page = PAGE_InputNumber;
   }
-  if(HMI_Touched.Menu == 4){
-    HMI_Touched.Menu = 0;
+  if(ladderTouched.Menu == 4){ // RIGHT ARROW
+    ladderTouched.Menu = 0;
     editionMode = 0;
-    ShowingNetwork++;
-    if (ShowingNetwork >= TOTAL_NETWORKS-1){ShowingNetwork=0;}
+    showingNetwork++;
+    if (showingNetwork >= TOTAL_NETWORKS-1){showingNetwork=0;}
   }
-  if(HMI_Touched.Menu == 5){
-    HMI_Touched.Menu = 0;
+  if(ladderTouched.Menu == 5){ // EDIT / SAVE
+    ladderTouched.Menu = 0;
     if (editionMode == 0){
       editionMode = 1;
     }
     else{
       editionMode = 0;
-      //saveNetworkFlash(ShowingNetwork); CONVERSION
+      //saveNetworkFlash(showingNetwork); CONVERSION
     }
   }
-  if(HMI_Touched.Menu == 6){
-    HMI_Touched.Menu = 0;
+  if(ladderTouched.Menu == 6){ // CHANGE PLC STATE
+    ladderTouched.Menu = 0;
     if      (PLCstate == PLCERROR) {PLCstate = STOPPED;}
     else if (PLCstate == RUNNING)  {PLCstate = STOPPED;}
     else if (PLCstate == STOPPED)  {PLCstate = RUNNING;}
   }
-
-// Execute Logic Cell Edition or Highlight
-  if (HMI_Touched.Logic.Value){
-    HMI_Touched.Logic.Value = 0;
-    //HMI_Touched.Logic.Row;
-    //HMI_Touched.Logic.Col;
+  
+  //-------------------------------------------
+  // Execute Logic Cell Edition or Highlight
+  //-------------------------------------------
+  
+  if (ladderTouched.Logic.Value){
+    ladderTouched.Logic.Value = 0;
+    //ladderTouched.Logic.Row;
+    //ladderTouched.Logic.Col;
 
     Serial.print ("Touched Row Cell: ");
-    Serial.println (HMI_Touched.Logic.Row);
+    Serial.println (ladderTouched.Logic.Row);
     Serial.print ("Touched Col Cell: ");
-    Serial.println (HMI_Touched.Logic.Col);
+    Serial.println (ladderTouched.Logic.Col);
   }
 }
 
@@ -197,8 +238,8 @@ void drawLadderMenuBut6(void){
 }
 
 uint16_t NetworkChanged(void) {
-  if (ShowingNetworkOld != ShowingNetwork){
-    ShowingNetworkOld = ShowingNetwork;
+  if (showingNetworkOld != showingNetwork){
+    showingNetworkOld = showingNetwork;
     return 1;
   }
   else {return 0;}
@@ -231,10 +272,10 @@ void printNetworkNumber(void){
   tft.print("Network");
     
   tft.setTextSize(2);
-  if      (ShowingNetwork <  10){tft.setCursor(109+20, 17);}
-  else if (ShowingNetwork < 100){tft.setCursor(109+14, 17);}
+  if      (showingNetwork <  10){tft.setCursor(109+20, 17);}
+  else if (showingNetwork < 100){tft.setCursor(109+14, 17);}
   else                          {tft.setCursor(109+ 9, 17);}
-  tft.print(ShowingNetwork);
+  tft.print(showingNetwork);
 }  
   
 void EditionChanged(void){
