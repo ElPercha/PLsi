@@ -40,7 +40,7 @@ void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page full draw 
+// Numeric Keyboard Page full draw 
 //--------------------------------------------------------------------------------
 
 void drawNumericKeyboard (void){
@@ -219,7 +219,7 @@ void touchInputNumber(uint16_t ts_x, uint16_t ts_y){
       }
 
       //---------------------------------------------------------------------
-      // ESC button, delete buffer and go back to previous page
+      // ESC Button, delete buffer and go back to previous page
       //---------------------------------------------------------------------
 
       if (b == 3) {
@@ -229,7 +229,7 @@ void touchInputNumber(uint16_t ts_x, uint16_t ts_y){
       }
 
       //---------------------------------------------------------------------
-      // DEL button, delete buffer
+      // DEL Button, delete buffer
       //---------------------------------------------------------------------
 
       if (b == 7) {
