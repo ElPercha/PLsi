@@ -68,6 +68,7 @@ extern unsigned long actualScanTime;
 #define PAGE_MainLadder        10
 #define PAGE_MainHMI           20
 #define PAGE_MainConfig        30
+#define PAGE_LadderEditor      40
 #define PAGE_InputNumber      100
 
 //--------------------------------------------------------------------------------
@@ -185,18 +186,21 @@ void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint1
 void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 
 void touch_calibrate(void);
 void touchMainMenu(uint16_t ts_x, uint16_t ts_y);
 void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
 void touchMainHMI(uint16_t ts_x, uint16_t ts_y);
 void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
+void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
 void touchInputNumber(uint16_t ts_x, uint16_t ts_y);
   
 void drawNumericKeyboard(void);
 void drawMainMenu(void);
 void drawMainHMI(void);
 void drawMainConfig(void);
+void drawLadderEditor(void);
 void drawMainLadder(void);
   void drawLadderMenuBut1(void);
   void drawLadderMenuBut2(void);
