@@ -98,22 +98,22 @@ void drawLadderOnline (void){
 //--------------------------------------------------------------------------------
 
 void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
-typedef struct {
-  int Value;
-  int Row;
-  int Col;
-} LogicTouched;
+  typedef struct {
+    int Value;
+    int Row;
+    int Col;
+  } LogicTouched;
 
-typedef struct {
-  int Menu;
-  LogicTouched Logic;
-} AreaTouched;
+  typedef struct {
+    int Menu;
+    LogicTouched Logic;
+  } AreaTouched;
 
-AreaTouched ladderTouched;
-  ladderTouched.Menu = 0;
-  ladderTouched.Logic.Value = 0;
-  ladderTouched.Logic.Row = 0;
-  ladderTouched.Logic.Col = 0;
+  AreaTouched ladderTouched;
+    ladderTouched.Menu = 0;
+    ladderTouched.Logic.Value = 0;
+    ladderTouched.Logic.Row = 0;
+    ladderTouched.Logic.Col = 0;
 
   if (ts_y < MENU_HEIGTH){
     ladderTouched.Menu = abs(ts_x/MENU_WIDTH)+1;    
@@ -174,13 +174,23 @@ AreaTouched ladderTouched;
   
   if (ladderTouched.Logic.Value){
     ladderTouched.Logic.Value = 0;
+    
+    HMI_PageMemory = HMI_Page;
+    if (editionMode){
+      HMI_Page = PAGE_LadderEditor;
+    }
+    else{
+      HMI_Page = PAGE_LadderDetails;
+    }
+
+
     //ladderTouched.Logic.Row;
     //ladderTouched.Logic.Col;
 
-    Serial.print ("Touched Row Cell: ");
-    Serial.println (ladderTouched.Logic.Row);
-    Serial.print ("Touched Col Cell: ");
-    Serial.println (ladderTouched.Logic.Col);
+    // Serial.print ("Touched Row Cell: ");
+    // Serial.println (ladderTouched.Logic.Row);
+    // Serial.print ("Touched Col Cell: ");
+    // Serial.println (ladderTouched.Logic.Col);
   }
 }
 

@@ -3,16 +3,16 @@
 #include <hmi.h>
 
 //--------------------------------------------------------------------------------
-//Ladder Editor main Page
+//Ladder Details main Page
 //--------------------------------------------------------------------------------
 
-void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageLadderDetails (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
     
     if(firstLoad){
-      drawLadderEditor();
+      drawLadderDetails();
     }
     
   //-------------------------------
@@ -26,27 +26,27 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   //-------------------------------
 
   if (touchType){
-    touchLadderEditor(ts_x, ts_y); 
+    touchLadderDetails(ts_x, ts_y); 
   } 
 }
 
 //--------------------------------------------------------------------------------
-// Ladder Editor Page full draw 
+// Ladder Details Page full draw 
 //--------------------------------------------------------------------------------
 
-void drawLadderEditor (void){
-  tft.fillScreen(TFT_OLIVE);
+void drawLadderDetails (void){
+  tft.fillScreen(TFT_ORANGE);
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
-  tft.print("Ladder Editor!");
+  tft.print("Ladder Details on Instructions");
 }
 
 //--------------------------------------------------------------------------------
-// Ladder Editor Page
+// Ladder Details Page
 // Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
+void touchLadderDetails(uint16_t ts_x, uint16_t ts_y){
   HMI_Page = HMI_PageMemory;
 }

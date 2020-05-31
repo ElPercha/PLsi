@@ -76,6 +76,12 @@ void TaskHMI(void *pvParameters)
       case PAGE_MainConfig:
         pageMainConfig(firstLoad, touchType, ts_x, ts_y);
         break;
+      case PAGE_LadderEditor:
+        pageLadderEditor(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_LadderDetails:
+        pageLadderDetails(firstLoad, touchType, ts_x, ts_y);
+        break;
       case PAGE_InputNumber:
         pageInputNumber(firstLoad, touchType, ts_x, ts_y);
         break;
