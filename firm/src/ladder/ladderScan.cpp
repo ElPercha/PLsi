@@ -42,11 +42,19 @@ void execScanPLC(Network Networks[]){
   
   for (int n=0; n<TOTAL_NETWORKS; n++){
     execNetwork = Networks[n];
-
-    // Resets Dynamic Flags before to start 
-    for (int f=0; f<NET_COLUMNS-1; f++){NetworkFlags[f] = 0;}
     
+    //----------------------------------------------------
+    // Resets Dynamic Flags before to start each Network
+    //----------------------------------------------------
+
+    for (int f=0; f<NET_COLUMNS-1; f++){
+      NetworkFlags[f] = 0;
+    }
+    
+    //----------------------------------------------------
     // Call Ladder Instructions 
+    //----------------------------------------------------
+
     for (int c=0; c<NET_COLUMNS; c++){
       for (int r=0; r<NET_ROWS; r++){
         if (execNetwork.Cells[r][c].Code >=  FIRST_INVALID_CODE){
@@ -71,7 +79,11 @@ void execScanPLC(Network Networks[]){
           }
         }  
       } 
-      //Update dynamic Flags vs Bars (not for last column)
+
+      //----------------------------------------------------
+      // Update dynamic Flags vs Bars (not for last column)
+      //----------------------------------------------------
+      
       if((c < NET_COLUMNS - 1) && (NetworkFlags[c] != 0 )){
         for (int i=0; i<NET_ROWS-1; i++){
           NetworkFlags[c] = NetworkFlags[c] | ((NetworkFlags[c] & execNetwork.Bars[c]) << 1);
@@ -79,6 +91,11 @@ void execScanPLC(Network Networks[]){
         }
       }
     }
+
+    //----------------------------------------------------
+    // Save current processing Network to Online Network
+    //----------------------------------------------------
+    
     if (n == showingNetwork){
       onlineNetwork = Networks[n];
       for (int ff=0; ff<NET_COLUMNS-1; ff++){NetworkFlagsOnline[ff]= NetworkFlags[ff];}

@@ -14,7 +14,6 @@ void TaskDisk(void *pvParameters)
 {
   (void) pvParameters;
 
-  Serial.println  ("TskDisk - running.");
   loadSettings();
   loadUserProgram();
 
@@ -22,12 +21,12 @@ void TaskDisk(void *pvParameters)
 
     Network NetworksTesting[10];
 
-    if (I[4]){
+    if (I[4] && false){
       Serial.println  ("TskDisk - Input 4 activated");
       loadSettings();
       delay(2000);
     }
-    if (I[5]){
+    if (I[5] && false){
         Serial.print("Info SPIFFS Total Bytes: ");
         Serial.println(SPIFFS.totalBytes());
         Serial.print("Info SPIFFS Used Bytes: ");
@@ -44,7 +43,7 @@ void TaskDisk(void *pvParameters)
         
       delay(2000);
     }
-    if (I[6]){
+    if (I[6] && false){
             
       unsigned long StartTime = micros();
       File f = SPIFFS.open("/f.txt", "w");
@@ -138,7 +137,7 @@ void TaskDisk(void *pvParameters)
     }
 
     
-    if (I[7]){
+    if (I[7] && false){
       unsigned long StartTime = micros();
       File myFile = SPIFFS.open("/f.txt", "r");
       unsigned long CurrentTime = micros();
@@ -230,8 +229,8 @@ void TaskDisk(void *pvParameters)
       delay(2000);
     }
 
-
-    delay(10);
+    Serial.println  ("TskDisk - running.");
+    delay(4000);
   }
 }
 
@@ -277,7 +276,7 @@ void loadSettings (void) {
 //--------------------------------------------------------------------------------
 
 void loadUserProgram (void) {
-  delay(10000);
+  delay(1000);
   bootSequence = 1000;
 }
 
