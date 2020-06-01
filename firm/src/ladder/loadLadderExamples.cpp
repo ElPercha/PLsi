@@ -1,9 +1,40 @@
 #include <globals.h>
 
 void DebugCreateNetworks(Network Networks[]){
-  Networks[0].Cells[0][0].Code = 4;
-  Networks[0].Cells[0][0].Data = 77;
-  Networks[0].Cells[0][0].Type = 0;
+  Networks[0].Cells[0][0].Code = 3;
+  Networks[0].Cells[0][0].Data = 0;
+  Networks[0].Cells[0][0].Type = 2;
+
+  Networks[0].Cells[0][1].Code = 4;
+  Networks[0].Cells[0][1].Data = 1;
+  Networks[0].Cells[0][1].Type = 2;
+
+  Networks[0].Cells[1][0].Code = 3;
+  Networks[0].Cells[1][0].Data = 3;
+  Networks[0].Cells[1][0].Type = 1;
+
+  Networks[0].Cells[0][2].Code = 7;
+  Networks[0].Cells[0][2].Data = 3;
+  Networks[0].Cells[0][2].Type = 1;
+
+  Networks[0].Bars[0] = 9;
+  
+  Networks[0].Cells[3][0].Code = 3;
+  Networks[0].Cells[3][0].Data = 3;
+  Networks[0].Cells[3][0].Type = 2;
+
+  Networks[0].Cells[3][1].Code = 4;
+  Networks[0].Cells[3][1].Data = 4;
+  Networks[0].Cells[3][1].Type = 2;
+
+  Networks[0].Cells[3][2].Code = 7;
+  Networks[0].Cells[3][2].Data = 5000;
+  Networks[0].Cells[3][2].Type = 0;
+
+  Networks[0].Cells[4][0].Code = 3;
+  Networks[0].Cells[4][0].Data = 5000;
+  Networks[0].Cells[4][0].Type = 0;
+
 
   Networks[1].Cells[0][0].Code = 4;
   Networks[1].Cells[0][0].Data = 100;
@@ -114,7 +145,7 @@ void DebugCreateNetworks(Network Networks[]){
   Networks[4].Cells[2][1].Type = 1;
 
   Networks[4].Cells[3][1].Code = 7;
-  Networks[4].Cells[3][1].Data = 3;
+  Networks[4].Cells[3][1].Data = 5;
   Networks[4].Cells[3][1].Type = 1;
 
   Networks[4].Cells[4][1].Code = 7;
@@ -244,13 +275,6 @@ void DebugCreateNetworks(Network Networks[]){
   Networks[9].Cells[4][1].Code = 3;
   Networks[9].Cells[4][1].Data = 93;
   Networks[9].Cells[4][1].Type = 3;
-
-  Networks[0].Cells[2][0].Code = 14;
-  Networks[0].Cells[2][0].Data = 94;
-  Networks[0].Cells[2][0].Type =  9;
-  Networks[0].Cells[3][0].Code =  0;
-  Networks[0].Cells[3][0].Data = 10;
-  Networks[0].Cells[3][0].Type =  0;
 
   Networks[10].Cells[0][0].Code = 16;
   Networks[10].Cells[0][0].Data = 130;
