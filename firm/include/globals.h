@@ -8,10 +8,10 @@
 // PLC Running status
 //--------------------------------------------------------------------------------
 
-#define STOPPED        0 
-#define RUNNING        1 
-#define PLCERROR       2
-
+#define STOPPED                            0 
+#define RUNNING                            1 
+#define PLCERROR                           2
+#define PLCERROR_INVALID_INSTRUCTION      10
 //--------------------------------------------------------------------------------
 // PLC Data Types Codes
 // Must match with 'MnemonicsTypes' array
@@ -68,6 +68,7 @@
 #define XOR                   27
 #define NOT                   28
 #define FIRST_INVALID_CODE    29
+#define CELL_USED         0xF000 // Used by an instruction that occupies more than one cell
 
 //--------------------------------------------------------------------------------
 // PLC Network Logic matrix Size [units]

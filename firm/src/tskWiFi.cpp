@@ -1,10 +1,7 @@
 #include <globals.h>
-
 #include <WiFi.h>
-#include <WiFiClient.h>
 #include <WebServer.h>
 #include <Update.h>
-
 #include <tskWiFi.h>
 
 //--------------------------------------------------------------------------------
@@ -93,9 +90,10 @@ void TaskWiFi(void *pvParameters)
     // Enable WDT (it is disabled during OTA)
     //--------------------------------------------------
 
-    server.handleClient();
-    enableCore0WDT();
-    
+    if (I[0]){ // Manually enable the firmware update page
+      server.handleClient();
+      enableCore0WDT();
+    }
     delay(1);
   }
 }

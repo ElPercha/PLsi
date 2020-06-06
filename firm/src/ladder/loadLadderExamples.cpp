@@ -35,7 +35,6 @@ void DebugCreateNetworks(Network Networks[]){
   Networks[0].Cells[4][0].Data = 5000;
   Networks[0].Cells[4][0].Type = 0;
 
-
   Networks[1].Cells[0][0].Code = 4;
   Networks[1].Cells[0][0].Data = 100;
   Networks[1].Cells[0][0].Type = 0;

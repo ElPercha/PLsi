@@ -57,18 +57,36 @@ void execScanPLC(Network Networks[]){
 
     for (int c=0; c<NET_COLUMNS; c++){
       for (int r=0; r<NET_ROWS; r++){
+        
+        //----------------------------------------------------
+        // Evaluation for an invalid code
+        // If the cell is not part of an instruction 
+        // that uses more than one cell
+        // PLC to ERROR state and serial log
+        // else, do not process, it was processed before
+        //----------------------------------------------------
+
         if (execNetwork.Cells[r][c].Code >=  FIRST_INVALID_CODE){
-          Serial.println("TASK LADDER - CORE 1 - INSTRUCTION CODE INVALID: ");
-          Serial.print("   - Network: ");
-          Serial.println(n);
-          Serial.print("   - Code: ");
-          Serial.println(execNetwork.Cells[r][c].Code);
-          Serial.print("   - Data: ");
-          Serial.println(execNetwork.Cells[r][c].Data);
-          Serial.print("   - Type: ");
-          Serial.println(execNetwork.Cells[r][c].Type);
+          if (!(execNetwork.Cells[r][c].Code & CELL_USED)){ 
+            Serial.println("TASK LADDER - CORE 1 - INSTRUCTION CODE INVALID: ");
+            Serial.print("   - Network: ");
+            Serial.println(n);
+            Serial.print("   - Code: ");
+            Serial.println(execNetwork.Cells[r][c].Code);
+            Serial.print("   - Data: ");
+            Serial.println(execNetwork.Cells[r][c].Data);
+            Serial.print("   - Type: ");
+            Serial.println(execNetwork.Cells[r][c].Type);
+            PLCstate = PLCERROR_INVALID_INSTRUCTION;
+          }  
           execNetwork.Cells[r][c].Code = 0;
+          asm ( "nop \n" ); // Force to compile more efficiently (reduce Scan Time) 
         }  
+
+        //----------------------------------------------------
+        // Execute instruction
+        //----------------------------------------------------
+
         if (execNetwork.Cells[r][c].Code != 0) {
           if (c == 0) {
             if(PLCstate == RUNNING){execLadder[execNetwork.Cells[r][c].Code](c,r,1);}
@@ -98,7 +116,9 @@ void execScanPLC(Network Networks[]){
     
     if (n == showingNetwork){
       onlineNetwork = Networks[n];
-      for (int ff=0; ff<NET_COLUMNS-1; ff++){NetworkFlagsOnline[ff]= NetworkFlags[ff];}
+      for (int ff=0; ff<NET_COLUMNS-1; ff++){
+        NetworkFlagsOnline[ff]= NetworkFlags[ff];
+      }
     }
   }
 }
