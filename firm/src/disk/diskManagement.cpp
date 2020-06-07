@@ -31,7 +31,7 @@ uint16_t loadDisk (void) {
       Serial.print  ("TskDisk - SPIFSS Format Failed - System error or Partition file issue. Try reloading the whole firmware including partition table.");
       PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
       return 0;
-    }
+    } 
   }
   else{
     Serial.println("TskDisk - SPIFFS Disk successfully mounted");

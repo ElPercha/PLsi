@@ -16,17 +16,27 @@ void TaskDisk(void *pvParameters)
 {
   (void) pvParameters;
 
-  if (loadDisk()){         // Regular boot
+  //------------------------------------------------------
+  // Regular boot:
+  //   Load saved settings and defined User program Slot
+  // First boot:
+  //   Load default settings and demo User program 
+  //------------------------------------------------------
+  
+  if (loadDisk()){         
     loadSettings();
     loadUserProgram();
   }
-  else                     // First boot
+  else                     
   {
     loadDefaultSettings();
     loadDemoProgram();
   }
 
-  
+  //----------------------------------------------------
+  // Task Main loop 
+  //----------------------------------------------------
+
   while(1){
     Serial.println  ("TskDisk - running.");
     delay(4000);
