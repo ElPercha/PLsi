@@ -11,7 +11,9 @@
 #define STOPPED                            0 
 #define RUNNING                            1 
 #define PLCERROR                           2
-#define PLCERROR_INVALID_INSTRUCTION      10
+#define PLCERROR_SPIFFS_FORMAT_ERROR      10 
+#define PLCERROR_INVALID_INSTRUCTION      20
+
 //--------------------------------------------------------------------------------
 // PLC Data Types Codes
 // Must match with 'MnemonicsTypes' array
