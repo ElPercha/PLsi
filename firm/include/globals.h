@@ -80,6 +80,15 @@
 #define NET_ROWS               5
 
 //--------------------------------------------------------------------------------
+// SSID and password max length
+//     SSID is 32 + 1 for null
+//     PASS is 36 + 1 for null
+//--------------------------------------------------------------------------------
+
+#define SSID_LENGTH           33
+#define PASS_LENGTH           65
+
+//--------------------------------------------------------------------------------
 // Main PLC status 
 //  0  = Stopped 
 //  1  = Running 
@@ -168,8 +177,15 @@ typedef struct
 
 typedef struct
 {
-  generalSettings   general;
-  ladderSettings    ladderLogic;
+  char      ssid[SSID_LENGTH];
+  char  password[PASS_LENGTH];
+} wifiSettings;
+
+typedef struct
+{
+  generalSettings    general;
+  ladderSettings      ladder;
+  wifiSettings          wifi;
 } userSettings;
 
 extern userSettings settings;

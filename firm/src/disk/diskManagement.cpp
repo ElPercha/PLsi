@@ -56,8 +56,9 @@ void loadDefaultSettings(void){
 //--------------------------------------------------------------------------------
 
 void loadSettings(void){
+  // if(!fileexist){loadDefaultSettings()}
+  //comparar el tamanio de la estructura y si es distinto, tambien carga el default
 
- 
 }
 
 //--------------------------------------------------------------------------------
@@ -71,11 +72,13 @@ void saveSettings(void){
 
 //--------------------------------------------------------------------------------
 // Load user program at boot.
+// If program files are not created, create Demo program
 //--------------------------------------------------------------------------------
 
 void loadUserProgram (void) {
   delay(1000);
   bootSequence = 1000;
+  // if(!fileexist){loadDemoProgram()}
 }
 
 //--------------------------------------------------------------------------------

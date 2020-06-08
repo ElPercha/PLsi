@@ -19,7 +19,17 @@ void TaskWiFi(void *pvParameters)
   // Connect to WiFi network
   //--------------------------------------------------
 
-  WiFi.begin(ssid, password);
+  char ssid1[30] = "2203Alden";
+  char pass1[30] = "HolaHola";
+
+  snprintf(settings.wifi.ssid, SSID_LENGTH, ssid1);
+  snprintf(settings.wifi.password, PASS_LENGTH, pass1);
+
+  // Serial.println(sizeof(settings));
+  // Serial.println(settings.wifi.ssid);
+  // Serial.println(settings.wifi.password);
+
+  WiFi.begin(settings.wifi.ssid, settings.wifi.password);
   Serial.println("");
 
   //--------------------------------------------------
