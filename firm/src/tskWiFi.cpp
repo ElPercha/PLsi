@@ -14,7 +14,6 @@ void TaskWiFi(void *pvParameters)
 {
   (void) pvParameters;
 
-
   //--------------------------------------------------
   // Connect to WiFi network
   //--------------------------------------------------
@@ -42,7 +41,9 @@ void TaskWiFi(void *pvParameters)
   }
   Serial.println("");
   Serial.print("Connected to ");
-  Serial.println(ssid);
+  Serial.println(settings.wifi.ssid);
+  Serial.print("Password: ");
+  Serial.println(settings.wifi.password);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
