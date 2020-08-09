@@ -10,10 +10,14 @@
 // Task functions prototypes
 //--------------------------------------------------------------------------------
 
-uint16_t loadDisk(void);
+void loadDisk(void);
 
 void loadSettings(void);
 void loadDefaultSettings(void);
+
+//--------------------------------------------------------------------------------
+// User program management functions
+//--------------------------------------------------------------------------------
 
 void loadUserProgram(void);
 void loadDemoProgram(void);

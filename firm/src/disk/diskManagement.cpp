@@ -8,36 +8,52 @@
 
 //--------------------------------------------------------------------------------
 // Mount Disk
-// If first boot of PLC:
-//    Format SPIFSS memory
-// On fail, send PLC to ERROR
+//    If it is the first boot of PLC: Format SPIFSS memory
+//    On fail: Send PLC to ERROR
 //--------------------------------------------------------------------------------
 
-uint16_t loadDisk (void) {
+void loadDisk (void) {
   if (!SPIFFS.begin()){
     Serial.println("TskDisk - Mount SPIFFS failed. Will retry with FormatOnFail = true ...");
     unsigned long StartTime = micros();
     if (SPIFFS.begin(true)){
       unsigned long CurrentTime = micros();
       Serial.println("TskDisk - Disk formatted because regular mount failed.");
-      Serial.println("TskDisk - If this is the first boot, no worries.");
-      Serial.println("TskDisk - If this is not the first boot, try reloading the whole firmware including partition table.");
+      Serial.println("TskDisk - If it is the first boot, this is not a problem.");
+      Serial.println("TskDisk - If it is not the first boot, try reloading the whole firmware including partition table.");
       Serial.print  ("TskDisk - Time taken to Format 1Mb: ");
       Serial.println(CurrentTime - StartTime);
       bootSequence = 1;
-      return 1;
     }
     else{
       Serial.print  ("TskDisk - SPIFSS Format Failed - System error or Partition file issue. Try reloading the whole firmware including partition table.");
       PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
-      return 0;
+      bootSequence = 0;
     } 
   }
   else{
     Serial.println("TskDisk - SPIFFS Disk successfully mounted");
     bootSequence = 1;
-    return 1;
   }
+}
+
+//--------------------------------------------------------------------------------
+// Load user settings at boot
+//--------------------------------------------------------------------------------
+
+void loadSettings(void){
+  // if(bootSequence == 1){
+  //   if(fileexist && filesize == struct size){
+
+
+
+
+
+  //   }
+  //   else{
+  //     loadDefaultSettings();
+  //   }
+ // }
 }
 
 //--------------------------------------------------------------------------------
@@ -49,16 +65,6 @@ uint16_t loadDisk (void) {
 void loadDefaultSettings(void){
 
   
-}
-
-//--------------------------------------------------------------------------------
-// Load user settings at boot
-//--------------------------------------------------------------------------------
-
-void loadSettings(void){
-  // if(!fileexist){loadDefaultSettings()}
-  //comparar el tamanio de la estructura y si es distinto, tambien carga el default
-
 }
 
 //--------------------------------------------------------------------------------
@@ -77,8 +83,9 @@ void saveSettings(void){
 
 void loadUserProgram (void) {
   delay(1000);
-  bootSequence = 1000;
+  //bootSequence = 1000;
   // if(!fileexist){loadDemoProgram()}
+  loadDemoProgram();
 }
 
 //--------------------------------------------------------------------------------
@@ -89,6 +96,6 @@ void loadUserProgram (void) {
 
 void loadDemoProgram (void) {
   delay(1000);
-  bootSequence = 1000;
+  //bootSequence = 1000;
 }
 

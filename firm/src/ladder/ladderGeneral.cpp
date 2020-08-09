@@ -35,53 +35,6 @@ void savePreviousValues(void){
   }
 }
 
-//--------------------------------------------------------------------------------
-// Wait for tskDisk to load the User Settings  
-//--------------------------------------------------------------------------------
-
-void waitSettings (void){
-  Serial.println("TskLadder - Waiting for Settings to be loaded");
-  while (bootSequence != 1){
-    delay(10); // forces to update bootSequence variable
-  }
-  Serial.println("TskLadder - Settings loaded correctly");
-}
-
-//--------------------------------------------------------------------------------
-// Load user program to local Networks[] array 
-// Using the global variable diskNetwork and bootSequence sync variable
-//--------------------------------------------------------------------------------
-
-void waitUserProgram (void){
-  Serial.println("TskLadder - Start loading user program");
-  while (bootSequence != 1000){
-    delay(10); 
-  }
-  Serial.println("TskLadder - Finished loading user program");
-}
-
-//--------------------------------------------------------------------------------
-// Deletes all Networks (all values to 0)    
-//--------------------------------------------------------------------------------
-
-void clearProgram (Network Networks[]){
-  // Creates a empty block of Networks that fits in Flash block size
-  for (int n = 0; n < TOTAL_NETWORKS; n++){
-    Networks[n].Bars[0] = 0;
-    Networks[n].Bars[1] = 0;
-    Networks[n].Bars[2] = 0;  
-    Networks[n].Bars[3] = 0;  
-    Networks[n].Bars[4] = 0;  
-    for (int c=0 ; c<NET_COLUMNS; c++){
-      for (int r=0 ; r<NET_ROWS; r++){
-        Networks[n].Cells[r][c].Code = 0;
-        Networks[n].Cells[r][c].Data = 0;
-        Networks[n].Cells[r][c].Type = 0;
-      }
-    }
-  }
-  Serial.println("Tsk General - RAM PROGRAM CLEARED");
-}
 
 //--------------------------------------------------------------------------------
 // Deletes PLC Memory Areas
@@ -112,4 +65,39 @@ void clearMemory (void){
     Trh[i] = 0;
     Tr[i] = 0; 
   }
+}
+
+//--------------------------------------------------------------------------------
+// Wait for tskDisk to load the User Settings  
+//--------------------------------------------------------------------------------
+
+void ladderWaitSettings (void){
+  Serial.println("TskLadder - Waiting for Settings to be loaded");
+  while (bootSequence != 1){
+    delay(10); // forces to update bootSequence global variable
+  }
+  Serial.println("TskLadder - Settings loaded correctly");
+}
+
+//--------------------------------------------------------------------------------
+// Deletes all Networks (all values to 0)    
+//--------------------------------------------------------------------------------
+
+void clearProgram (Network Networks[]){
+  // Creates a empty block of Networks that fits in Flash block size
+  for (int n = 0; n < TOTAL_NETWORKS; n++){
+    Networks[n].Bars[0] = 0;
+    Networks[n].Bars[1] = 0;
+    Networks[n].Bars[2] = 0;  
+    Networks[n].Bars[3] = 0;  
+    Networks[n].Bars[4] = 0;  
+    for (int c=0 ; c<NET_COLUMNS; c++){
+      for (int r=0 ; r<NET_ROWS; r++){
+        Networks[n].Cells[r][c].Code = 0;
+        Networks[n].Cells[r][c].Data = 0;
+        Networks[n].Cells[r][c].Type = 0;
+      }
+    }
+  }
+  Serial.println("Tsk General - RAM PROGRAM CLEARED");
 }

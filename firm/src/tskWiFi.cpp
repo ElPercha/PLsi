@@ -2,6 +2,7 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Update.h>
+#include <wifi_plsi.h>
 #include <tskWiFi.h>
 
 //--------------------------------------------------------------------------------
@@ -14,15 +15,17 @@ void TaskWiFi(void *pvParameters)
 {
   (void) pvParameters;
 
+  wifiWaitSettings();
+
   //--------------------------------------------------
   // Connect to WiFi network
   //--------------------------------------------------
 
-  char ssid1[30] = "2203Alden";
-  char pass1[30] = "HolaHola";
+  char ssid1[30] = "2203Alden"; // LucasSettings
+  char pass1[30] = "HolaHola"; // LucasSettings
 
-  snprintf(settings.wifi.ssid, SSID_LENGTH, ssid1);
-  snprintf(settings.wifi.password, PASS_LENGTH, pass1);
+  snprintf(settings.wifi.ssid, SSID_LENGTH, ssid1); // LucasSettings
+  snprintf(settings.wifi.password, PASS_LENGTH, pass1); // LucasSettings
 
   // Serial.println(sizeof(settings));
   // Serial.println(settings.wifi.ssid);
@@ -91,7 +94,16 @@ void TaskWiFi(void *pvParameters)
       }
     }
   });
+
+  //--------------------------------------------------
+  // Starts Web server
+  //--------------------------------------------------
+  
   server.begin();
+
+  //--------------------------------------------------
+  // Task Main Loop
+  //--------------------------------------------------
 
   while(1){
 

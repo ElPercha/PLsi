@@ -20,10 +20,10 @@ extern uint16_t showingNetwork;
 // PLC Scan main functions
 //--------------------------------------------------------------------------------
 
+void ladderWaitSettings(void);
+
 void configureLocal_IO(void);
 void clearMemory(void);
-void waitSettings(void);
-void waitUserProgram(void);
 
 void readInputsLocal(void);
 void readInputsRemote(void);

@@ -58,10 +58,15 @@ userSettings settings;
 // Manage the boot secuence between tasks.
 // Booting state = 0
 // User config loaded = 1
-// 
 //--------------------------------------------------------------------------------
 
 uint16_t bootSequence = 0;
+
+//--------------------------------------------------------------------------------
+// Force User prorgam loading on boot
+//--------------------------------------------------------------------------------
+
+uint16_t loadSelectedProgram = 1;
 
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys

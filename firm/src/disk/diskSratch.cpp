@@ -11,6 +11,7 @@ void diskScratch(void){
       Serial.println  ("TskDisk - Input 4 activated");
       delay(2000);
     }
+    
     if (I[5] && false){
         Serial.print("Info SPIFFS Total Bytes: ");
         Serial.println(SPIFFS.totalBytes());
@@ -120,6 +121,8 @@ void diskScratch(void){
 
       delay(2000);
     }
+    
+    
     if (I[7] && false){
       unsigned long StartTime = micros();
       File myFile = SPIFFS.open("/f.txt", "r");
@@ -211,6 +214,170 @@ void diskScratch(void){
       }
       delay(2000);
     }
+
+
+    if (I[3]){
+      unsigned long StartTime = micros();
+      File myFile = SPIFFS.open("/lucas.txt", "r");
+      unsigned long CurrentTime = micros();
+      Serial.print("Time taken to Open File for READ: ");
+      Serial.println(CurrentTime - StartTime);
+
+      if (!myFile) {
+        Serial.println("file open failed while reading");
+      }
+      else{
+        Serial.print("File size in bytes: ");
+        Serial.println(myFile.size());
+        
+        StartTime = micros();
+        myFile.close();
+        CurrentTime = micros();
+
+        Serial.print("Time taken to Close the file: ");
+        Serial.println(CurrentTime - StartTime);
+      }
+      delay(2000);
+    }
+
+    if (I[5]){
+        Serial.print("Info SPIFFS Total Bytes: ");
+        Serial.println(SPIFFS.totalBytes());
+        Serial.print("Info SPIFFS Used Bytes: ");
+        Serial.println(SPIFFS.usedBytes());
+      delay(2000);
+    }
+
+
+
+    if (I[1]){
+      unsigned long StartTime = micros();
+      File myFile = SPIFFS.open("/lucas.txt", "a+");
+      unsigned long CurrentTime = micros();
+      Serial.print("Time taken to Open File for WRITE: ");
+      Serial.println(CurrentTime - StartTime);
+
+      if (!myFile) {
+        Serial.println("file open failed while reading");
+      }
+      else{
+          typedef struct
+        {
+          uint16_t value1;
+          uint16_t value2;
+          uint16_t value3[100];
+        } testdata;
+        
+        testdata testdata1;
+
+        testdata1.value1 = 0xFEDC;
+        testdata1.value2 = 0xBA98;
+
+        uint32_t pos = uint32_t(myFile.size());
+        
+          // if mode is SeekSet, position is set to offset bytes from the beginning.
+          // if mode is SeekCur, current position is moved by offset bytes.
+
+        if(myFile.seek(pos-1, SeekSet)){
+          Serial.println(" Position in File reached");
+        }
+        else{
+          Serial.println(" Position in File Not reached");
+        }
+        Serial.print("Position in File: ");
+        Serial.println(myFile.position());
+        Serial.print("File Size: ");
+        Serial.println(myFile.size());
+
+
+
+
+        myFile.write((uint8_t *)&testdata1, sizeof(testdata1));
+
+        Serial.print("Value of testdata value 1: ");
+        Serial.println(testdata1.value1);
+        Serial.print("Value of testdata value 2: ");
+        Serial.println(testdata1.value2);
+        Serial.print("size of testdata1: ");
+        Serial.println(uint16_t(sizeof(testdata1)));      
+
+        StartTime = micros();
+        myFile.close();
+        CurrentTime = micros();
+
+        Serial.print("Time taken to Close the file: ");
+        Serial.println(CurrentTime - StartTime);
+      }
+      delay(2000);
+    }
+
+
+
+
+
+    if (I[4]){
+      unsigned long StartTime = micros();
+      File myFile = SPIFFS.open("/lucas.txt", "a+");
+      unsigned long CurrentTime = micros();
+      Serial.print("Time taken to Open File for WRITE: ");
+      Serial.println(CurrentTime - StartTime);
+
+      if (!myFile) {
+        Serial.println("file open failed while reading");
+      }
+      else{
+          typedef struct
+        {
+          uint16_t value1;
+          uint16_t value2;
+          uint16_t value3[100];
+        } testdata;
+        
+        testdata testdata1;
+
+        testdata1.value1 = 0xFEDC;
+        testdata1.value2 = 0xBA98;
+
+        uint32_t pos = uint32_t(myFile.size());
+        
+          // if mode is SeekSet, position is set to offset bytes from the beginning.
+          // if mode is SeekCur, current position is moved by offset bytes.
+
+        if(myFile.seek(pos-1, SeekSet)){
+          Serial.println(" Position in File reached");
+        }
+        else{
+          Serial.println(" Position in File Not reached");
+        }
+        Serial.print("Position in File: ");
+        Serial.println(myFile.position());
+        Serial.print("File Size: ");
+        Serial.println(myFile.size());
+
+
+
+
+        myFile.write((uint8_t *)&testdata1, sizeof(testdata1));
+
+        Serial.print("Value of testdata value 1: ");
+        Serial.println(testdata1.value1);
+        Serial.print("Value of testdata value 2: ");
+        Serial.println(testdata1.value2);
+        Serial.print("size of testdata1: ");
+        Serial.println(uint16_t(sizeof(testdata1)));      
+
+        StartTime = micros();
+        myFile.close();
+        CurrentTime = micros();
+
+        Serial.print("Time taken to Close the file: ");
+        Serial.println(CurrentTime - StartTime);
+      }
+      delay(2000);
+    }
+
+
+
 }
 
 

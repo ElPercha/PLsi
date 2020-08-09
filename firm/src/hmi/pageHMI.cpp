@@ -3,7 +3,7 @@
 #include <hmi.h>
 
 //--------------------------------------------------------------------------------
-// HMI Menu Page
+// HMI Menu main Page
 //--------------------------------------------------------------------------------
 
 void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){

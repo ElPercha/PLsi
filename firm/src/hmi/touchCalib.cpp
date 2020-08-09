@@ -35,6 +35,6 @@ void touch_calibrate()
   Serial.print("Calibration Value 4: ");
   Serial.println(calData[4]);
 
-  tft.setTouch(calData);
+  tft.setTouch(calData); // LucasSettings
 
 }

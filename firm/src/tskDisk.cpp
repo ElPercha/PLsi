@@ -23,15 +23,8 @@ void TaskDisk(void *pvParameters)
   //   Load default settings and demo User program 
   //------------------------------------------------------
   
-  if (loadDisk()){         
+    loadDisk();         
     loadSettings();
-    loadUserProgram();
-  }
-  else                     
-  {
-    loadDefaultSettings();
-    loadDemoProgram();
-  }
 
   //----------------------------------------------------
   // Task Main loop 
