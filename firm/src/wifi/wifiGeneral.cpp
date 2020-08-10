@@ -6,9 +6,9 @@
 //--------------------------------------------------------------------------------
 
 void wifiWaitSettings (void){
-  Serial.println("TskWiFi - Waiting for Settings to be loaded");
-  while (bootSequence != 1){
+  Serial.println("TaskWiFi - Waiting for Unlock");
+  while (bootSequence != BOOT_TASK_UNLOCKED){
     delay(10); // forces to update bootSequence global variable
   }
-  Serial.println("TskWifi - Settings loaded correctly");
+  Serial.println("TaskWifi - Task Unlocked");
 }

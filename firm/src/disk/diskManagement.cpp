@@ -14,26 +14,26 @@
 
 void loadDisk (void) {
   if (!SPIFFS.begin()){
-    Serial.println("TskDisk - Mount SPIFFS failed. Will retry with FormatOnFail = true ...");
+    Serial.println("TaskDisk - Mount SPIFFS failed. Will retry with FormatOnFail = true ...");
     unsigned long StartTime = micros();
     if (SPIFFS.begin(true)){
       unsigned long CurrentTime = micros();
-      Serial.println("TskDisk - Disk formatted because regular mount failed.");
-      Serial.println("TskDisk - If it is the first boot, this is not a problem.");
-      Serial.println("TskDisk - If it is not the first boot, try reloading the whole firmware including partition table.");
-      Serial.print  ("TskDisk - Time taken to Format 1Mb: ");
+      Serial.println("TaskDisk - Disk formatted because regular mount failed.");
+      Serial.println("TaskDisk - If it is the first boot, this is not a problem.");
+      Serial.println("TaskDisk - If it is not the first boot, try reloading the whole firmware including partition table.");
+      Serial.print  ("TaskDisk - Time taken to Format 1Mb: ");
       Serial.println(CurrentTime - StartTime);
-      bootSequence = 1;
+      bootSequence = BOOT_DISK_LOADED;
     }
     else{
-      Serial.print  ("TskDisk - SPIFSS Format Failed - System error or Partition file issue. Try reloading the whole firmware including partition table.");
+      Serial.print  ("TaskDisk - SPIFSS Format Failed - System error or Partition file issue. Try reloading the whole firmware including partition table.");
       PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
-      bootSequence = 0;
+      bootSequence = BOOT_DISK_ERROR;
     } 
   }
   else{
-    Serial.println("TskDisk - SPIFFS Disk successfully mounted");
-    bootSequence = 1;
+    Serial.println("TaskDisk - SPIFFS Disk successfully mounted");
+    bootSequence = BOOT_DISK_LOADED;
   }
 }
 
@@ -42,18 +42,26 @@ void loadDisk (void) {
 //--------------------------------------------------------------------------------
 
 void loadSettings(void){
-  // if(bootSequence == 1){
-  //   if(fileexist && filesize == struct size){
-
-
-
-
-
-  //   }
-  //   else{
-  //     loadDefaultSettings();
-  //   }
- // }
+  if(bootSequence == BOOT_DISK_LOADED){
+    if (SPIFFS.exists(PATH_SETTINGS)){
+      Serial.println("TaskDisk - File settings.bin exists. Loading settings from disk");    
+      File settingsFile = SPIFFS.open(PATH_SETTINGS,"r+");
+        if (settingsFile.size() == sizeof(settings)){
+          Serial.println("TaskDisk - File settings.bin exists with same size. Settings to be loaded from Disk...");    
+          settingsFile.read((uint8_t *)&settings, sizeof(settings));
+          settingsFile.close();
+        }
+        else{
+          Serial.println("TaskDisk - File settings.bin exists but has different size. Loading default settings...");    
+          loadDefaultSettings();
+        }
+    }
+    else{
+      Serial.println("TaskDisk - File settings.bin does not exist. Creating file and loading default settings...");    
+      loadDefaultSettings();
+    }
+  }
+  bootSequence = BOOT_SETTINGS_LOADED;
 }
 
 //--------------------------------------------------------------------------------
@@ -63,9 +71,22 @@ void loadSettings(void){
 //--------------------------------------------------------------------------------
 
 void loadDefaultSettings(void){
+  settings.general.firstRun = 0;
+  settings.general.baudRate = BAUD_RATE;
+  settings.general.verbosityLevel = 0;
+  settings.general.value2 = 0;
 
-  
-}
+  settings.ladder.NetworksQuantity = TOTAL_NETWORKS;
+  settings.ladder.PLCbootState = STOPPED;
+  settings.ladder.value2 = 0;
+
+  snprintf(settings.wifi.ssid, SSID_LENGTH, WIFI_SSID);
+  snprintf(settings.wifi.password, PASS_LENGTH, WIFI_PASS);
+
+  File settingsFile = SPIFFS.open(PATH_SETTINGS,"w");
+  settingsFile.write((uint8_t *)&settings, sizeof(settings));
+  settingsFile.close();
+} 
 
 //--------------------------------------------------------------------------------
 // Save user settings to non volatile memory Disk (SPIFFS)
@@ -82,10 +103,18 @@ void saveSettings(void){
 //--------------------------------------------------------------------------------
 
 void loadUserProgram (void) {
-  delay(1000);
+  PLCstate = STOPPED;
+
+
   //bootSequence = 1000;
   // if(!fileexist){loadDemoProgram()}
   loadDemoProgram();
+
+
+
+
+
+  PLCstate = RUNNING;
 }
 
 //--------------------------------------------------------------------------------

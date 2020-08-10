@@ -72,11 +72,11 @@ void clearMemory (void){
 //--------------------------------------------------------------------------------
 
 void ladderWaitSettings (void){
-  Serial.println("TskLadder - Waiting for Settings to be loaded");
-  while (bootSequence != 1){
+  Serial.println("TaskLadder - Waiting for Unlock");
+  while (bootSequence != BOOT_TASK_UNLOCKED){
     delay(10); // forces to update bootSequence global variable
   }
-  Serial.println("TskLadder - Settings loaded correctly");
+  Serial.println("TaskLadder - Task Unlocked");
 }
 
 //--------------------------------------------------------------------------------
@@ -99,5 +99,5 @@ void clearProgram (Network Networks[]){
       }
     }
   }
-  Serial.println("Tsk General - RAM PROGRAM CLEARED");
+  Serial.println("TaskLadder - RAM PROGRAM CLEARED");
 }

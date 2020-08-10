@@ -15,14 +15,22 @@
 void TaskLadder(void *pvParameters)
 {
   (void) pvParameters;
-  
+
+  //----------------------------------------------------
+  // Task lock / unlock
+  //----------------------------------------------------
+
   ladderWaitSettings();
   
+  //----------------------------------------------------
+  // Ladder Logic initializations
+  //----------------------------------------------------
+
   Network Networks[TOTAL_NETWORKS];
 
   configureLocal_IO();
   clearMemory();
-  clearProgram(Networks); //not really needed 
+  clearProgram(Networks); //not really needed  lcuas to delete
 
   DebugCreateNetworks(Networks); // Lucas to delete
 
@@ -40,7 +48,6 @@ void TaskLadder(void *pvParameters)
     //------------------------------------------------------
     
     if(loadSelectedProgram){
-      PLCstate = STOPPED;
       loadUserProgram();
       loadSelectedProgram = 0;
     }

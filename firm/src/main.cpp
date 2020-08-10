@@ -9,9 +9,10 @@ void setup() {
 
 //--------------------------------------------------------------------------------
 // Serial Console initialization
+// Baud Rate will be replaced with User Settings Baud Rate after Initialization
 //--------------------------------------------------------------------------------
 
-  Serial.begin(BAUD_RATE);
+  Serial.begin(BAUD_RATE); 
 
 //--------------------------------------------------------------------------------
 // RTOS tasks configuration and setup

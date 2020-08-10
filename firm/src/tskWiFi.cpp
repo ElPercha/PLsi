@@ -15,38 +15,32 @@ void TaskWiFi(void *pvParameters)
 {
   (void) pvParameters;
 
+  //----------------------------------------------------
+  // Task lock / unlock
+  //----------------------------------------------------
+
   wifiWaitSettings();
 
   //--------------------------------------------------
   // Connect to WiFi network
   //--------------------------------------------------
 
-  char ssid1[30] = "2203Alden"; // LucasSettings
-  char pass1[30] = "HolaHola"; // LucasSettings
-
-  snprintf(settings.wifi.ssid, SSID_LENGTH, ssid1); // LucasSettings
-  snprintf(settings.wifi.password, PASS_LENGTH, pass1); // LucasSettings
-
-  // Serial.println(sizeof(settings));
-  // Serial.println(settings.wifi.ssid);
-  // Serial.println(settings.wifi.password);
-
   WiFi.begin(settings.wifi.ssid, settings.wifi.password);
-  Serial.println("");
 
   //--------------------------------------------------
   // Wait for connection
   //--------------------------------------------------
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
+    delay(3000);
+    Serial.println("TaskWiFi - Network not connected - Retrying in 3 seconds...");
+    Serial.print("TaskWiFi - Trying to connect to: ");
+    Serial.println(settings.wifi.ssid);
+    Serial.print("TaskWiFi - Trying with Password: ");
+    Serial.println(settings.wifi.password);
   }
-  Serial.println("");
   Serial.print("Connected to ");
   Serial.println(settings.wifi.ssid);
-  Serial.print("Password: ");
-  Serial.println(settings.wifi.password);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 

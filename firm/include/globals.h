@@ -15,6 +15,16 @@
 #define PLCERROR_INVALID_INSTRUCTION      20
 
 //--------------------------------------------------------------------------------
+// PLC Running status
+//--------------------------------------------------------------------------------
+
+#define BOOT_INIT                          0
+#define BOOT_DISK_LOADED                  10
+#define BOOT_SETTINGS_LOADED              20   
+#define BOOT_TASK_UNLOCKED                30
+#define BOOT_DISK_ERROR                  100
+
+//--------------------------------------------------------------------------------
 // PLC Data Types Codes
 // Must match with 'MnemonicsTypes' array
 //--------------------------------------------------------------------------------
@@ -158,13 +168,14 @@ extern Timer       Timers[QTY_T];
 
 //--------------------------------------------------------------------------------
 // General PLC Configuration struct
+// settings.bin in RAM
 //--------------------------------------------------------------------------------
 
 typedef struct
 {
   uint16_t firstRun;
   uint16_t verbosityLevel;
-  uint16_t baudRate;
+  uint32_t baudRate;
   uint16_t value2;
 } generalSettings;
 
@@ -173,6 +184,7 @@ typedef struct
   uint16_t PLCbootState;
   uint16_t NetworksQuantity;
   uint16_t value2;
+  //uint16_t value3;
 } ladderSettings;
 
 typedef struct

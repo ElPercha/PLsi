@@ -2,7 +2,7 @@
 #include <plsi.h>
 #include <TFT_eSPI.h>
 #include <hmi.h>
-#include <tskHMI.h>
+#include <tskHMI.h> // Lucas there is a issue with this calls, should be first this one but creates other issues
 
 //--------------------------------------------------------------------------------
 // HMI Task 
@@ -13,6 +13,10 @@
 void TaskHMI(void *pvParameters)
 {
   (void) pvParameters;
+
+  //----------------------------------------------------
+  // Task lock / unlock
+  //----------------------------------------------------
 
   hmiWaitSettings();
 
@@ -31,7 +35,7 @@ void TaskHMI(void *pvParameters)
   tft.init();
   tft.setRotation(TFT_ROTATION);  // LucasSettings
   
-  tft.setTouch(calData);
+  tft.setTouch(calData); // Lucas Settings
   //touch_calibrate();
 
   //----------------------------------------------------

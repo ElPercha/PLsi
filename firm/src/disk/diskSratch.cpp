@@ -1,5 +1,7 @@
 #include <globals.h>
+#include <plsi.h>
 #include <tskDisk.h>
+#include <disk.h>
 #include "FS.h"
 #include "SD.h"
 #include "SPIFFS.h"
@@ -8,7 +10,7 @@ void diskScratch(void){
     Network NetworksTesting[10];
 
     if (I[4] && false){
-      Serial.println  ("TskDisk - Input 4 activated");
+      Serial.println  ("TaskDisk - Input 4 activated");
       delay(2000);
     }
     

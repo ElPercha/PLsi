@@ -60,7 +60,7 @@ userSettings settings;
 // User config loaded = 1
 //--------------------------------------------------------------------------------
 
-uint16_t bootSequence = 0;
+uint16_t bootSequence = BOOT_INIT;
 
 //--------------------------------------------------------------------------------
 // Force User prorgam loading on boot
