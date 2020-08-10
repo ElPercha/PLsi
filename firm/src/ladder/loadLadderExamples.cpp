@@ -1,6 +1,6 @@
 #include <globals.h>
 
-void DebugCreateNetworks(Network Networks[]){
+void loadDemoUserPogram(Network Networks[]){
   Networks[0].Cells[0][0].Code = 3;
   Networks[0].Cells[0][0].Data = 0;
   Networks[0].Cells[0][0].Type = 2;
@@ -393,9 +393,6 @@ void DebugCreateNetworks(Network Networks[]){
   Networks[11].Cells[4][3].Data = 303;
   Networks[11].Cells[4][3].Type =  11;
 
-  // FlashNetworks[0].put(0, Networks);
-  // FlashNetworks[0].commit();
-  // FlashNetworks[0].end();
-  Serial.println("Testing program loaded...");
+  Serial.println("TaskLadder - Demo program loaded...");
 }
 

@@ -24,6 +24,12 @@
 #define TOTAL_NETWORKS 500
 
 //--------------------------------------------------------------------------------
+// Slot where the Demo Program will be loaded after first boot
+//--------------------------------------------------------------------------------
+
+#define DEMO_PROGRAM_SLOT 0
+
+//--------------------------------------------------------------------------------
 // PLC Memory Areas quantites (amount)
 //--------------------------------------------------------------------------------
 
@@ -71,7 +77,20 @@
 // Default file names and paths
 //--------------------------------------------------------------------------------
 
-#define PATH_SETTINGS    "/settings.bin"
+#define FILENAME_SETTINGS    "/settings.bin"
+#define FILENAME_PROGRAMS    "/program"
+#define FILENAME_PLSI        ".plsi"
+
+
+#define MAX_PROGRAMS   8
+const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/program0.plsi",
+                                                     "/program1.plsi",
+                                                     "/program2.plsi",
+                                                     "/program3.plsi",
+                                                     "/program4.plsi",
+                                                     "/program5.plsi",
+                                                     "/program6.plsi",
+                                                     "/program7.plsi"};
 
 //--------------------------------------------------------------------------------
 // Default WiFi credentials

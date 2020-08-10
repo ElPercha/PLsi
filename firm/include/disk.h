@@ -12,20 +12,12 @@
 
 void loadDisk(void);
 
-void serialPortInit(void);
-
 //--------------------------------------------------------------------------------
 // User Settings management functions
 //--------------------------------------------------------------------------------
 
 void loadSettings(void);
 void loadDefaultSettings(void);
-
-//--------------------------------------------------------------------------------
-// User Ladder programs management functions
-//--------------------------------------------------------------------------------
-
-void loadUserProgram(void);
-void loadDemoProgram(void);
+void saveSettings(void);
 
 #endif

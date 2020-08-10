@@ -85,7 +85,7 @@ void ladderWaitSettings (void){
 
 void clearProgram (Network Networks[]){
   // Creates a empty block of Networks that fits in Flash block size
-  for (int n = 0; n < TOTAL_NETWORKS; n++){
+  for (int n = 0; n < settings.ladder.NetworksQuantity; n++){
     Networks[n].Bars[0] = 0;
     Networks[n].Bars[1] = 0;
     Networks[n].Bars[2] = 0;  
@@ -99,5 +99,5 @@ void clearProgram (Network Networks[]){
       }
     }
   }
-  Serial.println("TaskLadder - RAM PROGRAM CLEARED");
+  Serial.println("TaskLadder - PROGRAM RAM CLEARED");
 }

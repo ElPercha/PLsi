@@ -83,6 +83,6 @@ void SetDataValue     (int r, int c, int Value);
 //--------------------------------------------------------------------------------
 
 void clearProgram (Network Networks[]);
-void DebugCreateNetworks (Network Networks[]);
+void loadDemoUserPogram (Network Networks[]);
 
 #endif

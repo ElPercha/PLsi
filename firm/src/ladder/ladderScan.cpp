@@ -40,7 +40,7 @@ void execScanPLC(Network Networks[]){
     execNOT
   };
   
-  for (int n=0; n<TOTAL_NETWORKS; n++){
+  for (int n=0; n<settings.ladder.NetworksQuantity; n++){
     execNetwork = Networks[n];
     
     //----------------------------------------------------

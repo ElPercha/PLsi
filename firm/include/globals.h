@@ -20,8 +20,7 @@
 
 #define BOOT_INIT                          0
 #define BOOT_DISK_LOADED                  10
-#define BOOT_SETTINGS_LOADED              20   
-#define BOOT_TASK_UNLOCKED                30
+#define BOOT_TASK_UNLOCKED                20
 #define BOOT_DISK_ERROR                  100
 
 //--------------------------------------------------------------------------------
@@ -175,16 +174,13 @@ typedef struct
 {
   uint16_t firstRun;
   uint16_t verbosityLevel;
-  uint32_t baudRate;
-  uint16_t value2;
 } generalSettings;
 
 typedef struct
 {
   uint16_t PLCbootState;
   uint16_t NetworksQuantity;
-  uint16_t value2;
-  //uint16_t value3;
+  uint16_t UserProgram;
 } ladderSettings;
 
 typedef struct

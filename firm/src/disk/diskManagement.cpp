@@ -2,6 +2,7 @@
 #include <plsi.h>
 #include <tskDisk.h>
 #include <disk.h>
+
 #include "FS.h"
 #include "SD.h"
 #include "SPIFFS.h"
@@ -35,6 +36,7 @@ void loadDisk (void) {
     Serial.println("TaskDisk - SPIFFS Disk successfully mounted");
     bootSequence = BOOT_DISK_LOADED;
   }
+  SPIFFS.end();
 }
 
 //--------------------------------------------------------------------------------
@@ -43,25 +45,30 @@ void loadDisk (void) {
 
 void loadSettings(void){
   if(bootSequence == BOOT_DISK_LOADED){
-    if (SPIFFS.exists(PATH_SETTINGS)){
-      Serial.println("TaskDisk - File settings.bin exists. Loading settings from disk");    
-      File settingsFile = SPIFFS.open(PATH_SETTINGS,"r+");
+    SPIFFS.begin();
+    if (SPIFFS.exists(FILENAME_SETTINGS)){
+      Serial.println("TaskDisk - File settings.bin exists.");    
+      File settingsFile = SPIFFS.open(FILENAME_SETTINGS,"r");
         if (settingsFile.size() == sizeof(settings)){
           Serial.println("TaskDisk - File settings.bin exists with same size. Settings to be loaded from Disk...");    
           settingsFile.read((uint8_t *)&settings, sizeof(settings));
           settingsFile.close();
+          SPIFFS.end();
         }
         else{
           Serial.println("TaskDisk - File settings.bin exists but has different size. Loading default settings...");    
+          settingsFile.close();
+          SPIFFS.end();
           loadDefaultSettings();
         }
     }
     else{
       Serial.println("TaskDisk - File settings.bin does not exist. Creating file and loading default settings...");    
+      SPIFFS.end();
       loadDefaultSettings();
     }
   }
-  bootSequence = BOOT_SETTINGS_LOADED;
+  bootSequence = BOOT_TASK_UNLOCKED;
 }
 
 //--------------------------------------------------------------------------------
@@ -72,20 +79,16 @@ void loadSettings(void){
 
 void loadDefaultSettings(void){
   settings.general.firstRun = 0;
-  settings.general.baudRate = BAUD_RATE;
   settings.general.verbosityLevel = 0;
-  settings.general.value2 = 0;
 
   settings.ladder.NetworksQuantity = TOTAL_NETWORKS;
   settings.ladder.PLCbootState = STOPPED;
-  settings.ladder.value2 = 0;
+  settings.ladder.UserProgram = DEMO_PROGRAM_SLOT;
 
   snprintf(settings.wifi.ssid, SSID_LENGTH, WIFI_SSID);
   snprintf(settings.wifi.password, PASS_LENGTH, WIFI_PASS);
 
-  File settingsFile = SPIFFS.open(PATH_SETTINGS,"w");
-  settingsFile.write((uint8_t *)&settings, sizeof(settings));
-  settingsFile.close();
+  saveSettings();
 } 
 
 //--------------------------------------------------------------------------------
@@ -93,38 +96,9 @@ void loadDefaultSettings(void){
 //--------------------------------------------------------------------------------
 
 void saveSettings(void){
-
- 
+  SPIFFS.begin();
+  File settingsFile = SPIFFS.open(FILENAME_SETTINGS,"w");
+  settingsFile.write((uint8_t *)&settings, sizeof(settings));
+  settingsFile.close();
+  SPIFFS.end();
 }
-
-//--------------------------------------------------------------------------------
-// Load user program at boot.
-// If program files are not created, create Demo program
-//--------------------------------------------------------------------------------
-
-void loadUserProgram (void) {
-  PLCstate = STOPPED;
-
-
-  //bootSequence = 1000;
-  // if(!fileexist){loadDemoProgram()}
-  loadDemoProgram();
-
-
-
-
-
-  PLCstate = RUNNING;
-}
-
-//--------------------------------------------------------------------------------
-// Fist boot
-//    Create files *.PLsi for all program slots
-//    Load Demo program
-//--------------------------------------------------------------------------------
-
-void loadDemoProgram (void) {
-  delay(1000);
-  //bootSequence = 1000;
-}
-

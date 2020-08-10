@@ -12,7 +12,7 @@ void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
   // capture input Value command
   //-------------------------------
 
-    if(numericValueAccepted && numericValue >= 0 && numericValue < TOTAL_NETWORKS){
+    if(numericValueAccepted && numericValue >= 0 && numericValue < settings.ladder.NetworksQuantity){
       showingNetwork = uint16_t(numericValue);
       numericValueAccepted = 0;
     }
@@ -136,7 +136,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
   if(ladderTouched.Menu == 2){ // LEFT ARROW
     ladderTouched.Menu = 0;
     editionMode = 0;
-    if (showingNetwork == 0){showingNetwork=TOTAL_NETWORKS-1;}
+    if (showingNetwork == 0){showingNetwork=settings.ladder.NetworksQuantity-1;}
     else{showingNetwork--;}
   }
   if(ladderTouched.Menu == 3){ // GO TO
@@ -149,7 +149,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
     ladderTouched.Menu = 0;
     editionMode = 0;
     showingNetwork++;
-    if (showingNetwork >= TOTAL_NETWORKS-1){showingNetwork=0;}
+    if (showingNetwork >= settings.ladder.NetworksQuantity-1){showingNetwork=0;}
   }
   if(ladderTouched.Menu == 5){ // EDIT / SAVE
     ladderTouched.Menu = 0;

@@ -378,7 +378,20 @@ void diskScratch(void){
       delay(2000);
     }
 
-
+    if (I[0]){ // Lucas delete
+      Serial.print("Networks changed to 200");
+      settings.ladder.NetworksQuantity = 200;
+      saveSettings();
+      Serial.print("Networks changed to 200 DONE ");
+      delay(2000);
+    }
+    if (I[3]){ // Lucas delete
+      Serial.print("Networks changed to 400");
+      settings.ladder.NetworksQuantity = 400;
+      saveSettings();
+      Serial.print("Networks changed to 400 DONE");
+      delay(2000);
+    }
 
 }
 
