@@ -11,6 +11,7 @@ uint16_t HMI_Page         = 0; // Main Menu Page
 uint16_t HMI_PageMemory   = 0; // Main Menu Page 
 
 uint16_t PLCstateOld = PLCstate; 
+uint16_t userProgramOld = 0;
 
 unsigned long  auxOldScanTime = 0;
 int networkColorBack = COLOR_BACK_NET;

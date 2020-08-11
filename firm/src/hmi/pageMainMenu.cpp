@@ -19,7 +19,7 @@ void pageMainMenu (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   // update required fields
   //-------------------------------
 
-  if(PLCstateChange() || ScanTimeChange()){
+  if(PLCstateChanged() || ScanTimeChanged() || userProgramChanged()) {
     printPLCstate();
   }
 
@@ -45,9 +45,14 @@ void drawMainMenu (void){
   tft.fillRoundRect( 20, 174, 280, 55, 6, AQUA);     // Button 3
 
   tft.setTextColor(WHITE);
-  tft.setCursor(10, 10);
   tft.setTextSize(2);
-  tft.print("PLsi v" + String(FIRMWARE));
+  // tft.setCursor(10, 10);
+  // tft.print("PLsi v" + String(FIRMWARE));
+  tft.setCursor(5, 10);
+
+  String str = FILENAME_USER_PROGRAMS[settings.ladder.UserProgram];
+  str = str.substring(1, str.length());
+  tft.print(str);
 
   printPLCstate();
 
@@ -69,18 +74,26 @@ void drawMainMenu (void){
 //--------------------------------------------------------------------------------
 
 void printPLCstate(void){
+  tft.fillRect     (  0,   0, 320, 34,    DARKGREY); 
+
+  tft.setTextColor(WHITE);
   tft.setTextSize(2);
-  tft.fillRect     (  100,   0, 320, 34,    DARKGREY);
+  tft.setCursor(5, 10);
+
+  String str = FILENAME_USER_PROGRAMS[settings.ladder.UserProgram];
+  str = str.substring(1, str.length());
+  tft.print(str);
+
   if (PLCstate == RUNNING){
     tft.setTextColor(GREEN);
-    String auxString = "RUNNING " + String(float(actualScanTime)/1000.0, 1) + " ms";
+    String auxString = "RUN " + String(float(actualScanTime)/1000.0, 1) + " ms";
     tft.setCursor(315 - auxString.length() * 12, 10);
     tft.print(auxString);
   }
   else if (PLCstate == STOPPED){
-    tft.setCursor(220, 10);
+    tft.setCursor(240, 10);
     tft.setTextColor(YELLOW);
-    tft.print("STOPPED");
+    tft.print("STOP");
   }
   else if (PLCstate == PLCERROR){
     tft.setCursor(240, 10);
@@ -93,9 +106,21 @@ void printPLCstate(void){
 // Return True if the PLC Staus has changed
 //--------------------------------------------------------------------------------
 
-uint16_t PLCstateChange(void) {
+uint16_t PLCstateChanged(void) {
   if (PLCstateOld != PLCstate){
     PLCstateOld = PLCstate;
+    return 1;
+  }
+  else {return 0;}
+}
+
+//--------------------------------------------------------------------------------
+// Return True if the User Program Slot has changed
+//--------------------------------------------------------------------------------
+
+uint16_t userProgramChanged(void) {
+  if (userProgramOld != settings.ladder.UserProgram){
+    userProgramOld = settings.ladder.UserProgram;
     return 1;
   }
   else {return 0;}
@@ -105,7 +130,7 @@ uint16_t PLCstateChange(void) {
 // Return True if the PLC Scan Time has changed
 //--------------------------------------------------------------------------------
 
-uint16_t ScanTimeChange(void) {
+uint16_t ScanTimeChanged(void) {
   unsigned int auxScanTime = actualScanTime/100;
   if (auxOldScanTime != auxScanTime){
     auxOldScanTime = auxScanTime;

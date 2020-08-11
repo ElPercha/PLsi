@@ -10,6 +10,7 @@ extern uint16_t HMI_Page;
 extern uint16_t HMI_PageMemory;
 
 extern uint16_t PLCstateOld; 
+extern uint16_t userProgramOld; 
 extern unsigned long  auxOldScanTime;
 
 extern unsigned long  auxOldScanTime;
@@ -228,11 +229,12 @@ void drawMainLadder(void);
 void drawLadderOnline(void);
   uint16_t NetworkChanged(void);
   void EditionChanged(void);
-  uint16_t PLCstateChange(void);
+  uint16_t PLCstateChanged(void);
+  uint16_t userProgramChanged(void);
   void printPLCstateSmall (void);
 
 void printPLCstate(void);
-uint16_t ScanTimeChange(void);
+uint16_t ScanTimeChanged(void);
 
 void printEDIT(void);
 void printSAVE(void);

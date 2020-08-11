@@ -78,19 +78,15 @@
 //--------------------------------------------------------------------------------
 
 #define FILENAME_SETTINGS    "/settings.bin"
-#define FILENAME_PROGRAMS    "/program"
-#define FILENAME_PLSI        ".plsi"
-
-
 #define MAX_PROGRAMS   8
-const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/program0.plsi",
-                                                     "/program1.plsi",
-                                                     "/program2.plsi",
-                                                     "/program3.plsi",
-                                                     "/program4.plsi",
-                                                     "/program5.plsi",
-                                                     "/program6.plsi",
-                                                     "/program7.plsi"};
+const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/PROGRAM_0.plsi",
+                                                     "/PROGRAM_1.plsi",
+                                                     "/PROGRAM_2.plsi",
+                                                     "/PROGRAM_3.plsi",
+                                                     "/PROGRAM_4.plsi",
+                                                     "/PROGRAM_5.plsi",
+                                                     "/PROGRAM_6.plsi",
+                                                     "/PROGRAM_7.plsi"};
 
 //--------------------------------------------------------------------------------
 // Default WiFi credentials

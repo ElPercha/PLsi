@@ -81,7 +81,7 @@ void drawLadderOnline (void){
   //Serial.println(millis()-StartTimeHMI);
 
   EditionChanged();
-  if(PLCstateChange()){printPLCstateSmall();}
+  if(PLCstateChanged()){printPLCstateSmall();}
 }
 
 //--------------------------------------------------------------------------------
