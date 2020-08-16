@@ -157,8 +157,12 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
       editionMode = 1;
     }
     else{
+      updateSelectedProgramRAM = 1;
+      updateSelectedProgramDisk = 1;
+      while(updateSelectedProgramRAM || updateSelectedProgramDisk){
+        delay(10);
+      }
       editionMode = 0;
-      //saveNetworkFlash(showingNetwork); CONVERSION
     }
   }
   if(ladderTouched.Menu == 6){ // CHANGE PLC STATE

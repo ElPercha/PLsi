@@ -176,7 +176,8 @@ extern unsigned long actualScanTime;
 #define COLOR_NET_GRID        DARKGREY
 #define COLOR_NET_GRID_EDIT   ORANGE
 #define COLOR_BAR_ON          GREEN
-#define COLOR_BAR_OFF         RED
+#define COLOR_BAR_OFF         DARKGREY
+#define COLOR_BAR_EDIT        ORANGE
 #define COLOR_VALUES_ONLINE   CYAN
 
 //--------------------------------------------------------------------------------

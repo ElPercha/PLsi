@@ -67,6 +67,8 @@ uint16_t bootSequence = BOOT_INIT;
 //--------------------------------------------------------------------------------
 
 uint16_t loadSelectedProgram = 1;
+uint16_t updateSelectedProgramRAM = 0;
+uint16_t updateSelectedProgramDisk = 0;
 
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys

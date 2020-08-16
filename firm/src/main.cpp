@@ -9,7 +9,6 @@ void setup() {
 
 //--------------------------------------------------------------------------------
 // Serial Console initialization
-// Baud Rate will be replaced with User Settings Baud Rate after Initialization
 //--------------------------------------------------------------------------------
 
   Serial.begin(BAUD_RATE); 
@@ -48,7 +47,7 @@ void setup() {
   xTaskCreatePinnedToCore( 
     TaskLadder
     ,  "Ladder Logic"
-    ,  110000
+    ,  110000  // Networks structure size is 95000 leaving 15K for the rest
     ,  NULL
     ,  3
     ,  NULL 

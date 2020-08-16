@@ -23,9 +23,10 @@ void TaskWiFi(void *pvParameters)
 
   //--------------------------------------------------
   // Connect to WiFi network
+  // Delay needed to Wait Program load from SPIFSS (weird)
   //--------------------------------------------------
   
-  delay(2000); // Need to Wait Program load from SPIFSS (weird)
+  delay(2000);
   WiFi.begin(settings.wifi.ssid, settings.wifi.password);
   
   //--------------------------------------------------

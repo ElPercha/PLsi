@@ -3,6 +3,9 @@
 #include <tskDisk.h>
 #include <disk.h>
 
+#include <TFT_eSPI.h> // Lucas borrar
+#include <hmi.h> // Lucas borrar
+
 #include "FS.h"
 #include "SD.h"
 #include "SPIFFS.h"
@@ -18,7 +21,6 @@ void TaskDisk(void *pvParameters)
   (void) pvParameters;
 
   //------------------------------------------------------
-  // Disable WDT Core 0 for Task in Lock State
   // Regular boot: Mount SPIFFS Disk
   // First boot: Format disk (SPIFFS)
   //------------------------------------------------------
@@ -37,7 +39,24 @@ void TaskDisk(void *pvParameters)
   //----------------------------------------------------
 
   while(1){
-    //Serial.println("TaskDisk is alive");
+
+    if(updateSelectedProgramDisk){
+      Serial.println("TaskDisk - Network Saved to Disk ");
+
+      SPIFFS.begin();
+
+      File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r+");
+      userProgramFile.seek(showingNetwork * sizeof(onlineNetwork));
+
+      Serial.print("Position in File: ");
+      Serial.println(userProgramFile.position());
+        
+      userProgramFile.write((uint8_t *)&onlineNetwork, sizeof(onlineNetwork));
+      userProgramFile.close();
+      SPIFFS.end();
+
+      updateSelectedProgramDisk = 0;
+    }
 
 
     if (I[0]){
@@ -88,6 +107,31 @@ void TaskDisk(void *pvParameters)
       Serial.print("Program changed to: ");
       Serial.println(settings.ladder.UserProgram);
     }
+
+    if (I[4] && editionMode){
+      onlineNetwork.Cells[0][0].Data++;
+
+      Serial.println("TaskDisk - Program changed to test edition: ");
+      delay(4000);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

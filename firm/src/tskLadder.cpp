@@ -1,7 +1,7 @@
 #include <globals.h>
 #include <tskLadder.h>
 #include <ladder.h>
-#include <disk.h>
+//#include <disk.h>
 
 #include "FS.h"
 #include "SPIFFS.h"
@@ -28,15 +28,6 @@ void TaskLadder(void *pvParameters)
   Network Networks[TOTAL_NETWORKS];
 
   configureLocal_IO();
-  
-
-
-  // clearMemory();   // lucas delete
-  // clearProgram(Networks);  //lucas delete
-  // loadDemoUserPogram(Networks); // lucas delete
-  
-
-
   
   //--------------------------------------------------
   // Task Main Loop
@@ -82,6 +73,22 @@ void TaskLadder(void *pvParameters)
       clearMemory();
       PLCstate = RUNNING;
       loadSelectedProgram = 0;
+    }
+
+    //----------------------------------------------------------------
+    // Update RAM Networks image with DiskLoad saved program indicated in settings.ladder.UserProgram
+    //    If file doesnt exist creates the empty file
+    //    If User Proggram number is 0, load Demo to this slot
+    //    this assumes that is the first boot
+    //----------------------------------------------------------------
+
+    if(updateSelectedProgramRAM){
+      Serial.print("Task Ladder - Network ");
+      Serial.print(showingNetwork);
+      Serial.println(" saved to RAM");
+
+      Networks[showingNetwork] = onlineNetwork;
+      updateSelectedProgramRAM = 0;
     }
 
     //------------------------------------------------------

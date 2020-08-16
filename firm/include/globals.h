@@ -208,10 +208,12 @@ extern userSettings settings;
 extern uint16_t bootSequence;
 
 //--------------------------------------------------------------------------------
-// Force User prorgam loading on boot
+// User prorgam loading and update flags
 //--------------------------------------------------------------------------------
 
 extern uint16_t loadSelectedProgram;
+extern uint16_t updateSelectedProgramRAM;
+extern uint16_t updateSelectedProgramDisk;
 
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys

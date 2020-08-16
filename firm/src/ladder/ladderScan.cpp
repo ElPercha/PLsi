@@ -114,10 +114,17 @@ void execScanPLC(Network Networks[]){
     // Save current processing Network to Online Network
     //----------------------------------------------------
     
-    if (n == showingNetwork){
-      onlineNetwork = Networks[n];
+    if (!editionMode){
+      if (n == showingNetwork){
+        onlineNetwork = Networks[n];
+        for (int ff=0; ff<NET_COLUMNS-1; ff++){
+          NetworkFlagsOnline[ff] = NetworkFlags[ff];
+        }
+      }
+    }
+    else{
       for (int ff=0; ff<NET_COLUMNS-1; ff++){
-        NetworkFlagsOnline[ff]= NetworkFlags[ff];
+        NetworkFlagsOnline[ff] = 0;
       }
     }
   }

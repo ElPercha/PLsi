@@ -993,8 +993,15 @@ void drawBaseNetwork(){
 void drawPowerBar(){
   //Left Power Bar
   int runColor;
-  if(PLCstate == RUNNING){runColor = COLOR_BAR_ON;}
-  else                   {runColor = COLOR_BAR_OFF;}
+  if(editionMode){
+    runColor = COLOR_BAR_EDIT;
+  }
+  else if(PLCstate == RUNNING){
+    runColor = COLOR_BAR_ON;
+  }
+  else{
+    runColor = COLOR_BAR_OFF;
+  }
   for (int i=0; i<POWER_BAR_WIDTH; i++){
     tft.drawFastVLine( i, MENU_HEIGTH-1, BODY_HEIGTH+1, runColor);    
   }
