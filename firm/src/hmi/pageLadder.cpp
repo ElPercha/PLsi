@@ -187,7 +187,6 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
       HMI_Page = PAGE_LadderDetails;
     }
 
-
     //ladderTouched.Logic.Row;
     //ladderTouched.Logic.Col;
 
@@ -289,13 +288,12 @@ void printNetworkNumber(void){
   
 void EditionChanged(void){
   if (editionModeOld != editionMode){
+    printEDIT();
     if (editionMode == 0){
-      printEDIT();
       networkColorBack = COLOR_BACK_NET;
       networkColorGrid = COLOR_NET_GRID;
     }
     else                 {
-      printSAVE();
       networkColorBack = COLOR_BACK_NET_EDIT;
       networkColorGrid = COLOR_NET_GRID_EDIT;
     }    
@@ -306,16 +304,14 @@ void EditionChanged(void){
 
 void printEDIT(void){
   tft.setTextSize(2);
-  tft.setTextColor(WHITE);
   tft.setCursor(215+3, 13);
   drawLadderMenuBut5();
-  tft.print("EDIT");
-}
-
-void printSAVE(void){
-  tft.setTextSize(2);
-  tft.setTextColor(ORANGE);
-  tft.setCursor(215+3, 13);
-  drawLadderMenuBut5();
-  tft.print("SAVE");
+  if (editionMode == 0){
+    tft.setTextColor(WHITE);
+    tft.print("EDIT");
+  }
+  else{
+    tft.setTextColor(ORANGE);
+    tft.print("SAVE");
+  }  
 }

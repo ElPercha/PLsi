@@ -238,7 +238,6 @@ void printPLCstate(void);
 uint16_t ScanTimeChanged(void);
 
 void printEDIT(void);
-void printSAVE(void);
 
 int GetData (int r, int c);
 int GetFlag (int r, int c);

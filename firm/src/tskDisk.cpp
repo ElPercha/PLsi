@@ -111,6 +111,17 @@ void TaskDisk(void *pvParameters)
     if (I[4] && editionMode){
       onlineNetwork.Cells[0][0].Data++;
 
+      if(showingNetwork == 499){
+        onlineNetwork.Cells[0][0].Code = 3;
+        onlineNetwork.Cells[0][0].Data = 2999;
+        onlineNetwork.Cells[0][0].Type = 0;
+
+        onlineNetwork.Cells[4][5].Code = 7;
+        onlineNetwork.Cells[4][5].Data = 1999;
+        onlineNetwork.Cells[4][5].Type = 0;
+      }    
+
+
       Serial.println("TaskDisk - Program changed to test edition: ");
       delay(4000);
     }
