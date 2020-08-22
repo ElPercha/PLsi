@@ -40,24 +40,37 @@ void TaskDisk(void *pvParameters)
 
   while(1){
 
+    //----------------------------------------------------
+    // Update Newtork currently in edition mode to disk
+    //----------------------------------------------------
+
     if(updateSelectedProgramDisk){
-      Serial.println("TaskDisk - Network Saved to Disk ");
-
       SPIFFS.begin();
-
       File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r+");
       userProgramFile.seek(showingNetwork * sizeof(onlineNetwork));
-
-      Serial.print("Position in File: ");
-      Serial.println(userProgramFile.position());
-        
       userProgramFile.write((uint8_t *)&onlineNetwork, sizeof(onlineNetwork));
       userProgramFile.close();
       SPIFFS.end();
-
       updateSelectedProgramDisk = 0;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //----------------------------------------------------
+    // LUCAS TESTING FUNCTIONS
+    //----------------------------------------------------
 
     if (I[0]){
       SPIFFS.begin();
@@ -120,31 +133,12 @@ void TaskDisk(void *pvParameters)
         onlineNetwork.Cells[4][5].Data = 1999;
         onlineNetwork.Cells[4][5].Type = 0;
       }    
-
-
       Serial.println("TaskDisk - Program changed to test edition: ");
       delay(4000);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //----------------------------------------------------
+    // LUCAS TESTING FUNCTIONS END
+    //----------------------------------------------------
 
 
 
