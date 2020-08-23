@@ -52,7 +52,11 @@ void touch_calibrate(){
   Serial.print("Calibration Value 4: ");
   Serial.println(calData[4]);
 
-  tft.setTouch(calData); // LucasSettings
-  saveSettings();
+  tft.setTouch(calData);
 
+  settings.hmi.ts.leftX   = calData[0];
+  settings.hmi.ts.rightX  = calData[1];
+  settings.hmi.ts.topY    = calData[2];
+  settings.hmi.ts.bottomY = calData[3];
+  saveSettings();
 }
