@@ -37,8 +37,10 @@ extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 // Datatypes Strings
 //----------------------------------------------------
 
-extern const String MnemonicsTypes[FIRST_INVALID_TYPE];
-extern const String MnemonicsCodes[FIRST_INVALID_CODE];
+const String MnemonicsTypes[FIRST_INVALID_TYPE] = {"M", "Q", "I", "Cd", "Cr", "Td", "Tr", "IW", "QW", "C", "T", "D", "K", "R"};
+const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "", "", "", "", "", "", "", "", "", 
+                                                   "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
+                                                   "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT"};
 
 //----------------------------------------------------
 // Invoke the TFT_eSPI button class and 
@@ -81,7 +83,6 @@ extern unsigned long actualScanTime;
 #define TFT_DC        27  
 #define TFT_RST       33 
 #define TS_CS         12 
-
 
 //--------------------------------------------------------------------------------
 // TFT Display Dimmensions

@@ -15,8 +15,9 @@ uint16_t PLCstateOld = PLCstate;
 uint16_t userProgramOld = 0;
 
 unsigned long  auxOldScanTime = 0;
-int networkColorBack = COLOR_BACK_NET;
-int networkColorGrid = DARKGREY;
+
+int networkColorBack;
+int networkColorGrid;
 
 //----------------------------------------------------
 // Network to show under Online animation
@@ -33,15 +34,6 @@ uint16_t editionModeOld = editionMode;
 //----------------------------------------------------
 
 uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
-
-//----------------------------------------------------
-// Datatypes Strings
-//----------------------------------------------------
-
-const String MnemonicsTypes[FIRST_INVALID_TYPE] = {"M", "Q", "I", "Cd", "Cr", "Td", "Tr", "IW", "QW", "C", "T", "D", "K", "R"};
-const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "", "", "", "", "", "", "", "", "", 
-                                                   "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
-                                                   "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT"};
 
 //----------------------------------------------------
 // Invoke the TFT_eSPI button class and 

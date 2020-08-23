@@ -13,8 +13,6 @@ void pageMainConfig (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
     
     if(firstLoad){
       drawMainConfig();
-
-      touch_calibrate();      
     }
     
   //-------------------------------

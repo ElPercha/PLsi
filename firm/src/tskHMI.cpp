@@ -1,8 +1,9 @@
 #include <globals.h>
 #include <plsi.h>
+
 #include <TFT_eSPI.h>
+#include <tskHMI.h>
 #include <hmi.h>
-#include <tskHMI.h> // Lucas there is a issue with this calls, should be first this one but creates other issues
 
 //--------------------------------------------------------------------------------
 // HMI Task 
@@ -32,7 +33,7 @@ void TaskHMI(void *pvParameters)
   
     setDisplay();
 
-    //touch_calibrate();
+    //touch_calibrate(); // Lucas
 
   //----------------------------------------------------
   // Task Main loop 
