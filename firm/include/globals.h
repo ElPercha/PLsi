@@ -185,6 +185,19 @@ typedef struct
 
 typedef struct
 {
+  uint16_t leftX;
+  uint16_t rightX;
+  uint16_t topY;
+  uint16_t bottomY;
+} tsCalibration;
+
+typedef struct
+{
+  tsCalibration ts;
+} hmiSettings;
+
+typedef struct
+{
   char      ssid[SSID_LENGTH];
   char  password[PASS_LENGTH];
 } wifiSettings;
@@ -193,6 +206,7 @@ typedef struct
 {
   generalSettings    general;
   ladderSettings      ladder;
+  hmiSettings            hmi;
   wifiSettings          wifi;
 } userSettings;
 

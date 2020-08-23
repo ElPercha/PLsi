@@ -3,11 +3,28 @@
 #include <hmi.h>
 
 //--------------------------------------------------------------------------------
+// Touch screen and TFT display initializations
+//--------------------------------------------------------------------------------
+
+void setDisplay(void) {
+  uint16_t calData[5];
+  calData[0] = settings.hmi.ts.leftX;
+  calData[1] = settings.hmi.ts.rightX;
+  calData[2] = settings.hmi.ts.topY;
+  calData[3] = settings.hmi.ts.bottomY;
+  calData[4] = TS_ROTATION;
+
+  tft.setTouch(calData); 
+
+  tft.init();
+  tft.setRotation(TFT_ROTATION);  
+}
+
+//--------------------------------------------------------------------------------
 // Touch screen calibration routine
 //--------------------------------------------------------------------------------
 
-void touch_calibrate()
-{
+void touch_calibrate(){
   uint16_t calData[5];
 
   tft.fillScreen(TFT_BLACK);
@@ -36,5 +53,6 @@ void touch_calibrate()
   Serial.println(calData[4]);
 
   tft.setTouch(calData); // LucasSettings
+  saveSettings();
 
 }

@@ -87,7 +87,7 @@ void TaskDisk(void *pvParameters)
       delay(4000);
     }
 
-    if (I[1]){ // Lucas delete
+    if (I[1]){
         SPIFFS.begin();
         Serial.print("Info SPIFFS Total Bytes: ");
         Serial.println(SPIFFS.totalBytes());
@@ -134,8 +134,15 @@ void TaskDisk(void *pvParameters)
         onlineNetwork.Cells[4][5].Type = 0;
       }    
       Serial.println("TaskDisk - Program changed to test edition: ");
-      delay(4000);
     }
+
+    if(I[5]){
+
+
+      delay(1000);
+    }
+
+
     //----------------------------------------------------
     // LUCAS TESTING FUNCTIONS END
     //----------------------------------------------------

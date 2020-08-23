@@ -85,6 +85,11 @@ void loadDefaultSettings(void){
   settings.ladder.PLCbootState = STOPPED;
   settings.ladder.UserProgram = DEMO_PROGRAM_SLOT;
 
+  settings.hmi.ts.leftX = TS_LEFT_X;
+  settings.hmi.ts.rightX = TS_RIGHT_X;
+  settings.hmi.ts.topY = TS_TOP_Y;
+  settings.hmi.ts.bottomY = TS_BOTTOM_Y;
+
   snprintf(settings.wifi.ssid, SSID_LENGTH, WIFI_SSID);
   snprintf(settings.wifi.password, PASS_LENGTH, WIFI_PASS);
 

@@ -21,22 +21,18 @@ void TaskHMI(void *pvParameters)
   hmiWaitSettings();
 
   //----------------------------------------------------
-  // Task global variables
+  // Task variables
   //----------------------------------------------------
 
   uint16_t ts_x, ts_y, touchType, firstLoad, pressed, pressedAux = 0;
-  uint16_t HMI_PagePrevious = 1; // To force Main Manu Load at fist boot
-  uint16_t calData[5] = {TS_LEFT_X, TS_RIGHT_X, TS_TOP_Y, TS_BOTTOM_Y, TS_ROTATION}; // LucasSettings
 
   //----------------------------------------------------
   // TFT and TS Display configuration
   //----------------------------------------------------
   
-  tft.init();
-  tft.setRotation(TFT_ROTATION);  // LucasSettings
-  
-  tft.setTouch(calData); // Lucas Settings
-  //touch_calibrate();
+    setDisplay();
+
+    //touch_calibrate();
 
   //----------------------------------------------------
   // Task Main loop 

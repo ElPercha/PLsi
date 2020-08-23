@@ -145,13 +145,13 @@ uint16_t ScanTimeChanged(void) {
 //--------------------------------------------------------------------------------
 
 void touchMainMenu(uint16_t X, uint16_t Y){
-  if      (Y <= 40) {
+  if      (Y <= 40 && X > 200) {
     PLCstate++;
-    if (PLCstate > 2){PLCstate = 0;}
+    if (PLCstate > 1){PLCstate = 0;}
   }
   else if (Y >  40 && Y < 111) {HMI_Page = PAGE_MainLadder;}
-  else if (Y <  174)           {HMI_Page = PAGE_MainHMI;}  
-  else                         {HMI_Page = PAGE_MainConfig;}
+  else if (Y > 111 && Y < 174) {HMI_Page = PAGE_MainHMI   ;}  
+  else if (Y > 174           ) {HMI_Page = PAGE_MainConfig;}
 }
 
 

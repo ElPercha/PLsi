@@ -89,6 +89,16 @@ const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/PROGRAM_0.plsi",
                                                      "/PROGRAM_7.plsi"};
 
 //--------------------------------------------------------------------------------
+// TS Calibration default constants.
+// 2.8" SPI display 
+//--------------------------------------------------------------------------------
+
+#define TS_LEFT_X    394
+#define TS_RIGHT_X  3469 
+#define TS_TOP_Y     323
+#define TS_BOTTOM_Y 3441
+
+//--------------------------------------------------------------------------------
 // Default WiFi credentials
 //--------------------------------------------------------------------------------
 

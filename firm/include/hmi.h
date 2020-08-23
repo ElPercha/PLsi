@@ -82,12 +82,6 @@ extern unsigned long actualScanTime;
 #define TFT_RST       33 
 #define TS_CS         12 
 
-//--------------------------------------------------------------------------------
-// TFT Display and TouchScreen Rotation
-//--------------------------------------------------------------------------------
-
-#define TFT_ROTATION   3
-#define TS_ROTATION    1
 
 //--------------------------------------------------------------------------------
 // TFT Display Dimmensions
@@ -97,14 +91,11 @@ extern unsigned long actualScanTime;
 #define TFT_PIXELS_Y 240 // heigth
 
 //--------------------------------------------------------------------------------
-// TS Calibration default constants.
-// 2.8" SPI display 
+// TFT Display and TouchScreen Rotation
 //--------------------------------------------------------------------------------
 
-#define TS_LEFT_X    394
-#define TS_RIGHT_X  3469 
-#define TS_TOP_Y     323
-#define TS_BOTTOM_Y 3441
+#define TFT_ROTATION   3
+#define TS_ROTATION    1
 
 //--------------------------------------------------------------------------------
 // Toch Screen type of command
@@ -194,6 +185,7 @@ void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
 void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageLadderDetails (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 
+void setDisplay(void);
 void touch_calibrate(void);
 void touchMainMenu(uint16_t ts_x, uint16_t ts_y);
 void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
@@ -288,5 +280,7 @@ void drawAnd(int Row, int Column, int Flag, int Data);
 void drawOr(int Row, int Column, int Flag, int Data);
 void drawXor(int Row, int Column, int Flag, int Data);
 void drawNot(int Row, int Column, int Flag, int Data);
+
+extern void saveSettings(void);
 
 #endif
