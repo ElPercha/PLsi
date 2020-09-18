@@ -22,8 +22,7 @@ void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
   //-------------------------------
     
     if(firstLoad){
-      networkColorBack = COLOR_BACK_NET;
-      networkColorGrid = DARKGREY;
+      setLadderGridColor();
       drawMainLadder();
     }
     
@@ -169,9 +168,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
   }
   if(ladderTouched.Menu == 6){ // CHANGE PLC STATE
     ladderTouched.Menu = 0;
-    if      (PLCstate == PLCERROR) {PLCstate = STOPPED;}
-    else if (PLCstate == RUNNING)  {PLCstate = STOPPED;}
-    else if (PLCstate == STOPPED)  {PLCstate = RUNNING;}
+    changePLCstate();
   }
   
   //-------------------------------------------
@@ -217,7 +214,7 @@ void printPLCstateSmall(void){
     tft.setTextColor(YELLOW);
     tft.print("STOP");
   }
-  else if (PLCstate == PLCERROR){
+  else if (PLCstate >= PLCERROR){
     tft.setTextColor(RED);
     tft.print("ERR");
   }
@@ -291,14 +288,7 @@ void printNetworkNumber(void){
 void EditionChanged(void){
   if (editionModeOld != editionMode){
     printEDIT();
-    if (editionMode == 0){
-      networkColorBack = COLOR_BACK_NET;
-      networkColorGrid = COLOR_NET_GRID;
-    }
-    else                 {
-      networkColorBack = COLOR_BACK_NET_EDIT;
-      networkColorGrid = COLOR_NET_GRID_EDIT;
-    }    
+    setLadderGridColor();
     drawBaseNetwork();
     editionModeOld = editionMode;
   }
@@ -316,4 +306,15 @@ void printEDIT(void){
     tft.setTextColor(ORANGE);
     tft.print("SAVE");
   }  
+}
+
+void setLadderGridColor(){
+  if (editionMode == 0){
+    networkColorBack = COLOR_BACK_NET;
+    networkColorGrid = COLOR_NET_GRID;
+  }
+  else{
+    networkColorBack = COLOR_BACK_NET_EDIT;
+    networkColorGrid = COLOR_NET_GRID_EDIT;
+  }   
 }

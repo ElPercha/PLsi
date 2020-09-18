@@ -19,6 +19,8 @@ unsigned long  auxOldScanTime = 0;
 int networkColorBack;
 int networkColorGrid;
 
+uint16_t dialogCode;
+
 //----------------------------------------------------
 // Network to show under Online animation
 //----------------------------------------------------

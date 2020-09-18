@@ -16,6 +16,7 @@ extern unsigned long  auxOldScanTime;
 extern unsigned long  auxOldScanTime;
 extern int networkColorBack;
 extern int networkColorGrid;
+extern uint16_t dialogCode;
 
 //----------------------------------------------------
 // Network to show under Online animation
@@ -74,6 +75,17 @@ extern unsigned long actualScanTime;
 #define PAGE_LadderEditor      40
 #define PAGE_LadderDetails     50
 #define PAGE_InputNumber      100
+#define PAGE_DialogOkCancel   150
+
+
+//--------------------------------------------------------------------------------
+// Define Dialog codes. Used to:
+//    Define Actions inside Dialog page 
+//    Define text to be displayed on Dialog page
+//--------------------------------------------------------------------------------
+
+#define DIALOG_RUN_STOP         1
+#define DIALOG_STOP_RUN         2
 
 //--------------------------------------------------------------------------------
 // TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO
@@ -179,12 +191,14 @@ extern unsigned long actualScanTime;
 void hmiWaitSettings (void);
 
 void pageMainMenu(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+  void changePLCstate(void);
 void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageLadderDetails (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageDialogOkCancel (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 
 void setDisplay(void);
 void touch_calibrate(void);
@@ -195,13 +209,11 @@ void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
 void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
 void touchLadderDetails(uint16_t ts_x, uint16_t ts_y);
 void touchInputNumber(uint16_t ts_x, uint16_t ts_y);
+void touchDialogOkCancel(uint16_t ts_x, uint16_t ts_y);
   
-void drawNumericKeyboard(void);
 void drawMainMenu(void);
 void drawMainHMI(void);
 void drawMainConfig(void);
-void drawLadderEditor(void);
-void drawLadderDetails(void);
 void drawMainLadder(void);
   void drawLadderMenuBut1(void);
   void drawLadderMenuBut2(void);
@@ -214,11 +226,17 @@ void drawMainLadder(void);
   void drawRightArrow(void);
   void printEDIT();  
   void printPLCstateSmall(void); 
-  
   void drawBaseNetwork(void);
   void drawPowerBar(void);
   void printNetworkNumber(void);
-  void drawNetwork(void);   
+  void drawNetwork(void);  
+  void setLadderGridColor(void); 
+void drawLadderEditor(void);
+void drawLadderDetails(void);
+void drawNumericKeyboard(void);
+void drawDialogOkCancel(void);
+  void drawDialogButtons(void);
+
 
 void drawLadderOnline(void);
   uint16_t NetworkChanged(void);

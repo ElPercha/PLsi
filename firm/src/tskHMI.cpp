@@ -88,6 +88,10 @@ void TaskHMI(void *pvParameters)
       case PAGE_InputNumber:
         pageInputNumber(firstLoad, touchType, ts_x, ts_y);
         break;
+      case PAGE_DialogOkCancel:
+        pageDialogOkCancel(firstLoad, touchType, ts_x, ts_y);
+        break;
+
       default:
         ;
       break;

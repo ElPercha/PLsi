@@ -70,7 +70,7 @@ void drawMainMenu (void){
 }
 
 //--------------------------------------------------------------------------------
-// Update Values on top left corner while in Main Menu  
+// Update Values on top bar while in Main Menu  
 //--------------------------------------------------------------------------------
 
 void printPLCstate(void){
@@ -95,7 +95,7 @@ void printPLCstate(void){
     tft.setTextColor(YELLOW);
     tft.print("STOP");
   }
-  else if (PLCstate == PLCERROR){
+  else if (PLCstate >= PLCERROR){
     tft.setCursor(240, 10);
     tft.setTextColor(RED);
     tft.print("ERROR");
@@ -145,15 +145,32 @@ uint16_t ScanTimeChanged(void) {
 //--------------------------------------------------------------------------------
 
 void touchMainMenu(uint16_t X, uint16_t Y){
-  if      (Y <= 40 && X > 200) {
-    PLCstate++;
-    if (PLCstate > 1){PLCstate = 0;}
-  }
+  if      (Y <= 40 && X > 200) {changePLCstate();}
   else if (Y >  40 && Y < 111) {HMI_Page = PAGE_MainLadder;}
   else if (Y > 111 && Y < 174) {HMI_Page = PAGE_MainHMI   ;}  
   else if (Y > 174           ) {HMI_Page = PAGE_MainConfig;}
 }
 
+//--------------------------------------------------------------------------------
+// Change PLC State 
+// Ask for user decision usong a Dialog OK / CANCEL screen
+//--------------------------------------------------------------------------------
+
+void changePLCstate(void){  
+  if (PLCstate >= PLCERROR) {
+    PLCstate = STOPPED;
+  }
+  else if (PLCstate == RUNNING){
+    HMI_PageMemory = HMI_Page;
+    dialogCode = DIALOG_RUN_STOP;
+    HMI_Page = PAGE_DialogOkCancel;
+  }
+  else if (PLCstate == STOPPED){
+    HMI_PageMemory = HMI_Page;
+    dialogCode = DIALOG_STOP_RUN;
+    HMI_Page = PAGE_DialogOkCancel;
+  }
+}
 
 
 
