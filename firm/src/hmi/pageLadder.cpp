@@ -324,9 +324,24 @@ void printEDIT(void){
     tft.setTextColor(WHITE);
     tft.print("EDIT");
   }
-  else{
-    tft.setTextColor(ORANGE);
-    tft.print("SAVE");
+  else{ // Green Arrow
+    tft.drawLine(230,19,235,24,TFT_DARKGREEN);
+    tft.drawLine(230,20,235,25,TFT_DARKGREEN);
+    tft.drawLine(230,21,235,26,TFT_DARKGREEN);
+    tft.drawLine(230,22,235,27,TFT_DARKGREEN);
+    tft.drawLine(230,23,235,28,TFT_DARKGREEN);
+    tft.drawLine(230,24,235,29,TFT_DARKGREEN);
+    tft.drawLine(230,25,235,30,TFT_DARKGREEN);
+    tft.drawLine(230,26,235,31,TFT_DARKGREEN);
+
+    tft.drawLine(235,24,250, 9,TFT_DARKGREEN);
+    tft.drawLine(235,25,250,10,TFT_DARKGREEN);
+    tft.drawLine(235,26,250,11,TFT_DARKGREEN);
+    tft.drawLine(235,27,250,12,TFT_DARKGREEN);
+    tft.drawLine(235,28,250,13,TFT_DARKGREEN);
+    tft.drawLine(235,29,250,14,TFT_DARKGREEN);
+    tft.drawLine(235,30,250,15,TFT_DARKGREEN);
+    tft.drawLine(235,31,250,16,TFT_DARKGREEN);
   }  
 }
 
