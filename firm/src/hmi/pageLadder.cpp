@@ -61,7 +61,7 @@ void drawMainLadder (void){
   printNetworkNumber();   // Network Number on Button 3
   drawRightArrow();       // On Menu position 4   
   printEDIT();            // Edit/Save in position 5 
-  printPLCstateSmall();   // Text PLC state on button 6 (right)
+  drawButton6Icon();      // Text PLC state on button 6 (right)
   
   drawBaseNetwork();
   drawNetwork();   
@@ -77,12 +77,9 @@ void drawLadderOnline (void){
     drawBaseNetwork();
     printNetworkNumber();
   }
-  //unsigned long StartTimeHMI = millis();
   drawNetwork();   
-  //Serial.println(millis()-StartTimeHMI);
-
+  
   EditionChanged();
-  if(PLCstateChanged()){printPLCstateSmall();}
 }
 
 //--------------------------------------------------------------------------------
@@ -166,9 +163,14 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
       editionMode = 0;
     }
   }
-  if(ladderTouched.Menu == 6){ // CHANGE PLC STATE
+  if(ladderTouched.Menu == 6){ // CHANGE PLC STATE or Cancel Edition Mode
     ladderTouched.Menu = 0;
-    changePLCstate();
+    if (editionMode == 0){
+      changePLCstate();
+    }
+    else{
+      editionMode = 0;
+    }
   }
   
   //-------------------------------------------
@@ -201,7 +203,16 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
 // Top Menu bar auxiliary functions
 //--------------------------------------------------------------------------------
 
-void printPLCstateSmall(void){
+void drawButton6Icon(void){
+  if(editionMode == 0){
+    drawPLCstateSmall();
+  }
+  else{
+    drawEditionCancel();
+  }
+} 
+  
+void drawPLCstateSmall(void){
   tft.setTextSize(2);
   tft.setCursor(276, 13);
   drawLadderMenuBut6();
@@ -218,6 +229,16 @@ void printPLCstateSmall(void){
     tft.setTextColor(RED);
     tft.print("ERR");
   }
+}
+
+void drawEditionCancel(void){
+  drawLadderMenuBut6();
+  tft.fillCircle(293,20,12,TFT_WHITE);
+  tft.fillCircle(293,20,11,TFT_RED);
+  tft.drawLine(286,13,300,27,TFT_WHITE);
+  tft.drawLine(287,13,301,27,TFT_WHITE);
+  tft.drawLine(286,27,300,13,TFT_WHITE);
+  tft.drawLine(287,27,301,13,TFT_WHITE);
 }
 
 void drawLadderMenuBut1(void){
@@ -288,6 +309,7 @@ void printNetworkNumber(void){
 void EditionChanged(void){
   if (editionModeOld != editionMode){
     printEDIT();
+    drawButton6Icon();
     setLadderGridColor();
     drawBaseNetwork();
     editionModeOld = editionMode;
@@ -318,3 +340,5 @@ void setLadderGridColor(){
     networkColorGrid = COLOR_NET_GRID_EDIT;
   }   
 }
+  
+

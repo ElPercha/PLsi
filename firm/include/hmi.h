@@ -225,12 +225,20 @@ void drawMainLadder(void);
   void drawLeftArrow(void);
   void drawRightArrow(void);
   void printEDIT();  
-  void printPLCstateSmall(void); 
   void drawBaseNetwork(void);
   void drawPowerBar(void);
   void printNetworkNumber(void);
   void drawNetwork(void);  
   void setLadderGridColor(void); 
+void drawLadderOnline(void);
+  uint16_t NetworkChanged(void);
+  void EditionChanged(void);
+  uint16_t PLCstateChanged(void);
+  uint16_t userProgramChanged(void);
+  void drawPLCstateSmall (void);
+  void drawEditionCancel (void);
+  void drawButton6Icon(void);
+
 void drawLadderEditor(void);
 void drawLadderDetails(void);
 void drawNumericKeyboard(void);
@@ -238,12 +246,6 @@ void drawDialogOkCancel(void);
   void drawDialogButtons(void);
 
 
-void drawLadderOnline(void);
-  uint16_t NetworkChanged(void);
-  void EditionChanged(void);
-  uint16_t PLCstateChanged(void);
-  uint16_t userProgramChanged(void);
-  void printPLCstateSmall (void);
 
 void printPLCstate(void);
 uint16_t ScanTimeChanged(void);

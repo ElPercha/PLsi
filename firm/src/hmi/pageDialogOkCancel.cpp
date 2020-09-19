@@ -40,7 +40,7 @@ void drawDialogOkCancel (void){
 
   if (dialogCode == DIALOG_RUN_STOP){
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(DIALOG_BORDER, DIALOG_BORDER, TFT_PIXELS_X - (DIALOG_BORDER*2), TFT_PIXELS_Y - (DIALOG_BORDER*2), 6, TFT_DARKGREY);
+    tft.fillRoundRect(DIALOG_BORDER, DIALOG_BORDER, TFT_PIXELS_X - (DIALOG_BORDER*2), TFT_PIXELS_Y - (DIALOG_BORDER*2), 6, TFT_WHITE);
     tft.fillRoundRect(DIALOG_BORDER1, DIALOG_BORDER1, TFT_PIXELS_X - (DIALOG_BORDER1*2), TFT_PIXELS_Y - (DIALOG_BORDER1*2), 4, TFT_RED);
 
     tft.setTextColor(WHITE);
@@ -52,7 +52,7 @@ void drawDialogOkCancel (void){
   }
   else if (dialogCode == DIALOG_STOP_RUN){
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(DIALOG_BORDER, DIALOG_BORDER, TFT_PIXELS_X - (DIALOG_BORDER*2), TFT_PIXELS_Y - (DIALOG_BORDER*2), 6, TFT_DARKGREY);
+    tft.fillRoundRect(DIALOG_BORDER, DIALOG_BORDER, TFT_PIXELS_X - (DIALOG_BORDER*2), TFT_PIXELS_Y - (DIALOG_BORDER*2), 6, TFT_WHITE);
     tft.fillRoundRect(DIALOG_BORDER1, DIALOG_BORDER1, TFT_PIXELS_X - (DIALOG_BORDER1*2), TFT_PIXELS_Y - (DIALOG_BORDER1*2), 4, TFT_DARKGREEN);
 
     tft.setTextColor(WHITE);
@@ -95,18 +95,19 @@ void drawDialogButtons(){
   #define BUTTON_W     (TFT_PIXELS_X - (SPACING * 3))/2 // Button Width
   #define BUTTON_Y     TFT_PIXELS_Y - SPACING - BUTTON_H // Y where the button starts
 
+  tft.fillRoundRect(SPACING, BUTTON_Y, BUTTON_W, BUTTON_H, 8, TFT_BLACK);
+  tft.fillRoundRect(SPACING+2, BUTTON_Y+2, BUTTON_W-4, BUTTON_H-4, 7, TFT_DARKGREY);
 
-  tft.fillRoundRect(SPACING, BUTTON_Y, BUTTON_W, BUTTON_H, 4, TFT_DARKGREY);
-  tft.fillRoundRect(SPACING * 2 + BUTTON_W, BUTTON_Y, BUTTON_W, BUTTON_H, 4, TFT_DARKGREY);
-
+  tft.fillRoundRect(SPACING*2+BUTTON_W, BUTTON_Y, BUTTON_W, BUTTON_H, 8, TFT_BLACK);
+  tft.fillRoundRect(SPACING*2+BUTTON_W+2, BUTTON_Y+2, BUTTON_W-4, BUTTON_H-4, 7, TFT_DARKGREY);
 
   tft.setTextColor(TFT_BLACK);
   tft.setTextSize(3);
-  tft.setCursor(68, BUTTON_Y + 18);
+  tft.setCursor(68, BUTTON_Y + 19);
   tft.print("OK");
 
   tft.setTextColor(TFT_BLACK);
   tft.setTextSize(3);
-  tft.setCursor(184, BUTTON_Y + 18);
+  tft.setCursor(184, BUTTON_Y + 19);
   tft.print("CANCEL");
 }
