@@ -20,7 +20,7 @@ void pageMainMenu (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   //-------------------------------
 
   if(PLCstateChanged() || ScanTimeChanged() || userProgramChanged()) {
-    printPLCstate();
+    printPLCstate ();
   }
 
   //-------------------------------
@@ -54,16 +54,14 @@ void drawMainMenu (void){
   str = str.substring(1, str.length());
   tft.print(str);
 
-  printPLCstate();
-
+  printPLCstate ();
+  
   tft.setTextColor(BLACK);
   tft.setTextSize(4);
   tft.setCursor(90, 61);
   tft.print("LADDER");
-  
   tft.setCursor(130, 124);
   tft.print("HMI");
-
   tft.setTextSize(3);
   tft.setCursor(43, 191);
   tft.print("CONFIGURATION");
@@ -73,8 +71,8 @@ void drawMainMenu (void){
 // Update Values on top bar while in Main Menu  
 //--------------------------------------------------------------------------------
 
-void printPLCstate(void){
-  tft.fillRect     (  0,   0, 320, 34,    DARKGREY); 
+void printPLCstate (void){
+  tft.fillRect (  0,   0, 320, 34,    DARKGREY); 
 
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
@@ -84,18 +82,18 @@ void printPLCstate(void){
   str = str.substring(1, str.length());
   tft.print(str);
 
-  if (PLCstate == RUNNING){
+  if (settings.ladder.PLCstate == RUNNING){
     tft.setTextColor(GREEN);
     String auxString = "RUN " + String(float(actualScanTime)/1000.0, 1) + " ms";
     tft.setCursor(315 - auxString.length() * 12, 10);
     tft.print(auxString);
   }
-  else if (PLCstate == STOPPED){
+  else if (settings.ladder.PLCstate == STOPPED){
     tft.setCursor(240, 10);
     tft.setTextColor(YELLOW);
     tft.print("STOP");
   }
-  else if (PLCstate >= PLCERROR){
+  else if (settings.ladder.PLCstate >= PLCERROR){
     tft.setCursor(240, 10);
     tft.setTextColor(RED);
     tft.print("ERROR");
@@ -107,8 +105,8 @@ void printPLCstate(void){
 //--------------------------------------------------------------------------------
 
 uint16_t PLCstateChanged(void) {
-  if (PLCstateOld != PLCstate){
-    PLCstateOld = PLCstate;
+  if (PLCstateOld != settings.ladder.PLCstate ){
+    PLCstateOld = settings.ladder.PLCstate ;
     return 1;
   }
   else {return 0;}
@@ -157,15 +155,16 @@ void touchMainMenu(uint16_t X, uint16_t Y){
 //--------------------------------------------------------------------------------
 
 void changePLCstate(void){  
-  if (PLCstate >= PLCERROR) {
-    PLCstate = STOPPED;
+  if (settings.ladder.PLCstate >= PLCERROR) {
+    settings.ladder.PLCstate = STOPPED;
+    saveSettings();
   }
-  else if (PLCstate == RUNNING){
+  else if (settings.ladder.PLCstate == RUNNING){
     HMI_PageMemory = HMI_Page;
     dialogCode = DIALOG_RUN_STOP;
     HMI_Page = PAGE_DialogOkCancel;
   }
-  else if (PLCstate == STOPPED){
+  else if (settings.ladder.PLCstate == STOPPED){
     HMI_PageMemory = HMI_Page;
     dialogCode = DIALOG_STOP_RUN;
     HMI_Page = PAGE_DialogOkCancel;

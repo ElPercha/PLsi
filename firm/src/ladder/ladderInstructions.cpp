@@ -154,7 +154,7 @@ void execTP (int c, int r, int f){
 void execCTU (int c, int r, int f){
  // Reset Counter
   if (c == 0){
-    if(PLCstate == RUNNING){
+    if(settings.ladder.PLCstate == RUNNING){
       C[execNetwork.Cells[r][c].Data] = 0;    
       Cd[execNetwork.Cells[r][c].Data] = 0;
       Cr[execNetwork.Cells[r][c].Data] = 0;
@@ -188,7 +188,7 @@ void execCTU (int c, int r, int f){
 void execCTD (int c, int r, int f){
  // Reset Counter
   if (c == 0){
-    if(PLCstate == RUNNING){
+    if(settings.ladder.PLCstate == RUNNING){
       C[execNetwork.Cells[r][c].Data] = execNetwork.Cells[r+1][c].Data;    
       Cd[execNetwork.Cells[r][c].Data] = 0;
       Cr[execNetwork.Cells[r][c].Data] = 0;

@@ -78,8 +78,10 @@ void drawLadderOnline (void){
     printNetworkNumber();
   }
   drawNetwork();   
-  
   EditionChanged();
+  if (editionMode == 0 && PLCstateChanged()){
+    drawPLCstateSmall();
+  }
 }
 
 //--------------------------------------------------------------------------------
@@ -166,7 +168,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
   if(ladderTouched.Menu == 6){ // CHANGE PLC STATE or Cancel Edition Mode
     ladderTouched.Menu = 0;
     if (editionMode == 0){
-      changePLCstate();
+      changePLCstate ();
     }
     else{
       editionMode = 0;
@@ -216,16 +218,16 @@ void drawPLCstateSmall(void){
   tft.setTextSize(2);
   tft.setCursor(276, 13);
   drawLadderMenuBut6();
-  if (PLCstate == RUNNING){
+  if (settings.ladder.PLCstate == RUNNING){
     tft.setTextColor(GREEN);
     tft.print("RUN");
   }
-  else if (PLCstate == STOPPED){
+  else if (settings.ladder.PLCstate == STOPPED){
     tft.setCursor(271, 13);
     tft.setTextColor(YELLOW);
     tft.print("STOP");
   }
-  else if (PLCstate >= PLCERROR){
+  else if (settings.ladder.PLCstate >= PLCERROR){
     tft.setTextColor(RED);
     tft.print("ERR");
   }
@@ -325,23 +327,23 @@ void printEDIT(void){
     tft.print("EDIT");
   }
   else{ // Green Arrow
-    tft.drawLine(230,19,235,24,TFT_DARKGREEN);
-    tft.drawLine(230,20,235,25,TFT_DARKGREEN);
-    tft.drawLine(230,21,235,26,TFT_DARKGREEN);
-    tft.drawLine(230,22,235,27,TFT_DARKGREEN);
-    tft.drawLine(230,23,235,28,TFT_DARKGREEN);
-    tft.drawLine(230,24,235,29,TFT_DARKGREEN);
-    tft.drawLine(230,25,235,30,TFT_DARKGREEN);
-    tft.drawLine(230,26,235,31,TFT_DARKGREEN);
+    tft.drawLine(230,19,235,24,TFT_GREEN);
+    tft.drawLine(230,20,235,25,TFT_GREEN);
+    tft.drawLine(230,21,235,26,TFT_GREEN);
+    tft.drawLine(230,22,235,27,TFT_GREEN);
+    tft.drawLine(230,23,235,28,TFT_GREEN);
+    tft.drawLine(230,24,235,29,TFT_GREEN);
+    tft.drawLine(230,25,235,30,TFT_GREEN);
+    tft.drawLine(230,26,235,31,TFT_GREEN);
 
-    tft.drawLine(235,24,250, 9,TFT_DARKGREEN);
-    tft.drawLine(235,25,250,10,TFT_DARKGREEN);
-    tft.drawLine(235,26,250,11,TFT_DARKGREEN);
-    tft.drawLine(235,27,250,12,TFT_DARKGREEN);
-    tft.drawLine(235,28,250,13,TFT_DARKGREEN);
-    tft.drawLine(235,29,250,14,TFT_DARKGREEN);
-    tft.drawLine(235,30,250,15,TFT_DARKGREEN);
-    tft.drawLine(235,31,250,16,TFT_DARKGREEN);
+    tft.drawLine(235,24,250, 9,TFT_GREEN);
+    tft.drawLine(235,25,250,10,TFT_GREEN);
+    tft.drawLine(235,26,250,11,TFT_GREEN);
+    tft.drawLine(235,27,250,12,TFT_GREEN);
+    tft.drawLine(235,28,250,13,TFT_GREEN);
+    tft.drawLine(235,29,250,14,TFT_GREEN);
+    tft.drawLine(235,30,250,15,TFT_GREEN);
+    tft.drawLine(235,31,250,16,TFT_GREEN);
   }  
 }
 

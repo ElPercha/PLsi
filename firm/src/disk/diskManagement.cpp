@@ -28,7 +28,7 @@ void loadDisk (void) {
     }
     else{
       Serial.print  ("TaskDisk - SPIFSS Format Failed - System error or Partition file issue. Try reloading the whole firmware including partition table.");
-      PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
+      settings.ladder.PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
       bootSequence = BOOT_DISK_ERROR;
     } 
   }
@@ -82,7 +82,7 @@ void loadDefaultSettings(void){
   settings.general.verbosityLevel = 0;
 
   settings.ladder.NetworksQuantity = TOTAL_NETWORKS;
-  settings.ladder.PLCbootState = STOPPED;
+  settings.ladder.PLCstate = STOPPED;
   settings.ladder.UserProgram = DEMO_PROGRAM_SLOT;
 
   settings.hmi.ts.leftX = TS_LEFT_X;

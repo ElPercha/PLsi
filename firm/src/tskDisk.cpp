@@ -85,7 +85,8 @@ void TaskDisk(void *pvParameters)
       }
       SPIFFS.end();
 
-      PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
+      settings.ladder.PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
+      
       delay(4000);
     }
 

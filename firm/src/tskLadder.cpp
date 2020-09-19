@@ -43,7 +43,7 @@ void TaskLadder(void *pvParameters)
     //----------------------------------------------------------------
     
     if(loadSelectedProgram){
-      PLCstate = STOPPED;
+      //settings.ladder.PLCstate = STOPPED;
       SPIFFS.begin();
 
       if (SPIFFS.exists(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram])){
@@ -71,7 +71,7 @@ void TaskLadder(void *pvParameters)
    
       SPIFFS.end();
       clearMemory();
-      PLCstate = RUNNING;
+      //settings.ladder.PLCstate = RUNNING;
       loadSelectedProgram = 0;
     }
 

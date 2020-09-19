@@ -137,7 +137,7 @@ int GetFlag (int r, int c){
   int returnData;
 
   if (c == 0){
-    if (PLCstate == RUNNING){returnData = 1;}
+    if (settings.ladder.PLCstate == RUNNING){returnData = 1;}
     else                    {returnData = 0;}
   }
   else{
@@ -920,7 +920,7 @@ void drawBoxInputPin2 (int Row, int Column){
   int in2;  
   
   if (Column == 0){
-    if(PLCstate == RUNNING){in2  = COLOR_ON;}
+    if(settings.ladder.PLCstate == RUNNING){in2  = COLOR_ON;}
     else{in2  = COLOR_OFF;}
   }
   else{
@@ -938,7 +938,7 @@ void drawBoxInputPin3 (int Row, int Column){
   int in2;
   
   if (Column == 0){
-    if(PLCstate == RUNNING){in2  = COLOR_ON;}
+    if(settings.ladder.PLCstate == RUNNING){in2  = COLOR_ON;}
     else{in2  = COLOR_OFF;}
   }
   else{
@@ -996,7 +996,7 @@ void drawPowerBar(){
   if(editionMode){
     runColor = COLOR_BAR_EDIT;
   }
-  else if(PLCstate == RUNNING){
+  else if(settings.ladder.PLCstate == RUNNING){
     runColor = COLOR_BAR_ON;
   }
   else{

@@ -98,15 +98,6 @@
 #define PASS_LENGTH           65
 
 //--------------------------------------------------------------------------------
-// Main PLC status 
-//  0  = Stopped 
-//  1  = Running 
-// >1  = Error Codes
-//--------------------------------------------------------------------------------
-
-extern uint16_t PLCstate; 
-
-//--------------------------------------------------------------------------------
 // Type definition for Networks and global declarations
 //--------------------------------------------------------------------------------
 
@@ -169,6 +160,11 @@ extern Timer       Timers[QTY_T];
 // General PLC Configuration struct
 // settings.bin in RAM
 //--------------------------------------------------------------------------------
+// Main PLC status in PLCstate
+//  0  = Stopped 
+//  1  = Running 
+// >1  = Error Codes
+//--------------------------------------------------------------------------------
 
 typedef struct
 {
@@ -178,7 +174,7 @@ typedef struct
 
 typedef struct
 {
-  uint16_t PLCbootState;
+  uint16_t PLCstate;
   uint16_t NetworksQuantity;
   uint16_t UserProgram;
 } ladderSettings;

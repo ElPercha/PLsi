@@ -1,5 +1,6 @@
 #include <globals.h>
 #include <ladder.h>
+#include <disk.h>
 
 //--------------------------------------------------------------------------------
 // Ladder Logic execution (PLC SCAN)
@@ -77,7 +78,8 @@ void execScanPLC(Network Networks[]){
             Serial.println(execNetwork.Cells[r][c].Data);
             Serial.print("   - Type: ");
             Serial.println(execNetwork.Cells[r][c].Type);
-            PLCstate = PLCERROR_INVALID_INSTRUCTION;
+            settings.ladder.PLCstate = PLCERROR_INVALID_INSTRUCTION;
+            saveSettings();
           }  
           execNetwork.Cells[r][c].Code = 0;
           asm ( "nop \n" ); // Force to compile more efficiently (reduce Scan Time) 
@@ -89,7 +91,7 @@ void execScanPLC(Network Networks[]){
 
         if (execNetwork.Cells[r][c].Code != 0) {
           if (c == 0) {
-            if(PLCstate == RUNNING){execLadder[execNetwork.Cells[r][c].Code](c,r,1);}
+            if(settings.ladder.PLCstate == RUNNING){execLadder[execNetwork.Cells[r][c].Code](c,r,1);}
             else                   {execLadder[execNetwork.Cells[r][c].Code](c,r,0);}
           } 
           else{
