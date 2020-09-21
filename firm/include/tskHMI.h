@@ -11,6 +11,8 @@ uint16_t HMI_Page         = 0; // Main Menu Page
 uint16_t HMI_PageMemory   = 0; // Main Menu Page 
 uint16_t HMI_PagePrevious = 1; // To force Main Manu Load at fist boot
 
+uint16_t indexLadderEditor = 0; // Subpage of Ladder Editor
+
 uint16_t PLCstateOld = 0; 
 uint16_t userProgramOld = 0;
 
@@ -20,6 +22,9 @@ int networkColorBack;
 int networkColorGrid;
 
 uint16_t dialogCode;
+
+uint16_t ladderEditorRow = 0;
+uint16_t ladderEditorColumn = 0;
 
 //----------------------------------------------------
 // Network to show under Online animation

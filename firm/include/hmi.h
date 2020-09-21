@@ -5,9 +5,11 @@
 // Globals variables for HMI "scope"
 //--------------------------------------------------------------------------------
 
-extern TFT_eSPI tft; // TFT Display Instance
+extern TFT_eSPI tft; 
 extern uint16_t HMI_Page;
 extern uint16_t HMI_PageMemory;
+
+extern uint16_t indexLadderEditor;
 
 extern uint16_t PLCstateOld; 
 extern uint16_t userProgramOld; 
@@ -17,6 +19,9 @@ extern unsigned long  auxOldScanTime;
 extern int networkColorBack;
 extern int networkColorGrid;
 extern uint16_t dialogCode;
+
+extern uint16_t ladderEditorRow;
+extern uint16_t ladderEditorColumn;
 
 //----------------------------------------------------
 // Network to show under Online animation
@@ -39,7 +44,7 @@ extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 //----------------------------------------------------
 
 const String MnemonicsTypes[FIRST_INVALID_TYPE] = {"M", "Q", "I", "Cd", "Cr", "Td", "Tr", "IW", "QW", "C", "T", "D", "K", "R"};
-const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "", "", "", "", "", "", "", "", "", 
+const String MnemonicsCodes[FIRST_INVALID_CODE] = {"NOP", "CON", "INV", "NO", "NC", "RE", "FE", "C", "L", "U", 
                                                    "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
                                                    "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT"};
 
@@ -73,10 +78,15 @@ extern unsigned long actualScanTime;
 #define PAGE_MainHMI           20
 #define PAGE_MainConfig        30
 #define PAGE_LadderEditor      40
+#define PAGE_EditInstructions1 41
+#define PAGE_EditInstructions2 42
+#define PAGE_EditInstructions3 43
+#define PAGE_EditInstructions4 44
 #define PAGE_LadderDetails     50
 #define PAGE_InputNumber      100
 #define PAGE_DialogOkCancel   150
 
+#define PAGES_LADDER_EDITOR     5
 
 //--------------------------------------------------------------------------------
 // Define Dialog codes. Used to:
@@ -240,12 +250,18 @@ void drawLadderOnline(void);
   void drawButton6Icon(void);
 
 void drawLadderEditor(void);
+  void drawLadderEditorBottomButtons(void);
+  void drawLadderEditorNavigationBar(void);
+  void drawLadderEditorInstructionsMenu(void);
+  void drawLadderEditorElementsMenu(void);
+
+
+
+
 void drawLadderDetails(void);
 void drawNumericKeyboard(void);
 void drawDialogOkCancel(void);
   void drawDialogButtons(void);
-
-
 
 void printPLCstate(void);
 uint16_t ScanTimeChanged(void);

@@ -181,7 +181,10 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
   
   if (ladderTouched.Logic.Value){
     ladderTouched.Logic.Value = 0;
-    
+
+    ladderEditorRow = ladderTouched.Logic.Row;
+    ladderEditorColumn = ladderTouched.Logic.Col;
+
     HMI_PageMemory = HMI_Page;
     if (editionMode){
       HMI_Page = PAGE_LadderEditor;
@@ -189,10 +192,6 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
     else{
       HMI_Page = PAGE_LadderDetails;
     }
-
-    //ladderTouched.Logic.Row;
-    //ladderTouched.Logic.Col;
-
     // Serial.print ("Touched Row Cell: ");
     // Serial.println (ladderTouched.Logic.Row);
     // Serial.print ("Touched Col Cell: ");
