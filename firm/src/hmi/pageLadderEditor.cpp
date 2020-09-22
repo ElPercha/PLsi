@@ -36,75 +36,26 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
 
 void drawLadderEditor (void){
 
- 
-  tft.setTextColor(TFT_BLACK);
-  tft.setTextSize(2);
-
-  if (indexLadderEditor == 0){
-    drawLadderEditorInstructionsMenu();
-
-
-
-
-    tft.fillScreen(TFT_BLACK);
-    tft.setCursor(10, 10);
-    tft.print("Ladder Editor - Index 0");
-  }
-  if (indexLadderEditor == 1){
-    drawLadderEditorInstructionsMenu();
-
-
-
-
-    tft.fillScreen(TFT_GOLD);
-    tft.setCursor(10, 10);
-    tft.print("Ladder Editor - Index 1");
-  }
-  if (indexLadderEditor == 2){
-    drawLadderEditorElementsMenu();
-
-
-
-    tft.fillScreen(TFT_PINK);
-    tft.setCursor(10, 10);
-    tft.print("Ladder Editor - Index 2");
-  }
-  if (indexLadderEditor == 3){
-    drawLadderEditorElementsMenu();
-
-
-
-    tft.fillScreen(TFT_VIOLET);
-    tft.setCursor(10, 10);
-    tft.print("Ladder Editor - Index 3");
-  }
-  if (indexLadderEditor == 4){
-    drawLadderEditorElementsMenu();
-
-
-
-
-    tft.fillScreen(TFT_GREENYELLOW);
-    tft.setCursor(10, 10);
-    tft.print("Ladder Editor - Index 4");
-  }
-
-
-
-
-
+  tft.fillScreen(TFT_BLACK);
 
   drawLadderEditorBottomButtons();
   drawLadderEditorNavigationBar();
 
-
-
-
-
-
-
-
-
+  if (indexLadderEditor == 0){
+    drawLadderEditorInstructionsMenu();
+  }
+  if (indexLadderEditor == 1){
+    drawLadderEditorInstructionsMenu();
+  }
+  if (indexLadderEditor == 2){
+    drawLadderEditorElementsMenu();
+  }
+  if (indexLadderEditor == 3){
+    drawLadderEditorElementsMenu();
+  }
+  if (indexLadderEditor == 4){
+    drawLadderEditorElementsMenu();
+  }
 
 }
 
@@ -210,37 +161,23 @@ void drawLadderEditorNavigationBar(void){
 
 void drawLadderEditorInstructionsMenu(void){
 
-  // #define BORDER        2
-  // #define SPACING       4
-  // #define BUTTON_H     46
-  // #define BUTTON_W     60
-  // #define BUTTON_Y     TFT_PIXELS_Y - SPACING - BUTTON_H // Y where the button starts
+  #define BORDER3        2
+  #define SPACING3       4
+  #define BUTTON_H3     44
+  #define BUTTON_W3     60
+  #define BUTTON_Y3     BORDER3
 
-  // tft.fillRoundRect(BORDER, BUTTON_Y, BUTTON_W, BUTTON_H, 8, TFT_WHITE);
-  // tft.fillRoundRect(BORDER+2, BUTTON_Y+2, BUTTON_W-4, BUTTON_H-4, 7, TFT_DARKCYAN);
+  tft.setTextColor(TFT_WHITE);
+  tft.setTextSize(2);
 
-  // tft.fillRoundRect(BORDER+BUTTON_W+SPACING, BUTTON_Y, BUTTON_W, BUTTON_H, 8, TFT_WHITE);
-  // tft.fillRoundRect(BORDER+BUTTON_W+SPACING+2, BUTTON_Y+2, BUTTON_W-4, BUTTON_H-4, 7, TFT_DARKCYAN);
-
-  // tft.fillRoundRect(BORDER+BUTTON_W*2+SPACING*2, BUTTON_Y, BUTTON_W, BUTTON_H, 8, TFT_WHITE);
-  // tft.fillRoundRect(BORDER+BUTTON_W*2+SPACING*2+2, BUTTON_Y+2, BUTTON_W-4, BUTTON_H-4, 8, TFT_DARKCYAN);
-
-
-  // tft.setTextColor(TFT_WHITE);
-  // tft.setTextSize(2);
-  // tft.setCursor(20, BUTTON_Y + 15);
-  // tft.print("DELETE");
-  // tft.setCursor(126, BUTTON_Y + 15);
-  // tft.print("CANCEL");
-  // tft.setCursor(232, BUTTON_Y + 15);
-  // tft.print("ACCEPT");
-
-
-
-
-
-
-
+  for (uint16_t row = 0; row < 3; row++){
+    for (uint16_t col = 0; col < 5; col++){
+      tft.fillRoundRect(BORDER3+BUTTON_W3*col+SPACING3*col, BUTTON_Y3+BUTTON_H3*row+SPACING3*row, BUTTON_W3, BUTTON_H3, 8, TFT_WHITE);
+      tft.fillRoundRect(BORDER3+BUTTON_W3*col+SPACING3*col+1, BUTTON_Y3+BUTTON_H3*row+SPACING3*row+1, BUTTON_W3-2, BUTTON_H3-2, 7, TFT_DARKGREY);
+      tft.setCursor(BORDER3+BUTTON_W3*col+SPACING3*col+25, BUTTON_Y3+BUTTON_H3*row+SPACING3*row + 15);
+      tft.print(String((row+1)*(col+1)));
+    }
+  }
 }
 
 //--------------------------------------------------------------------------------
@@ -248,10 +185,24 @@ void drawLadderEditorInstructionsMenu(void){
 //--------------------------------------------------------------------------------
 
 void drawLadderEditorElementsMenu(void){
+  #define BORDER4V       4
+  #define BORDER4H       2
+  #define SPACING4       4
+  #define BUTTON_H4     67
+  #define BUTTON_W4     156
+  #define BUTTON_Y4     BORDER4V
 
+  tft.fillRoundRect(BORDER4H, BUTTON_Y4, BUTTON_W4, BUTTON_H4, 8, TFT_WHITE);
+  tft.fillRoundRect(BORDER4H+2, BUTTON_Y4+2, BUTTON_W4-4, BUTTON_H4-4, 7, TFT_DARKGREY);
 
+  tft.fillRoundRect(BORDER4H+BUTTON_W4+SPACING4, BUTTON_Y4, BUTTON_W4, BUTTON_H4, 8, TFT_WHITE);
+  tft.fillRoundRect(BORDER4H+BUTTON_W4+SPACING4+2, BUTTON_Y4+2, BUTTON_W4-4, BUTTON_H4-4, 7, TFT_DARKGREY);
 
+  tft.fillRoundRect(BORDER4H, BUTTON_Y4+BUTTON_H4+SPACING4, BUTTON_W4, BUTTON_H4, 8, TFT_WHITE);
+  tft.fillRoundRect(BORDER4H+2, BUTTON_Y4+BUTTON_H4+SPACING4+2, BUTTON_W4-4, BUTTON_H4-4, 7, TFT_DARKGREY);
 
+  tft.fillRoundRect(BORDER4H+BUTTON_W4+SPACING4, BUTTON_Y4+BUTTON_H4+SPACING4, BUTTON_W4, BUTTON_H4, 8, TFT_WHITE);
+  tft.fillRoundRect(BORDER4H+BUTTON_W4+SPACING4+2,  BUTTON_Y4+BUTTON_H4+SPACING4+2, BUTTON_W4-4, BUTTON_H4-4, 7, TFT_DARKGREY);
 
 }
 
