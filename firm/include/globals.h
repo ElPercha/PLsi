@@ -79,7 +79,9 @@
 #define XOR                   27
 #define NOT                   28
 #define FIRST_INVALID_CODE    29
-#define CELL_USED         0xF000 // Used by an instruction that occupies more than one cell
+#define CELL_USED_MASK    0xF000 // Used by an instruction that occupies more than one cell
+#define CELL_CODE_MASK    0x0FFF 
+#define BAR_MNEMONIC_CODE     99
 
 //--------------------------------------------------------------------------------
 // PLC Network Logic matrix Size [units]

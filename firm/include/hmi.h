@@ -23,6 +23,7 @@ extern uint16_t dialogCode;
 extern uint16_t ladderEditorRow;
 extern uint16_t ladderEditorColumn;
 
+extern uint16_t edittingInstructionCode;
 //----------------------------------------------------
 // Network to show under Online animation
 //----------------------------------------------------
@@ -44,9 +45,23 @@ extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 //----------------------------------------------------
 
 const String MnemonicsTypes[FIRST_INVALID_TYPE] = {"M", "Q", "I", "Cd", "Cr", "Td", "Tr", "IW", "QW", "C", "T", "D", "K", "R"};
-const String MnemonicsCodes[FIRST_INVALID_CODE] = {"NOP", "CON", "INV", "NO", "NC", "RE", "FE", "C", "L", "U", 
+const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "CON", "INV", "NO", "NC", "RE", "FE", "C", "L", "U", 
                                                    "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
                                                    "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT"};
+
+#define BAR_MNEMONIC      "BAR"
+#define BAR_MNEMONIC_LENGTH  3
+//----------------------------------------------------
+// Defines the position of each mnemonic
+//  in the 5 x 3 instruction pallete
+// We have 2 pages
+//----------------------------------------------------
+
+const uint16_t menuInstructions[2][15] = {{3,4,5,6,99,7,8,9,2,1,10,11,12,13,14},
+                                          {16,17,18,19,15,25,26,27,28,0,20,21,22,23,24}};
+
+const String elementsFunctions[4] = {"COPY", "PASTE", "INSERT", "DELETE"};
+const String elementsList[3] = {"COLUMN", "ROW", "NETWORK"};
 
 //----------------------------------------------------
 // Invoke the TFT_eSPI button class and 
@@ -61,7 +76,6 @@ extern TFT_eSPI_Button numericKeys[16];
 
 extern double numericValue;            // Variable to use as return value of numeric keyboard
 extern uint16_t numericValueAccepted;  // Variable to use as return value of numeric keyboard
-
 
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task
@@ -179,7 +193,7 @@ extern unsigned long actualScanTime;
 #define NET_ROW_HEIGTH    40
 
 //--------------------------------------------------------------------------------
-// Ladder Logic Animation
+// Ladder Logic Animation Colors
 //--------------------------------------------------------------------------------
 
 #define COLOR_TAG             WHITE
@@ -193,6 +207,22 @@ extern unsigned long actualScanTime;
 #define COLOR_BAR_OFF         DARKGREY
 #define COLOR_BAR_EDIT        ORANGE
 #define COLOR_VALUES_ONLINE   CYAN
+
+//--------------------------------------------------------------------------------
+// Ladder Editor Colors
+//--------------------------------------------------------------------------------
+
+#define COLOR_BUTTON_FONT_LADDER_EDITOR       TFT_WHITE
+#define COLOR_BUTTON_INSTRUCTION_SELECTED     TFT_GREEN
+#define COLOR_BUTTON_INSTRUCTION              TFT_DARKGREY
+#define COLOR_BUTTON_ELEMENTS                 TFT_DARKGREY
+#define COLOR_BUTTON_BORDER_LADDER_EDITOR     TFT_WHITE
+#define COLOR_BUTTON_DELETE_LADDER_EDITOR     TFT_VIOLET
+#define COLOR_BUTTON_CANCEL_LADDER_EDITOR     TFT_MAGENTA
+#define COLOR_BUTTON_ACCEPT_LADDER_EDITOR     TFT_DARKGREEN
+#define COLOR_BUTTON_ARROWS_LADDER_EDITOR     TFT_DARKCYAN
+#define COLOR_BAR_LADDER_EDITOR               TFT_WHITE
+#define COLOR_BAR_FONT_LADDER_EDITOR          TFT_DARKGREY
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
@@ -254,6 +284,8 @@ void drawLadderEditor(void);
   void drawLadderEditorNavigationBar(void);
   void drawLadderEditorInstructionsMenu(void);
   void drawLadderEditorElementsMenu(void);
+
+
 
 
 

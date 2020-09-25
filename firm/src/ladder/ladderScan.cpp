@@ -68,7 +68,7 @@ void execScanPLC(Network Networks[]){
         //----------------------------------------------------
 
         if (execNetwork.Cells[r][c].Code >=  FIRST_INVALID_CODE){
-          if (!(execNetwork.Cells[r][c].Code & CELL_USED)){ 
+          if (!(execNetwork.Cells[r][c].Code & CELL_USED_MASK)){ 
             Serial.println("TASK LADDER - CORE 1 - INSTRUCTION CODE INVALID: ");
             Serial.print("   - Network: ");
             Serial.println(n);
