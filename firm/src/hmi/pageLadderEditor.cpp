@@ -185,24 +185,34 @@ void drawLadderEditorElementsMenu(void){
   #define BUTTON_W4    156
   #define BUTTON_Y4    BORDER4V
 
-  uint16_t auxX, auxXcenter, index;
+  uint16_t auxX, auxXcenter, index, auxColor=0;
   
   tft.setTextColor(COLOR_BUTTON_FONT_LADDER_EDITOR);
   tft.setTextSize(2);
   
+  if (indexLadderEditor == 2){
+    auxColor = COLOR_BUTTON_COLUMN;
+  }
+  else if(indexLadderEditor == 3){
+    auxColor = COLOR_BUTTON_ROW;
+  }
+  else if(indexLadderEditor == 4){
+    auxColor = COLOR_BUTTON_NETWORK;
+  }
+
   for (uint16_t row = 0; row < 2; row++){
     for (uint16_t col = 0; col < 2; col++){
       index = row*2+col;
 
       tft.fillRoundRect(BORDER4H+BUTTON_W4*col+SPACING4*col, BUTTON_Y4+BUTTON_H4*row+SPACING4*row, BUTTON_W4, BUTTON_H4, 8, COLOR_BUTTON_BORDER_LADDER_EDITOR);
-      tft.fillRoundRect(BORDER4H+BUTTON_W4*col+SPACING4*col+2, BUTTON_Y4+BUTTON_H4*row+SPACING4*row+2, BUTTON_W4-4, BUTTON_H4-4, 7, COLOR_BUTTON_ELEMENTS);
+      tft.fillRoundRect(BORDER4H+BUTTON_W4*col+SPACING4*col+2, BUTTON_Y4+BUTTON_H4*row+SPACING4*row+2, BUTTON_W4-4, BUTTON_H4-4, 7, auxColor);
 
       auxXcenter = BORDER4H+BUTTON_W4*col+SPACING4*col+BUTTON_W4/2; // Center of button
       auxX = auxXcenter - elementsFunctions[index].length()*6 + 1;  // Text length offset. Font size 2 is 10 pixel width and 2 px spacing (6 = (10+2)/2)
       tft.setCursor(auxX, BUTTON_Y4+BUTTON_H4*row+SPACING4*row + 15);
       tft.print(elementsFunctions[index]);
 
-      auxX = auxXcenter - elementsList[indexLadderEditor-2].length()*6 + 1;  // Text length offset. Font size 2 is 10 pixel width and 2 px spacing (6 = (10+2)/2)
+      auxX = auxXcenter - elementsList[indexLadderEditor-2].length()*6 + 1; // Text length offset. Font size 2 is 10 pixel width and 2 px spacing (6 = (10+2)/2)
       tft.setCursor(auxX, BUTTON_Y4+BUTTON_H4*row+SPACING4*row + 37);
       tft.print(elementsList[indexLadderEditor-2]);
     }
@@ -212,7 +222,7 @@ void drawLadderEditorElementsMenu(void){
 
 
 
-
+ 
 
 
 

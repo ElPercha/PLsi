@@ -213,9 +213,8 @@ extern unsigned long actualScanTime;
 //--------------------------------------------------------------------------------
 
 #define COLOR_BUTTON_FONT_LADDER_EDITOR       TFT_WHITE
-#define COLOR_BUTTON_INSTRUCTION_SELECTED     TFT_GREEN
+#define COLOR_BUTTON_INSTRUCTION_SELECTED     TFT_DARKGREEN
 #define COLOR_BUTTON_INSTRUCTION              TFT_DARKGREY
-#define COLOR_BUTTON_ELEMENTS                 TFT_DARKGREY
 #define COLOR_BUTTON_BORDER_LADDER_EDITOR     TFT_WHITE
 #define COLOR_BUTTON_DELETE_LADDER_EDITOR     TFT_VIOLET
 #define COLOR_BUTTON_CANCEL_LADDER_EDITOR     TFT_MAGENTA
@@ -223,6 +222,9 @@ extern unsigned long actualScanTime;
 #define COLOR_BUTTON_ARROWS_LADDER_EDITOR     TFT_DARKCYAN
 #define COLOR_BAR_LADDER_EDITOR               TFT_WHITE
 #define COLOR_BAR_FONT_LADDER_EDITOR          TFT_DARKGREY
+#define COLOR_BUTTON_COLUMN                   TFT_BROWN
+#define COLOR_BUTTON_ROW                      TFT_PURPLE
+#define COLOR_BUTTON_NETWORK                  TFT_OLIVE
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
