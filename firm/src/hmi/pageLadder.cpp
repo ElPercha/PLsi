@@ -187,6 +187,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
 
     HMI_PageMemory = HMI_Page;
     if (editionMode){
+      editingNetwork = onlineNetwork;
       HMI_Page = PAGE_LadderEditor;
     }
     else{

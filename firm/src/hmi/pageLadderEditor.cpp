@@ -12,7 +12,8 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   //-------------------------------
     
     if(firstLoad){
-      edittingInstructionCode = onlineNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code & CELL_CODE_MASK;
+      editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code & CELL_CODE_MASK;
+      drawLadderEditorBase();
       drawLadderEditor();
     }
     
@@ -27,6 +28,7 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   //-------------------------------
 
   if (touchType){
+    touchLadderEditorNavigation(ts_x, ts_y); 
     touchLadderEditor(ts_x, ts_y); 
   } 
 }
@@ -35,12 +37,14 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
 // Ladder Editor Page full draw 
 //--------------------------------------------------------------------------------
 
-void drawLadderEditor (void){
-
-  tft.fillScreen(TFT_BLACK);
-
+void drawLadderEditorBase (void){
+  tft.fillScreen(COLOR_LADDER_EDITOR_BACKGROUND);
   drawLadderEditorBottomButtons();
   drawLadderEditorNavigationBar();
+}
+
+void drawLadderEditor (void){
+  tft.fillRect(0,0,320,145,COLOR_LADDER_EDITOR_BACKGROUND);
 
   if (indexLadderEditor == 0){
     drawLadderEditorInstructionsMenu();
@@ -148,12 +152,22 @@ void drawLadderEditorInstructionsMenu(void){
       
       // Draw Button
       tft.fillRoundRect(BORDER3+BUTTON_W3*col+SPACING3*col, BUTTON_Y3+BUTTON_H3*row+SPACING3*row, BUTTON_W3, BUTTON_H3, 8, COLOR_BUTTON_BORDER_LADDER_EDITOR);
-      if(edittingInstructionCode == menuInstructions[indexLadderEditor][index]){
+      if(editingInstructionCode == menuInstructions[indexLadderEditor][index]){
         auxColor = COLOR_BUTTON_INSTRUCTION_SELECTED;
       }
       else{
         auxColor = COLOR_BUTTON_INSTRUCTION;
       }
+
+      if(menuInstructions[indexLadderEditor][index] == BAR_MNEMONIC_CODE){
+        if(editingNetwork.Bars[ladderEditorColumn] & FlagsMask[ladderEditorRow]){
+          auxColor = COLOR_BUTTON_INSTRUCTION_SELECTED;
+        }
+        else{
+          auxColor = COLOR_BUTTON_INSTRUCTION;
+        }
+      }
+
       tft.fillRoundRect(BORDER3+BUTTON_W3*col+SPACING3*col+1, BUTTON_Y3+BUTTON_H3*row+SPACING3*row+1, BUTTON_W3-2, BUTTON_H3-2, 7, auxColor);
 
       // Insert Text
@@ -219,34 +233,53 @@ void drawLadderEditorElementsMenu(void){
   }
 }
 
+//--------------------------------------------------------------------------------
+// Ladder Editor Page
+// Touch Screen parsing for navigation buttons
+//--------------------------------------------------------------------------------
 
-
-
- 
-
-
-
-
-
-
-
-
-
-
+void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
+    
+  if(ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1){
+    if(ts_x < BUTTON_W1 - SPACING1){                     // DELETE
+      Serial.println("DELETE");
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+      //deleteElement(); lucas
+      onlineNetwork = editingNetwork;
+    }
+    else if(ts_x < BUTTON_W1*2 - SPACING1*2){            // CANCEL
+      Serial.println("CANCEL");
+      editingNetwork = onlineNetwork;
+    }
+    else{                                                // ACCEPT
+      Serial.println("ACCEPT");
+      onlineNetwork = editingNetwork;
+    }
+    HMI_Page = PAGE_MainLadder;
+  }
+  else if(ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){
+    if(ts_x < BUTTON_W2 + SPACING2){                     // LEFT ARROW
+      if (indexLadderEditor > 0){
+        indexLadderEditor--;
+      }
+      else{
+        indexLadderEditor = PAGES_LADDER_EDITOR - 1;
+      }
+      drawLadderEditor();
+    }
+    else if(ts_x > TFT_PIXELS_X - BUTTON_W2 - SPACING2){ // RIGHT ARROW
+      indexLadderEditor++;
+      if (indexLadderEditor >= PAGES_LADDER_EDITOR){
+        indexLadderEditor = 0;
+      } 
+      drawLadderEditor();
+    }
+  }
+}
 
 //--------------------------------------------------------------------------------
 // Ladder Editor Page
@@ -255,25 +288,119 @@ void drawLadderEditorElementsMenu(void){
 
 void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
     
-  if(ts_y < 120){ // return
-    HMI_Page = HMI_PageMemory;
-  }
-  else if(ts_x > 160){    // Increase Page Index
-    indexLadderEditor++;
-    if (indexLadderEditor >= PAGES_LADDER_EDITOR){
-      indexLadderEditor = 0;
-    } 
-    drawLadderEditor();
-  }
-  else{    // Decrease Page Index
-    if (indexLadderEditor > 0){
-      indexLadderEditor--;
+  uint16_t index;
+
+  if(ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){
+    if(indexLadderEditor < 2){
+      for (uint16_t row = 0; row < 3; row++){
+        for (uint16_t col = 0; col < 5; col++){
+          index = row*5+col;
+          if(ts_x < BORDER3 + BUTTON_W3 + BUTTON_W3*col + SPACING3*col && ts_y < BORDER3 + BUTTON_H3 + BUTTON_H3*row + SPACING3*row){
+            if (menuInstructions[indexLadderEditor][index] == BAR_MNEMONIC_CODE){
+              touchLadderEditorToggleBar();
+              drawLadderEditorInstructionsMenu();
+            }
+            else{
+              if (checkValidEdition(menuInstructions[indexLadderEditor][index])){
+                editingInstructionCode = menuInstructions[indexLadderEditor][index];
+                if (editingInstructionCode == 0){      // Nop
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
+                  drawLadderEditorInstructionsMenu();
+                }
+                else if (editingInstructionCode == 1){ // Connection (Horizontal Bar)
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
+                  drawLadderEditorInstructionsMenu();
+                }
+                else if (editingInstructionCode == 2){ // Inversion (Horizontal Bar)
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
+                  drawLadderEditorInstructionsMenu();
+                }
+                else if (editingInstructionCode < 10){ // Boolean instructions
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
+                  HMI_Page = PAGE_EditInstructions1;
+                }
+                else if (editingInstructionCode < 15){ // Timers and Counters
+                  HMI_Page = PAGE_EditInstructions2;
+                }
+                else if (editingInstructionCode < 29){ // 16 Bit Math instructions
+                  HMI_Page = PAGE_EditInstructions3;
+                }
+              }
+              Serial.print("Cell pressed: ");
+              Serial.print(index);
+              Serial.print(" - ");
+              Serial.print(MnemonicsCodes[menuInstructions[indexLadderEditor][index]]);
+              Serial.print(" - ");
+              Serial.println(editingInstructionCode);
+              
+            }
+            return;
+          }
+        }
+      }
     }
     else{
-      indexLadderEditor = PAGES_LADDER_EDITOR - 1;
+      //parsing elements    
     }
-    drawLadderEditor();
   }
-
 }
 
+
+//--------------------------------------------------------------------------------
+// Toggle Bar status, exclude last column and last row              
+//--------------------------------------------------------------------------------
+
+void touchLadderEditorToggleBar(void){
+  if (ladderEditorColumn < NET_COLUMNS && ladderEditorRow < NET_ROWS){
+    if (editingNetwork.Bars[ladderEditorColumn] & FlagsMask[ladderEditorRow]){
+      uint16_t FlagMaskInverted = 65535;
+      FlagMaskInverted = FlagMaskInverted ^ FlagsMask[ladderEditorRow];
+      editingNetwork.Bars[ladderEditorColumn] = editingNetwork.Bars[ladderEditorColumn] & FlagMaskInverted; 
+    }
+    else{
+      editingNetwork.Bars[ladderEditorColumn] = editingNetwork.Bars[ladderEditorColumn] | FlagsMask[ladderEditorRow]; 
+    }
+  }              
+}
+
+//--------------------------------------------------------------------------------
+// Validates the edition
+// New instruction should have the same size format or Cells must be free
+//--------------------------------------------------------------------------------
+
+uint16_t checkValidEdition(uint16_t selectedInstructionCode){
+  
+  if(instructionWidth[editingInstructionCode] == instructionWidth[selectedInstructionCode] && instructionHeight[editingInstructionCode] == instructionHeight[selectedInstructionCode]){
+    return 1;
+  }
+  else{
+    for(uint16_t width=0; width < instructionWidth[selectedInstructionCode]; width++){
+      for(uint16_t height=0; height < instructionHeight[selectedInstructionCode]; height++){
+
+        uint16_t row = ladderEditorRow + height;
+        uint16_t column = ladderEditorColumn + width;
+
+        if(row >= NET_ROWS){
+          messageCode = MESSAGE_NO_ROWS;
+          HMI_PageMemory = HMI_Page;
+          HMI_Page = PAGE_DialogMessage;
+          return 0;
+        }
+        if(column >= NET_COLUMNS){
+          messageCode = MESSAGE_NO_COLUMNS;
+          HMI_PageMemory = HMI_Page;
+          HMI_Page = PAGE_DialogMessage;
+          return 0;
+
+        }
+        if(onlineNetwork.Cells[row][column].Code != 0){
+          messageCode = MESSAGE_SPACE_USED;
+          HMI_PageMemory = HMI_Page;
+          HMI_Page = PAGE_DialogMessage;
+          return 0;
+        }       
+      }
+    }
+    return 1;
+  }
+}

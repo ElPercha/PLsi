@@ -5,7 +5,7 @@
 #include <plsi.h>
 
 //--------------------------------------------------------------------------------
-// PLC Running status
+// PLC General status
 //--------------------------------------------------------------------------------
 
 #define STOPPED                            0 
@@ -15,7 +15,7 @@
 #define PLCERROR_INVALID_INSTRUCTION      20
 
 //--------------------------------------------------------------------------------
-// PLC Running status
+// PLC Booting status
 //--------------------------------------------------------------------------------
 
 #define BOOT_INIT                          0
@@ -116,9 +116,9 @@ typedef struct
   uint16_t Bars [NET_COLUMNS - 1];
 } Network;
 
-extern Network diskNetwork;
 extern Network execNetwork;
 extern Network onlineNetwork;
+extern Network editingNetwork;
 
 //--------------------------------------------------------------------------------
 // PLC Memory types definitions 
@@ -231,6 +231,6 @@ extern uint16_t updateSelectedProgramDisk;
 // Mask for "Bars vs Flags" analisys
 //--------------------------------------------------------------------------------
 
-extern const int FlagsMask[NET_ROWS];
+extern const uint16_t FlagsMask[NET_ROWS];
 
 #endif

@@ -82,6 +82,15 @@ void TaskHMI(void *pvParameters)
       case PAGE_LadderEditor:
         pageLadderEditor(firstLoad, touchType, ts_x, ts_y);
         break;
+      case PAGE_EditInstructions1:
+        pageEditLadderInstructions1(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_EditInstructions2:
+        pageEditLadderInstructions2(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_EditInstructions3:
+        pageEditLadderInstructions3(firstLoad, touchType, ts_x, ts_y);
+        break;
       case PAGE_LadderDetails:
         pageLadderDetails(firstLoad, touchType, ts_x, ts_y);
         break;
@@ -90,6 +99,9 @@ void TaskHMI(void *pvParameters)
         break;
       case PAGE_DialogOkCancel:
         pageDialogOkCancel(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_DialogMessage:
+        pageDialogMessage(firstLoad, touchType, ts_x, ts_y);
         break;
 
       default:

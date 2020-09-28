@@ -4,9 +4,9 @@
 // Type definition for Networks and global declarations
 //--------------------------------------------------------------------------------
 
-Network diskNetwork;
 Network execNetwork;
 Network onlineNetwork;
+Network editingNetwork;
 
 //--------------------------------------------------------------------------------
 // PLC Memory types definitions 
@@ -65,7 +65,7 @@ uint16_t updateSelectedProgramDisk = 0;
 // Mask for "Bars vs Flags" analisys
 //--------------------------------------------------------------------------------
 
-const int FlagsMask[NET_ROWS] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010};
+const uint16_t FlagsMask[NET_ROWS] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010};
 
 
 

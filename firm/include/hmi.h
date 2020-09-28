@@ -19,11 +19,13 @@ extern unsigned long  auxOldScanTime;
 extern int networkColorBack;
 extern int networkColorGrid;
 extern uint16_t dialogCode;
+extern uint16_t messageCode;
+
 
 extern uint16_t ladderEditorRow;
 extern uint16_t ladderEditorColumn;
 
-extern uint16_t edittingInstructionCode;
+extern uint16_t editingInstructionCode;
 //----------------------------------------------------
 // Network to show under Online animation
 //----------------------------------------------------
@@ -41,6 +43,13 @@ extern uint16_t editionModeOld;
 extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 
 //----------------------------------------------------
+// Defines the width and height of each instruction
+//----------------------------------------------------
+
+const uint16_t instructionHeight[FIRST_INVALID_CODE] = {1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,2,2,2,2,3,3,3,2};
+const uint16_t instructionWidth[FIRST_INVALID_CODE]  = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+
+//----------------------------------------------------
 // Datatypes Strings
 //----------------------------------------------------
 
@@ -51,6 +60,7 @@ const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "CON", "INV", "NO", "NC",
 
 #define BAR_MNEMONIC      "BAR"
 #define BAR_MNEMONIC_LENGTH  3
+
 //----------------------------------------------------
 // Defines the position of each mnemonic
 //  in the 5 x 3 instruction pallete
@@ -59,6 +69,7 @@ const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "CON", "INV", "NO", "NC",
 
 const uint16_t menuInstructions[2][15] = {{3,4,5,6,99,7,8,9,2,1,10,11,12,13,14},
                                           {16,17,18,19,15,25,26,27,28,0,20,21,22,23,24}};
+
 
 const String elementsFunctions[4] = {"COPY", "PASTE", "INSERT", "DELETE"};
 const String elementsList[3] = {"COLUMN", "ROW", "NETWORK"};
@@ -95,10 +106,10 @@ extern unsigned long actualScanTime;
 #define PAGE_EditInstructions1 41
 #define PAGE_EditInstructions2 42
 #define PAGE_EditInstructions3 43
-#define PAGE_EditInstructions4 44
 #define PAGE_LadderDetails     50
 #define PAGE_InputNumber      100
 #define PAGE_DialogOkCancel   150
+#define PAGE_DialogMessage    151
 
 #define PAGES_LADDER_EDITOR     5
 
@@ -110,6 +121,14 @@ extern unsigned long actualScanTime;
 
 #define DIALOG_RUN_STOP         1
 #define DIALOG_STOP_RUN         2
+
+//--------------------------------------------------------------------------------
+// Define Messages Codes for User
+//--------------------------------------------------------------------------------
+
+#define MESSAGE_NO_ROWS          1
+#define MESSAGE_NO_COLUMNS       2
+#define MESSAGE_SPACE_USED       3
 
 //--------------------------------------------------------------------------------
 // TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO
@@ -212,6 +231,7 @@ extern unsigned long actualScanTime;
 // Ladder Editor Colors
 //--------------------------------------------------------------------------------
 
+#define COLOR_LADDER_EDITOR_BACKGROUND        TFT_BLACK
 #define COLOR_BUTTON_FONT_LADDER_EDITOR       TFT_WHITE
 #define COLOR_BUTTON_INSTRUCTION_SELECTED     TFT_DARKGREEN
 #define COLOR_BUTTON_INSTRUCTION              TFT_DARKGREY
@@ -238,9 +258,13 @@ void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint1
 void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
-void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
-void pageLadderDetails (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
-void pageDialogOkCancel (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageLadderEditor(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageEditLadderInstructions1(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageEditLadderInstructions2(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageEditLadderInstructions3(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageLadderDetails(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageDialogOkCancel(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageDialogMessage(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 
 void setDisplay(void);
 void touch_calibrate(void);
@@ -248,10 +272,17 @@ void touchMainMenu(uint16_t ts_x, uint16_t ts_y);
 void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
 void touchMainHMI(uint16_t ts_x, uint16_t ts_y);
 void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
-void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
-void touchLadderDetails(uint16_t ts_x, uint16_t ts_y);
 void touchInputNumber(uint16_t ts_x, uint16_t ts_y);
 void touchDialogOkCancel(uint16_t ts_x, uint16_t ts_y);
+void touchDialogMessage(uint16_t ts_x, uint16_t ts_y);
+void touchLadderDetails(uint16_t ts_x, uint16_t ts_y);
+void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y);
+void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
+  void touchLadderEditorToggleBar(void);
+  uint16_t checkValidEdition(uint16_t selectedInstructionCode);
+void touchEditLadderInstructions1 (uint16_t ts_x, uint16_t ts_y);
+void touchEditLadderInstructions2 (uint16_t ts_x, uint16_t ts_y);
+void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
   
 void drawMainMenu(void);
 void drawMainHMI(void);
@@ -280,22 +311,20 @@ void drawLadderOnline(void);
   void drawPLCstateSmall (void);
   void drawEditionCancel (void);
   void drawButton6Icon(void);
-
+void drawLadderEditorBase(void);
 void drawLadderEditor(void);
   void drawLadderEditorBottomButtons(void);
   void drawLadderEditorNavigationBar(void);
   void drawLadderEditorInstructionsMenu(void);
   void drawLadderEditorElementsMenu(void);
-
-
-
-
-
-
+void drawEditLadderInstructions1 (void);
+void drawEditLadderInstructions2 (void);
+void drawEditLadderInstructions3 (void);
 void drawLadderDetails(void);
 void drawNumericKeyboard(void);
 void drawDialogOkCancel(void);
   void drawDialogButtons(void);
+void drawDialogMessage(void);
 
 void printPLCstate(void);
 uint16_t ScanTimeChanged(void);

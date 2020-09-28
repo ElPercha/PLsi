@@ -22,11 +22,12 @@ int networkColorBack;
 int networkColorGrid;
 
 uint16_t dialogCode;
+uint16_t messageCode;
 
 uint16_t ladderEditorRow = 0;
 uint16_t ladderEditorColumn = 0;
 
-uint16_t edittingInstructionCode = 0;
+uint16_t editingInstructionCode = 0;
 
 //----------------------------------------------------
 // Network to show under Online animation
