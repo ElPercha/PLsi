@@ -242,21 +242,13 @@ void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
     
   if(ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1){
     if(ts_x < BUTTON_W1 - SPACING1){                     // DELETE
-      Serial.println("DELETE");
-
-
-
-
-
-      //deleteElement(); lucas
+      deleteElement();
       onlineNetwork = editingNetwork;
     }
     else if(ts_x < BUTTON_W1*2 - SPACING1*2){            // CANCEL
-      Serial.println("CANCEL");
       editingNetwork = onlineNetwork;
     }
     else{                                                // ACCEPT
-      Serial.println("ACCEPT");
       onlineNetwork = editingNetwork;
     }
     HMI_Page = PAGE_MainLadder;
@@ -290,9 +282,9 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
     
   uint16_t index;
 
-  if(ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){
-    if(indexLadderEditor < 2){
-      for (uint16_t row = 0; row < 3; row++){
+  if(ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){ // Touch is in the palette area
+    if(indexLadderEditor < 2){                                           // Page 0 and 1 only
+      for (uint16_t row = 0; row < 3; row++){                            // Instruction matrix 3 x 5
         for (uint16_t col = 0; col < 5; col++){
           index = row*5+col;
           if(ts_x < BORDER3 + BUTTON_W3 + BUTTON_W3*col + SPACING3*col && ts_y < BORDER3 + BUTTON_H3 + BUTTON_H3*row + SPACING3*row){
@@ -301,7 +293,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
               drawLadderEditorInstructionsMenu();
             }
             else{
-              if (checkValidEdition(menuInstructions[indexLadderEditor][index])){
+              if (checkValidEdition(menuInstructions[indexLadderEditor][index])){ // Validate size and position
                 editingInstructionCode = menuInstructions[indexLadderEditor][index];
                 if (editingInstructionCode == 0){      // Nop
                   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
@@ -320,19 +312,18 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
                   HMI_Page = PAGE_EditInstructions1;
                 }
                 else if (editingInstructionCode < 15){ // Timers and Counters
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode; //LUCAS
+                  
+                  
                   HMI_Page = PAGE_EditInstructions2;
                 }
                 else if (editingInstructionCode < 29){ // 16 Bit Math instructions
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode; //LUCAS
+
+
                   HMI_Page = PAGE_EditInstructions3;
                 }
               }
-              Serial.print("Cell pressed: ");
-              Serial.print(index);
-              Serial.print(" - ");
-              Serial.print(MnemonicsCodes[menuInstructions[indexLadderEditor][index]]);
-              Serial.print(" - ");
-              Serial.println(editingInstructionCode);
-              
             }
             return;
           }
@@ -340,7 +331,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
       }
     }
     else{
-      //parsing elements    
+      //parsing elements    //lucas
     }
   }
 }
@@ -364,8 +355,10 @@ void touchLadderEditorToggleBar(void){
 }
 
 //--------------------------------------------------------------------------------
-// Validates the edition
-// New instruction should have the same size format or Cells must be free
+// Validates the edition in terms of size and position
+//   New instruction should have the same size format 
+//    or
+//   New Instruction must have enough space in the network 
 //--------------------------------------------------------------------------------
 
 uint16_t checkValidEdition(uint16_t selectedInstructionCode){
@@ -374,11 +367,13 @@ uint16_t checkValidEdition(uint16_t selectedInstructionCode){
     return 1;
   }
   else{
+    uint16_t row, column;
+
     for(uint16_t width=0; width < instructionWidth[selectedInstructionCode]; width++){
       for(uint16_t height=0; height < instructionHeight[selectedInstructionCode]; height++){
 
-        uint16_t row = ladderEditorRow + height;
-        uint16_t column = ladderEditorColumn + width;
+        row = ladderEditorRow + height;
+        column = ladderEditorColumn + width;
 
         if(row >= NET_ROWS){
           messageCode = MESSAGE_NO_ROWS;
@@ -391,7 +386,6 @@ uint16_t checkValidEdition(uint16_t selectedInstructionCode){
           HMI_PageMemory = HMI_Page;
           HMI_Page = PAGE_DialogMessage;
           return 0;
-
         }
         if(onlineNetwork.Cells[row][column].Code != 0){
           messageCode = MESSAGE_SPACE_USED;
@@ -402,5 +396,47 @@ uint16_t checkValidEdition(uint16_t selectedInstructionCode){
       }
     }
     return 1;
+  }
+}
+
+//--------------------------------------------------------------------------------
+// Delete selected instruction
+// Instructions bigger than one cell are defined on subsequent cells using Index code as follows:
+//
+//  Byte 1	| Byte 1	 |			Byte 0    |
+//  Index		| Instruction Code 12 bits  |
+//								
+//  0	0	0	0		Instruction is simple height cell or it is the first cell of a multiple cells instruction			
+//  x	0	0	1		Second cell for a multiple cell height instruction			
+//  x	0	1	0		Third cell for a multiple cell height instruction			
+//  x	0	1	1		Fourth cell for a multiple cell height instruction			
+//  x	1	0	0		Fifth cell for a multiple cell height instruction			
+//  1	x	x	x		Second column for a multiple columns instruction			
+//
+//--------------------------------------------------------------------------------
+
+void deleteElement(void){
+
+  uint16_t instructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code;
+
+  if( instructionCode == 0){
+    // No instruction to delete
+  }
+  else if(instructionWidth[instructionCode] == 1 && instructionHeight[instructionCode] == 1){
+    editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = 0;
+    editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = 0;
+    editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type = 0;
+  }
+  else{
+    uint16_t firstRowInstruction = ladderEditorRow - (instructionCode >> 12);
+    uint16_t firstColumnInstruction = ladderEditorColumn - (instructionCode >> 15);
+  
+    for(uint16_t width=0; width < instructionWidth[instructionCode]; width++){
+      for(uint16_t height=0; height < instructionHeight[instructionCode]; height++){
+        editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Code = 0;
+        editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Data = 0;
+        editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Type = 0;
+      }
+    }
   }
 }

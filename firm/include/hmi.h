@@ -280,6 +280,7 @@ void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y);
 void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
   void touchLadderEditorToggleBar(void);
   uint16_t checkValidEdition(uint16_t selectedInstructionCode);
+  void deleteElement(void);
 void touchEditLadderInstructions1 (uint16_t ts_x, uint16_t ts_y);
 void touchEditLadderInstructions2 (uint16_t ts_x, uint16_t ts_y);
 void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
