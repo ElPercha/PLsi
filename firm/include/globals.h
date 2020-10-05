@@ -119,6 +119,23 @@ typedef struct
 extern Network execNetwork;
 extern Network onlineNetwork;
 extern Network editingNetwork;
+extern Network copyMemoryNetwork;
+
+typedef struct
+{
+  Cell column[NET_ROWS];
+  uint16_t bar;
+} memoryColumn;
+
+extern memoryColumn copyMemoryColumn;
+
+typedef struct
+{
+  Cell row[NET_COLUMNS];
+  uint16_t bar;
+} memoryRow;
+
+extern memoryRow copyMemoryRow;
 
 //--------------------------------------------------------------------------------
 // PLC Memory types definitions 

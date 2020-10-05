@@ -134,7 +134,6 @@ void drawLadderEditorNavigationBar(void){
 //--------------------------------------------------------------------------------
 
 void drawLadderEditorInstructionsMenu(void){
-
   #define BORDER3        2
   #define SPACING3       4
   #define BUTTON_H3     44
@@ -281,6 +280,8 @@ void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
 void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
     
   uint16_t index;
+  uint16_t halfXpalette = BORDER4H + BUTTON_W4 + SPACING4/2;
+  uint16_t halfYpalette = BORDER4V + BUTTON_H4 + SPACING4/2;
 
   if(ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){ // Touch is in the palette area
     if(indexLadderEditor < 2){                                           // Page 0 and 1 only
@@ -330,8 +331,59 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
         }
       }
     }
-    else{
-      //parsing elements    //lucas
+    else if(indexLadderEditor == 2){                                     // 2= COLUMN menu 
+      if(ts_x < halfXpalette && ts_y < halfYpalette){
+        copyColumn();
+        Serial.println("Element selected COPY COLUMN");
+       }
+      else if(ts_x > halfXpalette && ts_y < halfYpalette){
+        pasteColumn();
+        Serial.println("Element selected PASTE COLUMN");
+     }
+      else if(ts_x < halfXpalette && ts_y > halfYpalette){
+        insertColumn();
+        Serial.println("Element selected INSERT COLUMN");
+      }
+      else if(ts_x > halfXpalette && ts_y > halfYpalette){
+        deleteColumn();
+        Serial.println("Element selected DELETE COLUMN");
+      }
+    }
+    else if(indexLadderEditor == 3){                                     // 3= ROW menu
+      if(ts_x < halfXpalette && ts_y < halfYpalette){
+        copyRow();
+        Serial.println("Element selected COPY ROW");
+      }
+      else if(ts_x > halfXpalette && ts_y < halfYpalette){
+        pasteRow();
+        Serial.println("Element selected PASTE ROW");
+      }
+      else if(ts_x < halfXpalette && ts_y > halfYpalette){
+        insertRow();
+        Serial.println("Element selected INSERT ROW");
+      }
+      else if(ts_x > halfXpalette && ts_y > halfYpalette){
+        deleteRow();
+        Serial.println("Element selected DELETE ROW");
+      }
+    }
+    else if(indexLadderEditor == 4){                                     // 4= NETWORK menu
+      if(ts_x < halfXpalette && ts_y < halfYpalette){
+        copyNetwork();
+        Serial.println("Element selected COPY NETWORK");
+      }
+      else if(ts_x > halfXpalette && ts_y < halfYpalette){
+        pasteNetwork();
+        Serial.println("Element selected PASTE NETWORK");
+      }
+      else if(ts_x < halfXpalette && ts_y > halfYpalette){
+        insertNetwork();
+        Serial.println("Element selected INSERT NETWORK");
+      }
+      else if(ts_x > halfXpalette && ts_y > halfYpalette){
+        deleteNetwork();
+        Serial.println("Element selected DELETE NETWORK");
+      }
     }
   }
 }
@@ -440,3 +492,191 @@ void deleteElement(void){
     }
   }
 }
+
+//--------------------------------------------------------------------------------
+// Elements edition: Copy Column 
+//--------------------------------------------------------------------------------
+
+void copyColumn(void){
+  if (columnContainsWideInstruction(ladderEditorColumn)){
+    messageCode = MESSAGE_CANNOT_COPY_COLUMN;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    copyMemoryColumn.column[row] = editingNetwork.Cells[row][ladderEditorColumn];
+  }
+  copyMemoryColumn.bar = editingNetwork.Bars[ladderEditorColumn];
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Paste Column 
+//--------------------------------------------------------------------------------
+
+void pasteColumn(void){
+  if(!columnIsEmpty(ladderEditorColumn)){
+    messageCode = MESSAGE_COLUMN_NOT_EMPTY;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    editingNetwork.Cells[row][ladderEditorColumn] = copyMemoryColumn.column[row];
+  }
+  editingNetwork.Bars[ladderEditorColumn] = copyMemoryColumn.bar;
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Insert Column 
+//--------------------------------------------------------------------------------
+
+void insertColumn(void){
+  if(!columnIsEmpty(NET_COLUMNS-1)){
+    messageCode = MESSAGE_CANNOT_INSERT_COLUMN;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  for(uint16_t row = 0; row < NET_ROWS; row++){
+    if((editingNetwork.Cells[row][ladderEditorColumn].Code >> 15) == 1){
+      messageCode = MESSAGE_CANNOT_SPLIT_INSTRUCTION;
+      HMI_PageMemory = HMI_Page;
+      HMI_Page = PAGE_DialogMessage;
+      return;
+    }
+  }
+  for(int16_t column = NET_COLUMNS-1; column > ladderEditorColumn; column--) {
+    for (uint16_t row = 0; row < NET_ROWS; row++){
+      editingNetwork.Cells[row][column] = editingNetwork.Cells[row][column-1];
+    }
+  }
+  deleteGivenColumn(ladderEditorColumn);
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Delete Column 
+//--------------------------------------------------------------------------------
+
+void deleteColumn(void){
+  if (columnContainsWideInstruction(ladderEditorColumn)){
+    messageCode = MESSAGE_CANNOT_DELETE_COLUMN;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+  }
+  else if(!columnIsEmpty(ladderEditorColumn)){
+    deleteGivenColumn(ladderEditorColumn);
+  }
+  else{ // Shift Newtwork content to left and delete last column
+ // lucas
+  }
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Copy Row
+//--------------------------------------------------------------------------------
+
+void copyRow(void){
+
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Paste Row 
+//--------------------------------------------------------------------------------
+
+void pasteRow(void){
+
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Insert Row
+//--------------------------------------------------------------------------------
+
+void insertRow(void){
+
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Delete Row
+//--------------------------------------------------------------------------------
+
+void deleteRow(void){
+
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Copy Network
+//--------------------------------------------------------------------------------
+
+void copyNetwork(void){
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Paste Network
+//--------------------------------------------------------------------------------
+
+void pasteNetwork(void){
+
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Insert Network
+//--------------------------------------------------------------------------------
+
+void insertNetwork(void){
+
+}
+
+//--------------------------------------------------------------------------------
+// Elements edition: Delete Network
+//--------------------------------------------------------------------------------
+
+void deleteNetwork(void){
+
+}
+
+//--------------------------------------------------------------------------------
+// Return True if Column does not have an instruction wider than 1 Cell 
+// Column can be deleted or copy
+//--------------------------------------------------------------------------------
+
+uint16_t columnContainsWideInstruction(uint16_t column){
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    if(instructionWidth[editingNetwork.Cells[row][column].Code && CELL_CODE_MASK] > 1){
+      return 1;
+    };
+  }
+  return 0;
+}
+
+//--------------------------------------------------------------------------------
+// Return True if Column is empty
+// Used to validate INSERT and PASTE column
+//--------------------------------------------------------------------------------
+
+uint16_t columnIsEmpty(uint16_t column){
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    if(editingNetwork.Cells[row][column].Code != 0){
+      return 0;
+    };
+  }
+  return 1;
+}
+
+//--------------------------------------------------------------------------------
+// Delete column with no control
+// Must be previously checked for double column instructions
+//--------------------------------------------------------------------------------
+
+void deleteGivenColumn(uint16_t column){
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    editingNetwork.Cells[row][column].Code = 0;
+    editingNetwork.Cells[row][column].Data = 0;
+    editingNetwork.Cells[row][column].Type = 0;
+  }
+  editingNetwork.Bars[column] = 0;
+}
+
+  // messageCode = MESSAGE_NO_ROWS;
+  // HMI_PageMemory = HMI_Page;
+  // HMI_Page = PAGE_DialogMessage;

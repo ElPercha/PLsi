@@ -8,6 +8,10 @@ Network execNetwork;
 Network onlineNetwork;
 Network editingNetwork;
 
+Network copyMemoryNetwork;
+memoryColumn copyMemoryColumn;
+memoryRow copyMemoryRow;
+
 //--------------------------------------------------------------------------------
 // PLC Memory types definitions 
 // Byte is used for Bits for increased performance of Scan time

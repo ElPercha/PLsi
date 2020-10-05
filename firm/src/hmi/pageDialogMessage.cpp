@@ -73,6 +73,70 @@ void drawDialogMessage (void){
     tft.setCursor(30, 170);
     tft.print("TOUCH TO CONTINUE...");
   }
+  else if (messageCode == MESSAGE_CANNOT_COPY_COLUMN){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT COPY COLUMN");
+    tft.setCursor(30, 65);
+    tft.print("CONTAINING DOUBLE");
+    tft.setCursor(30, 85);
+    tft.print("COLUMN INSTRUCTIONS");
+    tft.setCursor(30, 105);
+    tft.print("COPY NETWORK INSTEAD");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_CANNOT_COPY_ROW){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT COPY ROW");
+    tft.setCursor(30, 65);
+    tft.print("CONTAINING INSTRUCTIONS");
+    tft.setCursor(30, 85);
+    tft.print("HIGHER THAN 1 CELL");
+    tft.setCursor(30, 105);
+    tft.print("COPY NETWORK INSTEAD");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_COLUMN_NOT_EMPTY){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT PASTE");
+    tft.setCursor(30, 65);
+    tft.print("COLUMN IS NOT EMPTY");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_CANNOT_DELETE_COLUMN){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT DELETE COLUMN");
+    tft.setCursor(30, 65);
+    tft.print("CONTAINING DOUBLE");
+    tft.setCursor(30, 85);
+    tft.print("COLUMN INSTRUCTIONS");
+    tft.setCursor(30, 105);
+    tft.print("DELETE NETWORK INSTEAD");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_CANNOT_INSERT_COLUMN){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT INSERT COLUMN");
+    tft.setCursor(30, 65);
+    tft.print("LAST COLUMN");
+    tft.setCursor(30, 85);
+    tft.print("IS NOT EMPTY");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_CANNOT_SPLIT_INSTRUCTION){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT INSERT COLUMN");
+    tft.setCursor(30, 65);
+    tft.print("CANNOT SPLIT INSTRUCTION");
+    tft.setCursor(30, 85);
+    tft.print("SELECT THE RIGHT COLUMN");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
 }
 
 //--------------------------------------------------------------------------------
