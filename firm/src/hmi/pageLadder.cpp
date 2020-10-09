@@ -193,7 +193,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
     else{
       HMI_Page = PAGE_LadderDetails;
     }
-    // Serial.print ("Touched Row Cell: ");
+    // Serial.print ("Touched Row Cell: "); //lucas
     // Serial.println (ladderTouched.Logic.Row);
     // Serial.print ("Touched Col Cell: ");
     // Serial.println (ladderTouched.Logic.Col);

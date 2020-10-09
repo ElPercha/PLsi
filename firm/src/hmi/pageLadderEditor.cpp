@@ -243,12 +243,15 @@ void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
     if(ts_x < BUTTON_W1 - SPACING1){                     // DELETE
       deleteElement();
       onlineNetwork = editingNetwork;
+      Serial.println("LadderEditor - DELETE");
     }
     else if(ts_x < BUTTON_W1*2 - SPACING1*2){            // CANCEL
       editingNetwork = onlineNetwork;
+      Serial.println("LadderEditor - CANCEL");
     }
     else{                                                // ACCEPT
       onlineNetwork = editingNetwork;
+      Serial.println("LadderEditor - ACCEPT");
     }
     HMI_Page = PAGE_MainLadder;
   }
@@ -508,6 +511,7 @@ void copyColumn(void){
     copyMemoryColumn.column[row] = editingNetwork.Cells[row][ladderEditorColumn];
   }
   copyMemoryColumn.bar = editingNetwork.Bars[ladderEditorColumn];
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -525,6 +529,7 @@ void pasteColumn(void){
     editingNetwork.Cells[row][ladderEditorColumn] = copyMemoryColumn.column[row];
   }
   editingNetwork.Bars[ladderEditorColumn] = copyMemoryColumn.bar;
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -550,12 +555,17 @@ void insertColumn(void){
     for (uint16_t row = 0; row < NET_ROWS; row++){
       editingNetwork.Cells[row][column] = editingNetwork.Cells[row][column-1];
     }
+    editingNetwork.Bars[column] = editingNetwork.Bars[column-1];
   }
   deleteGivenColumn(ladderEditorColumn);
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
 // Elements edition: Delete Column 
+//    If instruction is double width, it cannot be splitted -> User Message
+//    If column is not empty: delete it
+//    If column is empty: Shift Newtwork content to left and delete last column
 //--------------------------------------------------------------------------------
 
 void deleteColumn(void){
@@ -563,13 +573,23 @@ void deleteColumn(void){
     messageCode = MESSAGE_CANNOT_DELETE_COLUMN;
     HMI_PageMemory = HMI_Page;
     HMI_Page = PAGE_DialogMessage;
+    return;
   }
   else if(!columnIsEmpty(ladderEditorColumn)){
     deleteGivenColumn(ladderEditorColumn);
   }
-  else{ // Shift Newtwork content to left and delete last column
- // lucas
+  else{ 
+    for(int16_t column = ladderEditorColumn; column < NET_COLUMNS-1; column++) {
+      for (uint16_t row = 0; row < NET_ROWS; row++){
+        editingNetwork.Cells[row][column] = editingNetwork.Cells[row][column+1];
+      }
+    }
+    for(int16_t column = ladderEditorColumn; column < NET_COLUMNS-2; column++) { //dont bring Bars from column 5, they doesnt exist
+      editingNetwork.Bars[column] = editingNetwork.Bars[column+1];
+    }  
+    deleteGivenColumn(NET_COLUMNS-1);
   }
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -677,6 +697,19 @@ void deleteGivenColumn(uint16_t column){
   editingNetwork.Bars[column] = 0;
 }
 
+//--------------------------------------------------------------------------------
+// Elements edition - Go back and accept change
+//--------------------------------------------------------------------------------
+
+void elementsEditionAccept(void){
+  onlineNetwork = editingNetwork;
+  HMI_Page = PAGE_MainLadder;
+}
+
+  // lucas
   // messageCode = MESSAGE_NO_ROWS;
   // HMI_PageMemory = HMI_Page;
   // HMI_Page = PAGE_DialogMessage;
+
+
+

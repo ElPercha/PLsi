@@ -302,6 +302,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
   uint16_t columnContainsWideInstruction(uint16_t column);
   uint16_t columnIsEmpty(uint16_t column);
   void deleteGivenColumn(uint16_t column);
+  void elementsEditionAccept(void);
 void touchEditLadderInstructions1 (uint16_t ts_x, uint16_t ts_y);
 void touchEditLadderInstructions2 (uint16_t ts_x, uint16_t ts_y);
 void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
