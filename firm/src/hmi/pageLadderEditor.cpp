@@ -11,7 +11,7 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   // draw full Page on first load
   //-------------------------------
     
-    if(firstLoad){
+    if (firstLoad){
       editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code & CELL_CODE_MASK;
       drawLadderEditorBase();
       drawLadderEditor();
@@ -151,18 +151,18 @@ void drawLadderEditorInstructionsMenu(void){
       
       // Draw Button
       tft.fillRoundRect(BORDER3+BUTTON_W3*col+SPACING3*col, BUTTON_Y3+BUTTON_H3*row+SPACING3*row, BUTTON_W3, BUTTON_H3, 8, COLOR_BUTTON_BORDER_LADDER_EDITOR);
-      if(editingInstructionCode == menuInstructions[indexLadderEditor][index]){
+      if (editingInstructionCode == menuInstructions[indexLadderEditor][index]){
         auxColor = COLOR_BUTTON_INSTRUCTION_SELECTED;
       }
-      else{
+      else {
         auxColor = COLOR_BUTTON_INSTRUCTION;
       }
 
-      if(menuInstructions[indexLadderEditor][index] == BAR_MNEMONIC_CODE){
-        if(editingNetwork.Bars[ladderEditorColumn] & FlagsMask[ladderEditorRow]){
+      if (menuInstructions[indexLadderEditor][index] == BAR_MNEMONIC_CODE){
+        if (editingNetwork.Bars[ladderEditorColumn] & FlagsMask[ladderEditorRow]){
           auxColor = COLOR_BUTTON_INSTRUCTION_SELECTED;
         }
-        else{
+        else {
           auxColor = COLOR_BUTTON_INSTRUCTION;
         }
       }
@@ -177,7 +177,7 @@ void drawLadderEditorInstructionsMenu(void){
         tft.setCursor(auxX, BUTTON_Y3+BUTTON_H3*row+SPACING3*row + 16);
         tft.print(BAR_MNEMONIC);
       }
-      else{
+      else { 
         auxX = auxX - MnemonicsCodes[menuInstructions[indexLadderEditor][index]].length()*6 + 1;  // Text length offset. Font size 2 is 10 pixel width and 2 px spacing (6 = (10+2)/2)
         tft.setCursor(auxX, BUTTON_Y3+BUTTON_H3*row+SPACING3*row + 16);
         tft.print(MnemonicsCodes[menuInstructions[indexLadderEditor][index]]);
@@ -206,10 +206,10 @@ void drawLadderEditorElementsMenu(void){
   if (indexLadderEditor == 2){
     auxColor = COLOR_BUTTON_COLUMN;
   }
-  else if(indexLadderEditor == 3){
+  else if (indexLadderEditor == 3){
     auxColor = COLOR_BUTTON_ROW;
   }
-  else if(indexLadderEditor == 4){
+  else if (indexLadderEditor == 4){
     auxColor = COLOR_BUTTON_NETWORK;
   }
 
@@ -239,33 +239,33 @@ void drawLadderEditorElementsMenu(void){
 
 void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
     
-  if(ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1){
-    if(ts_x < BUTTON_W1 - SPACING1){                     // DELETE
+  if (ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1){
+    if (ts_x < BUTTON_W1 - SPACING1){                     // DELETE
       deleteElement();
       onlineNetwork = editingNetwork;
       Serial.println("LadderEditor - DELETE");
     }
-    else if(ts_x < BUTTON_W1*2 - SPACING1*2){            // CANCEL
+    else if (ts_x < BUTTON_W1*2 - SPACING1*2){            // CANCEL
       editingNetwork = onlineNetwork;
       Serial.println("LadderEditor - CANCEL");
     }
-    else{                                                // ACCEPT
+    else {                                                // ACCEPT
       onlineNetwork = editingNetwork;
       Serial.println("LadderEditor - ACCEPT");
     }
     HMI_Page = PAGE_MainLadder;
   }
-  else if(ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){
-    if(ts_x < BUTTON_W2 + SPACING2){                     // LEFT ARROW
+  else if (ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){
+    if (ts_x < BUTTON_W2 + SPACING2){                     // LEFT ARROW
       if (indexLadderEditor > 0){
         indexLadderEditor--;
       }
-      else{
+      else {
         indexLadderEditor = PAGES_LADDER_EDITOR - 1;
       }
       drawLadderEditor();
     }
-    else if(ts_x > TFT_PIXELS_X - BUTTON_W2 - SPACING2){ // RIGHT ARROW
+    else if (ts_x > TFT_PIXELS_X - BUTTON_W2 - SPACING2){ // RIGHT ARROW
       indexLadderEditor++;
       if (indexLadderEditor >= PAGES_LADDER_EDITOR){
         indexLadderEditor = 0;
@@ -286,8 +286,8 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
   uint16_t halfXpalette = BORDER4H + BUTTON_W4 + SPACING4/2;
   uint16_t halfYpalette = BORDER4V + BUTTON_H4 + SPACING4/2;
 
-  if(ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){ // Touch is in the palette area
-    if(indexLadderEditor < 2){                                           // Page 0 and 1 only
+  if (ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){ // Touch is in the palette area
+    if (indexLadderEditor < 2){                                           // Page 0 and 1 only
       for (uint16_t row = 0; row < 3; row++){                            // Instruction matrix 3 x 5
         for (uint16_t col = 0; col < 5; col++){
           index = row*5+col;
@@ -334,56 +334,56 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
         }
       }
     }
-    else if(indexLadderEditor == 2){                                     // 2= COLUMN menu 
-      if(ts_x < halfXpalette && ts_y < halfYpalette){
+    else if (indexLadderEditor == 2){                                     // 2= COLUMN menu 
+      if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyColumn();
         Serial.println("Element selected COPY COLUMN");
        }
-      else if(ts_x > halfXpalette && ts_y < halfYpalette){
+      else if (ts_x > halfXpalette && ts_y < halfYpalette){
         pasteColumn();
         Serial.println("Element selected PASTE COLUMN");
      }
-      else if(ts_x < halfXpalette && ts_y > halfYpalette){
+      else if (ts_x < halfXpalette && ts_y > halfYpalette){
         insertColumn();
         Serial.println("Element selected INSERT COLUMN");
       }
-      else if(ts_x > halfXpalette && ts_y > halfYpalette){
+      else if (ts_x > halfXpalette && ts_y > halfYpalette){
         deleteColumn();
         Serial.println("Element selected DELETE COLUMN");
       }
     }
-    else if(indexLadderEditor == 3){                                     // 3= ROW menu
-      if(ts_x < halfXpalette && ts_y < halfYpalette){
+    else if (indexLadderEditor == 3){                                     // 3= ROW menu
+      if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyRow();
         Serial.println("Element selected COPY ROW");
       }
-      else if(ts_x > halfXpalette && ts_y < halfYpalette){
+      else if (ts_x > halfXpalette && ts_y < halfYpalette){
         pasteRow();
         Serial.println("Element selected PASTE ROW");
       }
-      else if(ts_x < halfXpalette && ts_y > halfYpalette){
+      else if (ts_x < halfXpalette && ts_y > halfYpalette){
         insertRow();
         Serial.println("Element selected INSERT ROW");
       }
-      else if(ts_x > halfXpalette && ts_y > halfYpalette){
+      else if (ts_x > halfXpalette && ts_y > halfYpalette){
         deleteRow();
         Serial.println("Element selected DELETE ROW");
       }
     }
-    else if(indexLadderEditor == 4){                                     // 4= NETWORK menu
-      if(ts_x < halfXpalette && ts_y < halfYpalette){
+    else if (indexLadderEditor == 4){                                     // 4= NETWORK menu
+      if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyNetwork();
         Serial.println("Element selected COPY NETWORK");
       }
-      else if(ts_x > halfXpalette && ts_y < halfYpalette){
+      else if (ts_x > halfXpalette && ts_y < halfYpalette){
         pasteNetwork();
         Serial.println("Element selected PASTE NETWORK");
       }
-      else if(ts_x < halfXpalette && ts_y > halfYpalette){
+      else if (ts_x < halfXpalette && ts_y > halfYpalette){
         insertNetwork();
         Serial.println("Element selected INSERT NETWORK");
       }
-      else if(ts_x > halfXpalette && ts_y > halfYpalette){
+      else if (ts_x > halfXpalette && ts_y > halfYpalette){
         deleteNetwork();
         Serial.println("Element selected DELETE NETWORK");
       }
@@ -403,7 +403,7 @@ void touchLadderEditorToggleBar(void){
       FlagMaskInverted = FlagMaskInverted ^ FlagsMask[ladderEditorRow];
       editingNetwork.Bars[ladderEditorColumn] = editingNetwork.Bars[ladderEditorColumn] & FlagMaskInverted; 
     }
-    else{
+    else {
       editingNetwork.Bars[ladderEditorColumn] = editingNetwork.Bars[ladderEditorColumn] | FlagsMask[ladderEditorRow]; 
     }
   }              
@@ -418,31 +418,31 @@ void touchLadderEditorToggleBar(void){
 
 uint16_t checkValidEdition(uint16_t selectedInstructionCode){
   
-  if(instructionWidth[editingInstructionCode] == instructionWidth[selectedInstructionCode] && instructionHeight[editingInstructionCode] == instructionHeight[selectedInstructionCode]){
+  if (instructionWidth[editingInstructionCode] == instructionWidth[selectedInstructionCode] && instructionHeight[editingInstructionCode] == instructionHeight[selectedInstructionCode]){
     return 1;
   }
-  else{
+  else {
     uint16_t row, column;
 
-    for(uint16_t width=0; width < instructionWidth[selectedInstructionCode]; width++){
-      for(uint16_t height=0; height < instructionHeight[selectedInstructionCode]; height++){
+    for (uint16_t width=0; width < instructionWidth[selectedInstructionCode]; width++){
+      for (uint16_t height=0; height < instructionHeight[selectedInstructionCode]; height++){
 
         row = ladderEditorRow + height;
         column = ladderEditorColumn + width;
 
-        if(row >= NET_ROWS){
+        if (row >= NET_ROWS){
           messageCode = MESSAGE_NO_ROWS;
           HMI_PageMemory = HMI_Page;
           HMI_Page = PAGE_DialogMessage;
           return 0;
         }
-        if(column >= NET_COLUMNS){
+        if (column >= NET_COLUMNS){
           messageCode = MESSAGE_NO_COLUMNS;
           HMI_PageMemory = HMI_Page;
           HMI_Page = PAGE_DialogMessage;
           return 0;
         }
-        if(onlineNetwork.Cells[row][column].Code != 0){
+        if (onlineNetwork.Cells[row][column].Code != 0){
           messageCode = MESSAGE_SPACE_USED;
           HMI_PageMemory = HMI_Page;
           HMI_Page = PAGE_DialogMessage;
@@ -474,20 +474,20 @@ void deleteElement(void){
 
   uint16_t instructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code;
 
-  if( instructionCode == 0){
+  if (instructionCode == 0){
     // No instruction to delete
   }
-  else if(instructionWidth[instructionCode] == 1 && instructionHeight[instructionCode] == 1){
+  else if (instructionWidth[instructionCode] == 1 && instructionHeight[instructionCode] == 1){
     editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = 0;
     editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = 0;
     editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type = 0;
   }
-  else{
+  else {
     uint16_t firstRowInstruction = ladderEditorRow - (instructionCode >> 12);
     uint16_t firstColumnInstruction = ladderEditorColumn - (instructionCode >> 15);
   
-    for(uint16_t width=0; width < instructionWidth[instructionCode]; width++){
-      for(uint16_t height=0; height < instructionHeight[instructionCode]; height++){
+    for (uint16_t width=0; width < instructionWidth[instructionCode]; width++){
+      for (uint16_t height=0; height < instructionHeight[instructionCode]; height++){
         editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Code = 0;
         editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Data = 0;
         editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Type = 0;
@@ -519,7 +519,7 @@ void copyColumn(void){
 //--------------------------------------------------------------------------------
 
 void pasteColumn(void){
-  if(!columnIsEmpty(ladderEditorColumn)){
+  if (!columnIsEmpty(ladderEditorColumn)){
     messageCode = MESSAGE_COLUMN_NOT_EMPTY;
     HMI_PageMemory = HMI_Page;
     HMI_Page = PAGE_DialogMessage;
@@ -537,21 +537,21 @@ void pasteColumn(void){
 //--------------------------------------------------------------------------------
 
 void insertColumn(void){
-  if(!columnIsEmpty(NET_COLUMNS-1)){
+  if (!columnIsEmpty(NET_COLUMNS-1)){
     messageCode = MESSAGE_CANNOT_INSERT_COLUMN;
     HMI_PageMemory = HMI_Page;
     HMI_Page = PAGE_DialogMessage;
     return;
   }
-  for(uint16_t row = 0; row < NET_ROWS; row++){
-    if((editingNetwork.Cells[row][ladderEditorColumn].Code >> 15) == 1){
-      messageCode = MESSAGE_CANNOT_SPLIT_INSTRUCTION;
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    if ((editingNetwork.Cells[row][ladderEditorColumn].Code >> 15) == 1){
+      messageCode = MESSAGE_CANNOT_SPLIT_WIDE_INSTR;
       HMI_PageMemory = HMI_Page;
       HMI_Page = PAGE_DialogMessage;
       return;
     }
   }
-  for(int16_t column = NET_COLUMNS-1; column > ladderEditorColumn; column--) {
+  for (int16_t column = NET_COLUMNS-1; column > ladderEditorColumn; column--) {
     for (uint16_t row = 0; row < NET_ROWS; row++){
       editingNetwork.Cells[row][column] = editingNetwork.Cells[row][column-1];
     }
@@ -575,18 +575,19 @@ void deleteColumn(void){
     HMI_Page = PAGE_DialogMessage;
     return;
   }
-  else if(!columnIsEmpty(ladderEditorColumn)){
+  else if (!columnIsEmpty(ladderEditorColumn)){
     deleteGivenColumn(ladderEditorColumn);
   }
-  else{ 
-    for(int16_t column = ladderEditorColumn; column < NET_COLUMNS-1; column++) {
+  else { 
+    for (int16_t column = ladderEditorColumn; column < NET_COLUMNS-1; column++) {
       for (uint16_t row = 0; row < NET_ROWS; row++){
         editingNetwork.Cells[row][column] = editingNetwork.Cells[row][column+1];
       }
     }
-    for(int16_t column = ladderEditorColumn; column < NET_COLUMNS-2; column++) { //dont bring Bars from column 5, they doesnt exist
+    for (int16_t column = ladderEditorColumn; column < NET_COLUMNS-2; column++) { //dont bring Bars from column 5, they doesn't exist
       editingNetwork.Bars[column] = editingNetwork.Bars[column+1];
     }  
+    editingNetwork.Bars[NET_COLUMNS-2] = 0; // This is because it supposed to copy Bars from Column 5 with 0 value but it doesn't happen
     deleteGivenColumn(NET_COLUMNS-1);
   }
   elementsEditionAccept();
@@ -597,7 +598,24 @@ void deleteColumn(void){
 //--------------------------------------------------------------------------------
 
 void copyRow(void){
-
+  if (rowContainsHighInstruction(ladderEditorRow)){
+    messageCode = MESSAGE_CANNOT_COPY_ROW;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  for (uint16_t col = 0; col < NET_COLUMNS; col++){
+    copyMemoryRow.row[col] = editingNetwork.Cells[ladderEditorRow][col];
+  }
+  for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+    if (editingNetwork.Bars[col] & FlagsMask[ladderEditorRow]){
+      copyMemoryRow.bar |= FlagsMask[col]; 
+    }
+    else {
+      copyMemoryRow.bar &= FlagsMaskAnd[col]; 
+    }
+  }
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -605,7 +623,24 @@ void copyRow(void){
 //--------------------------------------------------------------------------------
 
 void pasteRow(void){
-
+  if (!rowIsEmpty(ladderEditorRow)){
+    messageCode = MESSAGE_ROW_NOT_EMPTY;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  for (uint16_t col = 0; col < NET_COLUMNS; col++){
+    editingNetwork.Cells[ladderEditorRow][col] = copyMemoryRow.row[col];
+  }
+  for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+    if (copyMemoryRow.bar & FlagsMask[col]){
+      editingNetwork.Bars[col] |= FlagsMask[ladderEditorRow]; 
+    }
+    else {
+      editingNetwork.Bars[col] &= FlagsMaskAnd[ladderEditorRow]; 
+    }
+  }
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -613,7 +648,37 @@ void pasteRow(void){
 //--------------------------------------------------------------------------------
 
 void insertRow(void){
-
+  if (!rowIsEmpty(NET_ROWS-1)){
+    messageCode = MESSAGE_CANNOT_INSERT_ROW;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  for (uint16_t col = 0; col < NET_ROWS; col++){
+    if(((editingNetwork.Cells[ladderEditorRow][col].Code >> 12) & 0x0007) >= 1){ //0x0007 to remove higher bit that represent the width and not the height
+      messageCode = MESSAGE_CANNOT_SPLIT_HIGH_INSTR;
+      HMI_PageMemory = HMI_Page;
+      HMI_Page = PAGE_DialogMessage;
+      return;
+    }
+  }
+  for (int16_t row = NET_ROWS-1; row > ladderEditorRow; row--) {
+    for (uint16_t col = 0; col < NET_COLUMNS; col++){
+      editingNetwork.Cells[row][col] = editingNetwork.Cells[row-1][col];
+    }
+  }
+  for (int16_t row = NET_ROWS-2; row > ladderEditorRow; row--) {
+    for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+      if (editingNetwork.Bars[col] & FlagsMask[row]){
+        editingNetwork.Bars[col] |= FlagsMask[row+1]; 
+      }
+      else{
+        editingNetwork.Bars[col] &= FlagsMaskAnd[row+1]; 
+      }
+    }
+  }  
+  deleteGivenRow(ladderEditorRow);
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -621,7 +686,35 @@ void insertRow(void){
 //--------------------------------------------------------------------------------
 
 void deleteRow(void){
-
+  if (rowContainsHighInstruction(ladderEditorRow)){
+    messageCode = MESSAGE_CANNOT_DELETE_ROW;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  else if (!rowIsEmpty(ladderEditorRow)){
+    deleteGivenRow(ladderEditorRow);
+  }
+  else { // Row is empty, shift network up from selected row
+    for (int16_t row = ladderEditorRow; row < NET_ROWS-1; row++) {
+      for (uint16_t col = 0; col < NET_COLUMNS; col++){
+        editingNetwork.Cells[row][col] = editingNetwork.Cells[row+1][col];
+      }
+      for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+        if (row == NET_ROWS-2){
+          editingNetwork.Bars[col] &= FlagsMaskAnd[row]; 
+        }
+        else if (editingNetwork.Bars[col] & FlagsMask[row+1]){
+          editingNetwork.Bars[col] |= FlagsMask[row]; 
+        }
+        else {
+          editingNetwork.Bars[col] &= FlagsMaskAnd[row]; 
+        }
+      }
+    }
+    deleteGivenRow(NET_ROWS-1);
+  }
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -662,7 +755,7 @@ void deleteNetwork(void){
 
 uint16_t columnContainsWideInstruction(uint16_t column){
   for (uint16_t row = 0; row < NET_ROWS; row++){
-    if(instructionWidth[editingNetwork.Cells[row][column].Code && CELL_CODE_MASK] > 1){
+    if(instructionWidth[editingNetwork.Cells[row][column].Code & CELL_CODE_MASK] > 1){
       return 1;
     };
   }
@@ -698,6 +791,50 @@ void deleteGivenColumn(uint16_t column){
 }
 
 //--------------------------------------------------------------------------------
+// Return True if Row does not have an instruction higher than 1 Cell 
+// Row can be deleted or copy
+//--------------------------------------------------------------------------------
+
+uint16_t rowContainsHighInstruction(uint16_t row){
+  for (uint16_t col = 0; col < NET_COLUMNS; col++){
+    if(instructionHeight[editingNetwork.Cells[row][col].Code & CELL_CODE_MASK] > 1){
+      return 1;
+    };
+  }
+  return 0;
+}
+
+//--------------------------------------------------------------------------------
+// Return True if Row is empty
+// Used to validate INSERT and PASTE column
+//--------------------------------------------------------------------------------
+
+uint16_t rowIsEmpty(uint16_t row){
+  for (uint16_t col = 0; col < NET_COLUMNS; col++){
+    if(editingNetwork.Cells[row][col].Code != 0){
+      return 0;
+    };
+  }
+  return 1;
+}
+
+//--------------------------------------------------------------------------------
+// Delete Row with no control
+// Must be previously checked for double+ height instructions
+//--------------------------------------------------------------------------------
+
+void deleteGivenRow(uint16_t row){
+  for (uint16_t col = 0; col < NET_COLUMNS; col++){
+    editingNetwork.Cells[row][col].Code = 0;
+    editingNetwork.Cells[row][col].Data = 0;
+    editingNetwork.Cells[row][col].Type = 0;
+  }
+  for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+    editingNetwork.Bars[col] &= FlagsMaskAnd[row]; 
+  }
+}
+
+//--------------------------------------------------------------------------------
 // Elements edition - Go back and accept change
 //--------------------------------------------------------------------------------
 
@@ -705,11 +842,3 @@ void elementsEditionAccept(void){
   onlineNetwork = editingNetwork;
   HMI_Page = PAGE_MainLadder;
 }
-
-  // lucas
-  // messageCode = MESSAGE_NO_ROWS;
-  // HMI_PageMemory = HMI_Page;
-  // HMI_Page = PAGE_DialogMessage;
-
-
-

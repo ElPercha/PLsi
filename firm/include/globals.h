@@ -249,5 +249,6 @@ extern uint16_t updateSelectedProgramDisk;
 //--------------------------------------------------------------------------------
 
 extern const uint16_t FlagsMask[NET_ROWS];
+extern const uint16_t FlagsMaskAnd[NET_ROWS];
 
 #endif

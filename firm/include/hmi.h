@@ -132,9 +132,13 @@ extern unsigned long actualScanTime;
 #define MESSAGE_CANNOT_COPY_COLUMN          4 
 #define MESSAGE_CANNOT_COPY_ROW             5
 #define MESSAGE_COLUMN_NOT_EMPTY            6
-#define MESSAGE_CANNOT_DELETE_COLUMN        7
-#define MESSAGE_CANNOT_INSERT_COLUMN        8 
-#define MESSAGE_CANNOT_SPLIT_INSTRUCTION    9
+#define MESSAGE_ROW_NOT_EMPTY               7
+#define MESSAGE_CANNOT_DELETE_COLUMN        8
+#define MESSAGE_CANNOT_DELETE_ROW           9
+#define MESSAGE_CANNOT_INSERT_COLUMN       10 
+#define MESSAGE_CANNOT_INSERT_ROW          11 
+#define MESSAGE_CANNOT_SPLIT_WIDE_INSTR    12
+#define MESSAGE_CANNOT_SPLIT_HIGH_INSTR    13
 
 //--------------------------------------------------------------------------------
 // TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO
@@ -300,8 +304,12 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
   void insertNetwork(void);
   void deleteNetwork(void);
   uint16_t columnContainsWideInstruction(uint16_t column);
+  uint16_t columnContainsHighInstruction(uint16_t row);
   uint16_t columnIsEmpty(uint16_t column);
   void deleteGivenColumn(uint16_t column);
+  uint16_t rowContainsHighInstruction(uint16_t row);
+  uint16_t rowIsEmpty(uint16_t row);
+  void deleteGivenRow(uint16_t row);
   void elementsEditionAccept(void);
 void touchEditLadderInstructions1 (uint16_t ts_x, uint16_t ts_y);
 void touchEditLadderInstructions2 (uint16_t ts_x, uint16_t ts_y);
