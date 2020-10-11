@@ -149,7 +149,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
     ladderTouched.Menu = 0;
     editionMode = 0;
     showingNetwork++;
-    if (showingNetwork >= settings.ladder.NetworksQuantity-1){showingNetwork=0;}
+    if (showingNetwork >= settings.ladder.NetworksQuantity){showingNetwork=0;}
   }
   if(ladderTouched.Menu == 5){ // EDIT / SAVE
     ladderTouched.Menu = 0;

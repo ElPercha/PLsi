@@ -113,6 +113,14 @@ void drawDialogMessage (void){
     tft.setCursor(30, 170);
     tft.print("TOUCH TO CONTINUE...");
   }
+  else if (messageCode == MESSAGE_NETWORK_NOT_EMPTY){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT PASTE");
+    tft.setCursor(30, 65);
+    tft.print("NETWORK IS NOT EMPTY");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
   else if (messageCode == MESSAGE_CANNOT_DELETE_COLUMN){
     tft.setCursor(30, 45);
     tft.print("CANNOT DELETE COLUMN");
@@ -129,7 +137,7 @@ void drawDialogMessage (void){
     tft.setCursor(30, 45);
     tft.print("CANNOT DELETE ROW");
     tft.setCursor(30, 65);
-    tft.print("CONTAINING INSTRUCTIONS");
+    tft.print("CONTAINING INSTRUCTION");
     tft.setCursor(30, 85);
     tft.print("HIGHER THAN 1 CELL");
     tft.setCursor(30, 105);
@@ -152,6 +160,16 @@ void drawDialogMessage (void){
     tft.print("CANNOT INSERT ROW");
     tft.setCursor(30, 65);
     tft.print("LAST ROW");
+    tft.setCursor(30, 85);
+    tft.print("IS NOT EMPTY");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_CANNOT_INSERT_NETWORK){
+    tft.setCursor(30, 45);
+    tft.print("CANNOT INSERT NETWORK");
+    tft.setCursor(30, 65);
+    tft.print("LAST NETWORK");
     tft.setCursor(30, 85);
     tft.print("IS NOT EMPTY");
     tft.setCursor(30, 170);

@@ -34,6 +34,9 @@ void TaskDisk(void *pvParameters)
 
   loadSettings();
   
+
+  clearEmptyNetwork();
+  
   //----------------------------------------------------
   // Task Main loop 
   //----------------------------------------------------

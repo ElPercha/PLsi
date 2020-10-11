@@ -12,6 +12,8 @@
 
 void loadDisk(void);
 
+void clearEmptyNetwork(void);
+
 //--------------------------------------------------------------------------------
 // User Settings management functions
 //--------------------------------------------------------------------------------
@@ -19,5 +21,6 @@ void loadDisk(void);
 void loadSettings(void);
 void loadDefaultSettings(void);
 void saveSettings(void);
+
 
 #endif

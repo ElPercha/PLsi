@@ -1,8 +1,6 @@
 #include <globals.h>
 #include <tskLadder.h>
 #include <ladder.h>
-//#include <disk.h>
-
 #include "FS.h"
 #include "SPIFFS.h"
 
@@ -89,6 +87,58 @@ void TaskLadder(void *pvParameters)
 
       Networks[showingNetwork] = onlineNetwork;
       updateSelectedProgramRAM = 0;
+    }
+
+    //----------------------------------------------------------------
+    // Shift All networks down on RAM and SPIFSS
+    // Creates an empty Network in the selected Network by shifting the rest up (number)
+    // The last network has to be checked empty before enable this code
+    // 1 - Performs the RAM shift in one scan (all required networks)
+    // 2 - Delete showingNetwork Network because it gets duplicated
+    // 3 - Save the complete program to SPIFSS
+    //----------------------------------------------------------------
+
+    if (moveNetworksInsert > 0){
+      uint16_t startNetwork = moveNetworksInsert - 1;
+
+      for (uint16_t net = settings.ladder.NetworksQuantity-1; net > startNetwork; net--){
+        Networks[net] = Networks[net-1];
+      }
+      Networks[startNetwork] = emptyNetwork;
+
+      SPIFFS.begin();
+      File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
+      userProgramFile.write((uint8_t *)&Networks, sizeof(Networks));
+      userProgramFile.close();
+      SPIFFS.end();
+
+      moveNetworksInsert = 0;
+    }
+
+    //----------------------------------------------------------------
+    // Shift All networks up on RAM and SPIFSS
+    // Delete the current selected Network and shift the rest down (number)
+    // 1 - Performs the RAM shift in one scan (all required networks)
+    // 2 - Delete last Network because it gets duplicated
+    // 3 - Save the complete program to SPIFSS
+    //----------------------------------------------------------------
+
+    if(moveNetworksDelete > 0){
+      uint16_t startNetwork = moveNetworksDelete - 1;
+
+      for (uint16_t net = startNetwork; net < settings.ladder.NetworksQuantity-1; net++){
+        Networks[net] = Networks[net+1];
+      }
+      Networks[settings.ladder.NetworksQuantity-1] = emptyNetwork;
+      editingNetwork = Networks[startNetwork]; // It is already shifted
+
+      SPIFFS.begin();
+      File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
+      userProgramFile.write((uint8_t *)&Networks, sizeof(Networks));
+      userProgramFile.close();
+      SPIFFS.end();
+
+      moveNetworksDelete = 0;
     }
 
     //------------------------------------------------------

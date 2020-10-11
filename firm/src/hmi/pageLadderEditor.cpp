@@ -2,6 +2,10 @@
 #include <TFT_eSPI.h>
 #include <hmi.h>
 
+#include "FS.h"
+#include "SD.h"
+#include "SPIFFS.h"
+
 //--------------------------------------------------------------------------------
 //Ladder Editor main Page
 //--------------------------------------------------------------------------------
@@ -722,6 +726,8 @@ void deleteRow(void){
 //--------------------------------------------------------------------------------
 
 void copyNetwork(void){
+  copyMemoryNetwork = editingNetwork;
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -729,23 +735,54 @@ void copyNetwork(void){
 //--------------------------------------------------------------------------------
 
 void pasteNetwork(void){
-
+  if (!networkIsEmpty()){
+    messageCode = MESSAGE_NETWORK_NOT_EMPTY;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  editingNetwork = copyMemoryNetwork;
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
 // Elements edition: Insert Network
+// It has to be requested to tskLadder because it is not available on local RAM
+// And it has to be saved on SPIFSS memory
 //--------------------------------------------------------------------------------
 
 void insertNetwork(void){
-
+  if (!lastNetworkIsEmpty()){
+    messageCode = MESSAGE_CANNOT_INSERT_NETWORK;
+    HMI_PageMemory = HMI_Page;
+    HMI_Page = PAGE_DialogMessage;
+    return;
+  }
+  moveNetworksInsert = showingNetwork + 1;
+  while(moveNetworksInsert != 0){
+    delay(10);
+  }
+  editingNetwork = emptyNetwork;
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
 // Elements edition: Delete Network
+// It has to be requested to tskLadder because it is not available on local RAM
+// And it has to be saved on SPIFSS memory
 //--------------------------------------------------------------------------------
 
 void deleteNetwork(void){
-
+  if (!networkIsEmpty()){
+    editingNetwork = emptyNetwork;
+  }
+  else{
+    moveNetworksDelete = showingNetwork + 1;
+    while(moveNetworksDelete != 0){
+      delay(10);
+    }
+  }
+  elementsEditionAccept();
 }
 
 //--------------------------------------------------------------------------------
@@ -842,3 +879,54 @@ void elementsEditionAccept(void){
   onlineNetwork = editingNetwork;
   HMI_Page = PAGE_MainLadder;
 }
+
+//--------------------------------------------------------------------------------
+// Elements edition - Evaluate Network, Return 1 if Network is empty
+//--------------------------------------------------------------------------------
+
+uint16_t networkIsEmpty(void){
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    for (uint16_t col = 0; col < NET_COLUMNS; col++){
+      if (editingNetwork.Cells[row][col].Code != 0){
+        return 0;
+      };
+    }
+  }
+  for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+    if (editingNetwork.Bars[col] != 0){
+      return 0;
+    }
+  }
+  return 1;
+}
+
+//--------------------------------------------------------------------------------
+// Evaluates Last network
+//--------------------------------------------------------------------------------
+
+uint16_t lastNetworkIsEmpty(void){
+
+  Network auxNetwork;
+
+  SPIFFS.begin();
+  File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r");
+  userProgramFile.seek((settings.ladder.NetworksQuantity - 1) * sizeof(auxNetwork));
+  userProgramFile.read((uint8_t *)&auxNetwork, sizeof(auxNetwork));
+  userProgramFile.close();
+  SPIFFS.end();
+
+  for (uint16_t row = 0; row < NET_ROWS; row++){
+    for (uint16_t col = 0; col < NET_COLUMNS; col++){
+      if (auxNetwork.Cells[row][col].Code != 0){
+        return 0;
+      };
+    }
+  }
+  for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+    if (auxNetwork.Bars[col] != 0){
+      return 0;
+    }
+  }
+  return 1;
+}
+

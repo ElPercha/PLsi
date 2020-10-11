@@ -40,7 +40,7 @@ void savePreviousValues(void){
 // Deletes PLC Memory Areas
 //--------------------------------------------------------------------------------
 
-void clearMemory (void){
+void clearMemory(void){
   for (int i=0; i<QTY_M; i++){
     Mh[i] = 0;
     M[i] = 0; 
@@ -71,7 +71,7 @@ void clearMemory (void){
 // Wait for tskDisk to load the User Settings  
 //--------------------------------------------------------------------------------
 
-void ladderWaitSettings (void){
+void ladderWaitSettings(void){
   Serial.println("TaskLadder - Waiting for Unlock");
   while (bootSequence != BOOT_TASK_UNLOCKED){
     delay(10); // forces to update bootSequence global variable
@@ -84,7 +84,6 @@ void ladderWaitSettings (void){
 //--------------------------------------------------------------------------------
 
 void clearProgram (Network Networks[]){
-  // Creates a empty block of Networks that fits in Flash block size
   for (int n = 0; n < settings.ladder.NetworksQuantity; n++){
     Networks[n].Bars[0] = 0;
     Networks[n].Bars[1] = 0;

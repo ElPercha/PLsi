@@ -120,6 +120,7 @@ extern Network execNetwork;
 extern Network onlineNetwork;
 extern Network editingNetwork;
 extern Network copyMemoryNetwork;
+extern Network emptyNetwork; 
 
 typedef struct
 {
@@ -237,12 +238,14 @@ extern userSettings settings;
 extern uint16_t bootSequence;
 
 //--------------------------------------------------------------------------------
-// User prorgam loading and update flags
+// Sync between taskLadder and others
 //--------------------------------------------------------------------------------
 
 extern uint16_t loadSelectedProgram;
 extern uint16_t updateSelectedProgramRAM;
 extern uint16_t updateSelectedProgramDisk;
+extern uint16_t moveNetworksInsert;
+extern uint16_t moveNetworksDelete;
 
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys

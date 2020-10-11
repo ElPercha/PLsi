@@ -4,13 +4,13 @@
 // Type definition for Networks and global declarations
 //--------------------------------------------------------------------------------
 
-Network execNetwork;
-Network onlineNetwork;
-Network editingNetwork;
-
-Network copyMemoryNetwork;
-memoryColumn copyMemoryColumn;
-memoryRow copyMemoryRow;
+Network execNetwork;            // Network in excecution 
+Network onlineNetwork;          // Network for Online animation and program visualization
+Network editingNetwork;         // Intermediate Network for editing 
+Network copyMemoryNetwork;      // Used To Copy and Paste Networks
+Network emptyNetwork;           // Empty Network
+memoryColumn copyMemoryColumn;  // Struct to copy and paste columns
+memoryRow copyMemoryRow;        // Struct to copy and paste rows
 
 //--------------------------------------------------------------------------------
 // PLC Memory types definitions 
@@ -58,12 +58,14 @@ userSettings settings;
 uint16_t bootSequence = BOOT_INIT;
 
 //--------------------------------------------------------------------------------
-// Force User prorgam loading on boot
+// Sync between taskLadder and others
 //--------------------------------------------------------------------------------
 
-uint16_t loadSelectedProgram = 1;
+uint16_t loadSelectedProgram = 1; // Force to load user program on boot
 uint16_t updateSelectedProgramRAM = 0;
 uint16_t updateSelectedProgramDisk = 0;
+uint16_t moveNetworksInsert = 0;
+uint16_t moveNetworksDelete = 0;
 
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys

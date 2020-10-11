@@ -398,3 +398,15 @@ void diskScratch(void){
 }
 
 
+    // for (uint16_t row = 0; row < NET_ROWS; row++){
+    //   for (uint16_t col = 0; col < NET_COLUMNS; col++){
+    //     editingNetwork.Cells[row][col].Code = 0;
+    //     editingNetwork.Cells[row][col].Data = 0;
+    //     editingNetwork.Cells[row][col].Type = 0;
+    //   }
+    // }
+    // for (uint16_t col = 0; col < NET_COLUMNS-1; col++){
+    //   editingNetwork.Bars[col] = 0;
+    // }
+
+
