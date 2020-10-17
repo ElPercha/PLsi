@@ -1,6 +1,15 @@
 #include <globals.h>
 #include <main.h>
 
+
+
+#include <tskDisk.h>
+#include <disk.h>
+
+#include "FS.h"
+#include "SD.h"
+#include "FFat.h"
+
 //--------------------------------------------------------------------------------
 // Standard Arduino setup
 //--------------------------------------------------------------------------------
@@ -29,7 +38,7 @@ void setup() {
   xTaskCreatePinnedToCore(
     TaskDisk
     ,  "Disk management"
-    ,  4096 
+    ,  4096
     ,  NULL
     ,  0
     ,  NULL 
@@ -47,7 +56,7 @@ void setup() {
   xTaskCreatePinnedToCore( 
     TaskLadder
     ,  "Ladder Logic"
-    ,  110000  // Networks structure size is 95000 leaving 15K for the rest
+    ,  80000  // Networks structure size is 76000 leaving 4K free
     ,  NULL
     ,  3
     ,  NULL 

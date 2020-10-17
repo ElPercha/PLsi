@@ -4,7 +4,7 @@
 
 #include "FS.h"
 #include "SD.h"
-#include "SPIFFS.h"
+#include "FFat.h"
 
 //--------------------------------------------------------------------------------
 //Ladder Editor main Page
@@ -384,12 +384,12 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
         Serial.println("Element selected PASTE NETWORK");
       }
       else if (ts_x < halfXpalette && ts_y > halfYpalette){
-        insertNetwork();
         Serial.println("Element selected INSERT NETWORK");
+        insertNetwork();
       }
       else if (ts_x > halfXpalette && ts_y > halfYpalette){
-        deleteNetwork();
         Serial.println("Element selected DELETE NETWORK");
+        deleteNetwork();
       }
     }
   }
@@ -759,9 +759,21 @@ void insertNetwork(void){
     return;
   }
   moveNetworksInsert = showingNetwork + 1;
+
+  unsigned long StartTime = micros();
+
   while(moveNetworksInsert != 0){
     delay(10);
   }
+
+  unsigned long CurrentTime = micros();
+  Serial.print("   - Time taken to Insert Network: ");
+  Serial.println(CurrentTime - StartTime);
+  Serial.print("   - Free ESP memory: ");
+  Serial.println (esp_get_minimum_free_heap_size());
+  Serial.print("   - Free ESP memory xPort: ");
+  Serial.println(xPortGetFreeHeapSize());
+
   editingNetwork = emptyNetwork;
   elementsEditionAccept();
 }
@@ -778,9 +790,20 @@ void deleteNetwork(void){
   }
   else{
     moveNetworksDelete = showingNetwork + 1;
+
+    unsigned long StartTime = micros();
+
     while(moveNetworksDelete != 0){
       delay(10);
     }
+
+    unsigned long CurrentTime = micros();
+    Serial.print("   - Time taken to Delete Network: ");
+    Serial.println(CurrentTime - StartTime);
+    Serial.print("   - Free ESP memory: ");
+    Serial.println (esp_get_minimum_free_heap_size());
+    Serial.print("   - Free ESP memory xPort: ");
+    Serial.println(xPortGetFreeHeapSize());
   }
   elementsEditionAccept();
 }
@@ -908,12 +931,12 @@ uint16_t lastNetworkIsEmpty(void){
 
   Network auxNetwork;
 
-  SPIFFS.begin();
-  File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r");
+  FFat.begin(false,"/ffat",1);
+  File userProgramFile = FFat.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r");
   userProgramFile.seek((settings.ladder.NetworksQuantity - 1) * sizeof(auxNetwork));
   userProgramFile.read((uint8_t *)&auxNetwork, sizeof(auxNetwork));
   userProgramFile.close();
-  SPIFFS.end();
+  FFat.end();
 
   for (uint16_t row = 0; row < NET_ROWS; row++){
     for (uint16_t col = 0; col < NET_COLUMNS; col++){

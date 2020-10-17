@@ -5,7 +5,7 @@
 
 #include "FS.h"
 #include "SD.h"
-#include "SPIFFS.h"
+#include "FFat.h"
 
 //--------------------------------------------------------------------------------
 // Mount Disk
@@ -14,10 +14,10 @@
 //--------------------------------------------------------------------------------
 
 void loadDisk (void) {
-  if (!SPIFFS.begin()){
-    Serial.println("TaskDisk - Mount SPIFFS failed. Will retry with FormatOnFail = true ...");
+  if (!FFat.begin(false,"/ffat",1)){
+    Serial.println("TaskDisk - Mount SPIFFS failed. Disk will be Formatted...");
     unsigned long StartTime = micros();
-    if (SPIFFS.begin(true)){
+    if (FFat.begin(true,"/ffat",1)){
       unsigned long CurrentTime = micros();
       Serial.println("TaskDisk - Disk formatted because regular mount failed.");
       Serial.println("TaskDisk - If it is the first boot, this is not a problem.");
@@ -36,7 +36,7 @@ void loadDisk (void) {
     Serial.println("TaskDisk - SPIFFS Disk successfully mounted");
     bootSequence = BOOT_DISK_LOADED;
   }
-  SPIFFS.end();
+  FFat.end();
 }
 
 //--------------------------------------------------------------------------------
@@ -45,30 +45,29 @@ void loadDisk (void) {
 
 void loadSettings(void){
   if(bootSequence == BOOT_DISK_LOADED){
-    SPIFFS.begin();
-    if (SPIFFS.exists(FILENAME_SETTINGS)){
+    FFat.begin(false,"/ffat",1);
+    if (FFat.exists(FILENAME_SETTINGS)){
       Serial.println("TaskDisk - File settings.bin exists.");    
-      File settingsFile = SPIFFS.open(FILENAME_SETTINGS,"r");
+      File settingsFile = FFat.open(FILENAME_SETTINGS,"r");
         if (settingsFile.size() == sizeof(settings)){
           Serial.println("TaskDisk - File settings.bin exists with same size. Settings to be loaded from Disk...");    
           settingsFile.read((uint8_t *)&settings, sizeof(settings));
           settingsFile.close();
-          SPIFFS.end();
+          FFat.end();
         }
         else{
           Serial.println("TaskDisk - File settings.bin exists but has different size. Loading default settings...");    
           settingsFile.close();
-          SPIFFS.end();
+          FFat.end();
           loadDefaultSettings();
         }
     }
     else{
       Serial.println("TaskDisk - File settings.bin does not exist. Creating file and loading default settings...");    
-      SPIFFS.end();
+      FFat.end();
       loadDefaultSettings();
     }
   }
-  bootSequence = BOOT_TASK_UNLOCKED;
 }
 
 //--------------------------------------------------------------------------------
@@ -101,9 +100,9 @@ void loadDefaultSettings(void){
 //--------------------------------------------------------------------------------
 
 void saveSettings(void){
-  SPIFFS.begin();
-  File settingsFile = SPIFFS.open(FILENAME_SETTINGS,"w");
+  FFat.begin(false,"/ffat",1);
+  File settingsFile = FFat.open(FILENAME_SETTINGS,"w");
   settingsFile.write((uint8_t *)&settings, sizeof(settings));
   settingsFile.close();
-  SPIFFS.end();
+  FFat.end();
 }

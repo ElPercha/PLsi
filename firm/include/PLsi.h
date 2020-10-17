@@ -21,7 +21,7 @@
 // Total Networks. Max quantity tested OK = 500
 //--------------------------------------------------------------------------------
 
-#define TOTAL_NETWORKS 500
+#define TOTAL_NETWORKS 400
 
 //--------------------------------------------------------------------------------
 // Slot where the Demo Program will be loaded after first boot

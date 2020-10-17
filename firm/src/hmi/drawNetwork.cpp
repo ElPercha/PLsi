@@ -7,6 +7,7 @@
 //--------------------------------------------------------------------------------
 
 void drawNetwork (void){
+  uint16_t code;
 
   typedef void (*DrawLadderLogic) (int n, int c, int r, int f);
   DrawLadderLogic drawLadder [] =
@@ -48,22 +49,25 @@ void drawNetwork (void){
   // Draw / Update Ladder instructions  
   for (int c=0; c<NET_COLUMNS; c++){
     for (int r=0; r<NET_ROWS; r++){
-      if (onlineNetwork.Cells[r][c].Code > 0) {
-        if (onlineNetwork.Cells[r][c].Code >=    FIRST_INVALID_CODE){
+      code = onlineNetwork.Cells[r][c].Code;
+
+      // if (onlineNetwork.Cells[r][c].Code > 0) {
+      //   if (onlineNetwork.Cells[r][c].Code >= FIRST_INVALID_CODE){ lucas
+      if (code >= FIRST_INVALID_CODE){
+        if (!(code & CELL_USED_MASK)){ 
           Serial.println("TASK HMI - CORE 0 - INSTRUCTION CODE INVALID: ");
-          Serial.print("   - Network (absolute number): ");
+          Serial.print("   - Network: ");
           Serial.println(showingNetwork);
           Serial.print("   - Row: ");
           Serial.println(r);
           Serial.print("   - Column: ");
           Serial.println(c);
           Serial.print("   - Code: ");
-          Serial.println(onlineNetwork.Cells[r][c].Code);
-          onlineNetwork.Cells[r][c].Code = 0;
+          Serial.println(code);
         }
-     
-        drawLadder [onlineNetwork.Cells[r][c].Code](r, c, GetFlag(r, c), GetData(r, c));
+        code = 0;
       } 
+      drawLadder[code](r, c, GetFlag(r, c), GetData(r, c));
     } 
   }
   // Draw / Update Ladder bars

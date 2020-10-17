@@ -8,7 +8,7 @@
 
 #include "FS.h"
 #include "SD.h"
-#include "SPIFFS.h"
+#include "FFat.h"
 
 //--------------------------------------------------------------------------------
 // Disk Task 
@@ -34,10 +34,15 @@ void TaskDisk(void *pvParameters)
 
   loadSettings();
   
+  //------------------------------------------------------
+  // Clear auxiliary networks and Unlock tasks
+  //------------------------------------------------------
 
   clearEmptyNetwork();
   
-  //----------------------------------------------------
+  bootSequence = BOOT_TASK_UNLOCKED;
+
+//----------------------------------------------------
   // Task Main loop 
   //----------------------------------------------------
 
@@ -48,12 +53,12 @@ void TaskDisk(void *pvParameters)
     //----------------------------------------------------
 
     if(updateSelectedProgramDisk){
-      SPIFFS.begin();
-      File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r+");
+      FFat.begin(false,"/ffat",1);
+      File userProgramFile = FFat.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r+");
       userProgramFile.seek(showingNetwork * sizeof(onlineNetwork));
       userProgramFile.write((uint8_t *)&onlineNetwork, sizeof(onlineNetwork));
       userProgramFile.close();
-      SPIFFS.end();
+      FFat.end();
       updateSelectedProgramDisk = 0;
     }
 
@@ -76,17 +81,27 @@ void TaskDisk(void *pvParameters)
     //----------------------------------------------------
 
     if (I[0]){
-      SPIFFS.begin();
-      File root = SPIFFS.open("/");
+      FFat.begin(false,"/ffat",1);
+      Serial.println("--------------- 1 -----------------");
+      File root = FFat.open("/");
+      Serial.println("--------------- 2 -----------------");
       File file = root.openNextFile();
+      Serial.println("--------------- 3 -----------------");
       while(file){
+      Serial.println("--------------- 4 -----------------");
         Serial.print("FILE: ");
+      Serial.println("--------------- 5 -----------------");
         Serial.print(file.name());
+      Serial.println("--------------- 6 -----------------");
         Serial.print("       SIZE: ");
+      Serial.println("--------------- 7 -----------------");
         Serial.println(file.size());
+      Serial.println("--------------- 8 -----------------");
         file = root.openNextFile();
       }
-      SPIFFS.end();
+
+
+      FFat.end();
 
       settings.ladder.PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
       
@@ -94,24 +109,24 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[1]){
-        SPIFFS.begin();
+        FFat.begin(false,"/ffat",1);
         Serial.print("Info SPIFFS Total Bytes: ");
-        Serial.println(SPIFFS.totalBytes());
-        Serial.print("Info SPIFFS Used Bytes: ");
-        Serial.println(SPIFFS.usedBytes());
-        SPIFFS.end();
+        Serial.println(FFat.totalBytes());
+        Serial.print("Info SPIFFS Free Bytes: ");
+        Serial.println(FFat.freeBytes());
+        FFat.end();
       delay(2000);
     }
     
     if (I[2]){
         Serial.println("Formatting SPIFFS...");
-        SPIFFS.begin();
-        SPIFFS.format();
-        SPIFFS.end();
+        FFat.format();
+        FFat.begin(false,"/ffat",1);
         Serial.print("Info SPIFFS Total Bytes: ");
-        Serial.println(SPIFFS.totalBytes());
+        Serial.println(FFat.totalBytes());
         Serial.print("Info SPIFFS Used Bytes: ");
-        Serial.println(SPIFFS.usedBytes());
+        Serial.println(FFat.freeBytes());
+        FFat.end();
       delay(4000);
     }
 

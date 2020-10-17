@@ -67,7 +67,7 @@ void execScanPLC(Network Networks[]){
         // else, do not process, it was processed before
         //----------------------------------------------------
 
-        if (execNetwork.Cells[r][c].Code >=  FIRST_INVALID_CODE){
+        if (execNetwork.Cells[r][c].Code >= FIRST_INVALID_CODE){
           if (!(execNetwork.Cells[r][c].Code & CELL_USED_MASK)){ 
             Serial.println("TASK LADDER - CORE 1 - INSTRUCTION CODE INVALID: ");
             Serial.print("   - Network: ");
@@ -82,17 +82,17 @@ void execScanPLC(Network Networks[]){
             saveSettings();
           }  
           execNetwork.Cells[r][c].Code = 0;
-          asm ( "nop \n" ); // Force to compile more efficiently (reduce Scan Time) 
+          asm ( "nop \n" ); // Force to compile more efficiently (reduce Scan Time) lucas
         }  
 
         //----------------------------------------------------
         // Execute instruction
         //----------------------------------------------------
-
+        
         if (execNetwork.Cells[r][c].Code != 0) {
           if (c == 0) {
             if(settings.ladder.PLCstate == RUNNING){execLadder[execNetwork.Cells[r][c].Code](c,r,1);}
-            else                   {execLadder[execNetwork.Cells[r][c].Code](c,r,0);}
+            else                                   {execLadder[execNetwork.Cells[r][c].Code](c,r,0);}
           } 
           else{
             execLadder[execNetwork.Cells[r][c].Code](c,r,(NetworkFlags[c-1] & FlagsMask[r]));

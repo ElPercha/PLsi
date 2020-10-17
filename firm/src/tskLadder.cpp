@@ -2,7 +2,7 @@
 #include <tskLadder.h>
 #include <ladder.h>
 #include "FS.h"
-#include "SPIFFS.h"
+#include "FFat.h"
 
 //--------------------------------------------------------------------------------
 // Ladder logic execution Task 
@@ -42,14 +42,14 @@ void TaskLadder(void *pvParameters)
     
     if(loadSelectedProgram){
       //settings.ladder.PLCstate = STOPPED;
-      SPIFFS.begin();
+      FFat.begin(false,"/ffat",1);
 
-      if (SPIFFS.exists(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram])){
+      if (FFat.exists(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram])){
         Serial.print("TaskLadder - File ");
         Serial.print(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram]);
         Serial.println(" exists. Will be loaded to RAM");
 
-        File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r");
+        File userProgramFile = FFat.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"r");
         userProgramFile.read((uint8_t *)&Networks, sizeof(Networks));
         userProgramFile.close();
       }
@@ -62,12 +62,12 @@ void TaskLadder(void *pvParameters)
         if(settings.ladder.UserProgram == DEMO_PROGRAM_SLOT){
           loadDemoUserPogram(Networks);
         }
-        File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
+        File userProgramFile = FFat.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
         userProgramFile.write((uint8_t *)&Networks, sizeof(Networks));
         userProgramFile.close();
       }
    
-      SPIFFS.end();
+      FFat.end();
       clearMemory();
       //settings.ladder.PLCstate = RUNNING;
       loadSelectedProgram = 0;
@@ -106,11 +106,19 @@ void TaskLadder(void *pvParameters)
       }
       Networks[startNetwork] = emptyNetwork;
 
-      SPIFFS.begin();
-      File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
-      userProgramFile.write((uint8_t *)&Networks, sizeof(Networks));
+      FFat.begin(false,"/ffat",1);
+      File userProgramFile = FFat.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
+      size_t StatusWrite = userProgramFile.write((uint8_t *)&Networks, sizeof(Networks));
       userProgramFile.close();
-      SPIFFS.end();
+
+      Serial.print("   - Status of File Write operation for INSERT: ");
+      Serial.println(StatusWrite);
+      Serial.print("   - Info SPIFFS Total Bytes: ");
+      Serial.println(FFat.totalBytes());
+      Serial.print("   - Info SPIFFS Free Bytes: ");
+      Serial.println(FFat.freeBytes());
+      
+      FFat.end();
 
       moveNetworksInsert = 0;
     }
@@ -132,11 +140,19 @@ void TaskLadder(void *pvParameters)
       Networks[settings.ladder.NetworksQuantity-1] = emptyNetwork;
       editingNetwork = Networks[startNetwork]; // It is already shifted
 
-      SPIFFS.begin();
-      File userProgramFile = SPIFFS.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
-      userProgramFile.write((uint8_t *)&Networks, sizeof(Networks));
+      FFat.begin(false,"/ffat",1);
+      File userProgramFile = FFat.open(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram],"w");
+      size_t StatusWrite = userProgramFile.write((uint8_t *)&Networks, sizeof(Networks));
       userProgramFile.close();
-      SPIFFS.end();
+
+      Serial.print("   - Status of File Write operation for DELETE: ");
+      Serial.println(StatusWrite);
+      Serial.print("   - Info SPIFFS Total Bytes: ");
+      Serial.println(FFat.totalBytes());
+      Serial.print("   - Info SPIFFS Free Bytes: ");
+      Serial.println(FFat.freeBytes());
+
+      FFat.end();
 
       moveNetworksDelete = 0;
     }

@@ -17,6 +17,10 @@ void clearEmptyNetwork (void){
   for (int c = 0 ; c < NET_COLUMNS-1; c++){
     emptyNetwork.Bars[c] = 0;
   }
-  Serial.println("TaskDisk - emptyNetwork Initialized");
+  copyMemoryNetwork = emptyNetwork;
+  onlineNetwork = emptyNetwork;
+  editingNetwork = emptyNetwork;
+
+  Serial.println("TaskDisk - emptyNetwork and auxiliary Networks Initialized");
 }
 

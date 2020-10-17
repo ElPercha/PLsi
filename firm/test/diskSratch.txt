@@ -4,7 +4,7 @@
 #include <disk.h>
 #include "FS.h"
 #include "SD.h"
-#include "SPIFFS.h"
+//#include "SPIFFS.h"
 
 // LUCAS DELETE
 
