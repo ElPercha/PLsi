@@ -33,9 +33,7 @@ uint16_t editingInstructionCode = 0;
 // Network to show under Online animation
 //----------------------------------------------------
 
-uint16_t showingNetwork = 0;
 uint16_t showingNetworkOld = showingNetwork;
-
 uint16_t editionMode = 0;
 uint16_t editionModeOld = editionMode;
 

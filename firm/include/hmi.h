@@ -30,9 +30,7 @@ extern uint16_t editingInstructionCode;
 // Network to show under Online animation
 //----------------------------------------------------
 
-extern uint16_t showingNetwork;
 extern uint16_t showingNetworkOld;
-
 extern uint16_t editionMode;
 extern uint16_t editionModeOld;
 

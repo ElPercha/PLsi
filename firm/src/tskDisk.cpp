@@ -2,10 +2,6 @@
 #include <plsi.h>
 #include <tskDisk.h>
 #include <disk.h>
-
-#include <TFT_eSPI.h> // Lucas borrar
-#include <hmi.h> // Lucas borrar
-
 #include "FS.h"
 #include "SD.h"
 #include "FFat.h"
@@ -57,6 +53,7 @@ void TaskDisk(void *pvParameters)
       userProgramFile.write((uint8_t *)&onlineNetwork, sizeof(onlineNetwork));
       userProgramFile.close();
       FFat.end();
+
       updateSelectedProgramDisk = 0;
     }
 
@@ -131,19 +128,9 @@ void TaskDisk(void *pvParameters)
       Serial.println(settings.ladder.UserProgram);
     }
 
-    if (I[4] && editionMode){
-      onlineNetwork.Cells[0][0].Data++;
+    if (I[4]){
 
-      if(showingNetwork == 499){
-        onlineNetwork.Cells[0][0].Code = 3;
-        onlineNetwork.Cells[0][0].Data = 2999;
-        onlineNetwork.Cells[0][0].Type = 0;
-
-        onlineNetwork.Cells[4][5].Code = 7;
-        onlineNetwork.Cells[4][5].Data = 1999;
-        onlineNetwork.Cells[4][5].Type = 0;
-      }    
-      Serial.println("TaskDisk - Program changed to test edition: ");
+      delay(1000);
     }
 
     if(I[5]){

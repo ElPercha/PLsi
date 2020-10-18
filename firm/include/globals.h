@@ -248,6 +248,8 @@ extern uint16_t updateSelectedProgramDisk;
 extern uint16_t moveNetworksInsert;
 extern uint16_t moveNetworksDelete;
 
+extern uint16_t showingNetwork; // move to tskHMI.h lucas
+
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys
 //--------------------------------------------------------------------------------

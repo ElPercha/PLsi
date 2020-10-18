@@ -292,7 +292,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
 
   if (ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){ // Touch is in the palette area
     if (indexLadderEditor < 2){                                           // Page 0 and 1 only
-      for (uint16_t row = 0; row < 3; row++){                            // Instruction matrix 3 x 5
+      for (uint16_t row = 0; row < 3; row++){                             // Instruction matrix 3 x 5
         for (uint16_t col = 0; col < 5; col++){
           index = row*5+col;
           if(ts_x < BORDER3 + BUTTON_W3 + BUTTON_W3*col + SPACING3*col && ts_y < BORDER3 + BUTTON_H3 + BUTTON_H3*row + SPACING3*row){
@@ -760,20 +760,9 @@ void insertNetwork(void){
   }
   moveNetworksInsert = showingNetwork + 1;
 
-  unsigned long StartTime = micros();
-
   while(moveNetworksInsert != 0){
     delay(10);
   }
-
-  unsigned long CurrentTime = micros();
-  Serial.print("   - Time taken to Insert Network: ");
-  Serial.println(CurrentTime - StartTime);
-  Serial.print("   - Free ESP memory: ");
-  Serial.println (esp_get_minimum_free_heap_size());
-  Serial.print("   - Free ESP memory xPort: ");
-  Serial.println(xPortGetFreeHeapSize());
-
   editingNetwork = emptyNetwork;
   elementsEditionAccept();
 }
@@ -791,19 +780,9 @@ void deleteNetwork(void){
   else{
     moveNetworksDelete = showingNetwork + 1;
 
-    unsigned long StartTime = micros();
-
     while(moveNetworksDelete != 0){
       delay(10);
     }
-
-    unsigned long CurrentTime = micros();
-    Serial.print("   - Time taken to Delete Network: ");
-    Serial.println(CurrentTime - StartTime);
-    Serial.print("   - Free ESP memory: ");
-    Serial.println (esp_get_minimum_free_heap_size());
-    Serial.print("   - Free ESP memory xPort: ");
-    Serial.println(xPortGetFreeHeapSize());
   }
   elementsEditionAccept();
 }

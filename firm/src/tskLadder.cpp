@@ -37,11 +37,14 @@ void TaskLadder(void *pvParameters)
     // Load saved program indicated in settings.ladder.UserProgram
     //    If file doesnt exist creates the empty file
     //    If User Proggram number is 0, load Demo to this slot
-    //    this assumes that is the first boot
+    //    assuming that it is the first boot or FFat was formatted
+    //    lucas: to validate the size of program file before to load it to RAM
+    //           if size is invalid, re-generate file and send PLC to error
     //----------------------------------------------------------------
     
     if(loadSelectedProgram){
       //settings.ladder.PLCstate = STOPPED;
+
       FFat.begin(false,"/ffat",1);
 
       if (FFat.exists(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram])){
@@ -81,10 +84,6 @@ void TaskLadder(void *pvParameters)
     //----------------------------------------------------------------
 
     if(updateSelectedProgramRAM){
-      Serial.print("Task Ladder - Network ");
-      Serial.print(showingNetwork);
-      Serial.println(" saved to RAM");
-
       Networks[showingNetwork] = onlineNetwork;
       updateSelectedProgramRAM = 0;
     }

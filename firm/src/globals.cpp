@@ -67,6 +67,8 @@ uint16_t updateSelectedProgramDisk = 0;
 uint16_t moveNetworksInsert = 0;
 uint16_t moveNetworksDelete = 0;
 
+uint16_t showingNetwork = 0;      // Network to show under Online animation
+
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys
 //--------------------------------------------------------------------------------
