@@ -111,7 +111,7 @@ void TaskWiFi(void *pvParameters)
 
     if (I[0]){ // Manually enable the firmware update page
       server.handleClient();
-      enableCore0WDT();
+      //enableCore0WDT(); lucas
     }
     delay(1);
   }

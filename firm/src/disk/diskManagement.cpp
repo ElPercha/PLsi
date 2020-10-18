@@ -15,7 +15,7 @@
 
 void loadDisk (void) {
   if (!FFat.begin(false,"/ffat",1)){
-    Serial.println("TaskDisk - Mount SPIFFS failed. Disk will be Formatted...");
+    Serial.println("TaskDisk - Mount FFAT failed. Disk will be Formatted...");
     unsigned long StartTime = micros();
     if (FFat.begin(true,"/ffat",1)){
       unsigned long CurrentTime = micros();
@@ -28,12 +28,12 @@ void loadDisk (void) {
     }
     else{
       Serial.print  ("TaskDisk - SPIFSS Format Failed - System error or Partition file issue. Try reloading the whole firmware including partition table.");
-      settings.ladder.PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
+      settings.ladder.PLCstate = PLCERROR_FFAT_FORMAT_ERROR;
       bootSequence = BOOT_DISK_ERROR;
     } 
   }
   else{
-    Serial.println("TaskDisk - SPIFFS Disk successfully mounted");
+    Serial.println("TaskDisk - FFAT Disk successfully mounted");
     bootSequence = BOOT_DISK_LOADED;
   }
   FFat.end();
@@ -54,18 +54,21 @@ void loadSettings(void){
           settingsFile.read((uint8_t *)&settings, sizeof(settings));
           settingsFile.close();
           FFat.end();
+          bootSequence = BOOT_SETTINGS_LOADED;
         }
         else{
           Serial.println("TaskDisk - File settings.bin exists but has different size. Loading default settings...");    
           settingsFile.close();
           FFat.end();
           loadDefaultSettings();
+          bootSequence = BOOT_SETTINGS_LOADED;
         }
     }
     else{
       Serial.println("TaskDisk - File settings.bin does not exist. Creating file and loading default settings...");    
       FFat.end();
       loadDefaultSettings();
+      bootSequence = BOOT_SETTINGS_LOADED;
     }
   }
 }
@@ -96,7 +99,7 @@ void loadDefaultSettings(void){
 } 
 
 //--------------------------------------------------------------------------------
-// Save user settings to non volatile memory Disk (SPIFFS)
+// Save user settings to non volatile memory FFAT Disk 
 //--------------------------------------------------------------------------------
 
 void saveSettings(void){

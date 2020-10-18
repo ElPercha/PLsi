@@ -11,7 +11,7 @@
 #define STOPPED                            0 
 #define RUNNING                            1 
 #define PLCERROR                           2
-#define PLCERROR_SPIFFS_FORMAT_ERROR      10 
+#define PLCERROR_FFAT_FORMAT_ERROR        10 
 #define PLCERROR_INVALID_INSTRUCTION      20
 
 //--------------------------------------------------------------------------------
@@ -20,7 +20,8 @@
 
 #define BOOT_INIT                          0
 #define BOOT_DISK_LOADED                  10
-#define BOOT_TASK_UNLOCKED                20
+#define BOOT_SETTINGS_LOADED              20
+#define BOOT_TASK_UNLOCKED                30
 #define BOOT_DISK_ERROR                  100
 
 //--------------------------------------------------------------------------------

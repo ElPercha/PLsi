@@ -113,9 +113,9 @@ void TaskLadder(void *pvParameters)
 
       Serial.print("   - Status of File Write operation for INSERT: ");
       Serial.println(StatusWrite);
-      Serial.print("   - Info SPIFFS Total Bytes: ");
+      Serial.print("   - Info FFAT Total Bytes: ");
       Serial.println(FFat.totalBytes());
-      Serial.print("   - Info SPIFFS Free Bytes: ");
+      Serial.print("   - Info FFAT Free Bytes: ");
       Serial.println(FFat.freeBytes());
       
       FFat.end();
@@ -147,9 +147,9 @@ void TaskLadder(void *pvParameters)
 
       Serial.print("   - Status of File Write operation for DELETE: ");
       Serial.println(StatusWrite);
-      Serial.print("   - Info SPIFFS Total Bytes: ");
+      Serial.print("   - Info FFAT Total Bytes: ");
       Serial.println(FFat.totalBytes());
-      Serial.print("   - Info SPIFFS Free Bytes: ");
+      Serial.print("   - Info FFAT Free Bytes: ");
       Serial.println(FFat.freeBytes());
 
       FFat.end();

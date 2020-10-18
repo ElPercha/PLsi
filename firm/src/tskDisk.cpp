@@ -21,14 +21,14 @@ void TaskDisk(void *pvParameters)
   (void) pvParameters;
 
   //------------------------------------------------------
-  // Regular boot: Mount SPIFFS Disk
-  // First boot: Format disk (SPIFFS)
+  // Regular boot: Mount FFAT Disk
+  // First boot: Format FFAT disk
   //------------------------------------------------------
   
   loadDisk();         
 
   //------------------------------------------------------
-  // Regular boot: Load saved settings from SPIFFS Disk
+  // Regular boot: Load saved settings from FFAT Disk
   // First boot: Load default settings and Save to Disk
   //------------------------------------------------------
 
@@ -39,8 +39,6 @@ void TaskDisk(void *pvParameters)
   //------------------------------------------------------
 
   clearEmptyNetwork();
-  
-  bootSequence = BOOT_TASK_UNLOCKED;
 
 //----------------------------------------------------
   // Task Main loop 
@@ -82,49 +80,40 @@ void TaskDisk(void *pvParameters)
 
     if (I[0]){
       FFat.begin(false,"/ffat",1);
-      Serial.println("--------------- 1 -----------------");
       File root = FFat.open("/");
-      Serial.println("--------------- 2 -----------------");
       File file = root.openNextFile();
-      Serial.println("--------------- 3 -----------------");
       while(file){
-      Serial.println("--------------- 4 -----------------");
         Serial.print("FILE: ");
-      Serial.println("--------------- 5 -----------------");
         Serial.print(file.name());
-      Serial.println("--------------- 6 -----------------");
         Serial.print("       SIZE: ");
-      Serial.println("--------------- 7 -----------------");
         Serial.println(file.size());
-      Serial.println("--------------- 8 -----------------");
         file = root.openNextFile();
       }
 
-
       FFat.end();
 
-      settings.ladder.PLCstate = PLCERROR_SPIFFS_FORMAT_ERROR;
+      settings.ladder.PLCstate = PLCERROR_FFAT_FORMAT_ERROR;
       
       delay(4000);
     }
 
     if (I[1]){
         FFat.begin(false,"/ffat",1);
-        Serial.print("Info SPIFFS Total Bytes: ");
+        Serial.print("Info FFAT Total Bytes: ");
         Serial.println(FFat.totalBytes());
-        Serial.print("Info SPIFFS Free Bytes: ");
+        Serial.print("Info FFAT Free Bytes: ");
         Serial.println(FFat.freeBytes());
         FFat.end();
       delay(2000);
     }
     
     if (I[2]){
-        Serial.println("Formatting SPIFFS...");
+        Serial.println("Formatting FFAT...");
         FFat.format();
         FFat.begin(false,"/ffat",1);
-        Serial.print("Info SPIFFS Total Bytes: ");
+        Serial.print("Info FFAT Total Bytes: ");
         Serial.println(FFat.totalBytes());
-        Serial.print("Info SPIFFS Used Bytes: ");
+        Serial.print("Info FFAT Used Bytes: ");
         Serial.println(FFat.freeBytes());
         FFat.end();
       delay(4000);
