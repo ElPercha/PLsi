@@ -51,12 +51,6 @@ void drawNetwork (void){
     for (int r=0; r<NET_ROWS; r++){
       code = onlineNetwork.Cells[r][c].Code;
 
-      // if (onlineNetwork.Cells[r][c].Code > 0) {
-      //   if (onlineNetwork.Cells[r][c].Code >= FIRST_INVALID_CODE){ lucas
-
-      // if (code >= FIRST_INVALID_CODE){
-      //   if (!(code & CELL_USED_MASK)){ 
-
       if (code & CELL_USED_MASK){
         if ((code & CELL_CODE_MASK) >= FIRST_INVALID_CODE){ 
           Serial.println("TASK HMI - CORE 0 - INSTRUCTION CODE INVALID: ");
