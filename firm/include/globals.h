@@ -43,7 +43,8 @@
 #define TypeD                 11
 #define TypeK                 12
 #define TypeR                 13
-#define FIRST_INVALID_TYPE    14
+#define TypeKR                14
+#define FIRST_INVALID_TYPE    15
 
 //--------------------------------------------------------------------------------
 // PLC Ladder Instructions codes 

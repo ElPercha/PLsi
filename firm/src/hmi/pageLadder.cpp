@@ -48,8 +48,7 @@ void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
 void drawMainLadder (void){
   tft.fillScreen(WHITE);
   
-  // 6 Buttons shapes on Header
-  drawLadderMenuBut1();
+  drawLadderMenuBut1();   // 6 Buttons shapes on Header
   drawLadderMenuBut2();
   drawLadderMenuBut3();
   drawLadderMenuBut4();
@@ -193,10 +192,6 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
     else{
       // HMI_Page = PAGE_LadderDetails; // lucas 
     }
-    // Serial.print ("Touched Row Cell: "); //lucas
-    // Serial.println (ladderTouched.Logic.Row);
-    // Serial.print ("Touched Col Cell: ");
-    // Serial.println (ladderTouched.Logic.Col);
   }
 }
 

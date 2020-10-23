@@ -68,7 +68,7 @@ void drawLadderEditor (void){
 }
 
 //--------------------------------------------------------------------------------
-// Draw DELETE CANCEL ACCEPT Buttons in the bottom
+// Draw DELETE CANCEL ACCEPT Buttons in the bottom of the page
 //--------------------------------------------------------------------------------
 
 void drawLadderEditorBottomButtons(){
@@ -76,7 +76,7 @@ void drawLadderEditorBottomButtons(){
   #define SPACING1       2
   #define BUTTON_H1     45
   #define BUTTON_W1    104
-  #define BUTTON_Y1     TFT_PIXELS_Y - SPACING1 - BUTTON_H1 // Y where the button starts
+  #define BUTTON_Y1    TFT_PIXELS_Y - SPACING1 - BUTTON_H1 // Y where the button starts
 
   tft.fillRoundRect(BORDER1, BUTTON_Y1, BUTTON_W1, BUTTON_H1, 8, COLOR_BUTTON_BORDER_LADDER_EDITOR);
   tft.fillRoundRect(BORDER1+1, BUTTON_Y1+1, BUTTON_W1-2, BUTTON_H1-2, 7, COLOR_BUTTON_DELETE_LADDER_EDITOR);
@@ -247,15 +247,15 @@ void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
     if (ts_x < BUTTON_W1 - SPACING1){                     // DELETE
       deleteElement();
       onlineNetwork = editingNetwork;
-      Serial.println("LadderEditor - DELETE");
+      Serial.println("LadderEditor - DELETE"); //lucas
     }
     else if (ts_x < BUTTON_W1*2 - SPACING1*2){            // CANCEL
       editingNetwork = onlineNetwork;
-      Serial.println("LadderEditor - CANCEL");
+      Serial.println("LadderEditor - CANCEL"); //lucas
     }
     else {                                                // ACCEPT
       onlineNetwork = editingNetwork;
-      Serial.println("LadderEditor - ACCEPT");
+      Serial.println("LadderEditor - ACCEPT"); //lucas
     }
     HMI_Page = PAGE_MainLadder;
   }

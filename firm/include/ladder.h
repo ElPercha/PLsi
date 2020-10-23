@@ -2,7 +2,7 @@
 #define LADDER_H
 
 //--------------------------------------------------------------------------------
-// Globals variables for Ladder "scope"
+// Globals variables for Ladder 
 //--------------------------------------------------------------------------------
 
 extern uint16_t NetworkFlags[NET_COLUMNS - 1];

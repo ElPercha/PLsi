@@ -33,7 +33,7 @@
 // PLC Memory Areas quantites (amount)
 //--------------------------------------------------------------------------------
 
-#define QTY_M      12000    // Marks. Regular flags
+#define QTY_M       2000    // Marks. Regular flags
 #define QTY_I        200    // Digital Inputs
 #define QTY_Q        200    // Digital Outputs
 #define QTY_IW        50    // Analog Inputs

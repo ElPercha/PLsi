@@ -88,9 +88,6 @@ void TaskDisk(void *pvParameters)
       }
 
       FFat.end();
-
-      settings.ladder.PLCstate = PLCERROR_FFAT_FORMAT_ERROR;
-      
       delay(4000);
     }
 
@@ -117,15 +114,15 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[3]){
-      settings.ladder.UserProgram ++;
-      if (settings.ladder.UserProgram > 7){
-        settings.ladder.UserProgram = 0;
-      }
-      saveSettings();
-      loadSelectedProgram = 1;
-      delay(4000);
-      Serial.print("Program changed to: ");
-      Serial.println(settings.ladder.UserProgram);
+      // settings.ladder.UserProgram ++;
+      // if (settings.ladder.UserProgram > 7){
+      //   settings.ladder.UserProgram = 0;
+      // }
+      // saveSettings();
+      // loadSelectedProgram = 1;
+      // delay(4000);
+      // Serial.print("Program changed to: ");
+      // Serial.println(settings.ladder.UserProgram);
     }
 
     if (I[4]){

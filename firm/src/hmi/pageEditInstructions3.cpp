@@ -26,6 +26,7 @@ void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16
   //-------------------------------
 
   if (touchType){
+    touchEditLadderInstructionsNavigation(ts_x, ts_y);
     touchEditLadderInstructions3(ts_x, ts_y); 
   } 
 }
@@ -35,7 +36,9 @@ void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16
 //--------------------------------------------------------------------------------
 
 void drawEditLadderInstructions3 (void){
-  tft.fillScreen(TFT_GOLD);
+  tft.fillScreen(COLOR_LADDER_INSTRUC_BACKGROUND);
+  drawLadderEditorInstructionsNavigation();
+
   tft.setTextColor(BLACK);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
@@ -47,5 +50,5 @@ void drawEditLadderInstructions3 (void){
 //--------------------------------------------------------------------------------
 
 void touchEditLadderInstructions3(uint16_t ts_x, uint16_t ts_y){
-  HMI_Page = PAGE_LadderEditor;
+
 }

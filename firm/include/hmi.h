@@ -2,7 +2,7 @@
 #define HMI_H
 
 //--------------------------------------------------------------------------------
-// Globals variables for HMI "scope"
+// Globals variables for HMI 
 //--------------------------------------------------------------------------------
 
 extern TFT_eSPI tft; 
@@ -255,6 +255,17 @@ extern unsigned long actualScanTime;
 #define COLOR_BUTTON_COLUMN                   TFT_BROWN
 #define COLOR_BUTTON_ROW                      TFT_PURPLE
 #define COLOR_BUTTON_NETWORK                  TFT_OLIVE
+#define COLOR_LADDER_INSTRUC_BACKGROUND       TFT_BLACK
+#define COLOR_BUTTON_FONT_INSTRUC_EDITOR      TFT_WHITE
+
+#define COLOR_BAR_FONT_INSTRUC_EDITOR         TFT_BLACK
+#define COLOR_BAR_FONT1_INSTRUC_EDITOR        TFT_DARKGREY 
+#define COLOR_BAR_INSTRUC_EDITOR              WHITE2
+#define COLOR_BUTTON_BORDER_INSTRUC_EDITOR    TFT_WHITE
+#define COLOR_BUTTON_CANCEL_INSTRUC_EDITOR    TFT_MAGENTA
+#define COLOR_BUTTON_BACK_INSTRUC_EDITOR      TFT_DARKGREY
+#define COLOR_BUTTON_ACCEPT_INSTRUC_EDITOR    TFT_DARKGREEN
+#define COLOR_BUTTON_INSTRUC_BOOLEAN_EDITOR   TFT_DARKCYAN
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
@@ -315,9 +326,14 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
   uint16_t lastNetworkIsEmpty(void);
 
 void touchEditLadderInstructions1 (uint16_t ts_x, uint16_t ts_y);
+  void drawLadderEditorInstructionsNavigation();
 void touchEditLadderInstructions2 (uint16_t ts_x, uint16_t ts_y);
 void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
-  
+
+void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y);
+void drawInstructionsEditorBooleanBar(void);
+uint16_t getMaxMemoryAddress(uint16_t type);
+
 void drawMainMenu(void);
 void drawMainHMI(void);
 void drawMainConfig(void);
