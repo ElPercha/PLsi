@@ -12,8 +12,10 @@ void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
   // capture input Value command
   //-------------------------------
 
-    if(numericValueAccepted && numericValue >= 0 && numericValue < settings.ladder.NetworksQuantity){
-      showingNetwork = uint16_t(numericValue);
+    if(numericValueAccepted){
+      if(numericValue >= 0 && numericValue < settings.ladder.NetworksQuantity){
+        showingNetwork = uint16_t(numericValue);
+      }
       numericValueAccepted = 0;
     }
 

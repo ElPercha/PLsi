@@ -16,7 +16,15 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   //-------------------------------
     
     if (firstLoad){
-      editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code & CELL_CODE_MASK;
+      //lucas
+      //Adjust to the first Column and Row of instruction. User can select any os the instructions cells
+      ladderEditorRow = ladderEditorRow - ((editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code >> 12) & 0x0007);
+      ladderEditorColumn = ladderEditorColumn - (editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code >> 15);
+      //editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code & CELL_CODE_MASK;
+      editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code;
+
+
+
       drawLadderEditorBase();
       drawLadderEditor();
     }
@@ -320,13 +328,18 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
                   HMI_Page = PAGE_EditInstructions1;
                 }
                 else if (editingInstructionCode < 15){ // Timers and Counters
-                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode; //LUCAS
-                  
-                  
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
+                  editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Code = editingInstructionCode | 0x1000;
                   HMI_Page = PAGE_EditInstructions2;
                 }
                 else if (editingInstructionCode < 29){ // 16 Bit Math instructions
-                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode; //LUCAS
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
+                  editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Code = editingInstructionCode | 0x1000;
+                  
+                  
+                  //editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Code = editingInstructionCode | 0x2000;
+                  //lucas to analyze the heigth of the instruction to load the proper Code
+                  // if user goes from higher to shorter (3 to 2) we have to delete the third row !!!
 
 
                   HMI_Page = PAGE_EditInstructions3;
@@ -487,14 +500,11 @@ void deleteElement(void){
     editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type = 0;
   }
   else {
-    uint16_t firstRowInstruction = ladderEditorRow - (instructionCode >> 12);
-    uint16_t firstColumnInstruction = ladderEditorColumn - (instructionCode >> 15);
-  
     for (uint16_t width=0; width < instructionWidth[instructionCode]; width++){
       for (uint16_t height=0; height < instructionHeight[instructionCode]; height++){
-        editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Code = 0;
-        editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Data = 0;
-        editingNetwork.Cells[firstRowInstruction + height][firstColumnInstruction + width].Type = 0;
+        editingNetwork.Cells[ladderEditorRow + height][ladderEditorColumn + width].Code = 0;
+        editingNetwork.Cells[ladderEditorRow + height][ladderEditorColumn + width].Data = 0;
+        editingNetwork.Cells[ladderEditorRow + height][ladderEditorColumn + width].Type = 0;
       }
     }
   }

@@ -28,6 +28,8 @@ uint16_t ladderEditorRow = 0;
 uint16_t ladderEditorColumn = 0;
 
 uint16_t editingInstructionCode = 0;
+uint16_t timerSelected = 0;
+uint16_t timerCounterField = 0;
 
 //----------------------------------------------------
 // Network to show under Online animation

@@ -109,7 +109,7 @@ typedef struct
 {
   uint16_t Code;
   int16_t Data;
-  int16_t Type;
+  uint16_t Type;
 } Cell;
 
 typedef struct

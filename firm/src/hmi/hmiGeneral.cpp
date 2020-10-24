@@ -54,37 +54,13 @@ void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y){
     if (ts_x < BUTTON_W10 - SPACING10){                    // CANCEL
       editingNetwork = onlineNetwork;
       HMI_Page = PAGE_MainLadder;
-      Serial.println("InstructionEditor - CANCEL"); //lucas
     }
     else if (ts_x < BUTTON_W10*2 - SPACING10*2){            // BACK
       HMI_Page = PAGE_LadderEditor;
-      Serial.println("InstructionEditor - BACK"); //lucas
     }
     else {                                                  // ACCEPT
       onlineNetwork = editingNetwork;
       HMI_Page = PAGE_MainLadder;
-      Serial.println("InstructionEditor - ACCEPT"); //lucas
     }
   }
-}
-
-//--------------------------------------------------------------------------------
-// Return the max Memory valid index for the given Type of Memory area
-//--------------------------------------------------------------------------------
-
-uint16_t getMaxMemoryAddress(uint16_t type){
-  if(type == TypeM)  {return QTY_M - 1;}
-  if(type == TypeQ)  {return QTY_Q - 1;}
-  if(type == TypeI)  {return QTY_I - 1;}
-  if(type == TypeCd) {return QTY_C - 1;}
-  if(type == TypeCr) {return QTY_C - 1;}
-  if(type == TypeTd) {return QTY_T - 1;}
-  if(type == TypeTr) {return QTY_T - 1;}
-  if(type == TypeIW) {return QTY_IW - 1;}
-  if(type == TypeQW) {return QTY_QW - 1;}
-  if(type == TypeC)  {return QTY_C - 1;}
-  if(type == TypeT)  {return QTY_T - 1;}
-  if(type == TypeD)  {return QTY_D - 1;}
-  if(type == TypeR)  {return 65535;}
-  return 0;
 }

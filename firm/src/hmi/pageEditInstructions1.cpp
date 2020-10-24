@@ -160,14 +160,3 @@ void touchEditLadderInstructions1(uint16_t ts_x, uint16_t ts_y){
     HMI_Page = PAGE_InputNumber;  
   }
 }
-
-//--------------------------------------------------------------------------------
-// Limit the Memory Range per Type of memory Area
-// If Index is invalid, set to max possible Index
-//--------------------------------------------------------------------------------
-
-void limitMemoryRange(void){
-  if (editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data > getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
-    editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type);
-  }
-}

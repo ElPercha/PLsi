@@ -7,11 +7,53 @@
 //--------------------------------------------------------------------------------
 
 void pageEditLadderInstructions2 (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+
+  //-------------------------------
+  // capture input Value command
+  //-------------------------------
+
+  if (numericValueAccepted){
+    if(timerCounterField == 1){
+    //  if (uint16_t(numericValue) <= getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
+    //   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = uint16_t(numericValue);
+    // }
+      if (timerSelected){
+
+      } 
+      else{
+
+      }
+    }
+    else if(timerCounterField == 2){
+
+
+    }
+
+
+    numericValueAccepted = 0;
+  }
+
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
     
     if(firstLoad){
+      // Define if it is a Timer or Counter 
+      // Preload the Data Type for Timer or Counter
+      if (editingInstructionCode == TON || editingInstructionCode == TOFF || editingInstructionCode == TP){
+        timerSelected = 1;
+        editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type = TypeT;
+      }
+      else{ // is Counter
+        timerSelected = 0;
+        editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type = TypeC;
+      }
+
+      // Validate that the Memory address is in a valid range for the given Type
+      if (editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data > getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
+        editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type);
+      }
+
       drawEditLadderInstructions2();
     }
     
@@ -36,13 +78,116 @@ void pageEditLadderInstructions2 (uint16_t firstLoad, uint16_t touchType, uint16
 //--------------------------------------------------------------------------------
 
 void drawEditLadderInstructions2 (void){
+
+  #define TIMER_BORDER      5
+  #define TIMER_H         175
+  #define TIMER_W         170 
+ 
+  #define TIMER_TEXT       11
+  #define TIMER_BUTTON_Y   30
+  #define TIMER_BUTTON_H   45
+  #define TIMER_BUTTON_W  160
+
+  //clear the screen and draw the buttons at bottom of page
   tft.fillScreen(COLOR_LADDER_INSTRUC_BACKGROUND);
   drawLadderEditorInstructionsNavigation();
 
-  tft.setTextColor(WHITE);
-  tft.setCursor(10, 10);
+  // Print base rectangle "Instruction box"
+  tft.fillRoundRect(TFT_PIXELS_X/2-TIMER_W/2, TIMER_BORDER, TIMER_W, TIMER_H, 8, COLOR_TIMER_EDITION);
+  
+  // Print Header - Instruction Mnemonic
+  tft.setTextColor(COLOR_TIMER_EDITION_TEXT);
   tft.setTextSize(2);
-  tft.print("Edit Instructions 2");
+  String auxString = MnemonicsCodes[editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code];
+  tft.setCursor(TFT_PIXELS_X/2 - auxString.length()*6, TIMER_TEXT);
+  tft.print(auxString);
+
+  // Draw first Field
+  updateTimerCounterNumber();
+  
+  // Draw second Field
+  updateTimerCounterSetPoint();
+
+  // Draw third Field
+  if (timerSelected){
+    updateTimerBaseTime();
+  } 
+  else{
+    updateCounterField();
+  }
+}
+
+//--------------------------------------------------------------------------------
+// Update Timer Base Time 
+//--------------------------------------------------------------------------------
+
+void updateTimerBaseTime(void){
+  uint16_t indexTimer = 10;
+  for (uint16_t i = 0; i < 5; i++){
+    if (editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type == timerBaseTime[i]){
+      indexTimer = i;
+    }
+  }
+  if (indexTimer == 10){
+    editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type = timerBaseTime[3]; // Default to Seconds
+    indexTimer = 3;
+  }
+
+  tft.fillRoundRect(TFT_PIXELS_X/2-TIMER_BUTTON_W/2, TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2, TIMER_BUTTON_W, TIMER_BUTTON_H, 8, COLOR_TIMER_FIELDS);
+
+  tft.setTextSize(3);
+  tft.setTextColor(COLOR_TIMER_COUNTER_TEXT);
+  String auxString = timerBaseTimeText[indexTimer];
+  tft.setCursor(TFT_PIXELS_X/2 - auxString.length() * 9, TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2 + 15);
+  tft.print(auxString);
+}
+
+//--------------------------------------------------------------------------------
+// Print "counts when instruction is a counter
+//--------------------------------------------------------------------------------
+
+void updateCounterField(void){
+  tft.fillRoundRect(TFT_PIXELS_X/2-TIMER_BUTTON_W/2, TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2, TIMER_BUTTON_W, TIMER_BUTTON_H, 8, COLOR_TIMER_FIELDS);
+
+  tft.setTextSize(3);
+  tft.setTextColor(COLOR_TIMER_COUNTER_TEXT);
+  tft.setCursor(TFT_PIXELS_X/2 - 6 * 9, TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2 + 15);
+  tft.print("counts");
+}
+
+//--------------------------------------------------------------------------------
+// Update first field with Number of Timer
+//--------------------------------------------------------------------------------
+
+void updateTimerCounterNumber(void){
+  String auxString;
+  tft.fillRoundRect(TFT_PIXELS_X/2-TIMER_BUTTON_W/2, TIMER_BUTTON_Y , TIMER_BUTTON_W, TIMER_BUTTON_H, 8, COLOR_TIMER_FIELDS);
+
+  tft.setTextSize(3);
+  tft.setTextColor(COLOR_TIMER_COUNTER_TEXT);
+  if (timerSelected){
+    auxString = "T ";
+  } 
+  else{
+    auxString = "C ";
+  }
+  auxString = auxString + String(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data);
+  tft.setCursor(TFT_PIXELS_X/2 - auxString.length() * 9, TIMER_BUTTON_Y + 15);
+  tft.print(auxString);
+}
+
+//--------------------------------------------------------------------------------
+// Update second field with SetPoint for Timer or Counter
+//--------------------------------------------------------------------------------
+
+void updateTimerCounterSetPoint(void){
+  tft.fillRoundRect(TFT_PIXELS_X/2-TIMER_BUTTON_W/2, TIMER_BUTTON_Y + TIMER_BORDER+TIMER_BUTTON_H, TIMER_BUTTON_W, TIMER_BUTTON_H, 8, COLOR_TIMER_FIELDS);
+
+  tft.setTextSize(3);
+  tft.setTextColor(COLOR_TIMER_COUNTER_TEXT);
+  String auxString = String(editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data);
+  tft.setCursor(TFT_PIXELS_X/2 - auxString.length() * 9, TIMER_BUTTON_Y + TIMER_BORDER+TIMER_BUTTON_H + 15);
+  tft.print(auxString);
 }
 
 //--------------------------------------------------------------------------------
@@ -50,5 +195,31 @@ void drawEditLadderInstructions2 (void){
 //--------------------------------------------------------------------------------
 
 void touchEditLadderInstructions2(uint16_t ts_x, uint16_t ts_y){
+  if (ts_y < TIMER_BUTTON_Y + TIMER_BORDER+TIMER_BUTTON_H){
+    timerCounterField = 1;
 
+    if (timerSelected){
+
+    } 
+    else{
+
+    }
+  }
+  else if (ts_y < TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2){
+    timerCounterField = 2;
+
+
+  }
+  else if (ts_y < TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*3){ // Only for timers
+    if (timerSelected){
+      changeTimerBaseTime();
+      updateTimerBaseTime();
+    } 
+  }
 }
+
+
+
+
+
+
