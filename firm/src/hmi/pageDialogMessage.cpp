@@ -189,9 +189,9 @@ void drawDialogMessage (void){
     tft.setCursor(30, 45);
     tft.print("CANNOT INSERT ROW");
     tft.setCursor(30, 65);
-    tft.print("CANNOT SPLIT INSTRUCTION");
+    tft.print("SPLIT INSTRUCTION");
     tft.setCursor(30, 85);
-    tft.print("SELECT THE RIGHT COLUMN");
+    tft.print("NOT POSSIBLE");
     tft.setCursor(30, 170);
     tft.print("TOUCH TO CONTINUE...");
   }

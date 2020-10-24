@@ -14,22 +14,16 @@ void pageEditLadderInstructions2 (uint16_t firstLoad, uint16_t touchType, uint16
 
   if (numericValueAccepted){
     if(timerCounterField == 1){
-    //  if (uint16_t(numericValue) <= getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
-    //   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = uint16_t(numericValue);
-    // }
-      if (timerSelected){
-
+      // Validate that the Memory address is in a valid range for the given Type
+      if (uint16_t(numericValue) <= getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
+        editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = uint16_t(numericValue);
       } 
-      else{
-
-      }
     }
     else if(timerCounterField == 2){
-
-
+      if (uint16_t(numericValue) <= 32767){
+        editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data = uint16_t(numericValue);
+      } 
     }
-
-
     numericValueAccepted = 0;
   }
 
@@ -52,7 +46,7 @@ void pageEditLadderInstructions2 (uint16_t firstLoad, uint16_t touchType, uint16
       // Validate that the Memory address is in a valid range for the given Type
       if (editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data > getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
         editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type);
-      }
+      } 
 
       drawEditLadderInstructions2();
     }
@@ -197,18 +191,15 @@ void updateTimerCounterSetPoint(void){
 void touchEditLadderInstructions2(uint16_t ts_x, uint16_t ts_y){
   if (ts_y < TIMER_BUTTON_Y + TIMER_BORDER+TIMER_BUTTON_H){
     timerCounterField = 1;
-
-    if (timerSelected){
-
-    } 
-    else{
-
-    }
+    updateTimerCounterNumber();
+    HMI_PageMemory = HMI_Page;  
+    HMI_Page = PAGE_InputNumber;
   }
   else if (ts_y < TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2){
     timerCounterField = 2;
-
-
+    updateTimerCounterSetPoint();
+    HMI_PageMemory = HMI_Page;  
+    HMI_Page = PAGE_InputNumber;
   }
   else if (ts_y < TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*3){ // Only for timers
     if (timerSelected){

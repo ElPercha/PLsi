@@ -38,7 +38,7 @@
 #define QTY_Q        200    // Digital Outputs
 #define QTY_IW        50    // Analog Inputs
 #define QTY_QW        50    // Analog Outputs 
-#define QTY_C        300    // Counter registers (16 bits)
+#define QTY_C        200    // Counter registers (16 bits)
 #define QTY_T        300    // Timers
 #define QTY_D      10000    // Regular registers (16 bit signed)
 #define QTY_R       2000    // Float or Real registers
