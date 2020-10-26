@@ -26,7 +26,7 @@ extern uint16_t ladderEditorColumn;
 
 extern uint16_t editingInstructionCode;
 extern uint16_t timerSelected;
-extern uint16_t timerCounterField;
+extern uint16_t instructionFieldSelection;
 
 //----------------------------------------------------
 // Network to show under Online animation
@@ -75,16 +75,22 @@ const String timerBaseTimeText[5] = {"millisec", "0.01 sec", "0.1 sec", "seconds
 
 //----------------------------------------------------
 // Defines the position of each mnemonic
-//  in the 5 x 3 instruction pallete
-// We have 2 pages
+//  in the 5 x 3 instruction palette
+//  We have 2 pages
 //----------------------------------------------------
 
-const uint16_t menuInstructions[2][15] = {{3,4,5,6,99,7,8,9,2,1,10,11,12,13,14},
-                                          {16,17,18,19,15,25,26,27,28,0,20,21,22,23,24}};
-
+const uint16_t menuInstructions[2][15] = {{NO, NC, RE, FE, BAR_MNEMONIC_CODE, COIL, COILL, COILU, NEG, CONN, TON, TOFF, TP, CTU, CTD},
+                                          {SUB, ADD, MUL, DIV, MOVE, AND, OR, XOR, NOT, NOPP, MOD, SHL, SHR, ROL, ROR}};
 
 const String elementsFunctions[4] = {"COPY", "PASTE", "INSERT", "DELETE"};
 const String elementsList[3] = {"COLUMN", "ROW", "NETWORK"};
+
+//----------------------------------------------------
+// Index of Mnemonic Type. 
+// The position in the array is the order in the page
+//----------------------------------------------------
+
+const uint16_t menuDataTypes[6] = {TypeD, TypeT, TypeC, TypeIW, TypeK, TypeQW};
 
 //----------------------------------------------------
 // Invoke the TFT_eSPI button class and 
@@ -286,6 +292,17 @@ extern unsigned long actualScanTime;
 #define COLOR_TIMER_EDITION_TEXT              TFT_WHITE
 #define COLOR_TIMER_COUNTER_TEXT              TFT_BLACK
 
+#define COLOR_INSTRUCTION_EDITION             TFT_DARKCYAN
+#define COLOR_INSTRUCTION_FIELDS              WHITE2
+#define COLOR_INSTRUCTION_FIELDS1             GREEN
+#define COLOR_INSTRUCTION_EDITION_TEXT        TFT_WHITE
+#define COLOR_INSTRUCTION_COUNTER_TEXT        TFT_BLACK
+
+#define COLOR_PALETTE_BUTTON_BORDER           TFT_WHITE
+#define COLOR_PALETTE_BUTTON                  TFT_DARKCYAN
+#define COLOR_PALETTE_TEXT                    TFT_WHITE
+#define COLOR_PALETTE_BAR                     WHITE2
+#define COLOR_PALETTE_BAR_TEXT                TFT_BLACK
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
@@ -344,21 +361,26 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y);
   void elementsEditionAccept(void);
   uint16_t networkIsEmpty(void);
   uint16_t lastNetworkIsEmpty(void);
-
 void touchEditLadderInstructions1 (uint16_t ts_x, uint16_t ts_y);
   void drawLadderEditorInstructionsNavigation();
 void touchEditLadderInstructions2 (uint16_t ts_x, uint16_t ts_y);
+  void updateTimerBaseTime(void);
+  void changeTimerBaseTime(void);
+  void updateCounterField(void);
+  void updateTimerCounterNumber(void);
+  void updateTimerCounterSetPoint(void);
 void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
+  void updateInstructionEditField1(void);
+  void updateInstructionEditField2(void);
+  void updateInstructionEditField3(void);
+  void drawDataTypesPalette(void);
+  void drawBarAddressEdition(void);
+  void updateInstruction16Bit(void);
 
 void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y);
 void drawInstructionsEditorBooleanBar(void);
 uint16_t getMaxMemoryAddress(uint16_t type);
 void limitMemoryRange(void);
-void updateTimerBaseTime(void);
-void changeTimerBaseTime(void);
-void updateCounterField(void);
-void updateTimerCounterNumber(void);
-void updateTimerCounterSetPoint(void);
 
 
 

@@ -13,13 +13,13 @@ void pageEditLadderInstructions2 (uint16_t firstLoad, uint16_t touchType, uint16
   //-------------------------------
 
   if (numericValueAccepted){
-    if(timerCounterField == 1){
+    if(instructionFieldSelection == 1){
       // Validate that the Memory address is in a valid range for the given Type
       if (uint16_t(numericValue) <= getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
         editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = uint16_t(numericValue);
       } 
     }
-    else if(timerCounterField == 2){
+    else if(instructionFieldSelection == 2){
       if (uint16_t(numericValue) <= 32767){
         editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data = uint16_t(numericValue);
       } 
@@ -72,7 +72,6 @@ void pageEditLadderInstructions2 (uint16_t firstLoad, uint16_t touchType, uint16
 //--------------------------------------------------------------------------------
 
 void drawEditLadderInstructions2 (void){
-
   #define TIMER_BORDER      5
   #define TIMER_H         175
   #define TIMER_W         170 
@@ -154,18 +153,12 @@ void updateCounterField(void){
 //--------------------------------------------------------------------------------
 
 void updateTimerCounterNumber(void){
-  String auxString;
+  //String auxString;
   tft.fillRoundRect(TFT_PIXELS_X/2-TIMER_BUTTON_W/2, TIMER_BUTTON_Y , TIMER_BUTTON_W, TIMER_BUTTON_H, 8, COLOR_TIMER_FIELDS);
 
   tft.setTextSize(3);
   tft.setTextColor(COLOR_TIMER_COUNTER_TEXT);
-  if (timerSelected){
-    auxString = "T ";
-  } 
-  else{
-    auxString = "C ";
-  }
-  auxString = auxString + String(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data);
+  String auxString = MnemonicsTypes[editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type] + String(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data);
   tft.setCursor(TFT_PIXELS_X/2 - auxString.length() * 9, TIMER_BUTTON_Y + 15);
   tft.print(auxString);
 }
@@ -190,13 +183,13 @@ void updateTimerCounterSetPoint(void){
 
 void touchEditLadderInstructions2(uint16_t ts_x, uint16_t ts_y){
   if (ts_y < TIMER_BUTTON_Y + TIMER_BORDER+TIMER_BUTTON_H){
-    timerCounterField = 1;
+    instructionFieldSelection = 1;
     updateTimerCounterNumber();
     HMI_PageMemory = HMI_Page;  
     HMI_Page = PAGE_InputNumber;
   }
   else if (ts_y < TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2){
-    timerCounterField = 2;
+    instructionFieldSelection = 2;
     updateTimerCounterSetPoint();
     HMI_PageMemory = HMI_Page;  
     HMI_Page = PAGE_InputNumber;

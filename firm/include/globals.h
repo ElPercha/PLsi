@@ -54,7 +54,7 @@
 #define NOPP                   0
 #define CONN                   1
 #define NEG                    2
-#define NO                     2
+#define NO                     3
 #define NC                     4
 #define RE                     5
 #define FE                     6

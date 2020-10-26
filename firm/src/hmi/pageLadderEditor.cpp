@@ -23,8 +23,6 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
       //editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code & CELL_CODE_MASK;
       editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code;
 
-
-
       drawLadderEditorBase();
       drawLadderEditor();
     }
@@ -255,15 +253,12 @@ void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
     if (ts_x < BUTTON_W1 - SPACING1){                     // DELETE
       deleteElement();
       onlineNetwork = editingNetwork;
-      Serial.println("LadderEditor - DELETE"); //lucas
     }
     else if (ts_x < BUTTON_W1*2 - SPACING1*2){            // CANCEL
       editingNetwork = onlineNetwork;
-      Serial.println("LadderEditor - CANCEL"); //lucas
     }
     else {                                                // ACCEPT
       onlineNetwork = editingNetwork;
-      Serial.println("LadderEditor - ACCEPT"); //lucas
     }
     HMI_Page = PAGE_MainLadder;
   }
@@ -330,18 +325,16 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
                 else if (editingInstructionCode < 15){ // Timers and Counters
                   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
                   editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Code = editingInstructionCode | 0x1000;
+                  instructionFieldSelection = 1;
                   HMI_Page = PAGE_EditInstructions2;
                 }
                 else if (editingInstructionCode < 29){ // 16 Bit Math instructions
                   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
                   editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Code = editingInstructionCode | 0x1000;
-                  
-                  
-                  //editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Code = editingInstructionCode | 0x2000;
-                  //lucas to analyze the heigth of the instruction to load the proper Code
-                  // if user goes from higher to shorter (3 to 2) we have to delete the third row !!!
-
-
+                  if (instructionHeight[editingInstructionCode] == 3){
+                    editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Code = editingInstructionCode | 0x2000;
+                  }
+                  instructionFieldSelection = 1;
                   HMI_Page = PAGE_EditInstructions3;
                 }
               }
@@ -354,54 +347,42 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
     else if (indexLadderEditor == 2){                                     // 2= COLUMN menu 
       if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyColumn();
-        Serial.println("Element selected COPY COLUMN");
        }
       else if (ts_x > halfXpalette && ts_y < halfYpalette){
         pasteColumn();
-        Serial.println("Element selected PASTE COLUMN");
      }
       else if (ts_x < halfXpalette && ts_y > halfYpalette){
         insertColumn();
-        Serial.println("Element selected INSERT COLUMN");
       }
       else if (ts_x > halfXpalette && ts_y > halfYpalette){
         deleteColumn();
-        Serial.println("Element selected DELETE COLUMN");
       }
     }
     else if (indexLadderEditor == 3){                                     // 3= ROW menu
       if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyRow();
-        Serial.println("Element selected COPY ROW");
       }
       else if (ts_x > halfXpalette && ts_y < halfYpalette){
         pasteRow();
-        Serial.println("Element selected PASTE ROW");
       }
       else if (ts_x < halfXpalette && ts_y > halfYpalette){
         insertRow();
-        Serial.println("Element selected INSERT ROW");
       }
       else if (ts_x > halfXpalette && ts_y > halfYpalette){
         deleteRow();
-        Serial.println("Element selected DELETE ROW");
       }
     }
     else if (indexLadderEditor == 4){                                     // 4= NETWORK menu
       if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyNetwork();
-        Serial.println("Element selected COPY NETWORK");
       }
       else if (ts_x > halfXpalette && ts_y < halfYpalette){
         pasteNetwork();
-        Serial.println("Element selected PASTE NETWORK");
       }
       else if (ts_x < halfXpalette && ts_y > halfYpalette){
-        Serial.println("Element selected INSERT NETWORK");
         insertNetwork();
       }
       else if (ts_x > halfXpalette && ts_y > halfYpalette){
-        Serial.println("Element selected DELETE NETWORK");
         deleteNetwork();
       }
     }
