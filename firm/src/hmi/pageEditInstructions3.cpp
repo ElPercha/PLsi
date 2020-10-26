@@ -296,10 +296,14 @@ void touchEditLadderInstructions3(uint16_t ts_x, uint16_t ts_y){
     }
     else if(ts_y < TOUCH_PALETTE_H*2){
       if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W){
-        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[3];
+        if(instructionFieldSelection != instructionHeight[editingInstructionCode]){  // Don't allow IW Type in output of instruction
+          editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[3];
+        }
       }
       else if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W*2){
-        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[4];
+        if(instructionFieldSelection != instructionHeight[editingInstructionCode]){  // Don't allow K Type in output of instruction
+          editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[4];
+        }
       }
       else if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W*3){
         editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[5];
