@@ -27,6 +27,7 @@ extern uint16_t ladderEditorColumn;
 extern uint16_t editingInstructionCode;
 extern uint16_t timerSelected;
 extern uint16_t instructionFieldSelection;
+extern unsigned long timerRefreshMainMenu;
 
 //----------------------------------------------------
 // Network to show under Online animation
@@ -383,10 +384,6 @@ uint16_t getMaxMemoryAddress(uint16_t type);
 int16_t getMinMemoryAddress(uint16_t type);
 void limitMemoryRange(void);
 
-
-
-
-
 void drawMainMenu(void);
 void drawMainHMI(void);
 void drawMainConfig(void);
@@ -410,7 +407,7 @@ void drawLadderOnline(void);
   uint16_t NetworkChanged(void);
   void EditionChanged(void);
   uint16_t PLCstateChanged(void);
-  uint16_t userProgramChanged(void);
+  uint16_t userProgramChanged(void); // lucas to delete
   void drawPLCstateSmall (void);
   void drawEditionCancel (void);
   void drawButton6Icon(void);
@@ -430,6 +427,8 @@ void drawDialogOkCancel(void);
 void drawDialogMessage(void);
 
 void printPLCstate(void);
+void printPLCprogram (void);
+
 uint16_t ScanTimeChanged(void);
 
 void printEDIT(void);

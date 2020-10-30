@@ -13,14 +13,17 @@ void pageMainMenu (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
     
     if(firstLoad){
       drawMainMenu ();
+      printPLCprogram();
+      printPLCstate ();
     }
 
   //-------------------------------
   // update required fields
   //-------------------------------
 
-  if(PLCstateChanged() || ScanTimeChanged() || userProgramChanged()) {
+  if((PLCstateChanged() || ScanTimeChanged()) && (millis() - timerRefreshMainMenu > 2000)){
     printPLCstate ();
+    timerRefreshMainMenu = millis();
   }
 
   //-------------------------------
@@ -28,7 +31,7 @@ void pageMainMenu (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   //-------------------------------
 
   if (touchType){
-    touchMainMenu(ts_x, ts_y); 
+    touchMainMenu(ts_x, ts_y);
   } 
 }
 
@@ -68,19 +71,12 @@ void drawMainMenu (void){
 }
 
 //--------------------------------------------------------------------------------
-// Update Values on top bar while in Main Menu  
+// Update Values PLC State and Scan time on top bar of Main Menu  
 //--------------------------------------------------------------------------------
 
 void printPLCstate (void){
-  tft.fillRect (  0,   0, 320, 34,    DARKGREY); 
-
-  tft.setTextColor(WHITE);
+  tft.fillRect (170, 0, 320-170, 34,    DARKGREY); 
   tft.setTextSize(2);
-  tft.setCursor(5, 10);
-
-  String str = FILENAME_USER_PROGRAMS[settings.ladder.UserProgram];
-  str = str.substring(1, str.length());
-  tft.print(str);
 
   if (settings.ladder.PLCstate == RUNNING){
     tft.setTextColor(GREEN);
@@ -101,24 +97,28 @@ void printPLCstate (void){
 }
 
 //--------------------------------------------------------------------------------
+// Update Values PLC State and Scan time on top bar of Main Menu  
+//--------------------------------------------------------------------------------
+
+void printPLCprogram (void){
+  tft.fillRect (  0,   0, 320, 34,    DARKGREY); 
+
+  tft.setTextColor(WHITE);
+  tft.setTextSize(2);
+  tft.setCursor(5, 10);
+
+  String str = FILENAME_USER_PROGRAMS[settings.ladder.UserProgram];
+  str = str.substring(1, str.length());
+  tft.print(str);
+}
+
+//--------------------------------------------------------------------------------
 // Return True if the PLC Staus has changed
 //--------------------------------------------------------------------------------
 
 uint16_t PLCstateChanged(void) {
   if (PLCstateOld != settings.ladder.PLCstate ){
     PLCstateOld = settings.ladder.PLCstate ;
-    return 1;
-  }
-  else {return 0;}
-}
-
-//--------------------------------------------------------------------------------
-// Return True if the User Program Slot has changed
-//--------------------------------------------------------------------------------
-
-uint16_t userProgramChanged(void) {
-  if (userProgramOld != settings.ladder.UserProgram){
-    userProgramOld = settings.ladder.UserProgram;
     return 1;
   }
   else {return 0;}
@@ -151,7 +151,7 @@ void touchMainMenu(uint16_t X, uint16_t Y){
 
 //--------------------------------------------------------------------------------
 // Change PLC State 
-// Ask for user decision usong a Dialog OK / CANCEL screen
+// Ask for user decision usIng a Dialog OK / CANCEL screen
 //--------------------------------------------------------------------------------
 
 void changePLCstate(void){  
