@@ -19,7 +19,16 @@ uint16_t getMaxMemoryAddress(uint16_t type){
   if(type == TypeC)  {return QTY_C - 1;}
   if(type == TypeT)  {return QTY_T - 1;}
   if(type == TypeD)  {return QTY_D - 1;}
-  if(type == TypeK)  {return 65535;}
+  if(type == TypeK)  {return 32768;}
+  return 0;
+}
+
+//--------------------------------------------------------------------------------
+// Return the max Memory valid index for the given Type of Memory area
+//--------------------------------------------------------------------------------
+
+int16_t getMinMemoryAddress(uint16_t type){
+  if(type == TypeK)  {return -32767;}
   return 0;
 }
 

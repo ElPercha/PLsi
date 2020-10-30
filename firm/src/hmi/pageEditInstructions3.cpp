@@ -14,8 +14,9 @@ void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16
 
   if (numericValueAccepted){
     // Validate that the Memory address is in a valid range for the given Type
-    if (uint16_t(numericValue) <= getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type)){
-      editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Data = uint16_t(numericValue);
+    if (int16_t(numericValue) <= getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type) &&
+        int16_t(numericValue) >= getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type)){
+      editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Data = int16_t(numericValue);
     } 
     numericValueAccepted = 0;
   }
@@ -49,9 +50,18 @@ void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16
       if (editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data > getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type)){
         editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data = getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type);
       } 
+      if (editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data < getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type)){
+        editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data = getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type);
+      } 
+      if (editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data < getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type)){
+        editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data = getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type);
+      } 
       if (instructionHeight[editingInstructionCode] == 3){
         if (editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Data > getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Type)){
           editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Data = getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Type);
+        } 
+        if (editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Data < getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Type)){
+          editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Data = getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Type);
         } 
       }
       
@@ -144,10 +154,10 @@ void updateInstructionEditField1(void){
   }
   tft.fillRoundRect(INSTRUCTION_BUTTON_X, INSTRUCTION_BUTTON_Y, INSTRUCTION_BUTTON_W, INSTRUCTION_BUTTON_H, 8, auxColor);
 
-  tft.setTextSize(3);
+  tft.setTextSize(2);
   tft.setTextColor(COLOR_INSTRUCTION_COUNTER_TEXT);
   String auxString = MnemonicsTypes[editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type] + String(editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Data);
-  tft.setCursor(INSTRUCTION_BORDER + INSTRUCTION_W/2 - auxString.length() * 9, INSTRUCTION_BUTTON_Y + 13);
+  tft.setCursor(INSTRUCTION_BORDER + INSTRUCTION_W/2 - auxString.length() * 6, INSTRUCTION_BUTTON_Y + 17);
   tft.print(auxString);
 }
 
@@ -166,10 +176,10 @@ void updateInstructionEditField2(void){
   }
   tft.fillRoundRect(INSTRUCTION_BUTTON_X, INSTRUCTION_BUTTON_Y + INSTRUCTION_BORDER1 + INSTRUCTION_BUTTON_H , INSTRUCTION_BUTTON_W, INSTRUCTION_BUTTON_H, 8, auxColor);
 
-  tft.setTextSize(3);
+  tft.setTextSize(2);
   tft.setTextColor(COLOR_INSTRUCTION_COUNTER_TEXT);
   String auxString = MnemonicsTypes[editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type] + String(editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Data);
-  tft.setCursor(INSTRUCTION_BORDER + INSTRUCTION_W/2 - auxString.length() * 9, INSTRUCTION_BUTTON_Y + INSTRUCTION_BORDER1 + INSTRUCTION_BUTTON_H + 13);
+  tft.setCursor(INSTRUCTION_BORDER + INSTRUCTION_W/2 - auxString.length() * 6, INSTRUCTION_BUTTON_Y + INSTRUCTION_BORDER1 + INSTRUCTION_BUTTON_H + 17);
   tft.print(auxString);
 }
 
@@ -188,10 +198,10 @@ void updateInstructionEditField3(void){
   }
   tft.fillRoundRect(INSTRUCTION_BUTTON_X, INSTRUCTION_BUTTON_Y + INSTRUCTION_BORDER1*2 + INSTRUCTION_BUTTON_H*2, INSTRUCTION_BUTTON_W, INSTRUCTION_BUTTON_H, 8, auxColor);
 
-  tft.setTextSize(3);
+  tft.setTextSize(2);
   tft.setTextColor(COLOR_INSTRUCTION_COUNTER_TEXT);
   String auxString = MnemonicsTypes[editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Type] + String(editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Data);
-  tft.setCursor(INSTRUCTION_BORDER + INSTRUCTION_W/2 - auxString.length() * 9, INSTRUCTION_BUTTON_Y + INSTRUCTION_BORDER1*2 + INSTRUCTION_BUTTON_H*2 + 13);
+  tft.setCursor(INSTRUCTION_BORDER + INSTRUCTION_W/2 - auxString.length() * 6, INSTRUCTION_BUTTON_Y + INSTRUCTION_BORDER1*2 + INSTRUCTION_BUTTON_H*2 + 17);
   tft.print(auxString);
 }
 
@@ -311,6 +321,9 @@ void touchEditLadderInstructions3(uint16_t ts_x, uint16_t ts_y){
     }
     if (editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Data > getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type)){
       editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Data = getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type);
+    } 
+    if (editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Data < getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type)){
+      editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Data = getMinMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type);
     } 
     updateInstruction16Bit();
   }

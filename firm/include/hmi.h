@@ -380,6 +380,7 @@ void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
 void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y);
 void drawInstructionsEditorBooleanBar(void);
 uint16_t getMaxMemoryAddress(uint16_t type);
+int16_t getMinMemoryAddress(uint16_t type);
 void limitMemoryRange(void);
 
 
