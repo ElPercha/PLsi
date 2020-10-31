@@ -12,30 +12,19 @@ void pageInputText(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   //-------------------------------
     
     if(firstLoad){
+      clearTextKeyboard();  
+
+      tft.fillScreen(COLOR_KEYBOARD_BACK);
       drawTextBox();
       drawKeyboard(0);
       drawKeyboardSpace();
-      
-      textValue = "";
-      textValueAccepted = 0;
     }
     
   //-------------------------------
   // update required fields
   //-------------------------------
 
-    if (I[0]){
-      drawKeyboard(0);
-    }
-    if (I[1]){
-      drawKeyboard(1);
-    }
-    if (I[2]){
-      drawKeyboard(2);
-    }
-    if (I[3]){
-      drawKeyboard(3);
-    }
+    // nothing to update
 
   //-------------------------------
   // Parse touch screen
@@ -56,9 +45,25 @@ void drawTextBox (void){
   #define TEXT_BAR_Y         5 
   #define TEXT_BAR_X         5
 
-  tft.fillScreen(COLOR_KEYBOARD_BACK);
   tft.fillRoundRect(TEXT_BAR_X, TEXT_BAR_Y, TEXT_BAR_W, TEXT_BAR_H, 10, COLOR_KEYBOARD_BAR);
   tft.drawRoundRect(TEXT_BAR_X, TEXT_BAR_Y, TEXT_BAR_W, TEXT_BAR_H, 10, COLOR_KEYBOARD_BACK);
+
+  tft.setTextSize(2); 
+  tft.setTextColor(COLOR_KEYBOARD_FONT); 
+  String auxString = String(textBuffer);
+
+  if(auxString.length() <= 24){
+    tft.drawString(auxString, TEXT_BAR_X + 10, TEXT_BAR_Y + 25);
+  }
+  else if (auxString.length() <= 48){
+    tft.drawString(auxString.substring(0, 24), TEXT_BAR_X + 10, TEXT_BAR_Y + 15);
+    tft.drawString(auxString.substring(24, auxString.length()), TEXT_BAR_X + 10, TEXT_BAR_Y + 35);
+  }  
+  else{
+    tft.drawString(auxString.substring( 0, 24), TEXT_BAR_X + 10, TEXT_BAR_Y + 7);
+    tft.drawString(auxString.substring(24, 48), TEXT_BAR_X + 10, TEXT_BAR_Y + 27);
+    tft.drawString(auxString.substring(48, auxString.length()), TEXT_BAR_X + 10, TEXT_BAR_Y + 47);
+  }  
 }
 
 //--------------------------------------------------------------------------------
@@ -150,7 +155,91 @@ void drawKeyboardSpace (void){
 //--------------------------------------------------------------------------------
 
 void touchInputText(uint16_t ts_x, uint16_t ts_y){
+  uint16_t i, x, y, x1, y1;
 
-  HMI_Page = HMI_PageMemory;
+  // Touching the top bar also changes the Page, to simplify usage
+  if (ts_y < KEY_TEXT_Y){
+    changeKeyboardPage();
+  }
+  // Parsing of Printable keys, shift and Backspace
+  else if (ts_y < KEY_SPACE_Y){
+    for (uint8_t row = 0; row < 3; row++) {
+      for (uint8_t col = 0; col < 10; col++) {
+        i = col + row * 10;
+        x = KEY_TEXT_X + KEY_TEXT_W * col;
+        y = KEY_TEXT_Y + KEY_TEXT_H * row;
+        x1 = KEY_TEXT_X + KEY_TEXT_W * col + KEY_TEXT_W;
+        y1 = KEY_TEXT_Y + KEY_TEXT_H * row + KEY_TEXT_H;
 
+        if (ts_x > x && ts_x < x1 && ts_y > y && ts_y < y1){
+          if (i != 20 && i != 28 && i != 29){ // Printable ASCII characters
+            if (textIndex < MAX_STRING_LENGTH) {
+              textBuffer[textIndex] = keyLabel[keyboardPage][i];
+              textIndex++;
+              textBuffer[textIndex] = 0; // zero terminate
+            }
+          }
+          else if(i == 20){                  // Shift key - Same position in all pages
+            changeKeyboardPage();
+          }
+          else if(i == 28 || i == 29){       // Backspace key - Same position in all pages
+            textBuffer[textIndex] = 0;
+            if (textIndex > 0) {
+              textIndex--;
+              textBuffer[textIndex] = 0;
+            }
+          }
+        }
+      }
+    }
+    drawTextBox();      // Draw the string in top box
+  }
+  // Bottom buttons
+  else{
+    if (ts_x < KEY_TEXT_W * 3){            // ESC
+      clearTextKeyboard();  
+      HMI_Page = HMI_PageMemory;
+    }    
+    else if (ts_x < KEY_TEXT_W * 7){       // SPACE 
+      if (textIndex < MAX_STRING_LENGTH) {
+        textBuffer[textIndex] = ' ';
+        textIndex++;
+        textBuffer[textIndex] = 0;
+      }
+      drawTextBox();      // Draw the string in top box   //lucas
+    }    
+    else{                                  // ENTER 
+      textValueAccepted = 1;
+      textValue = String(textBuffer);    
+      HMI_Page = HMI_PageMemory;
+
+      Serial.println(textValue); //lucas
+
+    }    
+  }
 }
+
+//--------------------------------------------------------------------------------
+// Change Keyboard Page 
+//--------------------------------------------------------------------------------
+
+void changeKeyboardPage(void){
+  keyboardPage ++;
+  if (keyboardPage > 3){
+    keyboardPage = 0;
+  }
+  drawKeyboard(keyboardPage);
+}
+
+//--------------------------------------------------------------------------------
+// Initialize all variables 
+//--------------------------------------------------------------------------------
+
+void clearTextKeyboard(void){
+  keyboardPage = 0;          // KeyboardPage
+  textIndex = 0;
+  textBuffer[textIndex] = 0; // Place null in buffer
+
+  textValueAccepted = 0;     // Output validation variable
+  textValue = "";            // Output string variable
+}  

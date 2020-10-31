@@ -121,7 +121,7 @@ extern char numberBuffer[NUM_KEY_LEN + 1];
 
 extern uint8_t numberIndex;  
 extern TFT_eSPI_Button numericKeys[16];
- 
+
 extern double numericValue;                // Variable to use as return value of numeric keyboard
 extern uint16_t numericValueAccepted;      // Variable to use as return value of numeric keyboard
 
@@ -129,9 +129,11 @@ extern uint16_t numericValueAccepted;      // Variable to use as return value of
 // Text Keyboard
 //----------------------------------------------------
 
-extern char textBuffer[PASS_LENGTH];       // Password for WiFi is the longer possible string (63 + 1)
+extern char textBuffer[MAX_STRING_LENGTH]; // Password for WiFi is the longer possible string (63 + 1)
 extern String textValue;                   // Variable to use as return value of text keyboard
 extern uint16_t textValueAccepted;         // 1 = Return value of text keyboard was accepted
+extern uint16_t keyboardPage;              // Indexes between the 4 pages
+extern uint16_t textIndex;                 // Indexes in the output Char array 
 
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task
@@ -458,7 +460,8 @@ void drawNumericKeyboard(void);
 void drawKeyboard(uint16_t keyboardPage);
   void drawTextBox (void);
   void drawKeyboardSpace (void);
-
+  void changeKeyboardPage(void);
+  void clearTextKeyboard(void);
 
 void drawDialogOkCancel(void);
   void drawDialogButtons(void);

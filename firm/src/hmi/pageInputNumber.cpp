@@ -71,7 +71,7 @@ void drawNumericKeyboard (void){
   // Key Labels and Colors
   //-------------------------------------------------
 
-  char keyLabel[16][5] = {"1", "2", "3", "ESC", "4", "5", "6", "DEL", "7", "8", "9", "<<", ".", "0", "-", "OK"};
+  char keyLabelNum[16][5] = {"1", "2", "3", "ESC", "4", "5", "6", "DEL", "7", "8", "9", "<<", ".", "0", "-", "OK"};
   uint16_t keyColor[16] = {TFT_DARKGREY, TFT_DARKGREY, TFT_DARKGREY, TFT_MAGENTA, 
                            TFT_DARKGREY, TFT_DARKGREY, TFT_DARKGREY, TFT_VIOLET,
                            TFT_DARKGREY, TFT_DARKGREY, TFT_DARKGREY, TFT_DARKCYAN,
@@ -96,7 +96,7 @@ void drawNumericKeyboard (void){
       numericKeys[b].initButton(&tft, KEY_X + col * (KEY_W + KEY_SPACING_X),
                         KEY_Y + row * (KEY_H + KEY_SPACING_Y), // x, y, w, h, outline, fill, text
                         KEY_W, KEY_H, TFT_WHITE, keyColor[b], TFT_WHITE,
-                        keyLabel[b], KEY_TEXTSIZE);
+                        keyLabelNum[b], KEY_TEXTSIZE);
       numericKeys[b].setLabelDatum(2,5);
       numericKeys[b].drawButton();
     }
