@@ -3,10 +3,10 @@
 #include <hmi.h>
 
 //--------------------------------------------------------------------------------
-// Input Number Page display (Numeric Keyboard)
+// Keyboard Page - Input Text
 //--------------------------------------------------------------------------------
 
-void pageInputText(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageKeyboard(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
@@ -50,19 +50,18 @@ void drawTextBox (void){
 
   tft.setTextSize(2); 
   tft.setTextColor(COLOR_KEYBOARD_FONT); 
-  String auxString = String(textBuffer);
 
-  if(auxString.length() <= 24){
-    tft.drawString(auxString, TEXT_BAR_X + 10, TEXT_BAR_Y + 25);
+  if(textValue.length() <= 24){
+    tft.drawString(textValue, TEXT_BAR_X + 10, TEXT_BAR_Y + 25);
   }
-  else if (auxString.length() <= 48){
-    tft.drawString(auxString.substring(0, 24), TEXT_BAR_X + 10, TEXT_BAR_Y + 15);
-    tft.drawString(auxString.substring(24, auxString.length()), TEXT_BAR_X + 10, TEXT_BAR_Y + 35);
+  else if (textValue.length() <= 48){
+    tft.drawString(textValue.substring(0, 24), TEXT_BAR_X + 10, TEXT_BAR_Y + 15);
+    tft.drawString(textValue.substring(24, textValue.length()), TEXT_BAR_X + 10, TEXT_BAR_Y + 35);
   }  
   else{
-    tft.drawString(auxString.substring( 0, 24), TEXT_BAR_X + 10, TEXT_BAR_Y + 7);
-    tft.drawString(auxString.substring(24, 48), TEXT_BAR_X + 10, TEXT_BAR_Y + 27);
-    tft.drawString(auxString.substring(48, auxString.length()), TEXT_BAR_X + 10, TEXT_BAR_Y + 47);
+    tft.drawString(textValue.substring( 0, 24), TEXT_BAR_X + 10, TEXT_BAR_Y + 7);
+    tft.drawString(textValue.substring(24, 48), TEXT_BAR_X + 10, TEXT_BAR_Y + 27);
+    tft.drawString(textValue.substring(48, textValue.length()), TEXT_BAR_X + 10, TEXT_BAR_Y + 47);
   }  
 }
 
@@ -173,20 +172,16 @@ void touchInputText(uint16_t ts_x, uint16_t ts_y){
 
         if (ts_x > x && ts_x < x1 && ts_y > y && ts_y < y1){
           if (i != 20 && i != 28 && i != 29){ // Printable ASCII characters
-            if (textIndex < MAX_STRING_LENGTH) {
-              textBuffer[textIndex] = keyLabel[keyboardPage][i];
-              textIndex++;
-              textBuffer[textIndex] = 0; // zero terminate
+            if (textValue.length() < MAX_STRING_LENGTH) {
+              textValue = textValue + keyLabel[keyboardPage][i];
             }
           }
           else if(i == 20){                  // Shift key - Same position in all pages
             changeKeyboardPage();
           }
           else if(i == 28 || i == 29){       // Backspace key - Same position in all pages
-            textBuffer[textIndex] = 0;
-            if (textIndex > 0) {
-              textIndex--;
-              textBuffer[textIndex] = 0;
+            if (textValue.length() > 0) {
+              textValue = textValue.substring(0, textValue.length()-1);
             }
           }
         }
@@ -201,15 +196,12 @@ void touchInputText(uint16_t ts_x, uint16_t ts_y){
       HMI_Page = HMI_PageMemory;
     }    
     else if (ts_x < KEY_TEXT_W * 7){       // SPACE 
-      if (textIndex < MAX_STRING_LENGTH) {
-        textBuffer[textIndex] = ' ';
-        textIndex++;
-        textBuffer[textIndex] = 0;
+      if (textValue.length() < MAX_STRING_LENGTH) {
+        textValue = textValue + ' ';
       }
     }    
     else{                                  // ENTER 
       textValueAccepted = 1;
-      textValue = String(textBuffer);    
       HMI_Page = HMI_PageMemory;
     }    
   }
@@ -228,14 +220,10 @@ void changeKeyboardPage(void){
 }
 
 //--------------------------------------------------------------------------------
-// Initialize all variables 
+// Initialize required variables 
 //--------------------------------------------------------------------------------
 
 void clearTextKeyboard(void){
   keyboardPage = 0;          // KeyboardPage
-  textIndex = 0;
-  textBuffer[textIndex] = 0; // Place null in buffer
-
   textValueAccepted = 0;     // Output validation variable
-  textValue = "";            // Output string variable
 }  

@@ -132,7 +132,10 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[4]){
-      HMI_Page = PAGE_InputText;        
+      
+      textValue = "2203Alden";     
+      HMI_PageMemory =  HMI_Page;        
+      HMI_Page = PAGE_Keyboard;        
 
       delay(1000);
     }

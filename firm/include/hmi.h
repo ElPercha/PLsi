@@ -129,11 +129,9 @@ extern uint16_t numericValueAccepted;      // Variable to use as return value of
 // Text Keyboard
 //----------------------------------------------------
 
-extern char textBuffer[MAX_STRING_LENGTH]; // Password for WiFi is the longer possible string (63 + 1)
 extern String textValue;                   // Variable to use as return value of text keyboard
 extern uint16_t textValueAccepted;         // 1 = Return value of text keyboard was accepted
 extern uint16_t keyboardPage;              // Indexes between the 4 pages
-extern uint16_t textIndex;                 // Indexes in the output Char array 
 
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task
@@ -155,7 +153,7 @@ extern unsigned long actualScanTime;
 #define PAGE_EditInstructions3 43
 #define PAGE_LadderDetails     50
 #define PAGE_InputNumber      100
-#define PAGE_InputText        110
+#define PAGE_Keyboard         110
 #define PAGE_DialogOkCancel   150
 #define PAGE_DialogMessage    151
 
@@ -352,7 +350,7 @@ void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint1
 void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
-void pageInputText(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageKeyboard(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageLadderEditor(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageEditLadderInstructions1(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageEditLadderInstructions2(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
