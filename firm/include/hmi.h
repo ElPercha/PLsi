@@ -332,6 +332,12 @@ extern unsigned long actualScanTime;
 #define COLOR_PALETTE_BAR                     WHITE2
 #define COLOR_PALETTE_BAR_TEXT                TFT_BLACK
 
+#define COLOR_KEYBOARD_FONT                   TFT_BLACK
+#define COLOR_KEYBOARD_BAR                    TFT_WHITE
+#define COLOR_KEYBOARD_KEY                    TFT_WHITE
+#define COLOR_KEYBOARD_BACK                   TFT_LIGHTGREY
+#define COLOR_KEYBOARD_SPECIAL_KEY            TFT_ORANGE
+
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
 //--------------------------------------------------------------------------------
@@ -406,13 +412,11 @@ void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
   void drawDataTypesPalette(void);
   void drawBarAddressEdition(void);
   void updateInstruction16Bit(void);
-
 void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y);
 void drawInstructionsEditorBooleanBar(void);
 uint16_t getMaxMemoryAddress(uint16_t type);
 int16_t getMinMemoryAddress(uint16_t type);
 void limitMemoryRange(void);
-
 void drawMainMenu(void);
 void drawMainHMI(void);
 void drawMainConfig(void);
@@ -452,35 +456,29 @@ void drawEditLadderInstructions3 (void);
 void drawLadderDetails(void);
 void drawNumericKeyboard(void);
 void drawKeyboard(uint16_t keyboardPage);
-void drawTextBox (void);
+  void drawTextBox (void);
+  void drawKeyboardSpace (void);
+
+
 void drawDialogOkCancel(void);
   void drawDialogButtons(void);
 void drawDialogMessage(void);
-
 void printPLCstate(void);
 void printPLCprogram (void);
-
 uint16_t ScanTimeChanged(void);
-
 void printEDIT(void);
-
 int GetData (int r, int c);
 int GetFlag (int r, int c);
 void drawTagBit (int Row, int Column, int Color);
-
 void drawBox2 (int Row, int Column, int boxcolor);
 void drawBox3 (int Row, int Column, int boxcolor);
-
 void drawBoxTag (int Row, int Column, int Color);
 void drawBox2Tags (int Row, int Column, int Color);
 void drawBox3Tags (int Row, int Column, int Color);
-
 void drawBoxInputPin2 (int Row, int Column);
 void drawBoxInputPin3 (int Row, int Column);
-
 void drawBoxOutputPin2 (int Row, int Column);
 void drawBoxOutputPin3 (int Row, int Column);
-
 void drawTimerTags (int Row, int Column, int Color);
 void drawCounterTags (int Row, int Column, int Color);
 void drawNop (int Row, int Column, int Flag, int Data);
