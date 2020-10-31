@@ -53,11 +53,19 @@ uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 
 #define NUM_KEY_LEN 16
 char numberBuffer[NUM_KEY_LEN + 1] = "";
-uint8_t numberIndex = 0;  
 
+uint8_t numberIndex = 0;  
 TFT_eSPI_Button numericKeys[16];
 
 double numericValue = 0;            // Variable to use as return value of numeric keyboard
-uint16_t numericValueAccepted = 0;  // Variable to use as return value of numeric keyboard
+uint16_t numericValueAccepted = 0;  // 1 = Return value of numeric keyboard was accepted
+
+//----------------------------------------------------
+// Text Keyboard
+//----------------------------------------------------
+
+char textBuffer[PASS_LENGTH] = "";  // Password for WiFi is the longer possible string (63 + 1)
+String textValue = "";              // Variable to use as return value of text keyboard
+uint16_t textValueAccepted = 0;     // 1 = Return value of text keyboard was accepted
 
 #endif

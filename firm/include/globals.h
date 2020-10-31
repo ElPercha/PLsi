@@ -95,11 +95,11 @@
 //--------------------------------------------------------------------------------
 // SSID and password max length
 //     SSID is 32 + 1 for null
-//     PASS is 36 + 1 for null
+//     PASS is 63 + 1 for null
 //--------------------------------------------------------------------------------
 
 #define SSID_LENGTH           33
-#define PASS_LENGTH           65
+#define PASS_LENGTH           64
 
 //--------------------------------------------------------------------------------
 // Type definition for Networks and global declarations

@@ -38,6 +38,20 @@
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 
+  settings.ladder.UserProgram ++;
+  if (settings.ladder.UserProgram > 7){
+    settings.ladder.UserProgram = 0;
+  }
+  saveSettings();
+  loadSelectedProgram = 1;
+  delay(4000);
+  Serial.print("Program changed to: ");
+  Serial.println(settings.ladder.UserProgram);
+
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+
 unsigned long StartTime = micros();
     INSTRUCTION TO MEASURE TIME
 unsigned long CurrentTime = micros();
@@ -53,34 +67,6 @@ Serial.print("   - Free ESP Miniumn memory ever available: ");
 Serial.println (esp_get_minimum_free_heap_size());
 Serial.print("   - Free ESP memory xPort: ");
 Serial.println(xPortGetFreeHeapSize());
-
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
-
-multi_heap_info_t *info = 0;
-heap_caps_get_info(info, MALLOC_CAP_8BIT);
-
-Serial.print("   - Total free bytes in the heap. Equivalent to multi_free_heap_size(): ");
-Serial.println(info->total_free_bytes);
-
-Serial.print("   - Total bytes allocated to data in the heap: ");
-Serial.println(info->total_allocated_bytes);
-
-Serial.print("   - Size of largest free block in the heap. This is the largest malloc-able size: ");
-Serial.println(info->largest_free_block);
-
-Serial.print("   - Lifetime minimum free heap size. Equivalent to multi_minimum_free_heap_size(): ");
-Serial.println(info->minimum_free_bytes);
-
-Serial.print("   - Number of (variable size) blocks allocated in the heap: ");
-Serial.println(info->allocated_blocks);
-
-Serial.print("   - Number of (variable size) free blocks in the heap: ");
-Serial.println(info->free_blocks);
-
-Serial.print("   - size_t total_blocks: ");
-Serial.println(info->total_blocks);
 
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -161,3 +147,32 @@ loop	    Val1 += 10;
 	
 	    pwm1.setPWM(0, Val1, Val2);
 	    pwm1.setPWM(15, Val2, Val1);
+
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+
+multi_heap_info_t *info = 0;
+heap_caps_get_info(info, MALLOC_CAP_8BIT);
+
+Serial.print("   - Total free bytes in the heap. Equivalent to multi_free_heap_size(): ");
+Serial.println(info->total_free_bytes);
+
+Serial.print("   - Total bytes allocated to data in the heap: ");
+Serial.println(info->total_allocated_bytes);
+
+Serial.print("   - Size of largest free block in the heap. This is the largest malloc-able size: ");
+Serial.println(info->largest_free_block);
+
+Serial.print("   - Lifetime minimum free heap size. Equivalent to multi_minimum_free_heap_size(): ");
+Serial.println(info->minimum_free_bytes);
+
+Serial.print("   - Number of (variable size) blocks allocated in the heap: ");
+Serial.println(info->allocated_blocks);
+
+Serial.print("   - Number of (variable size) free blocks in the heap: ");
+Serial.println(info->free_blocks);
+
+Serial.print("   - size_t total_blocks: ");
+Serial.println(info->total_blocks);
+

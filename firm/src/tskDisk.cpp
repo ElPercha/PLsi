@@ -6,6 +6,9 @@
 #include "SD.h"
 #include "FFat.h"
 
+#include <TFT_eSPI.h> //lucas to delete
+#include "hmi.h" //lucas to delete
+
 //--------------------------------------------------------------------------------
 // Disk Task 
 // Controls SPIFSS memory and SD Card files
@@ -75,6 +78,18 @@ void TaskDisk(void *pvParameters)
     // LUCAS TESTING FUNCTIONS
     //----------------------------------------------------
 
+    if (I[0] && I[1] && I[2]){
+        Serial.println("Formatting FFAT...");
+        FFat.format();
+        FFat.begin(false,"/ffat",1);
+        Serial.print("Info FFAT Total Bytes: ");
+        Serial.println(FFat.totalBytes());
+        Serial.print("Info FFAT Used Bytes: ");
+        Serial.println(FFat.freeBytes());
+        FFat.end();
+      delay(1000);
+    }
+
     if (I[0]){
       FFat.begin(false,"/ffat",1);
       File root = FFat.open("/");
@@ -88,7 +103,7 @@ void TaskDisk(void *pvParameters)
       }
 
       FFat.end();
-      delay(4000);
+      delay(1000);
     }
 
     if (I[1]){
@@ -98,40 +113,31 @@ void TaskDisk(void *pvParameters)
         Serial.print("Info FFAT Free Bytes: ");
         Serial.println(FFat.freeBytes());
         FFat.end();
-      delay(2000);
+
+        Serial.print("   - Free ESP Miniumn memory ever available: ");
+        Serial.println (esp_get_minimum_free_heap_size());
+        Serial.print("   - Free ESP memory xPort: ");
+        Serial.println(xPortGetFreeHeapSize());
+      delay(1000);
     }
     
     if (I[2]){
-        Serial.println("Formatting FFAT...");
-        FFat.format();
-        FFat.begin(false,"/ffat",1);
-        Serial.print("Info FFAT Total Bytes: ");
-        Serial.println(FFat.totalBytes());
-        Serial.print("Info FFAT Used Bytes: ");
-        Serial.println(FFat.freeBytes());
-        FFat.end();
-      delay(4000);
+
+      delay(1000);
     }
 
     if (I[3]){
-      // settings.ladder.UserProgram ++;
-      // if (settings.ladder.UserProgram > 7){
-      //   settings.ladder.UserProgram = 0;
-      // }
-      // saveSettings();
-      // loadSelectedProgram = 1;
-      // delay(4000);
-      // Serial.print("Program changed to: ");
-      // Serial.println(settings.ladder.UserProgram);
+
+      delay(1000);
     }
 
     if (I[4]){
+      HMI_Page = PAGE_InputText;        
 
       delay(1000);
     }
 
     if(I[5]){
-
 
       delay(1000);
     }

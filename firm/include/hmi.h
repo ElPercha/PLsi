@@ -86,6 +86,24 @@ const uint16_t menuInstructions[2][15] = {{NO, NC, RE, FE, BAR_MNEMONIC_CODE, CO
 const String elementsFunctions[4] = {"COPY", "PASTE", "INSERT", "DELETE"};
 const String elementsList[3] = {"COLUMN", "ROW", "NETWORK"};
 
+//-------------------------------------------------
+// Keyboard characters definition
+// 4 pages of 30 char
+//
+// Printable ASCII:
+//       ! " # $ % & ' ( ) * + , - . / 
+//     0 1 2 3 4 5 6 7 8 9 : ; < = > ? 
+//     @ A B C D E F G H I J K L M N O 
+//     P Q R S T U V W X Y Z [ \ ] ^ _ 
+//     ` a b c d e f g h i j k l m n o 
+//     p q r s t u v w x y z { | } ~
+//-------------------------------------------------
+
+const char keyLabel[4][30] = {{'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', '.', ' ', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ' ', ' '},
+                              {'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', '.', ' ', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ' ', ' '},
+                              {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', ' ', '\\', '|', '/', '-', ':', ',', '.', ' ', ' '},
+                              {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '<', '=', '>', '[', ']', '{', '}', '~', ';', '\'', ' ', '?', '_', '+', '`', '\"', ',', '.', ' ', ' '}};
+
 //----------------------------------------------------
 // Index of Mnemonic Type. 
 // The position in the array is the order in the page
@@ -100,12 +118,20 @@ const uint16_t menuDataTypes[6] = {TypeD, TypeT, TypeC, TypeIW, TypeK, TypeQW};
 
 #define NUM_KEY_LEN 16
 extern char numberBuffer[NUM_KEY_LEN + 1];
+
 extern uint8_t numberIndex;  
-
 extern TFT_eSPI_Button numericKeys[16];
+ 
+extern double numericValue;                // Variable to use as return value of numeric keyboard
+extern uint16_t numericValueAccepted;      // Variable to use as return value of numeric keyboard
 
-extern double numericValue;            // Variable to use as return value of numeric keyboard
-extern uint16_t numericValueAccepted;  // Variable to use as return value of numeric keyboard
+//----------------------------------------------------
+// Text Keyboard
+//----------------------------------------------------
+
+extern char textBuffer[PASS_LENGTH];       // Password for WiFi is the longer possible string (63 + 1)
+extern String textValue;                   // Variable to use as return value of text keyboard
+extern uint16_t textValueAccepted;         // 1 = Return value of text keyboard was accepted
 
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task
@@ -127,6 +153,7 @@ extern unsigned long actualScanTime;
 #define PAGE_EditInstructions3 43
 #define PAGE_LadderDetails     50
 #define PAGE_InputNumber      100
+#define PAGE_InputText        110
 #define PAGE_DialogOkCancel   150
 #define PAGE_DialogMessage    151
 
@@ -317,6 +344,7 @@ void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint1
 void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageInputText(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageLadderEditor(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageEditLadderInstructions1(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageEditLadderInstructions2(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
@@ -332,6 +360,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
 void touchMainHMI(uint16_t ts_x, uint16_t ts_y);
 void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
 void touchInputNumber(uint16_t ts_x, uint16_t ts_y);
+void touchInputText(uint16_t ts_x, uint16_t ts_y);
 void touchDialogOkCancel(uint16_t ts_x, uint16_t ts_y);
 void touchDialogMessage(uint16_t ts_x, uint16_t ts_y);
 void touchLadderDetails(uint16_t ts_x, uint16_t ts_y);
@@ -422,6 +451,8 @@ void drawEditLadderInstructions2 (void);
 void drawEditLadderInstructions3 (void);
 void drawLadderDetails(void);
 void drawNumericKeyboard(void);
+void drawKeyboard(uint16_t keyboardPage);
+void drawTextBox (void);
 void drawDialogOkCancel(void);
   void drawDialogButtons(void);
 void drawDialogMessage(void);
