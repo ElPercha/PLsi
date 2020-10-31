@@ -206,15 +206,11 @@ void touchInputText(uint16_t ts_x, uint16_t ts_y){
         textIndex++;
         textBuffer[textIndex] = 0;
       }
-      drawTextBox();      // Draw the string in top box   //lucas
     }    
     else{                                  // ENTER 
       textValueAccepted = 1;
       textValue = String(textBuffer);    
       HMI_Page = HMI_PageMemory;
-
-      Serial.println(textValue); //lucas
-
     }    
   }
 }
