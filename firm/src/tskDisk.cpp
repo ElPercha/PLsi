@@ -122,11 +122,19 @@ void TaskDisk(void *pvParameters)
     }
     
     if (I[2]){
+      textValue = "";     
+      textMaxLength = 8;     
+      HMI_PageMemory =  HMI_Page;        
+      HMI_Page = PAGE_Keyboard;        
 
       delay(1000);
     }
 
     if (I[3]){
+      textValue = "012345678901234567890123456789012345678901234567890123456789";     
+      textMaxLength = 63;     
+      HMI_PageMemory =  HMI_Page;        
+      HMI_Page = PAGE_Keyboard;        
 
       delay(1000);
     }
@@ -134,6 +142,7 @@ void TaskDisk(void *pvParameters)
     if (I[4]){
       
       textValue = "2203Alden";     
+      textMaxLength = 40;     
       HMI_PageMemory =  HMI_Page;        
       HMI_Page = PAGE_Keyboard;        
 

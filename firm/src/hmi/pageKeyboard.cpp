@@ -172,7 +172,7 @@ void touchInputText(uint16_t ts_x, uint16_t ts_y){
 
         if (ts_x > x && ts_x < x1 && ts_y > y && ts_y < y1){
           if (i != 20 && i != 28 && i != 29){ // Printable ASCII characters
-            if (textValue.length() < MAX_STRING_LENGTH) {
+            if (textValue.length() < textMaxLength) {
               textValue = textValue + keyLabel[keyboardPage][i];
             }
           }
@@ -196,7 +196,7 @@ void touchInputText(uint16_t ts_x, uint16_t ts_y){
       HMI_Page = HMI_PageMemory;
     }    
     else if (ts_x < KEY_TEXT_W * 7){       // SPACE 
-      if (textValue.length() < MAX_STRING_LENGTH) {
+      if (textValue.length() < textMaxLength) {
         textValue = textValue + ' ';
       }
     }    

@@ -3,16 +3,16 @@
 #include <hmi.h>
 
 //--------------------------------------------------------------------------------
-// Configuration Menu Page
+// Network Configuration Page
 //--------------------------------------------------------------------------------
 
-void pageMainConfig (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
     
     if(firstLoad){
-      drawMainConfig();
+      drawConfigNetwork();
     }
     
   //-------------------------------
@@ -26,50 +26,28 @@ void pageMainConfig (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
   //-------------------------------
 
   if (touchType){
-    touchMainConfig(ts_x, ts_y); 
+    touchConfigNetwork(ts_x, ts_y); 
   } 
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page full draw 
+// Network Configuration draw 
 //--------------------------------------------------------------------------------
 
-void drawMainConfig (void){
+void drawConfigNetwork (void){
   tft.fillScreen(MAGENTA);
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
-  tft.print("CONFIG coming!");
+  tft.print("NETWORKS !");
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page
+// Network configuration page
 // Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
-  if(ts_y < 80){
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigHMI;      
-    }
-    else{
-      HMI_Page = PAGE_ConfigPLC;      
-    }
-  }
-  else if(ts_y < 160){
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigIO;      
-    }
-    else{
-      HMI_Page = PAGE_ConfigNetwork;      
-    }
-  }
-  else{
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigSystem;      
-    }
-    else{
-      HMI_Page = PAGE_MainMenu;
-    }
-  }
+void touchConfigNetwork(uint16_t ts_x, uint16_t ts_y){
+  HMI_Page = PAGE_MainConfig;
 }
+

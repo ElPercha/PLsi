@@ -100,7 +100,6 @@
 
 #define SSID_LENGTH           33
 #define PASS_LENGTH           64
-#define MAX_STRING_LENGTH     PASS_LENGTH
 
 //--------------------------------------------------------------------------------
 // Type definition for Networks and global declarations

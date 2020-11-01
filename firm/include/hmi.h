@@ -132,6 +132,7 @@ extern uint16_t numericValueAccepted;      // Variable to use as return value of
 extern String textValue;                   // Variable to use as return value of text keyboard
 extern uint16_t textValueAccepted;         // 1 = Return value of text keyboard was accepted
 extern uint16_t keyboardPage;              // Indexes between the 4 pages
+extern uint16_t textMaxLength;             // Specifies the max length of the string to be modified
 
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task
@@ -144,18 +145,27 @@ extern unsigned long actualScanTime;
 //--------------------------------------------------------------------------------
 
 #define PAGE_MainMenu           0
+
 #define PAGE_MainLadder        10
-#define PAGE_MainHMI           20
-#define PAGE_MainConfig        30
-#define PAGE_LadderEditor      40
-#define PAGE_EditInstructions1 41
-#define PAGE_EditInstructions2 42
-#define PAGE_EditInstructions3 43
-#define PAGE_LadderDetails     50
-#define PAGE_InputNumber      100
-#define PAGE_Keyboard         110
-#define PAGE_DialogOkCancel   150
-#define PAGE_DialogMessage    151
+#define PAGE_LadderEditor      20
+#define PAGE_EditInstructions1 21
+#define PAGE_EditInstructions2 22
+#define PAGE_EditInstructions3 23
+#define PAGE_LadderDetails     40
+
+#define PAGE_MainConfig       100
+#define PAGE_ConfigNetwork    101
+#define PAGE_ConfigPLC        102
+#define PAGE_ConfigIO         103
+#define PAGE_ConfigHMI        104
+#define PAGE_ConfigSystem     105
+
+#define PAGE_MainHMI          200
+
+#define PAGE_InputNumber      400
+#define PAGE_Keyboard         410
+#define PAGE_DialogOkCancel   420
+#define PAGE_DialogMessage    430
 
 #define PAGES_LADDER_EDITOR     5
 
@@ -358,6 +368,11 @@ void pageEditLadderInstructions3(uint16_t firstLoad, uint16_t touchType, uint16_
 void pageLadderDetails(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageDialogOkCancel(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageDialogMessage(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigPLC (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 
 void setDisplay(void);
 void touch_calibrate(void);
@@ -413,6 +428,13 @@ void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
   void drawBarAddressEdition(void);
   void updateInstruction16Bit(void);
 void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y);
+void touchConfigNetwork(uint16_t ts_x, uint16_t ts_y);
+void touchConfigPLC(uint16_t ts_x, uint16_t ts_y);
+void touchConfigHMI(uint16_t ts_x, uint16_t ts_y);
+void touchConfigIO(uint16_t ts_x, uint16_t ts_y);
+void touchConfigSystem(uint16_t ts_x, uint16_t ts_y);
+
+
 void drawInstructionsEditorBooleanBar(void);
 uint16_t getMaxMemoryAddress(uint16_t type);
 int16_t getMinMemoryAddress(uint16_t type);
@@ -450,16 +472,22 @@ void drawLadderEditor(void);
   void drawLadderEditorNavigationBar(void);
   void drawLadderEditorInstructionsMenu(void);
   void drawLadderEditorElementsMenu(void);
-void drawEditLadderInstructions1 (void);
-void drawEditLadderInstructions2 (void);
-void drawEditLadderInstructions3 (void);
+void drawEditLadderInstructions1(void);
+void drawEditLadderInstructions2(void);
+void drawEditLadderInstructions3(void);
 void drawLadderDetails(void);
 void drawNumericKeyboard(void);
 void drawKeyboard(uint16_t keyboardPage);
-  void drawTextBox (void);
-  void drawKeyboardSpace (void);
+  void drawTextBox(void);
+  void drawKeyboardSpace(void);
   void changeKeyboardPage(void);
   void clearTextKeyboard(void);
+void drawConfigNetwork(void);
+void drawConfigPLC(void);
+void drawConfigHMI(void);
+void drawConfigIO(void);
+void drawConfigSystem(void);
+
 
 void drawDialogOkCancel(void);
   void drawDialogButtons(void);

@@ -3,16 +3,16 @@
 #include <hmi.h>
 
 //--------------------------------------------------------------------------------
-// Configuration Menu Page
+// PLC Configuration Page
 //--------------------------------------------------------------------------------
 
-void pageMainConfig (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageConfigPLC (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
     
     if(firstLoad){
-      drawMainConfig();
+      drawConfigPLC();
     }
     
   //-------------------------------
@@ -26,50 +26,28 @@ void pageMainConfig (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
   //-------------------------------
 
   if (touchType){
-    touchMainConfig(ts_x, ts_y); 
+    touchConfigPLC(ts_x, ts_y); 
   } 
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page full draw 
+// PLC Configuration draw 
 //--------------------------------------------------------------------------------
 
-void drawMainConfig (void){
+void drawConfigPLC (void){
   tft.fillScreen(MAGENTA);
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
-  tft.print("CONFIG coming!");
+  tft.print("PLC !");
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page
+// PLC configuration page
 // Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
-  if(ts_y < 80){
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigHMI;      
-    }
-    else{
-      HMI_Page = PAGE_ConfigPLC;      
-    }
-  }
-  else if(ts_y < 160){
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigIO;      
-    }
-    else{
-      HMI_Page = PAGE_ConfigNetwork;      
-    }
-  }
-  else{
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigSystem;      
-    }
-    else{
-      HMI_Page = PAGE_MainMenu;
-    }
-  }
+void touchConfigPLC(uint16_t ts_x, uint16_t ts_y){
+  HMI_Page = PAGE_MainConfig;
 }
+

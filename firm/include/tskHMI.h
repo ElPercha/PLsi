@@ -67,5 +67,6 @@ uint16_t numericValueAccepted = 0;  // 1 = Return value of numeric keyboard was 
 String textValue = "";                    // Variable to use as return value of text keyboard
 uint16_t textValueAccepted = 0;           // 1 = Return value of text keyboard was accepted
 uint16_t keyboardPage = 0;                // Indexes between the 4 pages
+uint16_t textMaxLength;                   // Specifies the max length of the string to be modified
 
 #endif

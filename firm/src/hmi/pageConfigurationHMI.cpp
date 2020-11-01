@@ -2,17 +2,20 @@
 #include <TFT_eSPI.h>
 #include <hmi.h>
 
+#include <_test.h> //lucas
+
 //--------------------------------------------------------------------------------
-// Configuration Menu Page
+// HMI Configuration Page
 //--------------------------------------------------------------------------------
 
-void pageMainConfig (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
     
     if(firstLoad){
-      drawMainConfig();
+      drawConfigHMI();
+      tft.pushImage(140, 100, circleWidth, circleHeight, circle); //lucas
     }
     
   //-------------------------------
@@ -26,50 +29,28 @@ void pageMainConfig (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint
   //-------------------------------
 
   if (touchType){
-    touchMainConfig(ts_x, ts_y); 
+    touchConfigHMI(ts_x, ts_y); 
   } 
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page full draw 
+// HMI Configuration draw 
 //--------------------------------------------------------------------------------
 
-void drawMainConfig (void){
+void drawConfigHMI (void){
   tft.fillScreen(MAGENTA);
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
-  tft.print("CONFIG coming!");
+  tft.print("HMI !");
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page
+// HMI configuration page
 // Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
-  if(ts_y < 80){
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigHMI;      
-    }
-    else{
-      HMI_Page = PAGE_ConfigPLC;      
-    }
-  }
-  else if(ts_y < 160){
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigIO;      
-    }
-    else{
-      HMI_Page = PAGE_ConfigNetwork;      
-    }
-  }
-  else{
-    if(ts_x < 160){
-      HMI_Page = PAGE_ConfigSystem;      
-    }
-    else{
-      HMI_Page = PAGE_MainMenu;
-    }
-  }
+void touchConfigHMI(uint16_t ts_x, uint16_t ts_y){
+  HMI_Page = PAGE_MainConfig;
 }
+
