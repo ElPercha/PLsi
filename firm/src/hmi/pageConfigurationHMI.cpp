@@ -2,8 +2,6 @@
 #include <TFT_eSPI.h>
 #include <hmi.h>
 
-#include <_test.h> //lucas
-
 //--------------------------------------------------------------------------------
 // HMI Configuration Page
 //--------------------------------------------------------------------------------
@@ -15,7 +13,6 @@ void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint1
     
     if(firstLoad){
       drawConfigHMI();
-      tft.pushImage(140, 100, circleWidth, circleHeight, circle); //lucas
     }
     
   //-------------------------------
@@ -38,7 +35,7 @@ void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint1
 //--------------------------------------------------------------------------------
 
 void drawConfigHMI (void){
-  tft.fillScreen(MAGENTA);
+  tft.fillScreen(TFT_BLACK);
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);

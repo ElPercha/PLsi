@@ -235,6 +235,7 @@ extern unsigned long actualScanTime;
 
 #define BLACK    0x0000
 #define BLUE     0x001F
+#define DARKBLUE 0x0002
 #define RED      0xF800
 #define GREEN    0x07E0
 #define CYAN     0x07FF
@@ -257,6 +258,7 @@ extern unsigned long actualScanTime;
 #define BLUE1    0x00E7
 #define WHITE1   0xE77C
 #define WHITE2   0xC6F8
+#define WHITE3   0x8510
 
 //--------------------------------------------------------------------------------
 // Main Menu and Body dimmensions [pixels]
@@ -347,6 +349,10 @@ extern unsigned long actualScanTime;
 #define COLOR_KEYBOARD_KEY                    TFT_WHITE
 #define COLOR_KEYBOARD_BACK                   TFT_LIGHTGREY
 #define COLOR_KEYBOARD_SPECIAL_KEY            TFT_ORANGE
+
+#define COLOR_CONFIG_MAIN_BACK                TFT_BLACK
+#define COLOR_CONFIG_MAIN_BORDER              WHITE2
+#define COLOR_CONFIG_MAIN_TEXT                WHITE2
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes

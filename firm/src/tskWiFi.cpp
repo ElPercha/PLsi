@@ -23,12 +23,13 @@ void TaskWiFi(void *pvParameters)
 
   //--------------------------------------------------
   // Connect to WiFi network
-  // Delay needed to Wait Program load from SPIFSS (weird)
+  // Delay needed to Wait Program load from Ffat (weird)
   //--------------------------------------------------
   
   delay(2000);
+  // scanNetworks(); // lucas
   WiFi.begin(settings.wifi.ssid, settings.wifi.password);
-  
+
   //--------------------------------------------------
   // Wait for connection
   //--------------------------------------------------
