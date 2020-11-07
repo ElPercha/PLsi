@@ -359,7 +359,6 @@ extern unsigned long actualScanTime;
 //--------------------------------------------------------------------------------
 
 void hmiWaitSettings (void);
-
 void pageMainMenu(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
   void changePLCstate(void);
 void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);

@@ -131,11 +131,7 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[3]){
-      textValue = "012345678901234567890123456789012345678901234567890123456789";     
-      textMaxLength = 63;     
-      HMI_PageMemory =  HMI_Page;        
-      HMI_Page = PAGE_Keyboard;        
-
+      //screenServer();
       delay(1000);
     }
 

@@ -16,6 +16,7 @@
 //--------------------------------------------------------------------------------
 
 #define BAUD_RATE   115200
+//#define BAUD_RATE   921600 // Lucas For Screen Saver connection with PC
 
 //--------------------------------------------------------------------------------
 // Total Networks. Max quantity tested OK = 500
