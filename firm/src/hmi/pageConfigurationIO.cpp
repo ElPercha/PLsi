@@ -35,11 +35,13 @@ void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
 //--------------------------------------------------------------------------------
 
 void drawConfigIO (void){
-  tft.fillScreen(MAGENTA);
+  tft.fillScreen(TFT_BLACK);
   tft.setTextColor(WHITE);
-  tft.setCursor(10, 10);
   tft.setTextSize(2);
-  tft.print("IO !");
+  tft.setCursor(10, 10);
+  tft.print("I/O config");
+  tft.setCursor(10, 30);
+  tft.print("not yet available!");
 }
 
 //--------------------------------------------------------------------------------

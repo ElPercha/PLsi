@@ -134,6 +134,16 @@ extern uint16_t textValueAccepted;         // 1 = Return value of text keyboard 
 extern uint16_t keyboardPage;              // Indexes between the 4 pages
 extern uint16_t textMaxLength;             // Specifies the max length of the string to be modified
 
+//----------------------------------------------------
+// Wifi Editing
+//----------------------------------------------------
+
+extern uint16_t wifiEditionField;
+extern unsigned long timerRefreshWifiStatus;
+
+#define EDITING_WIFI_SSID     0
+#define EDITING_WIFI_PASSWORD 1
+
 //--------------------------------------------------------------------------------
 // Used Global variables in HMI scope, declared in another task
 //--------------------------------------------------------------------------------
@@ -159,6 +169,7 @@ extern unsigned long actualScanTime;
 #define PAGE_ConfigIO         103
 #define PAGE_ConfigHMI        104
 #define PAGE_ConfigSystem     105
+#define PAGE_ScanWiFi         110
 
 #define PAGE_MainHMI          200
 
@@ -377,6 +388,7 @@ void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, u
 void pageConfigPLC (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 
 void setDisplay(void);
@@ -438,6 +450,7 @@ void touchConfigPLC(uint16_t ts_x, uint16_t ts_y);
 void touchConfigHMI(uint16_t ts_x, uint16_t ts_y);
 void touchConfigIO(uint16_t ts_x, uint16_t ts_y);
 void touchConfigSystem(uint16_t ts_x, uint16_t ts_y);
+void touchScanWiFi(uint16_t ts_x, uint16_t ts_y);
 
 
 void drawInstructionsEditorBooleanBar(void);
@@ -488,10 +501,16 @@ void drawKeyboard(uint16_t keyboardPage);
   void changeKeyboardPage(void);
   void clearTextKeyboard(void);
 void drawConfigNetwork(void);
+  void drawNetworkConfigSSID(void);
+  void drawNetworkConfigPass(void);
+  void drawNetworkConfigStatus(void);
+  void drawNetworkConfigButtons(void);
+  void drawNetworkWifiOnOffButton(void);
 void drawConfigPLC(void);
 void drawConfigHMI(void);
 void drawConfigIO(void);
 void drawConfigSystem(void);
+void drawScanWiFi(void);
 
 
 void drawDialogOkCancel(void);

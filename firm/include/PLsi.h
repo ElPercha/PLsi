@@ -16,7 +16,7 @@
 //--------------------------------------------------------------------------------
 
 #define BAUD_RATE   115200
-//#define BAUD_RATE   921600 // Lucas For Screen Saver connection with PC
+//#define BAUD_RATE   921600 // Lucas For Screen Saver PC connection
 
 //--------------------------------------------------------------------------------
 // Total Networks. Max quantity tested OK = 500
@@ -94,16 +94,16 @@ const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/PROGRAM_0.plsi",
 // 2.8" SPI display 
 //--------------------------------------------------------------------------------
 
-#define TS_LEFT_X    394
-#define TS_RIGHT_X  3469 
-#define TS_TOP_Y     323
-#define TS_BOTTOM_Y 3441
+#define TS_LEFT_X      394
+#define TS_RIGHT_X    3469 
+#define TS_TOP_Y       323
+#define TS_BOTTOM_Y   3441
 
 //--------------------------------------------------------------------------------
 // Default WiFi credentials
 //--------------------------------------------------------------------------------
 
-#define WIFI_SSID     "2203Alden"
-#define WIFI_PASS     "HolaHola"
+#define WIFI_SSID     "Your_SSID"
+#define WIFI_PASS     "Your_Password"
 
 #endif

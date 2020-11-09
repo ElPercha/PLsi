@@ -180,7 +180,7 @@ extern Timer       Timers[QTY_T];
 
 //--------------------------------------------------------------------------------
 // General PLC Configuration struct
-// settings.bin in RAM
+// settings.bin in Ffat and RAM
 //--------------------------------------------------------------------------------
 // Main PLC status in PLCstate
 //  0  = Stopped 
@@ -216,16 +216,17 @@ typedef struct
 
 typedef struct
 {
-  char      ssid[SSID_LENGTH];
-  char  password[PASS_LENGTH];
+  char ssid[SSID_LENGTH];
+  char password[PASS_LENGTH];
+  uint16_t enabled;
 } wifiSettings;
 
 typedef struct
 {
-  generalSettings    general;
-  ladderSettings      ladder;
-  hmiSettings            hmi;
-  wifiSettings          wifi;
+  generalSettings general;
+  ladderSettings  ladder;
+  hmiSettings     hmi;
+  wifiSettings    wifi;
 } userSettings;
 
 extern userSettings settings;

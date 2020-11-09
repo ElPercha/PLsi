@@ -88,9 +88,6 @@ void TaskHMI(void *pvParameters)
       case PAGE_LadderDetails:
         pageLadderDetails(firstLoad, touchType, ts_x, ts_y);
         break;
-      case PAGE_MainHMI:
-        pageMainHMI(firstLoad, touchType, ts_x, ts_y);
-        break;
       case PAGE_MainConfig:
         pageMainConfig(firstLoad, touchType, ts_x, ts_y);
         break;
@@ -108,6 +105,12 @@ void TaskHMI(void *pvParameters)
         break;
       case PAGE_ConfigSystem:
         pageConfigSystem(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_ScanWiFi:
+        pageScanWiFi(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_MainHMI:
+        pageMainHMI(firstLoad, touchType, ts_x, ts_y);
         break;
       case PAGE_InputNumber:
         pageInputNumber(firstLoad, touchType, ts_x, ts_y);

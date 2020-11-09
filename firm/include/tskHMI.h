@@ -69,4 +69,11 @@ uint16_t textValueAccepted = 0;           // 1 = Return value of text keyboard w
 uint16_t keyboardPage = 0;                // Indexes between the 4 pages
 uint16_t textMaxLength;                   // Specifies the max length of the string to be modified
 
+//----------------------------------------------------
+// Wifi Editing
+//----------------------------------------------------
+
+uint16_t wifiEditionField = 0;
+unsigned long timerRefreshWifiStatus = 0;
+
 #endif

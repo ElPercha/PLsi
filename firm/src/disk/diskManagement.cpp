@@ -94,6 +94,7 @@ void loadDefaultSettings(void){
 
   snprintf(settings.wifi.ssid, SSID_LENGTH, WIFI_SSID);
   snprintf(settings.wifi.password, PASS_LENGTH, WIFI_PASS);
+  settings.wifi.enabled = 0;
 
   saveSettings();
 } 

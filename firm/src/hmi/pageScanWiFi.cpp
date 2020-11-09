@@ -3,16 +3,16 @@
 #include <hmi.h>
 
 //--------------------------------------------------------------------------------
-// HMI Configuration Page
+// WiFi Scanning SSIDs page
 //--------------------------------------------------------------------------------
 
-void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
     
     if(firstLoad){
-      drawConfigHMI();
+      drawScanWiFi();
     }
     
   //-------------------------------
@@ -26,30 +26,28 @@ void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint1
   //-------------------------------
 
   if (touchType){
-    touchConfigHMI(ts_x, ts_y); 
+    touchScanWiFi(ts_x, ts_y); 
   } 
 }
 
 //--------------------------------------------------------------------------------
-// HMI Configuration draw 
+// WiFi Scanning SSIDs draw 
 //--------------------------------------------------------------------------------
 
-void drawConfigHMI (void){
-  tft.fillScreen(TFT_BLACK);
+void drawScanWiFi (void){
+  tft.fillScreen(YELLOW);
   tft.setTextColor(WHITE);
-  tft.setTextSize(2);
   tft.setCursor(10, 10);
-  tft.print("HMI config");
-  tft.setCursor(10, 30);
-  tft.print("not yet available!");
+  tft.setTextSize(2);
+  tft.print("Scanning for SSIDs");
 }
 
 //--------------------------------------------------------------------------------
-// HMI configuration page
+// WiFi Scanning SSIDs page
 // Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-void touchConfigHMI(uint16_t ts_x, uint16_t ts_y){
-  HMI_Page = PAGE_MainConfig;
+void touchScanWiFi(uint16_t ts_x, uint16_t ts_y){
+  HMI_Page = PAGE_ConfigNetwork;
 }
 
