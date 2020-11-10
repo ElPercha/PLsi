@@ -15,31 +15,17 @@ void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, u
   
   if (textValueAccepted){
     textValueAccepted = 0;
-    if (wifiEditionField == EDITING_WIFI_SSID){
-      if(textValue.compareTo(String(settings.wifi.ssid))){
-        textValue.toCharArray(settings.wifi.ssid, SSID_LENGTH);
-        settings.wifi.enabled = 0; // Turn Off WiFi if value has been changed
-        saveSettings();
-
-        Serial.println("************ comparacion NO ok");
-      }
-      else{
-        Serial.println("++++++++++++ comparacion ok");
-      }
+    if (wifiEditionField == EDITING_WIFI_SSID && textValue.compareTo(String(settings.wifi.ssid))){
+      textValue.toCharArray(settings.wifi.ssid, SSID_LENGTH);
+      settings.wifi.enabled = 0; // Turn Off WiFi if value has been changed
+      saveSettings();
     }
-    if (wifiEditionField == EDITING_WIFI_PASSWORD){
-      if(textValue.compareTo(String(settings.wifi.password))){
-        textValue.toCharArray(settings.wifi.password, PASS_LENGTH);
-        settings.wifi.enabled = 0; // Turn Off WiFi if value has been changed
-        saveSettings();
-
-        Serial.println("************ comparacion NO ok PASS");
-      }
-      else{
-        Serial.println("++++++++++++ comparacion ok PASS");
-      }
+    if (wifiEditionField == EDITING_WIFI_PASSWORD && textValue.compareTo(String(settings.wifi.password))){
+      textValue.toCharArray(settings.wifi.password, PASS_LENGTH);
+      settings.wifi.enabled = 0; // Turn Off WiFi if value has been changed
+      saveSettings();
     }
-   }
+  }
 
   //-------------------------------
   // draw full Page on first load
@@ -317,4 +303,3 @@ void touchConfigNetwork(uint16_t ts_x, uint16_t ts_y){
     }
   }
 }
-
