@@ -98,8 +98,17 @@ void drawNetworkConfigSSID (void){
 
   tft.setTextSize(2);
   tft.setTextColor(TFT_BLACK);
-  tft.setCursor(CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE + 20);
-  tft.print(settings.wifi.ssid);
+
+  String auxString = String(settings.wifi.ssid);
+
+  // Max Length = SSID_LENGTH-1
+  if(textValue.length() <= 19){
+    tft.drawString(auxString, CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE + 20);
+  }
+  else{
+    tft.drawString(auxString.substring(0, 19), CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE + 11);
+    tft.drawString(auxString.substring(19, textValue.length()),  CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE + 31);
+  }  
 }
 
 //--------------------------------------------------------------------------------
@@ -111,8 +120,22 @@ void drawNetworkConfigPass (void){
 
   tft.setTextSize(2);
   tft.setTextColor(TFT_BLACK);
-  tft.setCursor(CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BAR_H + 20);
-  tft.print(settings.wifi.password);
+
+  String auxString = String(settings.wifi.password);
+
+  // Max Length = PASS_LENGTH-1
+  if(textValue.length() <= 19){
+    tft.drawString(auxString, CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BAR_H + 20);
+  }
+  else if(textValue.length() <= 38){
+    tft.drawString(auxString.substring(0, 19), CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BAR_H + 11);
+    tft.drawString(auxString.substring(19, textValue.length()),  CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BAR_H + 31);
+  }  
+  else{
+    tft.setTextSize(1);
+    tft.drawString(auxString.substring(0, 32), CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BAR_H + 11);
+    tft.drawString(auxString.substring(32, textValue.length()),  CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BAR_H + 31);
+  }  
 }
 
 //--------------------------------------------------------------------------------
