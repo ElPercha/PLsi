@@ -8,9 +8,11 @@ The models were created using "Microsoft 3D builder" application, it is included
 	Also, the full assembly is combined in the "Assembly" file, for visualization purposes only.
 
 In the folder "cura-slicer" 3 files are included for each model:
-	 1- *.stl   --> It is a direct export from Microsoft 3D Builder
-	 2- *.3mf   --> It is the Cura project (unfortunatelly it uses the same extension as Microsoft 3D Builder) 
-	 3- *.gcode --> It is the file to be imported in your 3D Printer
+
+	*.stl: It is a direct export from Microsoft 3D Builder
+	*.3mf: It is the Cura project (unfortunatelly it uses the same extension as Microsoft 3D Builder) 
+	*.gcode: It is the file to be imported in your 3D Printer
+	
 
 Ultimaker Cura Version: 4.8.0 was the Slicer used to create these files.
 	<https://ultimaker.com/software/ultimaker-cura>
