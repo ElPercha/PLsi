@@ -8,6 +8,7 @@
 
 #include <TFT_eSPI.h> //lucas to delete
 #include "hmi.h" //lucas to delete
+#include "wifi_plsi.h" //lucas to delete
 
 //--------------------------------------------------------------------------------
 // Disk Task 
@@ -136,7 +137,7 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[4]){
-      
+      scanNetworks();
       delay(1000);
     }
 
