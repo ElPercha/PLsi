@@ -17,15 +17,15 @@ In the folder "cura-slicer" 3 files are included for each model:
 Ultimaker Cura Version: 4.8.0 was the Slicer used to create these files.
 	<https://ultimaker.com/software/ultimaker-cura>
 
-Material usage:
+3D Print details:
 
-	Housing Base:
+	Housing Base material usage:
 		Weight: 43g
 		Lenght: 12.9m 
 		Filament Diameter: 1.75mm
 		Printing Time: 5h 56m
 
-	Housing Cover:
+	Housing Cover material usage:
 		Weight: 63g
 		Lenght: 18.88m 
 		Filament Diameter: 1.75mm
@@ -40,3 +40,4 @@ Material usage:
 		Nozzle Temp: 240C
 		Bed Temp: 80C
 		Layer Height: 0.2mm
+
