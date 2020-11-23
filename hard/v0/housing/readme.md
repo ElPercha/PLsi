@@ -7,12 +7,17 @@ The models were created using "Microsoft 3D builder" application, it is included
 	As helper, the board model was created and it is included in the root directory.
 	Also, the full assembly is combined in the "Assembly" file, for visualization purposes only.
 
-In the folder "cura-slicer" 3 files are included for each model:
+The housing is composed by 2 main and 1 optional parts:
+	
+	1 - housing base
+	2 - housing cover
+	3 - housing din rail (optional for DIN rail mounting)
+		
+For each part, 3 files are included in the "cura-slicer" folder:
 
 	*.stl: It is a direct export from Microsoft 3D Builder
 	*.3mf: It is the Cura project (unfortunatelly it uses the same extension as Microsoft 3D Builder) 
 	*.gcode: It is the file to be imported in your 3D Printer
-	
 
 Ultimaker Cura Version: 4.8.0 was the Slicer used to create these files.
 	<https://ultimaker.com/software/ultimaker-cura>
@@ -41,7 +46,7 @@ Ultimaker Cura Version: 4.8.0 was the Slicer used to create these files.
 		Speed: 50mm/s
 		Speed first and last layer: 25mm/s
 		Infill: 100%
-		Nozzle Temp: 240C (230 to 240 works fine)
+		Nozzle Temp: 230C
 		Bed Temp: 80C
 		Layer Height: 0.2mm
 		Restracting distance: 2mm
