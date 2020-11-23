@@ -4,8 +4,8 @@ The 3D design of the housing is composed by 2 models or main parts:
 You will also need 5 screws. Recommended size: #4 (3mm) x 1/2 inch Flat head.
 
 The models were created using "Microsoft 3D builder" application, it is included in most of W10 Versions for free.
-	As helper, the board model was created and it is included in the root directory.
-	Also, the full assembly is combined in the "Assembly" file, for visualization purposes only.
+Ultimaker Cura Version: 4.8.0 was the Slicer used to create these files.
+	<https://ultimaker.com/software/ultimaker-cura>
 
 The housing is composed by 2 main and 1 optional parts:
 	
@@ -19,8 +19,6 @@ For each part, 3 files are included in the "cura-slicer" folder:
 	*.3mf: It is the Cura project (unfortunatelly it uses the same extension as Microsoft 3D Builder) 
 	*.gcode: It is the file to be imported in your 3D Printer
 
-Ultimaker Cura Version: 4.8.0 was the Slicer used to create these files.
-	<https://ultimaker.com/software/ultimaker-cura>
 
 3D Print details:
 
