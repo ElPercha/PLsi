@@ -23,21 +23,31 @@ Ultimaker Cura Version: 4.8.0 was the Slicer used to create these files.
 		Weight: 43g
 		Lenght: 12.9m 
 		Filament Diameter: 1.75mm
-		Printing Time: 5h 56m
+		Printing Time: 5h
 
 	Housing Cover material usage:
 		Weight: 63g
 		Lenght: 18.88m 
 		Filament Diameter: 1.75mm
-		Printing Time: 9h 8m
+		Printing Time: 9h
 
 	3D Printer used:
 		Creality3D Upgraded Ender-3 V2
 
 	Main parameters for 3D Printer:
-		Material: PETG
-		Speed: 40mm/s
-		Nozzle Temp: 240C
+		Material: Generic PETG
+		Nozzle diameter: 0.4mm
+		Filament diameter: 1.75mm
+		Speed: 50mm/s
+		Speed first and last layer: 25mm/s
+		Infill: 100%
+		Nozzle Temp: 240C (230 to 240 works fine)
 		Bed Temp: 80C
 		Layer Height: 0.2mm
+		Restracting distance: 2mm
+		Restracting speed: 45mm/s
+		Generate Support: true 
+		Support placement: Everywhere 
+		Support Overhang Angle: 45
+
 
