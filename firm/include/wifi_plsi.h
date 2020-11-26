@@ -11,6 +11,5 @@
 //--------------------------------------------------------------------------------
 
 void wifiWaitSettings(void);
-void scanNetworks(void);
 
 #endif

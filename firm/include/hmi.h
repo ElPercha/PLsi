@@ -510,7 +510,11 @@ void drawConfigPLC(void);
 void drawConfigHMI(void);
 void drawConfigIO(void);
 void drawConfigSystem(void);
-void drawScanWiFi(void);
+void drawNetworksScan(void);
+void drawDisconnectingWiFi(void);
+void drawScanningWiFi(void);
+void drawWiFiScanFailed(void);
+void drawNetworkInfo(uint16_t netIndex, uint16_t pageIndex);
 
 
 void drawDialogOkCancel(void);

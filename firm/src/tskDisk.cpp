@@ -137,7 +137,6 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[4]){
-      scanNetworks();
       delay(1000);
     }
 

@@ -126,8 +126,14 @@ void drawNetworkConfigPass (void){
 
 //--------------------------------------------------------------------------------
 // Draw Status bar
+//
+// dBm Reference values
+// -30 dBm	Amazing	Max achievable signal strength. The client can only be a few feet from the AP to achieve this. Not typical or desirable in the real world.	N/A
+// -67 dBm	Very Good	Minimum signal strength for applications that require very reliable, timely delivery of data packets.	VoIP/VoWiFi, streaming video
+// -70 dBm	Okay	Minimum signal strength for reliable packet delivery.	Email, web
+// -80 dBm	Not Good	Minimum signal strength for basic connectivity. Packet delivery may be unreliable.	N/A
+// -90 dBm	Unusable	Approaching or drowning in the noise floor. Any functionality is highly unlikely.	N/A
 //--------------------------------------------------------------------------------
-
 
 void drawNetworkConfigStatus (void){
   if (WiFi.status() == WL_CONNECTED && settings.wifi.enabled){
