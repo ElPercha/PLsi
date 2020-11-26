@@ -87,6 +87,8 @@ void TaskWiFi(void *pvParameters)
 
     if (settings.wifi.enabled != WiFiPreviousStatus){
       if (settings.wifi.enabled){
+        WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE); // required to set hostname properly
+        WiFi.setHostname(WIFI_HOSTNAME);
         WiFi.begin(settings.wifi.ssid, settings.wifi.password);
       }
       else{

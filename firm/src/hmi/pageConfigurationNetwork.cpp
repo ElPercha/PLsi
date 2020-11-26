@@ -126,13 +126,6 @@ void drawNetworkConfigPass (void){
 
 //--------------------------------------------------------------------------------
 // Draw Status bar
-//
-// dBm Reference values
-// -30 dBm	Amazing	Max achievable signal strength. The client can only be a few feet from the AP to achieve this. Not typical or desirable in the real world.	N/A
-// -67 dBm	Very Good	Minimum signal strength for applications that require very reliable, timely delivery of data packets.	VoIP/VoWiFi, streaming video
-// -70 dBm	Okay	Minimum signal strength for reliable packet delivery.	Email, web
-// -80 dBm	Not Good	Minimum signal strength for basic connectivity. Packet delivery may be unreliable.	N/A
-// -90 dBm	Unusable	Approaching or drowning in the noise floor. Any functionality is highly unlikely.	N/A
 //--------------------------------------------------------------------------------
 
 void drawNetworkConfigStatus (void){
@@ -176,15 +169,11 @@ void drawNetworkConfigStatus (void){
   tft.print(WiFi.localIP());
 
   tft.setCursor(CONFIG_NETWORK_SPACE + 10, CONFIG_NETWORK_SPACE * 3 + CONFIG_NETWORK_BAR_H * 2 + 54);
-  int auxSignal = (90 + WiFi.RSSI()) * 100/40; // -50dBm= 100%  -90dBm= 1%
-  if (auxSignal > 100){
-    auxSignal = 100;
-  }
-  if (auxSignal < 1){
-    auxSignal = 1;
-  }
+
+  uint16_t auxSignal = convertDbm(int32_t(WiFi.RSSI()));
+
   if (WiFi.status() == WL_CONNECTED){
-    tft.print("Signal: " + String(uint16_t(auxSignal)) + "%");
+    tft.print("Signal: " + String(auxSignal) + "%");
   }
   else{
     tft.print("Signal: --");
@@ -309,3 +298,29 @@ void touchConfigNetwork(uint16_t ts_x, uint16_t ts_y){
     }
   }
 }
+
+//--------------------------------------------------------------------------------
+// Convert dBm to %
+// -50dBm = 100%  
+// -90dBm = 1%
+//
+// dBm Reference values
+// -30 dBm	Amazing	Max achievable signal strength. The client can only be a few feet from the AP to achieve this. Not typical or desirable in the real world.	N/A
+// -67 dBm	Very Good	Minimum signal strength for applications that require very reliable, timely delivery of data packets.	VoIP/VoWiFi, streaming video
+// -70 dBm	Okay	Minimum signal strength for reliable packet delivery.	Email, web
+// -80 dBm	Not Good	Minimum signal strength for basic connectivity. Packet delivery may be unreliable.	N/A
+// -90 dBm	Unusable	Approaching or drowning in the noise floor. Any functionality is highly unlikely.	N/A
+//--------------------------------------------------------------------------------
+
+uint16_t convertDbm (int32_t signalWifi){
+  double auxSignal = (90 + signalWifi) * 100.0/40.0; 
+  if (auxSignal > 100){
+    auxSignal = 100;
+  }
+  if (auxSignal < 1){
+    auxSignal = 1;
+  }
+  return uint16_t(auxSignal);
+}
+
+

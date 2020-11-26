@@ -515,6 +515,7 @@ void drawDisconnectingWiFi(void);
 void drawScanningWiFi(void);
 void drawWiFiScanFailed(void);
 void drawNetworkInfo(uint16_t netIndex, uint16_t pageIndex);
+uint16_t convertDbm(int32_t WiFiPower);
 
 
 void drawDialogOkCancel(void);

@@ -105,5 +105,6 @@ const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/PROGRAM_0.plsi",
 
 #define WIFI_SSID     "Your_SSID"
 #define WIFI_PASS     "Your_Password"
+#define WIFI_HOSTNAME "PLsi"
 
 #endif

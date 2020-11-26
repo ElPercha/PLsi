@@ -59,7 +59,7 @@ void drawNetworksScan (void){
     //  - for 240 Y display 5 Networks
     //  - for 320 Y display 7 Networks
     // An improvement would be to have a second page and show 5 more
-    uint16_t networksPerPage = (TFT_PIXELS_Y / VIEW_NET_Y) - 1; 
+    uint16_t networksPerPage = (TFT_PIXELS_Y / VIEW_NET_Y) - 1; // lucas multi page implementation
     if (numSSID < networksPerPage){
       networksPerPage = numSSID; 
     } 
@@ -111,43 +111,73 @@ void drawWiFiScanFailed (void){
 }
 
 //--------------------------------------------------------------------------------
-// WiFi Scanning Failed message
+// WiFi draw Network information
 //--------------------------------------------------------------------------------
 
 void drawNetworkInfo (uint16_t netIndex, uint16_t pageIndex){
   String SSID;
   uint8_t encryptionType, *BSSID;
+  uint16_t wifiPower;
   int32_t RSSI, channel;
-  
+  uint32_t auxColor;
+
   WiFi.getNetworkInfo(netIndex, SSID, encryptionType, RSSI, BSSID, channel);
 
-  Serial.print("Network number: ");
-  Serial.println(netIndex);
-  Serial.print("    - SSID: ");
-  Serial.println(SSID);
-  Serial.print("    - encryptionType: ");
-  Serial.println(encryptionType);
-  Serial.print("    - RSSD: ");
-  Serial.println(RSSI);
-  Serial.print("    - channel: ");
-  Serial.println(channel);
+  wifiPower = convertDbm(RSSI);
+  if(wifiPower > 60){      // equivalent to: < -66dBm
+    auxColor = TFT_DARKGREEN;
+  }
+  else if(wifiPower > 50){ // equivalent to: < -70 dBm
+    auxColor = ORANGE;
+  }
+  else{
+    auxColor = TFT_RED;
+  }
 
-  Serial.print("    - BSSID: ");
-  Serial.print(BSSID[0],HEX);
-  Serial.print(":");
-  Serial.print(BSSID[1],HEX);
-  Serial.print(":");
-  Serial.print(BSSID[2],HEX);
-  Serial.print(":");
-  Serial.print(BSSID[3],HEX);
-  Serial.print(":");
-  Serial.print(BSSID[4],HEX);
-  Serial.print(":");
-  Serial.println(BSSID[5],HEX);
+  // Box for each detected network
+  tft.fillRect(1, 1 + VIEW_NET_Y * pageIndex, TFT_PIXELS_X-2, VIEW_NET_Y - 2, auxColor);
+  tft.drawRect(1, 1 + VIEW_NET_Y * pageIndex, TFT_PIXELS_X-2, VIEW_NET_Y - 2, WHITE2);
+
+  // Power in % + SSID Name
+  tft.setTextColor(WHITE2);
+  tft.setTextSize(2);
+  tft.setCursor(10, 7 + VIEW_NET_Y * pageIndex);
+  tft.print(String(wifiPower) + "%  " + SSID);
+   
+  // Network info: Power in dBm + Channel + Encryption type + AP MAC address
+  // Example:
+  // -60dBm  CH: 5  WPA-PSK  AA-BB-CC-DD-EE-FF
+  tft.setTextSize(1);
+  tft.setCursor(10, 27 + VIEW_NET_Y * pageIndex);
+
+  String netInfo = "";
+  String encryptionString = "?";
+
+  if(encryptionType == WIFI_AUTH_OPEN){
+    encryptionString = "OPEN";
+  }
+  else if (encryptionType == WIFI_AUTH_WEP){
+    encryptionString = "WEP";
+  }
+  else if (encryptionType == WIFI_AUTH_WPA_PSK){
+    encryptionString = "WPA-PSK";
+  }
+  else if (encryptionType == WIFI_AUTH_WPA2_PSK){
+    encryptionString = "WPA2-PSK";
+  }
+  else if (encryptionType == WIFI_AUTH_WPA_WPA2_PSK){
+    encryptionString = "WPA-WPA2-PSK";
+  }
+  else if (encryptionType == WIFI_AUTH_WPA2_ENTERPRISE){
+    encryptionString = "WPA2-ENTERPR";
+  }
+  else if (encryptionType == WIFI_AUTH_MAX){
+    encryptionString = "MAX";
+  }
+
+  netInfo = netInfo + String(RSSI) + "dBm  CH: " + String(channel) + "  " + encryptionString + "  ";
 
   char macOctet[3];
-  String netInfo = "";
-
   for (uint16_t i = 0; i < 6; i++){
     sprintf(macOctet,"%02X",BSSID[i]);
     netInfo = netInfo + String(macOctet);
@@ -155,8 +185,7 @@ void drawNetworkInfo (uint16_t netIndex, uint16_t pageIndex){
       netInfo = netInfo + ":";
     }
   }
-  Serial.println("AP MAC: " + netInfo);
-
+  tft.print(netInfo);
 }
 
 //--------------------------------------------------------------------------------
