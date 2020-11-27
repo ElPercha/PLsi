@@ -135,8 +135,17 @@ extern uint16_t keyboardPage;              // Indexes between the 4 pages
 extern uint16_t textMaxLength;             // Specifies the max length of the string to be modified
 
 //----------------------------------------------------
-// Wifi Editing
+// Wifi
 //----------------------------------------------------
+
+extern int16_t networksFound;
+extern uint16_t networksScanPage;
+extern uint16_t networksToShow;
+
+#define VIEW_NET_Y            40 // Height of button for each network found
+// For 240 Y display 5 Networks per page 
+// For 320 Y display 7 Networks per page
+#define NETWORKS_PER_PAGE     uint16_t(TFT_PIXELS_Y / VIEW_NET_Y - 1)
 
 extern uint16_t wifiEditionField;
 extern unsigned long timerRefreshWifiStatus;
@@ -365,6 +374,12 @@ extern unsigned long actualScanTime;
 #define COLOR_CONFIG_MAIN_BORDER              WHITE2
 #define COLOR_CONFIG_MAIN_TEXT                WHITE2
 
+#define COLOR_WIFI_SIGNAL_GOOD                TFT_DARKGREEN
+#define COLOR_WIFI_SIGNAL_MED                 ORANGE
+#define COLOR_WIFI_SIGNAL_BAD                 TFT_RED
+#define COLOR_WIFI_BOX_BORDER                 WHITE2
+#define COLOR_WIFI_BOX_TEXT                   WHITE2
+
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
 //--------------------------------------------------------------------------------
@@ -510,12 +525,14 @@ void drawConfigPLC(void);
 void drawConfigHMI(void);
 void drawConfigIO(void);
 void drawConfigSystem(void);
-void drawNetworksScan(void);
-void drawDisconnectingWiFi(void);
-void drawScanningWiFi(void);
-void drawWiFiScanFailed(void);
-void drawNetworkInfo(uint16_t netIndex, uint16_t pageIndex);
-uint16_t convertDbm(int32_t WiFiPower);
+void scanWiFiNetworks(void);
+  void drawWiFiScanButtons(void);
+  void drawDisconnectingWiFi(void);
+  void drawScanningWiFi(void);
+  void drawWiFiScanFailed(void);
+  void drawNetworkInfo(uint16_t netIndex, uint16_t pageIndex);
+  void drawNetworksFound(void);
+  uint16_t convertDbm(int32_t WiFiPower);
 
 
 void drawDialogOkCancel(void);

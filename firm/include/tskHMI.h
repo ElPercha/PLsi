@@ -73,6 +73,10 @@ uint16_t textMaxLength;                   // Specifies the max length of the str
 // Wifi Editing
 //----------------------------------------------------
 
+int16_t networksFound = 0;
+uint16_t networksScanPage = 0;
+uint16_t networksToShow = 0;
+
 uint16_t wifiEditionField = 0;
 unsigned long timerRefreshWifiStatus = 0;
 

@@ -14,7 +14,10 @@ void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   //-------------------------------
     
     if(firstLoad){
-      drawNetworksScan();
+      tft.fillScreen(BLUE1); //lucas
+      drawWiFiScanButtons();
+      scanWiFiNetworks();
+      networksScanPage = 0;
     }
 
   //-------------------------------
@@ -36,8 +39,7 @@ void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
 // WiFi Turning of WiFi message
 //--------------------------------------------------------------------------------
 
-void drawNetworksScan (void){
-  #define VIEW_NET_Y 40
+void scanWiFiNetworks (void){
 
   // If WiFi is enabled but not connected, has to be disconencted before to scan
   if (!WiFi.isConnected() && settings.wifi.enabled){
@@ -48,25 +50,13 @@ void drawNetworksScan (void){
   }
 
   drawScanningWiFi();
-  int16_t numSSID = WiFi.scanNetworks();
+  networksFound = WiFi.scanNetworks();
 
-  if (numSSID <= WIFI_SCAN_FAILED){
+  if (networksFound <= WIFI_SCAN_FAILED){
     drawWiFiScanFailed();
   }
   else{
-
-    // Limited to show the best  networks 
-    //  - for 240 Y display 5 Networks
-    //  - for 320 Y display 7 Networks
-    // An improvement would be to have a second page and show 5 more
-    uint16_t networksPerPage = (TFT_PIXELS_Y / VIEW_NET_Y) - 1; // lucas multi page implementation
-    if (numSSID < networksPerPage){
-      networksPerPage = numSSID; 
-    } 
-
-    for (uint16_t thisNetwork = 0; thisNetwork < networksPerPage; thisNetwork++) {
-      drawNetworkInfo(thisNetwork, thisNetwork);
-    } 
+    drawNetworksFound();
   }
 }
 
@@ -75,7 +65,7 @@ void drawNetworksScan (void){
 //--------------------------------------------------------------------------------
 
 void drawDisconnectingWiFi (void){
-  tft.fillScreen(BLUE1);
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
@@ -87,7 +77,7 @@ void drawDisconnectingWiFi (void){
 //--------------------------------------------------------------------------------
 
 void drawScanningWiFi (void){
-  tft.fillScreen(BLUE1);
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
@@ -99,7 +89,7 @@ void drawScanningWiFi (void){
 //--------------------------------------------------------------------------------
 
 void drawWiFiScanFailed (void){
-  tft.fillScreen(BLUE1);
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
   tft.setCursor(10, 10);
@@ -108,6 +98,62 @@ void drawWiFiScanFailed (void){
   tft.print("Turn OFF WiFi");
   tft.setCursor(10, 50);
   tft.print("and try again...");
+}
+
+//--------------------------------------------------------------------------------
+// draw 3 buttons in the bottom CANCEL - RESCAN - MORE
+//--------------------------------------------------------------------------------
+
+void drawWiFiScanButtons(){
+  #define BORDERWIFI       1
+  #define SPACINGWIFI      2
+  #define BUTTON_H_WIFI    VIEW_NET_Y - BORDERWIFI * 2
+  #define BUTTON_W_WIFI    (TFT_PIXELS_X - SPACINGWIFI * 4) / 3
+  #define BUTTON_Y_WIFI    TFT_PIXELS_Y - VIEW_NET_Y + BORDERWIFI // Y where the button starts
+
+  tft.fillRoundRect(SPACINGWIFI, BUTTON_Y_WIFI, BUTTON_W_WIFI, BUTTON_H_WIFI, 8, COLOR_BUTTON_CANCEL_INSTRUC_EDITOR);
+  tft.drawRoundRect(SPACINGWIFI, BUTTON_Y_WIFI, BUTTON_W_WIFI, BUTTON_H_WIFI, 8, COLOR_BUTTON_BORDER_INSTRUC_EDITOR);
+
+  tft.fillRoundRect(SPACINGWIFI*2 + BUTTON_W_WIFI, BUTTON_Y_WIFI, BUTTON_W_WIFI, BUTTON_H_WIFI, 8, COLOR_BUTTON_ACCEPT_INSTRUC_EDITOR);
+  tft.drawRoundRect(SPACINGWIFI*2 + BUTTON_W_WIFI, BUTTON_Y_WIFI, BUTTON_W_WIFI, BUTTON_H_WIFI, 8, COLOR_BUTTON_BORDER_INSTRUC_EDITOR);
+
+  tft.fillRoundRect(SPACINGWIFI*3 + BUTTON_W_WIFI*2, BUTTON_Y_WIFI, BUTTON_W_WIFI, BUTTON_H_WIFI, 8, COLOR_BUTTON_BACK_INSTRUC_EDITOR);
+  tft.drawRoundRect(SPACINGWIFI*3 + BUTTON_W_WIFI*2, BUTTON_Y_WIFI, BUTTON_W_WIFI, BUTTON_H_WIFI, 8, COLOR_BUTTON_BORDER_LADDER_EDITOR);
+
+  tft.setTextSize(2);
+  tft.setTextColor(COLOR_BUTTON_FONT_INSTRUC_EDITOR);
+
+  String auxString;
+  auxString = "CANCEL";
+  tft.setCursor(SPACINGWIFI + BUTTON_W_WIFI/2 - auxString.length()*6, BUTTON_Y_WIFI + 13);
+  tft.print(auxString);
+
+  auxString = "SCAN";
+  tft.setCursor(SPACINGWIFI*2 + BUTTON_W_WIFI + BUTTON_W_WIFI/2 - auxString.length()*6, BUTTON_Y_WIFI + 13);
+  tft.print(auxString);
+
+  auxString = "MORE";
+  tft.setCursor(SPACINGWIFI*3 + BUTTON_W_WIFI*2 + BUTTON_W_WIFI/2 - auxString.length()*6, BUTTON_Y_WIFI + 13);
+  tft.print(auxString);
+}
+
+//--------------------------------------------------------------------------------
+// WiFi Scanning - Draw Networks found
+//--------------------------------------------------------------------------------
+
+void drawNetworksFound(void){
+  if(networksFound > NETWORKS_PER_PAGE * (networksScanPage + 1)){
+    networksToShow = NETWORKS_PER_PAGE;
+  }
+  else{
+    networksToShow = networksFound % NETWORKS_PER_PAGE;
+  }
+
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
+
+  for (uint16_t thisNetwork = 0; thisNetwork < networksToShow; thisNetwork++) {
+    drawNetworkInfo(thisNetwork + networksScanPage * NETWORKS_PER_PAGE, thisNetwork);
+  } 
 }
 
 //--------------------------------------------------------------------------------
@@ -123,23 +169,24 @@ void drawNetworkInfo (uint16_t netIndex, uint16_t pageIndex){
 
   WiFi.getNetworkInfo(netIndex, SSID, encryptionType, RSSI, BSSID, channel);
 
+  // 3 colors code for power signal
   wifiPower = convertDbm(RSSI);
-  if(wifiPower > 60){      // equivalent to: < -66dBm
-    auxColor = TFT_DARKGREEN;
+  if(wifiPower > 60){      // higher than -66 dBm
+    auxColor = COLOR_WIFI_SIGNAL_GOOD;
   }
-  else if(wifiPower > 50){ // equivalent to: < -70 dBm
-    auxColor = ORANGE;
+  else if(wifiPower < 50){ // lower than -70 dBm
+    auxColor = COLOR_WIFI_SIGNAL_BAD;
   }
-  else{
-    auxColor = TFT_RED;
+  else{                    // between -66 to -70 dBm
+    auxColor = COLOR_WIFI_SIGNAL_MED; 
   }
 
   // Box for each detected network
   tft.fillRect(1, 1 + VIEW_NET_Y * pageIndex, TFT_PIXELS_X-2, VIEW_NET_Y - 2, auxColor);
-  tft.drawRect(1, 1 + VIEW_NET_Y * pageIndex, TFT_PIXELS_X-2, VIEW_NET_Y - 2, WHITE2);
+  tft.drawRect(1, 1 + VIEW_NET_Y * pageIndex, TFT_PIXELS_X-2, VIEW_NET_Y - 2, COLOR_WIFI_BOX_BORDER);
 
   // Power in % + SSID Name
-  tft.setTextColor(WHITE2);
+  tft.setTextColor(COLOR_WIFI_BOX_TEXT);
   tft.setTextSize(2);
   tft.setCursor(10, 7 + VIEW_NET_Y * pageIndex);
   tft.print(String(wifiPower) + "%  " + SSID);
@@ -194,11 +241,38 @@ void drawNetworkInfo (uint16_t netIndex, uint16_t pageIndex){
 //--------------------------------------------------------------------------------
 
 void touchScanWiFi(uint16_t ts_x, uint16_t ts_y){
-  HMI_Page = PAGE_ConfigNetwork;
+
+  // Buttons selection
+  if (ts_y > TFT_PIXELS_Y - VIEW_NET_Y){
+    // MORE button
+    if (ts_x > SPACINGWIFI*3 + BUTTON_W_WIFI*2){
+      if (networksFound > NETWORKS_PER_PAGE * (networksScanPage + 1)){
+        networksScanPage++;
+      }
+      else{
+        networksScanPage = 0;
+      }
+      drawNetworksFound();
+    }
+    // CANCEL button
+    else if (ts_x < SPACINGWIFI*2 + BUTTON_W_WIFI){
+      HMI_Page = PAGE_ConfigNetwork;
+    }
+    // SCAN button
+    else{
+      scanWiFiNetworks();
+    }
+  }
+  // User selects a network
+  else{
+    uint16_t indexNetworkSelected = ts_y / uint16_t(VIEW_NET_Y);
+
+    if (indexNetworkSelected < networksToShow){
+      textValueAccepted = 1;
+      wifiEditionField = EDITING_WIFI_SSID;
+      textValue = WiFi.SSID(indexNetworkSelected);
+      HMI_Page = PAGE_ConfigNetwork;
+    } 
+  }
 }
-
-
-
-
-
 
