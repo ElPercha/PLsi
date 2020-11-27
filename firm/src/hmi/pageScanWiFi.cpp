@@ -14,7 +14,7 @@ void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   //-------------------------------
     
     if(firstLoad){
-      tft.fillScreen(BLUE1); //lucas
+      tft.fillScreen(COLOR_WIFI_SCAN_BACK);
       drawWiFiScanButtons();
       scanWiFiNetworks();
       networksScanPage = 0;
@@ -65,7 +65,7 @@ void scanWiFiNetworks (void){
 //--------------------------------------------------------------------------------
 
 void drawDisconnectingWiFi (void){
-  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, COLOR_WIFI_SCAN_BACK);
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
@@ -77,7 +77,7 @@ void drawDisconnectingWiFi (void){
 //--------------------------------------------------------------------------------
 
 void drawScanningWiFi (void){
-  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, COLOR_WIFI_SCAN_BACK);
   tft.setTextColor(WHITE);
   tft.setCursor(10, 10);
   tft.setTextSize(2);
@@ -89,7 +89,7 @@ void drawScanningWiFi (void){
 //--------------------------------------------------------------------------------
 
 void drawWiFiScanFailed (void){
-  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, COLOR_WIFI_SCAN_BACK);
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
   tft.setCursor(10, 10);
@@ -149,7 +149,7 @@ void drawNetworksFound(void){
     networksToShow = networksFound % NETWORKS_PER_PAGE;
   }
 
-  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, BLUE1); // lucas
+  tft.fillRect(0, 0, TFT_PIXELS_X, TFT_PIXELS_Y - VIEW_NET_Y, COLOR_WIFI_SCAN_BACK);
 
   for (uint16_t thisNetwork = 0; thisNetwork < networksToShow; thisNetwork++) {
     drawNetworkInfo(thisNetwork + networksScanPage * NETWORKS_PER_PAGE, thisNetwork);

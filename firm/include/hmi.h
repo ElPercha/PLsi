@@ -379,6 +379,7 @@ extern unsigned long actualScanTime;
 #define COLOR_WIFI_SIGNAL_BAD                 TFT_RED
 #define COLOR_WIFI_BOX_BORDER                 WHITE2
 #define COLOR_WIFI_BOX_TEXT                   WHITE2
+#define COLOR_WIFI_SCAN_BACK                  BLUE1
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
