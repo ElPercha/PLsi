@@ -195,6 +195,16 @@ void drawDialogMessage (void){
     tft.setCursor(30, 170);
     tft.print("TOUCH TO CONTINUE...");
   }
+  else if (messageCode == MESSAGE_PLC_MUST_BE_IN_STOP){
+    tft.setCursor(30, 45);
+    tft.print("PLC MUST BE STOPPED");
+    tft.setCursor(30, 65);
+    tft.print("SELECT PROGRAM");
+    tft.setCursor(30, 85);
+    tft.print("IN GREEN TO GO BACK");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
 }
 
 //--------------------------------------------------------------------------------

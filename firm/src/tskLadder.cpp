@@ -24,6 +24,7 @@ void TaskLadder(void *pvParameters)
   //----------------------------------------------------
 
   Network Networks[TOTAL_NETWORKS];
+  clearProgram(Networks);      
 
   configureLocal_IO();
   

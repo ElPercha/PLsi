@@ -1,7 +1,6 @@
 #include <globals.h>
 #include <TFT_eSPI.h>
 #include <hmi.h>
-#include <Free_Fonts.h> // lucas
 
 //--------------------------------------------------------------------------------
 // Configuration Menu Page
@@ -48,9 +47,9 @@ void drawMainConfig (void){
   tft.setTextSize(1);
   tft.setTextColor(COLOR_CONFIG_MAIN_TEXT);
 
-  for (uint16_t row = 0; row < 3; row++){
-    for (uint16_t col = 0; col < 2; col++){
-      uint16_t i = col + row * 2;
+  for (uint16_t row = 0; row < CONFIG_BUTTON_ROW; row++){
+    for (uint16_t col = 0; col < CONFIG_BUTTON_COL; col++){
+      uint16_t i = col + row * CONFIG_BUTTON_COL;
       uint16_t x = CONFIG_BUTTON_SPACE + col * (CONFIG_BUTTON_W + CONFIG_BUTTON_SPACE);
       uint16_t y = CONFIG_BUTTON_SPACE + row * (CONFIG_BUTTON_H + CONFIG_BUTTON_SPACE);
       

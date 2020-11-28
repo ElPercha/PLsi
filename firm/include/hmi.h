@@ -1,6 +1,8 @@
 #ifndef HMI_H
 #define HMI_H
 
+#include <Free_Fonts.h>
+
 //--------------------------------------------------------------------------------
 // Globals variables for HMI 
 //--------------------------------------------------------------------------------
@@ -217,6 +219,7 @@ extern unsigned long actualScanTime;
 #define MESSAGE_CANNOT_INSERT_NETWORK      13 
 #define MESSAGE_CANNOT_SPLIT_WIDE_INSTR    14
 #define MESSAGE_CANNOT_SPLIT_HIGH_INSTR    15
+#define MESSAGE_PLC_MUST_BE_IN_STOP        16
 
 //--------------------------------------------------------------------------------
 // TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO

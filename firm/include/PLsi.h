@@ -79,15 +79,11 @@
 //--------------------------------------------------------------------------------
 
 #define FILENAME_SETTINGS    "/settings.bin"
-#define MAX_PROGRAMS   8
-const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/PROGRAM_0.plsi",
-                                                     "/PROGRAM_1.plsi",
+#define MAX_PROGRAMS   4
+const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/PROGRAM_1.plsi",
                                                      "/PROGRAM_2.plsi",
                                                      "/PROGRAM_3.plsi",
-                                                     "/PROGRAM_4.plsi",
-                                                     "/PROGRAM_5.plsi",
-                                                     "/PROGRAM_6.plsi",
-                                                     "/PROGRAM_7.plsi"};
+                                                     "/PROGRAM_4.plsi"};
 
 //--------------------------------------------------------------------------------
 // TS Calibration default constants.
