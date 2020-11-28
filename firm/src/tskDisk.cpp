@@ -75,6 +75,19 @@ void TaskDisk(void *pvParameters)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     //----------------------------------------------------
     // LUCAS TESTING FUNCTIONS
     //----------------------------------------------------
@@ -92,18 +105,6 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[0]){
-      FFat.begin(false,"/ffat",1);
-      File root = FFat.open("/");
-      File file = root.openNextFile();
-      while(file){
-        Serial.print("FILE: ");
-        Serial.print(file.name());
-        Serial.print("       SIZE: ");
-        Serial.println(file.size());
-        file = root.openNextFile();
-      }
-
-      FFat.end();
       delay(1000);
     }
 
@@ -123,10 +124,6 @@ void TaskDisk(void *pvParameters)
     }
     
     if (I[2]){
-      textValue = "";     
-      textMaxLength = 8;     
-      HMI_PageMemory =  HMI_Page;        
-      HMI_Page = PAGE_Keyboard;        
 
       delay(1000);
     }
@@ -137,6 +134,18 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[4]){
+      FFat.begin(false,"/ffat",1);
+      File root = FFat.open("/");
+      File file = root.openNextFile();
+      while(file){
+        Serial.print("FILE: ");
+        Serial.print(file.name());
+        Serial.print("       SIZE: ");
+        Serial.println(file.size());
+        file = root.openNextFile();
+      }
+      FFat.end();
+
       delay(1000);
     }
 

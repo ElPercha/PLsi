@@ -165,31 +165,38 @@ extern unsigned long actualScanTime;
 // HMI Page numbers
 //--------------------------------------------------------------------------------
 
-#define PAGE_MainMenu           0
+#define PAGE_MainMenu                   0
 
-#define PAGE_MainLadder        10
-#define PAGE_LadderEditor      20
-#define PAGE_EditInstructions1 21
-#define PAGE_EditInstructions2 22
-#define PAGE_EditInstructions3 23
-#define PAGE_LadderDetails     40
+#define PAGE_MainLadder                10
+#define PAGE_LadderEditor              20
+#define PAGE_EditInstructions1         21
+#define PAGE_EditInstructions2         22
+#define PAGE_EditInstructions3         23
+#define PAGE_LadderDetails             40
 
-#define PAGE_MainConfig       100
-#define PAGE_ConfigNetwork    101
-#define PAGE_ConfigPLC        102
-#define PAGE_ConfigIO         103
-#define PAGE_ConfigHMI        104
-#define PAGE_ConfigSystem     105
-#define PAGE_ScanWiFi         110
+#define PAGE_MainConfig               100
+#define PAGE_ConfigNetwork            110
+#define PAGE_ConfigWiFi               111
+#define PAGE_ScanWiFi                 112
 
-#define PAGE_MainHMI          200
+#define PAGE_ConfigPLC                120
+#define PAGE_ConfigProgram            121
 
-#define PAGE_InputNumber      400
-#define PAGE_Keyboard         410
-#define PAGE_DialogOkCancel   420
-#define PAGE_DialogMessage    430
+#define PAGE_ConfigIO                 130
 
-#define PAGES_LADDER_EDITOR     5
+#define PAGE_ConfigHMI                140
+
+#define PAGE_ConfigSystem             150
+#define PAGE_ConfigFirmware           151
+
+#define PAGE_MainHMI                  200
+
+#define PAGE_InputNumber              400
+#define PAGE_Keyboard                 410
+#define PAGE_DialogOkCancel           420
+#define PAGE_DialogMessage            430
+
+#define PAGES_LADDER_EDITOR             5
 
 //--------------------------------------------------------------------------------
 // Define Dialog codes. Used to:
@@ -405,10 +412,16 @@ void pageDialogOkCancel(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, u
 void pageDialogMessage(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigPLC (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigProgram (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
-void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigFirmware (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+void pageConfigScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
 void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y);
+
+
+
 
 void setDisplay(void);
 void touch_calibrate(void);
@@ -465,11 +478,14 @@ void touchEditLadderInstructions3 (uint16_t ts_x, uint16_t ts_y);
   void updateInstruction16Bit(void);
 void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y);
 void touchConfigNetwork(uint16_t ts_x, uint16_t ts_y);
+void touchConfigWiFiNetwork(uint16_t ts_x, uint16_t ts_y);
 void touchConfigPLC(uint16_t ts_x, uint16_t ts_y);
+void touchConfigProgram(uint16_t ts_x, uint16_t ts_y);
 void touchConfigHMI(uint16_t ts_x, uint16_t ts_y);
 void touchConfigIO(uint16_t ts_x, uint16_t ts_y);
 void touchConfigSystem(uint16_t ts_x, uint16_t ts_y);
-void touchScanWiFi(uint16_t ts_x, uint16_t ts_y);
+void touchConfigFirmware(uint16_t ts_x, uint16_t ts_y);
+void touchConfigScanWiFi(uint16_t ts_x, uint16_t ts_y);
 
 
 void drawInstructionsEditorBooleanBar(void);
@@ -520,15 +536,18 @@ void drawKeyboard(uint16_t keyboardPage);
   void changeKeyboardPage(void);
   void clearTextKeyboard(void);
 void drawConfigNetwork(void);
+void drawConfigWiFiNetwork(void);
   void drawNetworkConfigSSID(void);
   void drawNetworkConfigPass(void);
-  void drawNetworkConfigStatus(void);
+  void drawWiFiNetworkConfigStatus(void);
   void drawNetworkConfigButtons(void);
   void drawNetworkWifiOnOffButton(void);
 void drawConfigPLC(void);
+  void drawConfigProgram(void);
 void drawConfigHMI(void);
 void drawConfigIO(void);
 void drawConfigSystem(void);
+  void drawConfigFirmware(void);
 void scanWiFiNetworks(void);
   void drawWiFiScanButtons(void);
   void drawDisconnectingWiFi(void);

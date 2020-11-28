@@ -94,8 +94,17 @@ void TaskHMI(void *pvParameters)
       case PAGE_ConfigNetwork:
         pageConfigNetwork(firstLoad, touchType, ts_x, ts_y);
         break;
+      case PAGE_ConfigWiFi:
+        pageConfigWiFi(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_ScanWiFi:
+        pageConfigScanWiFi(firstLoad, touchType, ts_x, ts_y);
+        break;
       case PAGE_ConfigPLC:
         pageConfigPLC(firstLoad, touchType, ts_x, ts_y);
+        break;
+      case PAGE_ConfigProgram:
+        pageConfigProgram(firstLoad, touchType, ts_x, ts_y);
         break;
       case PAGE_ConfigIO:
         pageConfigIO(firstLoad, touchType, ts_x, ts_y);
@@ -106,8 +115,8 @@ void TaskHMI(void *pvParameters)
       case PAGE_ConfigSystem:
         pageConfigSystem(firstLoad, touchType, ts_x, ts_y);
         break;
-      case PAGE_ScanWiFi:
-        pageScanWiFi(firstLoad, touchType, ts_x, ts_y);
+      case PAGE_ConfigFirmware:
+        pageConfigFirmware(firstLoad, touchType, ts_x, ts_y);
         break;
       case PAGE_MainHMI:
         pageMainHMI(firstLoad, touchType, ts_x, ts_y);

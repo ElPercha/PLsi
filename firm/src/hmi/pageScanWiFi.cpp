@@ -7,7 +7,7 @@
 // WiFi Scanning SSIDs page
 //--------------------------------------------------------------------------------
 
-void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageConfigScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
 
   //-------------------------------
   // draw full Page on first load
@@ -31,7 +31,7 @@ void pageScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   //-------------------------------
 
   if (touchType){
-    touchScanWiFi(ts_x, ts_y); 
+    touchConfigScanWiFi(ts_x, ts_y); 
   } 
 }
 
@@ -240,7 +240,7 @@ void drawNetworkInfo (uint16_t netIndex, uint16_t pageIndex){
 // Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-void touchScanWiFi(uint16_t ts_x, uint16_t ts_y){
+void touchConfigScanWiFi(uint16_t ts_x, uint16_t ts_y){
 
   // Buttons selection
   if (ts_y > TFT_PIXELS_Y - VIEW_NET_Y){
@@ -256,7 +256,7 @@ void touchScanWiFi(uint16_t ts_x, uint16_t ts_y){
     }
     // CANCEL button
     else if (ts_x < SPACINGWIFI*2 + BUTTON_W_WIFI){
-      HMI_Page = PAGE_ConfigNetwork;
+      HMI_Page = PAGE_ConfigWiFi;
     }
     // SCAN button
     else{
@@ -271,7 +271,7 @@ void touchScanWiFi(uint16_t ts_x, uint16_t ts_y){
       textValueAccepted = 1;
       wifiEditionField = EDITING_WIFI_SSID;
       textValue = WiFi.SSID(indexNetworkSelected);
-      HMI_Page = PAGE_ConfigNetwork;
+      HMI_Page = PAGE_ConfigWiFi;
     } 
   }
 }
