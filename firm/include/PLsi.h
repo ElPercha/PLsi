@@ -9,14 +9,14 @@
 // Firmware version 
 //--------------------------------------------------------------------------------
 
-#define FIRMWARE         0
+#define FIRMWARE         "Version 0.0.0"
 
 //--------------------------------------------------------------------------------
 // Baud Rate fo Serial console. Mainly for debbuging
 //--------------------------------------------------------------------------------
 
 #define BAUD_RATE   115200
-//#define BAUD_RATE   921600 // Lucas For Screen Saver PC connection
+//#define BAUD_RATE   921600 //  Issue #11 - For Screen Saver PC connection
 
 //--------------------------------------------------------------------------------
 // Total Networks. Max quantity tested OK = 500

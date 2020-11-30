@@ -6,7 +6,6 @@
 #include <pgmspace.h>
 
 
-//lucas
       // tft.setSwapBytes(true);
       // tft.pushImage(30, 30, circleWidth, circleHeight, circle);
       // tft.pushImage(10, 100, 100, 100, colorWheel);

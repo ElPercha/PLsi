@@ -1,5 +1,7 @@
 #include <globals.h>
 #include <WiFi.h>
+#include <WebServer.h>
+#include <Update.h>
 #include <wifi_plsi.h>
 
 //--------------------------------------------------------------------------------

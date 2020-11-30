@@ -382,7 +382,7 @@ int GetPreviousValue (int r, int c){
   }
   return returnData;
 }
-int GetDataValue (int r, int c) { //lucas change to uint16_t ?
+int GetDataValue (int r, int c) { // Issue #55 - Change to uint16_t ?
   int returnData = 0;
   switch (execNetwork.Cells[r][c].Type) {
     case TypeM:
@@ -434,7 +434,7 @@ int GetDataValue (int r, int c) { //lucas change to uint16_t ?
   return returnData;
 }
 
-void SetDataValue(int r, int c, int Value){ //lucas change to uint16_t ?
+void SetDataValue(int r, int c, int Value){ // Issue #55 - Change to uint16_t ?
   switch (execNetwork.Cells[r][c].Type) {
     case TypeM:
       M[execNetwork.Cells[r][c].Data] = byte(Value);

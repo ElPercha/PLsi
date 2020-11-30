@@ -192,7 +192,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
       HMI_Page = PAGE_LadderEditor;
     }
     else{
-      // HMI_Page = PAGE_LadderDetails; // lucas 
+      // HMI_Page = PAGE_LadderDetails; // Issue #31
     }
   }
 }

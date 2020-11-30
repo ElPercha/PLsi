@@ -67,12 +67,6 @@ void execScanPLC(Network Networks[]){
         // else, do not process, it was processed before
         //----------------------------------------------------
 
-        // if (execNetwork.Cells[r][c].Code >= FIRST_INVALID_CODE){ lucas - original logic
-        //   if (!(execNetwork.Cells[r][c].Code & CELL_USED_MASK)){ 
-        
-        // if (execNetwork.Cells[r][c].Code & CELL_USED_MASK){ lucas improved but slower  to test when the 2/3 cells instrictions have the code in the higher part of the word
-        //   if ((execNetwork.Cells[r][c].Code & CELL_CODE_MASK) >= FIRST_INVALID_CODE){ 
-
         if (execNetwork.Cells[r][c].Code >= FIRST_INVALID_CODE){
          if ((execNetwork.Cells[r][c].Code & CELL_CODE_MASK) >= FIRST_INVALID_CODE){ 
             Serial.println("TASK LADDER - CORE 1 - INSTRUCTION CODE INVALID: ");
@@ -88,7 +82,6 @@ void execScanPLC(Network Networks[]){
             saveSettings();
           }  
           execNetwork.Cells[r][c].Code = 0;
-          //asm ( "nop \n" ); // Force to compile more efficiently (reduce Scan Time) lucas
         }  
 
         //----------------------------------------------------

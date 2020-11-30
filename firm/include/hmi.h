@@ -160,6 +160,9 @@ extern unsigned long timerRefreshWifiStatus;
 //--------------------------------------------------------------------------------
 
 extern unsigned long actualScanTime;
+extern uint8_t configFirmwareEnabled;
+
+extern unsigned long auxTimerFirmwareBar;
 
 //--------------------------------------------------------------------------------
 // HMI Page numbers
@@ -227,6 +230,8 @@ extern unsigned long actualScanTime;
 #define MESSAGE_CANNOT_SPLIT_WIDE_INSTR    14
 #define MESSAGE_CANNOT_SPLIT_HIGH_INSTR    15
 #define MESSAGE_PLC_MUST_BE_IN_STOP        16
+#define MESSAGE_OTA_NOT_POSSIBLE           17
+#define MESSAGE_FIRMWARE_UPDATED           18
 
 //--------------------------------------------------------------------------------
 // TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO
@@ -390,6 +395,19 @@ extern unsigned long actualScanTime;
 #define COLOR_WIFI_BOX_BORDER                 WHITE2
 #define COLOR_WIFI_BOX_TEXT                   WHITE2
 #define COLOR_WIFI_SCAN_BACK                  BLUE1
+#define COLOR_WIFI_SCAN_BORDER                TFT_WHITE
+#define COLOR_WIFI_SCAN_CANCEL                TFT_MAGENTA
+#define COLOR_WIFI_SCAN_MORE                  TFT_DARKGREY
+#define COLOR_WIFI_SCAN_DO                    TFT_DARKGREEN
+
+#define COLOR_FIRMWARE_ENABLED                TFT_DARKGREEN
+#define COLOR_FIRMWARE_ENABLED_FONT           TFT_WHITE
+#define COLOR_FIRMWARE_DISABLED               DARKGREY
+#define COLOR_FIRMWARE_DISABLED_FONT          TFT_WHITE
+#define COLOR_FIRMWARE_CANCEL                 TFT_MAGENTA
+#define COLOR_FIRMWARE_CANCEL_FONT            TFT_WHITE
+#define COLOR_FIRMWARE_BAR                    WHITE2
+#define COLOR_FIRMWARE_BAR_FONT               TFT_BLACK
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
@@ -515,7 +533,6 @@ void drawLadderOnline(void);
   uint16_t NetworkChanged(void);
   void EditionChanged(void);
   uint16_t PLCstateChanged(void);
-  uint16_t userProgramChanged(void); // lucas to delete
   void drawPLCstateSmall (void);
   void drawEditionCancel (void);
   void drawButton6Icon(void);
@@ -548,6 +565,8 @@ void drawConfigHMI(void);
 void drawConfigIO(void);
 void drawConfigSystem(void);
   void drawConfigFirmware(void);
+  void drawFirmwareEnableButton(void);
+  void drawFirmwareStatusBar(void);
 void scanWiFiNetworks(void);
   void drawWiFiScanButtons(void);
   void drawDisconnectingWiFi(void);

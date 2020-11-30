@@ -205,6 +205,26 @@ void drawDialogMessage (void){
     tft.setCursor(30, 170);
     tft.print("TOUCH TO CONTINUE...");
   }
+  else if (messageCode == MESSAGE_OTA_NOT_POSSIBLE){
+    tft.setCursor(30, 45);
+    tft.print("CONNECT WIFI AND");
+    tft.setCursor(30, 65);
+    tft.print("STOP THE PLC TO ");
+    tft.setCursor(30, 85);
+    tft.print("PERFORM THE UPDATE");
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_FIRMWARE_UPDATED){
+    tft.setCursor(30, 45);
+    tft.print("FIRMWARE UPDATED");
+    tft.setCursor(30, 65);
+    tft.print("RUNNING VERSION:");
+    tft.setCursor(30, 85);
+    tft.print(FIRMWARE);
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
 }
 
 //--------------------------------------------------------------------------------
@@ -212,5 +232,15 @@ void drawDialogMessage (void){
 //--------------------------------------------------------------------------------
 
 void touchDialogMessage(uint16_t ts_x, uint16_t ts_y){
+
+  //----------------------------------------------------
+  // Firmware was updated -> User ack
+  //----------------------------------------------------
+
+  if (settings.general.firmware == FIRMWARE_UPDATED){
+    settings.general.firmware = FIRMWARE_ACCEPTED;
+    saveSettings();
+  }
+
   HMI_Page = HMI_PageMemory;
 }

@@ -33,7 +33,7 @@ void TaskHMI(void *pvParameters)
   
     setDisplay();
 
-    //touch_calibrate(); // Lucas
+    //touch_calibrate(); // Issue #14
 
   //----------------------------------------------------
   // Task Main loop 
@@ -138,6 +138,25 @@ void TaskHMI(void *pvParameters)
         ;
       break;
     }
+
+    //----------------------------------------------------
+    // Disable OTA if not in the right page
+    //----------------------------------------------------
+     
+    if (HMI_Page != PAGE_ConfigFirmware){
+      configFirmwareEnabled = 0;
+    }
+
+    //----------------------------------------------------
+    // Firmware was updated -> User message 
+    //----------------------------------------------------
+
+    if (settings.general.firmware == FIRMWARE_UPDATED && !configFirmwareEnabled){
+      messageCode = MESSAGE_FIRMWARE_UPDATED;
+      HMI_PageMemory = PAGE_MainMenu;
+      HMI_Page = PAGE_DialogMessage;
+    }
+
     delay(5); 
   }
 }

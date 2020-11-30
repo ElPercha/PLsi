@@ -14,7 +14,6 @@ extern unsigned long startTime;
 //--------------------------------------------------------------------------------
 
 extern uint16_t NetworkFlagsOnline [NET_COLUMNS - 1];
-extern uint16_t showingNetwork;
 extern uint16_t editionMode;
 
 //--------------------------------------------------------------------------------

@@ -8,6 +8,9 @@
 
 #include <TFT_eSPI.h> //lucas to delete
 #include "hmi.h" //lucas to delete
+#include <WiFi.h> //lucas to delete
+#include <WebServer.h> //lucas to delete
+#include <Update.h> //lucas to delete
 #include "wifi_plsi.h" //lucas to delete
 
 //--------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 #include <TFT_eSPI.h>
 #include <hmi.h>
 
-// lucas to delete this file from the project once it is fully documented
+// Issue #11 to delete this file from the project once it is fully documented
 
 // Reads a screen image off the TFT and send it to a processing client sketch
 // over the serial port. Use a high baud rate, e.g. for an ESP8266:
@@ -22,11 +22,12 @@
 
 // MIT licence applies, all text above must be included in derivative works
 
+// Issue #11 - Create user manual
 
-boolean screenServer(void);   // Lucas to send screen to PC
-boolean screenServer(String filename); // Lucas to send screen to PC
-boolean serialScreenServer(String filename); // Lucas to send screen to PC
-void sendParameters(String filename); // Lucas to send screen to PC
+boolean screenServer(void);  
+boolean screenServer(String filename); 
+boolean serialScreenServer(String filename); 
+void sendParameters(String filename); 
 
 
 //====================================================================================

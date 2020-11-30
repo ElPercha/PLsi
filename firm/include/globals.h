@@ -15,6 +15,13 @@
 #define PLCERROR_INVALID_INSTRUCTION      20
 
 //--------------------------------------------------------------------------------
+// Firmware Status
+//--------------------------------------------------------------------------------
+
+#define FIRMWARE_ACCEPTED                  0 
+#define FIRMWARE_UPDATED                   1
+
+//--------------------------------------------------------------------------------
 // PLC Booting status
 //--------------------------------------------------------------------------------
 
@@ -191,6 +198,7 @@ extern Timer       Timers[QTY_T];
 typedef struct
 {
   uint16_t firstRun;
+  uint16_t firmware;
   uint16_t verbosityLevel;
 } generalSettings;
 
@@ -250,7 +258,7 @@ extern uint16_t updateSelectedProgramDisk;
 extern uint16_t moveNetworksInsert;
 extern uint16_t moveNetworksDelete;
 
-extern uint16_t showingNetwork; // move to tskHMI.h lucas
+extern uint16_t showingNetwork; 
 
 //--------------------------------------------------------------------------------
 // Mask for "Bars vs Flags" analisys
@@ -258,5 +266,14 @@ extern uint16_t showingNetwork; // move to tskHMI.h lucas
 
 extern const uint16_t FlagsMask[NET_ROWS];
 extern const uint16_t FlagsMaskAnd[NET_ROWS];
+
+//--------------------------------------------------------------------------------
+// Firmware Update status
+//--------------------------------------------------------------------------------
+
+extern size_t firmwareUpdateSize;
+extern size_t firmwareUpdateProgress;
+extern String firmwareUpdateFilename;
+extern String firmwareUpdateStatus;
 
 #endif

@@ -80,4 +80,10 @@ uint16_t networksToShow = 0;
 uint16_t wifiEditionField = 0;
 unsigned long timerRefreshWifiStatus = 0;
 
+//----------------------------------------------------
+// Firmware Update
+//----------------------------------------------------
+
+unsigned long auxTimerFirmwareBar = 0;
+
 #endif

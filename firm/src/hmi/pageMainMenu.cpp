@@ -21,7 +21,6 @@ void pageMainMenu (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   // update required fields
   //-------------------------------
 
-  // if ((PLCstateChanged() || ScanTimeChanged()) && (millis() - timerRefreshMainMenu > 2000)){ // Lucas ScanTimeChanged() not used anymore
   if (PLCstateChanged() || (millis() - timerRefreshMainMenu > 2000)){
     printPLCstate();
     timerRefreshMainMenu = millis();

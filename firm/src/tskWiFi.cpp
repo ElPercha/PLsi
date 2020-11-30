@@ -2,8 +2,9 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Update.h>
-#include <wifi_plsi.h>
 #include <tskWiFi.h>
+#include <wifi_plsi.h>
+#include <disk.h>
 
 //--------------------------------------------------------------------------------
 // WiFi Task 
@@ -31,15 +32,11 @@ void TaskWiFi(void *pvParameters)
   uint16_t WiFiPreviousStatus = !settings.wifi.enabled;
   
   //--------------------------------------------------
-  // Web server for OTA updates
-  // return index page which is stored in serverIndex 
+  // Web server for OTA updates. Two pages:
+  //    serverIndex - For *.bin file selection and Update
   //--------------------------------------------------
 
   server.on("/", HTTP_GET, []() {
-    server.sendHeader("Connection", "close");
-    server.send(200, "text/html", loginIndex);
-  });
-  server.on("/serverIndex", HTTP_GET, []() {
     server.sendHeader("Connection", "close");
     server.send(200, "text/html", serverIndex);
   });
@@ -52,25 +49,60 @@ void TaskWiFi(void *pvParameters)
   server.on("/update", HTTP_POST, []() {
     server.sendHeader("Connection", "close");
     server.send(200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
-    ESP.restart();
   }, []() {
+    
     HTTPUpload& upload = server.upload();
-    if (upload.status == UPLOAD_FILE_START) {
-      disableCore0WDT();
-      Serial.printf("Update: %s\n", upload.filename.c_str());
-      if (!Update.begin(UPDATE_SIZE_UNKNOWN)) { //start with max available size
-        Update.printError(Serial);
-      }
-    } else if (upload.status == UPLOAD_FILE_WRITE) {
-      /* flashing firmware to ESP*/
-      if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
-        Update.printError(Serial);
-      }
-    } else if (upload.status == UPLOAD_FILE_END) {
-      if (Update.end(true)) { //true to set the size to the current progress
-        Serial.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
-      } else {
-        Update.printError(Serial);
+    
+    if (!configFirmwareEnabled){
+      Update.abort();
+    }
+    else{
+      firmwareUpdateSize = Update.size();
+      firmwareUpdateProgress = Update.progress();
+
+      if (upload.status == UPLOAD_FILE_START) {
+        if(upload.filename == ""){
+          firmwareUpdateStatus = "No File Selected";
+          firmwareUpdateFilename = "Restarting PLsi...";
+          delay(3000);
+          ESP.restart();
+        }
+        else{
+          disableCore0WDT();
+
+          // Start with max available size
+          if (!Update.begin(UPDATE_SIZE_UNKNOWN)) { 
+            firmwareUpdateStatus = "Error: " + String(Update.errorString());
+            firmwareUpdateFilename = "Restarting PLsi...";
+            delay(3000);
+            ESP.restart();
+          }
+        }
+      } 
+      else if (upload.status == UPLOAD_FILE_WRITE) {
+        // Flashing firmware to ESP
+        firmwareUpdateStatus = "Writing PLC Firmware...";
+        firmwareUpdateFilename = upload.filename;
+
+        if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
+          firmwareUpdateStatus = "Error: " + String(Update.errorString());
+          firmwareUpdateFilename = "Restarting PLsi...";
+          delay(3000);
+          ESP.restart();
+        }
+      } 
+      else if (upload.status == UPLOAD_FILE_END) {
+        if (Update.end(true)) { // True to set the size to the current progress
+          firmwareUpdateStatus = "Update OK - Restarting...";
+          settings.general.firmware = FIRMWARE_UPDATED;
+          saveSettings();
+          delay(3000);
+          ESP.restart();
+        }
+        else {
+          Update.printError(Serial);
+          firmwareUpdateStatus = Update.errorString();
+        }
       }
     }
   });
@@ -90,6 +122,8 @@ void TaskWiFi(void *pvParameters)
         WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE); // required to set hostname properly
         WiFi.setHostname(WIFI_HOSTNAME);
         WiFi.begin(settings.wifi.ssid, settings.wifi.password);
+        WiFi.setSleep(false);
+        server.begin();        
       }
       else{
         WiFi.disconnect();
@@ -98,17 +132,40 @@ void TaskWiFi(void *pvParameters)
     }
 
     //--------------------------------------------------
-    // Web server for OTA updates
-    // loop call
-    // Enable WDT (it is disabled during OTA)
+    // Firmware update (OTA)
     //--------------------------------------------------
 
-    if (I[3]){ // Manually enable the firmware update page
-      server.begin();        // lucas these 3 functions must be coordinated. this begin needs WIFI OK
-      server.handleClient(); // This has to be enabled when user selects firmware update
-      enableCore0WDT();      // This has to be reenabled when OTA finish or User unselect Firmware update
+     // Enable Firmware Update Sequence
+     if (configFirmwareSequence == 0 && configFirmwareEnabled == 1 && WiFi.isConnected() && settings.ladder.PLCstate == STOPPED){ 
+      configFirmwareSequence = 1;
+      Serial.println("TskWiFi - Firmware Update - Server enabled");
     }
- 
+    
+    // Enable Web access to user
+    if (configFirmwareSequence == 1){ 
+      server.handleClient();           
+    }
+
+    // Firmware Update Ended by User
+    if (configFirmwareEnabled == 0 && configFirmwareMemory == 1){ 
+      configFirmwareSequence = 0;
+      enableCore0WDT();             // It is disabled during OTA
+      Serial.println("TskWiFi - Firmware Update Ended - Watchdog Core 0 Enabled");
+      
+      // Status for HMI
+      firmwareUpdateStatus = "Update not started";
+      firmwareUpdateFilename = "No file selected";
+      firmwareUpdateSize = 0;
+      firmwareUpdateProgress = 0;
+
+      configFirmwareMemory = 0;
+    }
+
+    // Firmware Update Enabled - Reset Memory
+    if (configFirmwareEnabled){ 
+      configFirmwareMemory = 1;
+    }
+
     delay(1);
   }
 }

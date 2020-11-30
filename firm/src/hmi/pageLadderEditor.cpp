@@ -7,7 +7,7 @@
 #include "FFat.h"
 
 //--------------------------------------------------------------------------------
-//Ladder Editor main Page
+// Ladder Editor main Page
 //--------------------------------------------------------------------------------
 
 void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
@@ -16,11 +16,10 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   //-------------------------------
     
     if (firstLoad){
-      //lucas
-      //Adjust to the first Column and Row of instruction. User can select any os the instructions cells
+      //Adjust to the first Column and Row of instruction. User can select any of the instructions cells
       ladderEditorRow = ladderEditorRow - ((editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code >> 12) & 0x0007);
       ladderEditorColumn = ladderEditorColumn - (editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code >> 15);
-      //editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code & CELL_CODE_MASK;
+
       editingInstructionCode = editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code;
 
       drawLadderEditorBase();

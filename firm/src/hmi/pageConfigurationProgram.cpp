@@ -107,7 +107,7 @@ void touchConfigProgram(uint16_t ts_x, uint16_t ts_y){
   }
   else{
     settings.ladder.UserProgram = selectedProgram;
-    drawConfigPLC();
+    drawConfigProgram();
     saveSettings();
     loadSelectedProgram = 1;
     delay(500); // For user to see that program has been changed (turns green)

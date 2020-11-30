@@ -82,6 +82,7 @@ void loadSettings(void){
 void loadDefaultSettings(void){
   settings.general.firstRun = 0;
   settings.general.verbosityLevel = 0;
+  settings.general.firmware = FIRMWARE_ACCEPTED;
 
   settings.ladder.NetworksQuantity = TOTAL_NETWORKS;
   settings.ladder.PLCstate = STOPPED;

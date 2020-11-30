@@ -76,5 +76,14 @@ uint16_t showingNetwork = 0;      // Network to show under Online animation
 const uint16_t FlagsMask[NET_ROWS] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0010};
 const uint16_t FlagsMaskAnd[NET_ROWS] = {0xFFFE, 0xFFFD, 0xFFFB, 0x0007, 0xFFEF};
 
+//--------------------------------------------------------------------------------
+// Firmware Update status
+//--------------------------------------------------------------------------------
+
+size_t firmwareUpdateSize = 0;
+size_t firmwareUpdateProgress = 0;
+String firmwareUpdateFilename = "No file selected";
+String firmwareUpdateStatus = "Update not started";
+
 
 

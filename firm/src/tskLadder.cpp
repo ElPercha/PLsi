@@ -39,13 +39,12 @@ void TaskLadder(void *pvParameters)
     //    If file doesnt exist creates the empty file
     //    If User Proggram number is 0, load Demo to this slot
     //    assuming that it is the first boot or FFat was formatted
-    //    lucas: to validate the size of program file before to load it to RAM
-    //           if size is invalid, re-generate file and send PLC to error
+    //
+    //    Issue #19 : to validate the size of program file before to load it to RAM
+    //                if size is invalid, re-generate file and send PLC to error
     //----------------------------------------------------------------
     
     if(loadSelectedProgram){
-      //settings.ladder.PLCstate = STOPPED;
-
       FFat.begin(false,"/ffat",1);
 
       if (FFat.exists(FILENAME_USER_PROGRAMS[settings.ladder.UserProgram])){
@@ -73,7 +72,6 @@ void TaskLadder(void *pvParameters)
    
       FFat.end();
       clearMemory();
-      //settings.ladder.PLCstate = RUNNING;
       loadSelectedProgram = 0;
     }
 
