@@ -132,6 +132,8 @@ void drawFirmwareStatusBar(void){
     else{
       tft.drawCentreString("ENABLE process and go to:", TFT_PIXELS_X/2, FIRMWARE_BAR_Y + 10, GFXFF);
       tft.drawCentreString(WiFi.localIP().toString(), TFT_PIXELS_X/2, FIRMWARE_BAR_Y + 30, GFXFF);
+      tft.drawCentreString("Current Firmware Version:", TFT_PIXELS_X/2, FIRMWARE_BAR_Y + 50, GFXFF);
+      tft.drawCentreString(FIRMWARE, TFT_PIXELS_X/2, FIRMWARE_BAR_Y + 70, GFXFF);
     }
   }
   tft.setTextFont(1);

@@ -9,7 +9,7 @@
 // Firmware version 
 //--------------------------------------------------------------------------------
 
-#define FIRMWARE         "Version 0.0.0"
+#define FIRMWARE         "Version 0.0.1"
 
 //--------------------------------------------------------------------------------
 // Baud Rate fo Serial console. Mainly for debbuging
