@@ -5,7 +5,9 @@
 // Globals variables used in this specific task 
 //--------------------------------------------------------------------------------
 
-TFT_eSPI tft = TFT_eSPI(); // TFT Display Instance
+TFT_eSPI tft = TFT_eSPI();     // TFT Display Instance
+
+uint8_t button[8] = {0,0,0,0,0,0,0,0};
 
 uint16_t HMI_Page         = 0; // Main Menu Page 
 uint16_t HMI_PageMemory   = 0; // Main Menu Page 

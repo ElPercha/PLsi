@@ -8,6 +8,9 @@
 //--------------------------------------------------------------------------------
 
 extern TFT_eSPI tft; 
+
+extern uint8_t button[8];
+
 extern uint16_t HMI_Page;
 extern uint16_t HMI_PageMemory;
 
