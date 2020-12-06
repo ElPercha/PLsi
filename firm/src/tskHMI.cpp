@@ -1,9 +1,8 @@
 #include <globals.h>
 #include <plsi.h>
-
 #include <TFT_eSPI.h>
-#include <tskHMI.h>
 #include <hmi.h>
+#include <tskHMI.h>
 
 //--------------------------------------------------------------------------------
 // HMI Task 
@@ -45,7 +44,7 @@ void TaskHMI(void *pvParameters)
     // Touch Screen press type detection
     //----------------------------------------------------
 
-    pressed = tft.getTouch(&ts_x, &ts_y);
+    pressed = tft.getTouch(&ts_x, &ts_y);   
     touchType = 0;
 
     if (pressed && !pressedAux){

@@ -260,7 +260,7 @@ void TFT_eSPI::pushPixels(const void* data_in, uint32_t len)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-#elif defined (ILI9488_DRIVER) // For 24 bit colour TFT                                 ############# UNTESTED ###################
+#elif defined (SPI_18BIT_DRIVER) // SPI 18 bit colour
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /***************************************************************************************
@@ -401,8 +401,7 @@ void TFT_eSPI::pushPixels(const void* data_in, uint32_t len)
 ** Function name:           dmaBusy
 ** Description:             Check if DMA is busy (usefully non-blocking!)
 ***************************************************************************************/
-// Use "while(tft.dmaBusy());" in sketch for a blocking wait for DMA to complete
-// or  "while( tft.dmaBusy() ) {Do-something-useful;}"
+// Use while( tft.dmaBusy() ) {Do-something-useful;}"
 bool TFT_eSPI::dmaBusy(void)
 {
   //return (dmaHal.State == HAL_DMA_STATE_BUSY);  // Do not use, SPI may still be busy
@@ -411,7 +410,18 @@ bool TFT_eSPI::dmaBusy(void)
 
 
 /***************************************************************************************
-** Function name:           pushImageDMA
+** Function name:           dmaWait
+** Description:             Wait until DMA is over (blocking!)
+***************************************************************************************/
+void TFT_eSPI::dmaWait(void)
+{
+  //return (dmaHal.State == HAL_DMA_STATE_BUSY);  // Do not use, SPI may still be busy
+  while (spiHal.State == HAL_SPI_STATE_BUSY_TX); // Check if SPI Tx is busy
+}
+
+
+/***************************************************************************************
+** Function name:           pushPixelsDMA
 ** Description:             Push pixels to TFT (len must be less than 32767)
 ***************************************************************************************/
 // This will byte swap the original image if setSwapBytes(true) was called by sketch.
@@ -452,11 +462,12 @@ void TFT_eSPI::pushImageDMA(int32_t x, int32_t y, int32_t w, int32_t h, uint16_t
 
   if (dw < 1 || dh < 1) return;
 
-  if (buffer == nullptr) buffer = image;
-
   uint32_t len = dw*dh;
 
-  while (spiHal.State == HAL_SPI_STATE_BUSY_TX); // Check if SPI Tx is busy
+  if (buffer == nullptr) {
+    buffer = image;
+    while (spiHal.State == HAL_SPI_STATE_BUSY_TX); // Check if SPI Tx is busy
+  }
 
   // If image is clipped, copy pixels into a contiguous block
   if ( (dw != w) || (dh != h) ) {

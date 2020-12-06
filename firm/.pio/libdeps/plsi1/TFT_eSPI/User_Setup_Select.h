@@ -72,6 +72,8 @@
 //#include <User_Setups/Setup44_TTGO_CameraPlus.h>   // Setup file for ESP32 and TTGO T-CameraPlus ST7789 SPI bus TFT    240x240
 //#include <User_Setups/Setup45_TTGO_T_Watch.h>      // Setup file for ESP32 and TTGO T-Watch ST7789 SPI bus TFT  240x240
 
+//#include <User_Setups/Setup47_ST7735.h>            // Setup file configured for ST7735 128 x 128 animated eyes
+
 //#include <User_Setups/Setup50_SSD1963_Parallel.h>  // Setup file for ESP32 and SSD1963 TFT display
 
 //#include <User_Setups/Setup135_ST7789.h>           // Setup file for ESP8266 and ST7789 135 x 240 TFT
@@ -111,6 +113,11 @@
   #if !defined (RPI_DISPLAY_TYPE)
     #define RPI_DISPLAY_TYPE
   #endif
+#endif
+
+// Invoke 18 bit colour for selected displays
+#if (defined (ILI9481_DRIVER) || defined (ILI9486_DRIVER) || defined (ILI9488_DRIVER)) && !defined (TFT_PARALLEL_8_BIT) && !defined (ESP32_PARALLEL)
+  #define SPI_18BIT_DRIVER
 #endif
 
 // Load the right driver definition - do not tinker here !
@@ -171,6 +178,9 @@
 #elif defined (GC9A01_DRIVER)
      #include "TFT_Drivers/GC9A01_Defines.h"
      #define  TFT_DRIVER 0x9A01
+#elif defined (ILI9225_DRIVER)
+     #include "TFT_Drivers/ILI9225_Defines.h"
+     #define  TFT_DRIVER 0x9225
                               // <<<<<<<<<<<<<<<<<<<<<<<< ADD NEW DRIVER HERE
                               // XYZZY_init.h and XYZZY_rotation.h must also be added in TFT_eSPI.cpp
 #elif defined (XYZZY_DRIVER)
@@ -179,7 +189,6 @@
 #else
      #define  TFT_DRIVER 0x0000
 #endif
-
 
 // These are the pins for ESP8266 boards
 //      Name   GPIO    NodeMCU      Function

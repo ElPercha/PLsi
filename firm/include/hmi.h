@@ -237,15 +237,6 @@ extern unsigned long auxTimerFirmwareBar;
 #define MESSAGE_FIRMWARE_UPDATED           18
 
 //--------------------------------------------------------------------------------
-// TFT Display and TS (TouchScreen) Pinout in board socket at LOLIN D32 PRO
-//--------------------------------------------------------------------------------
-
-#define TFT_CS        14  
-#define TFT_DC        27  
-#define TFT_RST       33 
-#define TS_CS         12 
-
-//--------------------------------------------------------------------------------
 // TFT Display Dimmensions
 //--------------------------------------------------------------------------------
 

@@ -173,7 +173,7 @@ void TFT_eSPI::pushPixels(const void* data_in, uint32_t len)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-#elif !defined (ILI9488_DRIVER) && !defined (TFT_PARALLEL_8_BIT) // Most displays
+#elif !defined (SPI_18BIT_DRIVER) && !defined (TFT_PARALLEL_8_BIT) // Most SPI displays
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /***************************************************************************************
@@ -349,7 +349,7 @@ void TFT_eSPI::pushPixels(const void* data_in, uint32_t len){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-#elif defined (ILI9488_DRIVER) && !defined (TFT_PARALLEL_8_BIT)// Now code for ILI9488
+#elif defined (SPI_18BIT_DRIVER) // SPI 18 bit colour
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /***************************************************************************************
@@ -538,13 +538,14 @@ void TFT_eSPI::dmaWait(void)
 
 
 /***************************************************************************************
-** Function name:           pushImageDMA
+** Function name:           pushPixelsDMA
 ** Description:             Push pixels to TFT (len must be less than 32767)
 ***************************************************************************************/
 // This will byte swap the original image if setSwapBytes(true) was called by sketch.
 void TFT_eSPI::pushPixelsDMA(uint16_t* image, uint32_t len)
 {
   if ((len == 0) || (!DMA_Enabled)) return;
+
   dmaWait();
 
   if(_swapBytes) {
@@ -592,7 +593,10 @@ void TFT_eSPI::pushImageDMA(int32_t x, int32_t y, int32_t w, int32_t h, uint16_t
 
   uint32_t len = dw*dh;
 
-  if (buffer == nullptr) { buffer = image; dmaWait(); }
+  if (buffer == nullptr) {
+    buffer = image;
+    dmaWait();
+  }
 
   // If image is clipped, copy pixels into a contiguous block
   if ( (dw != w) || (dh != h) ) {
@@ -686,10 +690,10 @@ bool TFT_eSPI::initDMA(void)
     .cs_ena_posttrans = 0,
     .clock_speed_hz = SPI_FREQUENCY,
     .input_delay_ns = 0,
-    .spics_io_num = TFT_CS,
-    .flags = 0,
-    .queue_size = 7,
-    .pre_cb = dc_callback, //Callback to handle D/C line
+    .spics_io_num = -1, //TFT_CS,
+    .flags = SPI_DEVICE_NO_DUMMY, //0,
+    .queue_size = 1,
+    .pre_cb = 0, //dc_callback, //Callback to handle D/C line
     .post_cb = 0
   };
   ret = spi_bus_initialize(spi_host, &buscfg, 1);
