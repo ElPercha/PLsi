@@ -112,17 +112,17 @@ void TaskDisk(void *pvParameters)
     }
 
     if (I[1]){
-        FFat.begin(false,"/ffat",1);
-        Serial.print("Info FFAT Total Bytes: ");
-        Serial.println(FFat.totalBytes());
-        Serial.print("Info FFAT Free Bytes: ");
-        Serial.println(FFat.freeBytes());
-        FFat.end();
+      FFat.begin(false,"/ffat",1);
+      Serial.print("Info FFAT Total Bytes: ");
+      Serial.println(FFat.totalBytes());
+      Serial.print("Info FFAT Free Bytes: ");
+      Serial.println(FFat.freeBytes());
+      FFat.end();
 
-        Serial.print("   - Free ESP Miniumn memory ever available: ");
-        Serial.println (esp_get_minimum_free_heap_size());
-        Serial.print("   - Free ESP memory xPort: ");
-        Serial.println(xPortGetFreeHeapSize());
+      Serial.print("   - Free ESP Miniumn memory ever available: ");
+      Serial.println (esp_get_minimum_free_heap_size());
+      Serial.print("   - Free ESP memory xPort: ");
+      Serial.println(xPortGetFreeHeapSize());
       delay(1000);
     }
     

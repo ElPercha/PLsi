@@ -7,6 +7,9 @@
 //--------------------------------------------------------------------------------
 
 void setDisplay(void) {
+  tft.init();
+  tft.setRotation(TFT_ROTATION);  
+
   uint16_t calData[5];
   calData[0] = settings.hmi.ts.leftX;
   calData[1] = settings.hmi.ts.rightX;
@@ -15,9 +18,6 @@ void setDisplay(void) {
   calData[4] = TS_ROTATION;
 
   tft.setTouch(calData); 
-
-  tft.init();
-  tft.setRotation(TFT_ROTATION);  
 }
 
 //--------------------------------------------------------------------------------

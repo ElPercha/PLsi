@@ -14,11 +14,15 @@
   #########################################################################
  */
 
+#include <TFT_eSPI.h>
+#include <XPT2046_Touchscreen.h>
 #include <SPI.h>
 
-#include <TFT_eSPI.h> // Hardware-specific library
+#define CS_PIN  12
 
-TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+TFT_eSPI tft = TFT_eSPI();       
+XPT2046_Touchscreen ts(CS_PIN);  
+
 
 unsigned long targetTime = 0;
 byte red = 31;
@@ -28,14 +32,31 @@ byte state = 0;
 unsigned int colour = red << 11; // Colour order is RGB 5+6+5 bits each
 
 void setup(void) {
+  Serial.begin(115200);
+
   tft.init();
   tft.setRotation(2);
   tft.fillScreen(TFT_BLACK);
 
+  ts.begin();
+  ts.setRotation(1);
   targetTime = millis() + 1000;
 }
 
 void loop() {
+
+  if (ts.touched()) {
+    TS_Point p = ts.getPoint();
+    Serial.print("Pressure = ");
+    Serial.print(p.z);
+    Serial.print(", x = ");
+    Serial.print(p.x);
+    Serial.print(", y = ");
+    Serial.print(p.y);
+    delay(30);
+    Serial.println();
+  }
+
 
   if (targetTime < millis()) {
     targetTime = millis() + 10000;
@@ -153,6 +174,3 @@ void rainbow_fill()
     colour = red << 11 | green << 5 | blue;
   }
 }
-
-
-
