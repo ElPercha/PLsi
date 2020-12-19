@@ -26,7 +26,8 @@ void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
   // Parse touch screen
   //-------------------------------
 
-  if (touchType){
+  if (touchType == HMI_TOUCHED){
+
     touchMainHMI(ts_x, ts_y); 
   } 
 }
@@ -44,31 +45,16 @@ void drawMainHMI (void){
 
   tft.setSwapBytes(true);
 
-  uint8_t toggle = 0;
   uint8_t i = 0;
-
   for (uint8_t r = 1; r < 3; r++){
     for (uint8_t c = 0; c < 4; c++){
       i = c + (r-1)*4; 
-
-      toggle = !toggle;
-      if(toggle){
-        if (button[i]){
-          tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconRed64_on);
-        }
-        else
-        {
-          tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconRed64_off);
-        }
+      if (!button[i]){
+        tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconRed64_on);
       }
-      else{
-        if (button[i]){
-          tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconGreen64_on);
-        }
-        else
-        {
-          tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconGreen64_off);
-        }
+      else
+      {
+        tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconGreen64_on);
       }
     }
   }
@@ -113,4 +99,13 @@ void touchMainHMI(uint16_t ts_x, uint16_t ts_y){
     }
   }
   drawMainHMI();
+
+  M[0] = button[0];
+  M[1] = button[1];
+  M[2] = button[2];
+  M[3] = button[3];
+  M[4] = button[4];
+  M[5] = button[5];
+  M[6] = button[6];
+  M[7] = button[7];
 }

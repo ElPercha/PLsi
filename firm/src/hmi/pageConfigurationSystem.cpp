@@ -25,7 +25,8 @@ void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   // Parse touch screen
   //-------------------------------
 
-  if (touchType){
+  if (touchType == HMI_TOUCHED){
+
     touchConfigSystem(ts_x, ts_y); 
   } 
 }

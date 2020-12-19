@@ -25,7 +25,8 @@ void pageDialogMessage (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, u
   // Parse touch screen
   //-------------------------------
 
-  if (touchType){
+  if (touchType == HMI_TOUCHED){
+
     touchDialogMessage(ts_x, ts_y); 
   } 
 }

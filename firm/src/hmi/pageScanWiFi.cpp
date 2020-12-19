@@ -30,7 +30,8 @@ void pageConfigScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, 
   // Parse touch screen
   //-------------------------------
 
-  if (touchType){
+  if (touchType == HMI_TOUCHED){
+
     touchConfigScanWiFi(ts_x, ts_y); 
   } 
 }

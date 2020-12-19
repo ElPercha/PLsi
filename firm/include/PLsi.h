@@ -9,7 +9,7 @@
 // Firmware version 
 //--------------------------------------------------------------------------------
 
-#define FIRMWARE         "Version 0.0.1"
+#define FIRMWARE  "Version 0.00.01"
 
 //--------------------------------------------------------------------------------
 // Baud Rate fo Serial console. Mainly for debbuging
@@ -19,7 +19,9 @@
 //#define BAUD_RATE   921600 //  Issue #11 - For Screen Saver PC connection
 
 //--------------------------------------------------------------------------------
-// Total Networks. Max quantity tested OK = 500
+// Total Networks. 
+//     Max quantity tested = 500 (for 6 x 5 matrix)
+//     Max stable quantity = 400 (for 6 x 5 matrix)
 //--------------------------------------------------------------------------------
 
 #define TOTAL_NETWORKS 400

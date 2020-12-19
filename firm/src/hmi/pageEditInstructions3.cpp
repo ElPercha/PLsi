@@ -79,7 +79,8 @@ void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16
   // Parse touch screen
   //-------------------------------
 
-  if (touchType){
+  if (touchType == HMI_TOUCHED){
+
     touchEditLadderInstructionsNavigation(ts_x, ts_y);
     touchEditLadderInstructions3(ts_x, ts_y); 
   } 

@@ -30,7 +30,8 @@ void pageKeyboard(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
   // Parse touch screen
   //-------------------------------
 
-  if (touchType){
+  if (touchType == HMI_TOUCHED){
+
     touchInputText(ts_x, ts_y); 
   } 
 }
@@ -116,7 +117,7 @@ void drawKeyboard (uint16_t keyboardPage){
 }
 
 //--------------------------------------------------------------------------------
-// Keyboard NUM/LETTERS and SPACE bar
+// Keyboard Bottom bar ESC - SPACE - ENTER
 //--------------------------------------------------------------------------------
 
 void drawKeyboardSpace (void){

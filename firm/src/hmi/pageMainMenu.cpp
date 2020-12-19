@@ -30,7 +30,8 @@ void pageMainMenu (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16
   // Parse touch screen
   //-------------------------------
 
-  if (touchType){
+  if (touchType == HMI_TOUCHED){
+
     touchMainMenu(ts_x, ts_y);
   } 
 }

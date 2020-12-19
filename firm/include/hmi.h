@@ -210,8 +210,8 @@ extern unsigned long auxTimerFirmwareBar;
 //    Define text to be displayed on Dialog page
 //--------------------------------------------------------------------------------
 
-#define DIALOG_RUN_STOP         1
-#define DIALOG_STOP_RUN         2
+#define DIALOG_RUN_STOP                1
+#define DIALOG_STOP_RUN                2
 
 //--------------------------------------------------------------------------------
 // Define Messages Codes for User
@@ -254,9 +254,10 @@ extern unsigned long auxTimerFirmwareBar;
 // Toch Screen type of command
 //--------------------------------------------------------------------------------
 
-#define ONECLICK       1
-#define DOUBLECLICK    2
-#define LONGPRESS      3
+#define HMI_IDLE        0
+#define HMI_TOUCHED     1
+#define HMI_TOUCHING    2
+#define HMI_RELEASED    3
 
 //--------------------------------------------------------------------------------
 // TFT Display Colors definitions

@@ -24,7 +24,7 @@ void TaskHMI(void *pvParameters)
   // Task variables
   //----------------------------------------------------
 
-  uint16_t ts_x, ts_y, touchType, firstLoad, pressed, pressedAux = 0;
+  uint16_t ts_x, ts_y, touchType, firstLoad, pressed, pressedAux = 0, pressedAux1 = 0;
 
   //----------------------------------------------------
   // TFT and TS Display configuration
@@ -45,14 +45,25 @@ void TaskHMI(void *pvParameters)
     //----------------------------------------------------
 
     pressed = tft.getTouch(&ts_x, &ts_y);   
-    touchType = 0;
+    touchType = HMI_IDLE;
 
     if (pressed && !pressedAux){
       pressedAux = 1;
-      touchType = ONECLICK;
+      touchType = HMI_TOUCHED;
     }
+    else if(!pressed && !pressedAux1){
+      pressedAux1 = 1;
+      touchType = HMI_RELEASED;
+    }
+    else if(pressed){
+      touchType = HMI_TOUCHING;
+    }
+
     if (!pressed){
       pressedAux = 0;
+    }
+    if (pressed){
+      pressedAux1 = 0;
     }
 
     //----------------------------------------------------
