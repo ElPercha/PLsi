@@ -6,7 +6,8 @@
 // Ladder Logic Viewer and Editor main Page
 //--------------------------------------------------------------------------------
 
-void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageMainLadder (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
+{
   
   //-------------------------------
   // capture input Value command

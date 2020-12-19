@@ -7,7 +7,9 @@
 // HMI Menu main Page
 //--------------------------------------------------------------------------------
 
-void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
+{
+  
   //-------------------------------
   // draw full Page on first load
   //-------------------------------
@@ -27,8 +29,10 @@ void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
   //-------------------------------
 
   if (touchType == HMI_TOUCHED){
-
-    touchMainHMI(ts_x, ts_y); 
+    touchMainHMIpress(ts_x, ts_y); 
+  } 
+  if (touchType == HMI_RELEASED){
+    touchMainHMIrelease(ts_x, ts_y); 
   } 
 }
 
@@ -65,37 +69,81 @@ void drawMainHMI (void){
 // Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-void touchMainHMI(uint16_t ts_x, uint16_t ts_y){
+void touchMainHMIpress(uint16_t ts_x, uint16_t ts_y){
 
   if(ts_y < 80){
     HMI_Page = 0;
   }
   else if(ts_y < 160){
     if(ts_x > 240){
-      button[3] = !button[3];
+      button[3] = 1;
     }
     else if(ts_x > 160){
-      button[2] = !button[2];
+      button[2] = 1;
     }
     else if(ts_x > 80){
-      button[1] = !button[1];
+      button[1] = 1;
     }
     else{
-      button[0] = !button[0];
+      button[0] = 1;
     }
   }
   else{
     if(ts_x > 240){
-      button[7] = !button[7];
+      button[7] = 1;
     }
     else if(ts_x > 160){
-      button[6] = !button[6];
+      button[6] = 1;
     }
     else if(ts_x > 80){
-      button[5] = !button[5];
+      button[5] = 1;
     }
     else{
-      button[4] = !button[4];
+      button[4] = 1;
+    }
+  }
+  drawMainHMI();
+
+  M[0] = button[0];
+  M[1] = button[1];
+  M[2] = button[2];
+  M[3] = button[3];
+  M[4] = button[4];
+  M[5] = button[5];
+  M[6] = button[6];
+  M[7] = button[7];
+}
+void touchMainHMIrelease(uint16_t ts_x, uint16_t ts_y){
+
+  if(ts_y < 80){
+    HMI_Page = 0;
+  }
+  else if(ts_y < 160){
+    if(ts_x > 240){
+      button[3] = 0;
+    }
+    else if(ts_x > 160){
+      button[2] = 0;
+    }
+    else if(ts_x > 80){
+      button[1] = 0;
+    }
+    else{
+      button[0] = 0;
+    }
+  }
+  else{
+    if(ts_x > 240){
+      button[7] = 0;
+    }
+    else if(ts_x > 160){
+      button[6] = 0;
+    }
+    else if(ts_x > 80){
+      button[5] = 0;
+    }
+    else{
+      button[4] = 0;
     }
   }
   drawMainHMI();

@@ -6,7 +6,8 @@
 //Ladder Details main Page
 //--------------------------------------------------------------------------------
 
-void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
+{
   
   //-------------------------------
   // capture input Value command

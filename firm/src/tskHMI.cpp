@@ -24,8 +24,9 @@ void TaskHMI(void *pvParameters)
   // Task variables
   //----------------------------------------------------
 
-  uint16_t ts_x, ts_y, touchType, firstLoad, pressed, pressedAux = 0, pressedAux1 = 0;
-
+  uint16_t touchType, firstLoad, pressed, ts_x, ts_y, ts_pressed_x = 0, ts_pressed_y = 0, ts_actual_x = 0, ts_actual_y = 0;
+  uint16_t pressedAux = 0, releasedAux = 0;
+  
   //----------------------------------------------------
   // TFT and TS Display configuration
   //----------------------------------------------------
@@ -50,20 +51,24 @@ void TaskHMI(void *pvParameters)
     if (pressed && !pressedAux){
       pressedAux = 1;
       touchType = HMI_TOUCHED;
+      ts_pressed_x = ts_x;
+      ts_pressed_y = ts_y;
     }
-    else if(!pressed && !pressedAux1){
-      pressedAux1 = 1;
+    else if(!pressed && !releasedAux){
+      releasedAux = 1;
       touchType = HMI_RELEASED;
     }
     else if(pressed){
       touchType = HMI_TOUCHING;
+      ts_actual_x = ts_x;
+      ts_actual_y = ts_y;
     }
 
     if (!pressed){
       pressedAux = 0;
     }
     if (pressed){
-      pressedAux1 = 0;
+      releasedAux = 0;
     }
 
     //----------------------------------------------------
@@ -75,73 +80,73 @@ void TaskHMI(void *pvParameters)
       firstLoad = 1;
       HMI_PagePrevious = HMI_Page;
     }
-
+  
     switch (HMI_Page) {
       case PAGE_MainMenu: 
-        pageMainMenu(firstLoad, touchType, ts_x, ts_y);
+        pageMainMenu(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_MainLadder:
-        pageMainLadder(firstLoad, touchType, ts_x, ts_y);
+        pageMainLadder(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_LadderEditor:
-        pageLadderEditor(firstLoad, touchType, ts_x, ts_y);
+        pageLadderEditor(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_EditInstructions1:
-        pageEditLadderInstructions1(firstLoad, touchType, ts_x, ts_y);
+        pageEditLadderInstructions1(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_EditInstructions2:
-        pageEditLadderInstructions2(firstLoad, touchType, ts_x, ts_y);
+        pageEditLadderInstructions2(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_EditInstructions3:
-        pageEditLadderInstructions3(firstLoad, touchType, ts_x, ts_y);
+        pageEditLadderInstructions3(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_LadderDetails:
-        pageLadderDetails(firstLoad, touchType, ts_x, ts_y);
+        pageLadderDetails(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_MainConfig:
-        pageMainConfig(firstLoad, touchType, ts_x, ts_y);
+        pageMainConfig(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigNetwork:
-        pageConfigNetwork(firstLoad, touchType, ts_x, ts_y);
+        pageConfigNetwork(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigWiFi:
-        pageConfigWiFi(firstLoad, touchType, ts_x, ts_y);
+        pageConfigWiFi(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ScanWiFi:
-        pageConfigScanWiFi(firstLoad, touchType, ts_x, ts_y);
+        pageConfigScanWiFi(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigPLC:
-        pageConfigPLC(firstLoad, touchType, ts_x, ts_y);
+        pageConfigPLC(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigProgram:
-        pageConfigProgram(firstLoad, touchType, ts_x, ts_y);
+        pageConfigProgram(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigIO:
-        pageConfigIO(firstLoad, touchType, ts_x, ts_y);
+        pageConfigIO(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigHMI:
-        pageConfigHMI(firstLoad, touchType, ts_x, ts_y);
+        pageConfigHMI(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigSystem:
-        pageConfigSystem(firstLoad, touchType, ts_x, ts_y);
+        pageConfigSystem(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_ConfigFirmware:
-        pageConfigFirmware(firstLoad, touchType, ts_x, ts_y);
+        pageConfigFirmware(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_MainHMI:
-        pageMainHMI(firstLoad, touchType, ts_x, ts_y);
+        pageMainHMI(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_InputNumber:
-        pageInputNumber(firstLoad, touchType, ts_x, ts_y);
+        pageInputNumber(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_Keyboard:
-        pageKeyboard(firstLoad, touchType, ts_x, ts_y);
+        pageKeyboard(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_DialogOkCancel:
-        pageDialogOkCancel(firstLoad, touchType, ts_x, ts_y);
+        pageDialogOkCancel(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
       case PAGE_DialogMessage:
-        pageDialogMessage(firstLoad, touchType, ts_x, ts_y);
+        pageDialogMessage(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
 
       default:

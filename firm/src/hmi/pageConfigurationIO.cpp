@@ -6,7 +6,8 @@
 // IO Configuration Page
 //--------------------------------------------------------------------------------
 
-void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
+{
   //-------------------------------
   // Draw full Page on first load
   //-------------------------------

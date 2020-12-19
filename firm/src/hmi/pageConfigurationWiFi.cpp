@@ -7,7 +7,8 @@
 // WiFi Network Configuration Page
 //--------------------------------------------------------------------------------
 
-void pageConfigWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y){
+void pageConfigWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
+{
 
   //-------------------------------
   // Keyboard input
