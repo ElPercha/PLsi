@@ -227,7 +227,7 @@ void touchInputNumber(uint16_t ts_x, uint16_t ts_y){
       if (b == 3) {
         numberIndex = 0;               // Reset index to 0
         numberBuffer[numberIndex] = 0; // Place null in buffer
-        HMI_Page = HMI_PageMemory;
+        hmiPage = hmiPageMemory;
       }
 
       //---------------------------------------------------------------------
@@ -262,7 +262,7 @@ void touchInputNumber(uint16_t ts_x, uint16_t ts_y){
         numberIndex = 0;               // Reset index to 0
         numberBuffer[numberIndex] = 0; // Place null in buffer
 
-        HMI_Page = HMI_PageMemory;
+        hmiPage = hmiPageMemory;
       }
 
       //---------------------------------------------------------------------

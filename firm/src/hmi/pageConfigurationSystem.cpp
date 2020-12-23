@@ -50,6 +50,6 @@ void drawConfigSystem (void){
 //--------------------------------------------------------------------------------
 
 void touchConfigSystem(uint16_t ts_x, uint16_t ts_y){
-  HMI_Page = PAGE_MainConfig;
+  hmiPage = PAGE_MainConfig;
 }
 

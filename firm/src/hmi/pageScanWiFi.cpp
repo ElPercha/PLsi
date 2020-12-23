@@ -258,7 +258,7 @@ void touchConfigScanWiFi(uint16_t ts_x, uint16_t ts_y){
     }
     // CANCEL button
     else if (ts_x < SPACINGWIFI*2 + BUTTON_W_WIFI){
-      HMI_Page = PAGE_ConfigWiFi;
+      hmiPage = PAGE_ConfigWiFi;
     }
     // SCAN button
     else{
@@ -273,7 +273,7 @@ void touchConfigScanWiFi(uint16_t ts_x, uint16_t ts_y){
       textValueAccepted = 1;
       wifiEditionField = EDITING_WIFI_SSID;
       textValue = WiFi.SSID(indexNetworkSelected);
-      HMI_Page = PAGE_ConfigWiFi;
+      hmiPage = PAGE_ConfigWiFi;
     } 
   }
 }

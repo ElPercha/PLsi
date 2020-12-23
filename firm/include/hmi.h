@@ -9,10 +9,11 @@
 
 extern TFT_eSPI tft; 
 
+extern uint16_t hmiPage;
+extern uint16_t hmiPageMemory;
+extern uint8_t hmiPageUser;
+extern uint8_t hmiPageLoaded;
 extern uint8_t button[8];
-
-extern uint16_t HMI_Page;
-extern uint16_t HMI_PageMemory;
 
 extern uint16_t indexLadderEditor;
 
@@ -210,11 +211,11 @@ extern unsigned long auxTimerFirmwareBar;
 //    Define text to be displayed on Dialog page
 //--------------------------------------------------------------------------------
 
-#define DIALOG_RUN_STOP                1
-#define DIALOG_STOP_RUN                2
+#define DIALOG_RUN_STOP                 1
+#define DIALOG_STOP_RUN                 2
 
 //--------------------------------------------------------------------------------
-// Define Messages Codes for User
+// Define User Messages Codes
 //--------------------------------------------------------------------------------
 
 #define MESSAGE_NO_ROWS                     1
@@ -312,20 +313,43 @@ extern unsigned long auxTimerFirmwareBar;
 #define NET_ROW_HEIGTH    40
 
 //--------------------------------------------------------------------------------
+// HMI Screens definitions
+//--------------------------------------------------------------------------------
+
+#define HMI_MENU_H       40
+#define HMI_TITLE_H      40
+#define HMI_MENU_BUT      6
+#define HMI_SLOT_W       40
+#define HMI_SLOT_H       40
+
+#define HMI_COLUMNS       TFT_PIXELS_X / HMI_SLOT_W
+#define HMI_ROWS          (TFT_PIXELS_Y - HMI_MENU_H - HMI_TITLE_H) / HMI_SLOT_H
+
+#define HMI_SLOTS_Y       (HMI_MENU_H + HMI_TITLE_H) // Position where the matrix for components starts
+
+#define HMI_MENU_W        TFT_PIXELS_X / HMI_MENU_BUT
+#define HMI_SLOT_2W       HMI_SLOT_W * 2
+#define HMI_SLOT_3W       HMI_SLOT_W * 3
+#define HMI_SLOT_4W       HMI_SLOT_W * 4
+#define HMI_SLOT_2H       HMI_SLOT_W * 2
+#define HMI_SLOT_3H       HMI_SLOT_W * 3
+#define HMI_FONT_SIZE     2  
+
+//--------------------------------------------------------------------------------
 // Ladder Logic Animation Colors
 //--------------------------------------------------------------------------------
 
-#define COLOR_TAG             WHITE
-#define COLOR_OFF             WHITE
-#define COLOR_ON              GREEN
-#define COLOR_BACK_NET        BLACK
-#define COLOR_BACK_NET_EDIT   BROWN1
-#define COLOR_NET_GRID        DARKGREY
-#define COLOR_NET_GRID_EDIT   ORANGE
-#define COLOR_BAR_ON          GREEN
-#define COLOR_BAR_OFF         DARKGREY
-#define COLOR_BAR_EDIT        ORANGE
-#define COLOR_VALUES_ONLINE   CYAN
+#define COLOR_TAG                             WHITE
+#define COLOR_OFF                             WHITE
+#define COLOR_ON                              GREEN
+#define COLOR_BACK_NET                        BLACK
+#define COLOR_BACK_NET_EDIT                   BROWN1
+#define COLOR_NET_GRID                        DARKGREY
+#define COLOR_NET_GRID_EDIT                   ORANGE
+#define COLOR_BAR_ON                          GREEN
+#define COLOR_BAR_OFF                         DARKGREY
+#define COLOR_BAR_EDIT                        ORANGE
+#define COLOR_VALUES_ONLINE                   CYAN
 
 //--------------------------------------------------------------------------------
 // Ladder Editor Colors
@@ -404,66 +428,49 @@ extern unsigned long auxTimerFirmwareBar;
 #define COLOR_FIRMWARE_BAR                    WHITE2
 #define COLOR_FIRMWARE_BAR_FONT               TFT_BLACK
 
+#define COLOR_HMI_BACK                        TFT_BLACK
+#define COLOR_HMI_FONT                        TFT_WHITE  
+
+
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
 //--------------------------------------------------------------------------------
 
 void hmiWaitSettings (void);
-void pageMainMenu(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
+void pageMainMenu(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
   void changePLCstate(void);
-void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageKeyboard(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageLadderEditor(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageEditLadderInstructions1(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageEditLadderInstructions2(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageEditLadderInstructions3(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageLadderDetails(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageDialogOkCancel(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageDialogMessage(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigPLC (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigProgram (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigFirmware (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
-;
-
-
+void pageMainLadder(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageMainHMI(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageMainConfig(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageInputNumber(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageKeyboard(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageLadderEditor(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageEditLadderInstructions1(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageEditLadderInstructions2(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageEditLadderInstructions3(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageLadderDetails(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageDialogOkCancel(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageDialogMessage(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigPLC (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigProgram (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigFirmware (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 
 
 void setDisplay(void);
 void touch_calibrate(void);
 void touchMainMenu(uint16_t ts_x, uint16_t ts_y);
 void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
-void touchMainHMIpress(uint16_t ts_x, uint16_t ts_y);
-void touchMainHMIrelease(uint16_t ts_x, uint16_t ts_y);
+void touchHMImenu(uint16_t ts_x, uint16_t ts_y);
+void touchHMImatrix(uint16_t ts_x, uint16_t ts_y, uint16_t value);
+
+
+
 void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
 void touchInputNumber(uint16_t ts_x, uint16_t ts_y);
 void touchInputText(uint16_t ts_x, uint16_t ts_y);
@@ -525,11 +532,16 @@ void touchConfigScanWiFi(uint16_t ts_x, uint16_t ts_y);
 
 
 void drawInstructionsEditorBooleanBar(void);
-uint16_t getMaxMemoryAddress(uint16_t type);
-int16_t getMinMemoryAddress(uint16_t type);
-void limitMemoryRange(void);
+  uint16_t getMaxMemoryAddress(uint16_t type);
+  int16_t getMinMemoryAddress(uint16_t type);
+  void limitMemoryRange(void);
 void drawMainMenu(void);
 void drawMainHMI(void);
+  void drawHMImenu(void);
+  void drawHMImatrix(void);
+  void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color);
+  void drawHMIbuttonText(uint16_t posX, uint16_t posY, String text);
+
 void drawMainConfig(void);
 void drawMainLadder(void);
   void drawLadderMenuBut1(void);

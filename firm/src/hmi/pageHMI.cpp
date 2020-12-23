@@ -15,7 +15,10 @@ void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
   //-------------------------------
     
     if(firstLoad){
-      drawMainHMI();
+      tft.fillScreen(COLOR_HMI_BACK);
+      drawHMImenu();
+      drawHMImatrix();
+      hmiPageLoaded = 0;
     }
     
   //-------------------------------
@@ -28,125 +31,147 @@ void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
   // Parse touch screen
   //-------------------------------
 
+  if (touchType == HMI_IDLE){
+    hmiPageLoaded = 1; // To avoid any action when user keep pressing the touch and release once the page is loaded
+  }
+
   if (touchType == HMI_TOUCHED){
-    touchMainHMIpress(ts_x, ts_y); 
+    touchHMImenu(ts_x, ts_y);
+    touchHMImatrix(ts_x, ts_y, 1); 
   } 
-  if (touchType == HMI_RELEASED){
-    touchMainHMIrelease(ts_x, ts_y); 
+  if (hmiPageLoaded && touchType == HMI_RELEASED){
+    touchHMImatrix(ts_x, ts_y, 0); 
   } 
 }
 
 //--------------------------------------------------------------------------------
-// Main Configuration Page full draw 
+// HMI top menu
 //--------------------------------------------------------------------------------
 
-void drawMainHMI (void){
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(WHITE2);
-  tft.setCursor(10, 10);
-  tft.setTextSize(2);
-  //tft.print("HMI soon :)");
+void drawHMImenu(void){
+  String hmiMenu[HMI_MENU_BUT-1] = {"SW", "BUT", "POT", "STAT", "LEDS"};
 
-  tft.setSwapBytes(true);
+  tft.setTextColor(COLOR_HMI_FONT);
+  tft.setTextFont(1);
+  tft.setTextSize(1);
 
-  uint8_t i = 0;
-  for (uint8_t r = 1; r < 3; r++){
-    for (uint8_t c = 0; c < 4; c++){
-      i = c + (r-1)*4; 
-      if (!button[i]){
-        tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconRed64_on);
+  for (uint16_t i = 0; i < HMI_MENU_BUT; i++){
+    tft.fillRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, DARKGREY);
+    tft.drawRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, TFT_WHITE);
+
+    if (i == 0){
+      drawHomeIcon();
+    }
+    else{
+      tft.drawCentreString(hmiMenu[i-1], HMI_MENU_W*i + HMI_MENU_W/2, 12, HMI_FONT_SIZE);
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------
+// HMI draw of 5 "non editable" pages + title
+//--------------------------------------------------------------------------------
+
+void drawHMImatrix (void){
+  tft.fillRect(0, HMI_MENU_H, TFT_PIXELS_X, TFT_PIXELS_Y - HMI_MENU_H, COLOR_HMI_BACK);
+
+  // Draw HMI title  
+  String hmiTitle[HMI_MENU_BUT-1] = {"SWITCHES", "BUTTONS", "INPUT ANALOG VALUES", "ANALOG STATUS", "DIGITAL STATUS"};
+  tft.drawCentreString(hmiTitle[hmiPageUser], TFT_PIXELS_X/2, HMI_MENU_H + 12, HMI_FONT_SIZE);
+
+  // 8 buttons (size 4x4) non retentive 
+  if (hmiPageUser == 0){
+    for (uint8_t r = 0; r < 2; r++){
+      for (uint8_t c = 0; c < 4; c++){
+        drawHMIbutton(c*2, r*2, 1, button[c + r*4]);
+        drawHMIbuttonText(c*2, r*2, "M"+ String (c + r*4));
       }
-      else
-      {
-        tft.pushImage(8 + c*80, 8 + r*80, 64, 64, iconGreen64_on);
+    }
+  }
+  
+  // 8 buttons (size 4x4) retentive or switches
+  else if (hmiPageUser == 1){
+    
+  }
+  
+  // 8 indicators (size 1x4) 32 x 32 pixels indicator + text
+  else if (hmiPageUser == 2){
+    
+  }
+  
+  // 4 analog potentiometers
+  else if (hmiPageUser == 3){
+  
+  }
+  
+  // 8 analog indicators (1 x 4) + text 
+  else if (hmiPageUser == 4){
+    
+  }
+}
+
+//--------------------------------------------------------------------------------
+// HMI Menu Touch Screen parsing
+//--------------------------------------------------------------------------------
+
+void touchHMImenu (uint16_t ts_x, uint16_t ts_y){
+  if(ts_y < HMI_MENU_H){
+    for (uint16_t i = 0; i < HMI_MENU_BUT; i++){
+      if (ts_x > i * HMI_MENU_W && ts_x <= (i + 1) * HMI_MENU_W){
+        if (i == 0){
+          hmiPage = PAGE_MainMenu;
+        }
+        else{
+          hmiPageUser = i - 1;
+          drawHMImatrix();
+        }
       }
     }
   }
 }
 
 //--------------------------------------------------------------------------------
-// Main HMI Page
-// Touch Screen parsing
+// HMI Touch Screen parsing of 5 "non editable" pages + menu
 //--------------------------------------------------------------------------------
 
-void touchMainHMIpress(uint16_t ts_x, uint16_t ts_y){
+void touchHMImatrix(uint16_t ts_x, uint16_t ts_y, uint16_t value){
 
-  if(ts_y < 80){
-    HMI_Page = 0;
-  }
-  else if(ts_y < 160){
+  if(ts_y >= HMI_SLOTS_Y && ts_y < 160){
     if(ts_x > 240){
-      button[3] = 1;
+      button[3] = value;
+      drawHMIbutton(6, 0, 1, value);
     }
     else if(ts_x > 160){
-      button[2] = 1;
+      button[2] = value;
+      drawHMIbutton(4, 0, 1, value);
     }
     else if(ts_x > 80){
-      button[1] = 1;
+      button[1] = value;
+      drawHMIbutton(2, 0, 1, value);
     }
     else{
-      button[0] = 1;
+      button[0] = value;
+      drawHMIbutton(0, 0, 1, value);
     }
   }
-  else{
+  else if(ts_y >= HMI_SLOTS_Y && ts_y < 240){
     if(ts_x > 240){
-      button[7] = 1;
+      button[7] = value;
+      drawHMIbutton(6, 2, 1, value+2);
     }
     else if(ts_x > 160){
-      button[6] = 1;
+      button[6] = value;
+      drawHMIbutton(4, 2, 1, value+2);
     }
     else if(ts_x > 80){
-      button[5] = 1;
+      button[5] = value;
+      drawHMIbutton(2, 2, 1, value+2);
     }
     else{
-      button[4] = 1;
+      button[4] = value;
+      drawHMIbutton(0, 2, 1, value+2);
     }
   }
-  drawMainHMI();
-
-  M[0] = button[0];
-  M[1] = button[1];
-  M[2] = button[2];
-  M[3] = button[3];
-  M[4] = button[4];
-  M[5] = button[5];
-  M[6] = button[6];
-  M[7] = button[7];
-}
-void touchMainHMIrelease(uint16_t ts_x, uint16_t ts_y){
-
-  if(ts_y < 80){
-    HMI_Page = 0;
-  }
-  else if(ts_y < 160){
-    if(ts_x > 240){
-      button[3] = 0;
-    }
-    else if(ts_x > 160){
-      button[2] = 0;
-    }
-    else if(ts_x > 80){
-      button[1] = 0;
-    }
-    else{
-      button[0] = 0;
-    }
-  }
-  else{
-    if(ts_x > 240){
-      button[7] = 0;
-    }
-    else if(ts_x > 160){
-      button[6] = 0;
-    }
-    else if(ts_x > 80){
-      button[5] = 0;
-    }
-    else{
-      button[4] = 0;
-    }
-  }
-  drawMainHMI();
 
   M[0] = button[0];
   M[1] = button[1];

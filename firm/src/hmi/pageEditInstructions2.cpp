@@ -187,14 +187,14 @@ void touchEditLadderInstructions2(uint16_t ts_x, uint16_t ts_y){
   if (ts_y < TIMER_BUTTON_Y + TIMER_BORDER+TIMER_BUTTON_H){
     instructionFieldSelection = 1;
     updateTimerCounterNumber();
-    HMI_PageMemory = HMI_Page;  
-    HMI_Page = PAGE_InputNumber;
+    hmiPageMemory = hmiPage;  
+    hmiPage = PAGE_InputNumber;
   }
   else if (ts_y < TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*2){
     instructionFieldSelection = 2;
     updateTimerCounterSetPoint();
-    HMI_PageMemory = HMI_Page;  
-    HMI_Page = PAGE_InputNumber;
+    hmiPageMemory = hmiPage;  
+    hmiPage = PAGE_InputNumber;
   }
   else if (ts_y < TIMER_BUTTON_Y + (TIMER_BORDER+TIMER_BUTTON_H)*3){ // Only for timers
     if (timerSelected){

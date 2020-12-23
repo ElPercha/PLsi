@@ -50,5 +50,5 @@ void drawLadderDetails (void){
 //--------------------------------------------------------------------------------
 
 void touchLadderDetails(uint16_t ts_x, uint16_t ts_y){
-  HMI_Page = HMI_PageMemory;
+  hmiPage = hmiPageMemory;
 }

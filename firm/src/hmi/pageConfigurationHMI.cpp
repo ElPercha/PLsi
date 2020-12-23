@@ -52,6 +52,6 @@ void drawConfigHMI (void){
 //--------------------------------------------------------------------------------
 
 void touchConfigHMI(uint16_t ts_x, uint16_t ts_y){
-  HMI_Page = PAGE_MainConfig;
+  hmiPage = PAGE_MainConfig;
 }
 

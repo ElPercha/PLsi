@@ -45,7 +45,7 @@ void drawConfigPLC (void){
 //--------------------------------------------------------------------------------
 
 void touchConfigPLC(uint16_t ts_x, uint16_t ts_y){
-  HMI_Page = PAGE_MainMenu;
+  hmiPage = PAGE_MainMenu;
 
 }
 

@@ -100,12 +100,12 @@ void touchConfigProgram(uint16_t ts_x, uint16_t ts_y){
   }
 
   if(selectedProgram == settings.ladder.UserProgram){
-    HMI_Page = PAGE_MainConfig;
+    hmiPage = PAGE_MainConfig;
   }
   else if (settings.ladder.PLCstate != STOPPED){
       messageCode = MESSAGE_PLC_MUST_BE_IN_STOP;
-      HMI_PageMemory = HMI_Page;
-      HMI_Page = PAGE_DialogMessage;
+      hmiPageMemory = hmiPage;
+      hmiPage = PAGE_DialogMessage;
   }
   else{
     settings.ladder.UserProgram = selectedProgram;
@@ -113,7 +113,7 @@ void touchConfigProgram(uint16_t ts_x, uint16_t ts_y){
     saveSettings();
     loadSelectedProgram = 1;
     delay(500); // For user to see that program has been changed (turns green)
-    HMI_Page = PAGE_MainConfig;
+    hmiPage = PAGE_MainConfig;
   }
 }
 

@@ -76,12 +76,12 @@ void TaskHMI(void *pvParameters)
     //----------------------------------------------------
     
     firstLoad = 0; 
-    if (HMI_Page != HMI_PagePrevious){
+    if (hmiPage != hmiPageFirstLoad){
       firstLoad = 1;
-      HMI_PagePrevious = HMI_Page;
+      hmiPageFirstLoad = hmiPage;
     }
   
-    switch (HMI_Page) {
+    switch (hmiPage) {
       case PAGE_MainMenu: 
         pageMainMenu(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
@@ -158,7 +158,7 @@ void TaskHMI(void *pvParameters)
     // Disable OTA if not in the right page
     //----------------------------------------------------
      
-    if (HMI_Page != PAGE_ConfigFirmware){
+    if (hmiPage != PAGE_ConfigFirmware){
       configFirmwareEnabled = 0;
     }
 
@@ -168,8 +168,8 @@ void TaskHMI(void *pvParameters)
 
     if (settings.general.firmware == FIRMWARE_UPDATED && !configFirmwareEnabled){
       messageCode = MESSAGE_FIRMWARE_UPDATED;
-      HMI_PageMemory = PAGE_MainMenu;
-      HMI_Page = PAGE_DialogMessage;
+      hmiPageMemory = PAGE_MainMenu;
+      hmiPage = PAGE_DialogMessage;
     }
 
     delay(5); 

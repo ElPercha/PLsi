@@ -157,8 +157,8 @@ void touchConfigFirmware(uint16_t ts_x, uint16_t ts_y){
     }
     else{
       messageCode = MESSAGE_OTA_NOT_POSSIBLE;
-      HMI_PageMemory = HMI_Page;
-      HMI_Page = PAGE_DialogMessage;
+      hmiPageMemory = hmiPage;
+      hmiPage = PAGE_DialogMessage;
     }
     drawFirmwareEnableButton();
     drawFirmwareStatusBar();
@@ -166,8 +166,8 @@ void touchConfigFirmware(uint16_t ts_x, uint16_t ts_y){
   // Cancel button
   else if(ts_y > FIRMWARE_CANCEL_Y){
     configFirmwareEnabled = 0;
-    //HMI_Page = PAGE_ConfigPLC; // To be used when full navigation is implemented for this menu
-    HMI_Page = PAGE_MainConfig;
+    //hmiPage = PAGE_ConfigPLC; // To be used when full navigation is implemented for this menu
+    hmiPage = PAGE_MainConfig;
   }
 }
 

@@ -244,5 +244,5 @@ void touchDialogMessage(uint16_t ts_x, uint16_t ts_y){
     saveSettings();
   }
 
-  HMI_Page = HMI_PageMemory;
+  hmiPage = hmiPageMemory;
 }

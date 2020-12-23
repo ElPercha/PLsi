@@ -134,7 +134,7 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
   if(ladderTouched.Menu == 1){ // HOME
     ladderTouched.Menu = 0;
     editionMode = 0;
-    HMI_Page = PAGE_MainMenu;
+    hmiPage = PAGE_MainMenu;
   }
   if(ladderTouched.Menu == 2){ // LEFT ARROW
     ladderTouched.Menu = 0;
@@ -145,8 +145,8 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
   if(ladderTouched.Menu == 3){ // GO TO
     ladderTouched.Menu = 0;
     editionMode = 0;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_InputNumber;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_InputNumber;
   }
   if(ladderTouched.Menu == 4){ // RIGHT ARROW
     ladderTouched.Menu = 0;
@@ -188,13 +188,13 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y){
     ladderEditorRow = ladderTouched.Logic.Row;
     ladderEditorColumn = ladderTouched.Logic.Col;
 
-    HMI_PageMemory = HMI_Page;
+    hmiPageMemory = hmiPage;
     if (editionMode){
       editingNetwork = onlineNetwork;
-      HMI_Page = PAGE_LadderEditor;
+      hmiPage = PAGE_LadderEditor;
     }
     else{
-      // HMI_Page = PAGE_LadderDetails; // Issue #31
+      // hmiPage = PAGE_LadderDetails; // Issue #31
     }
   }
 }

@@ -82,10 +82,10 @@ void touchDialogOkCancel(uint16_t ts_x, uint16_t ts_y){
       settings.ladder.PLCstate = RUNNING;
       saveSettings();
     }
-    HMI_Page = HMI_PageMemory;
+    hmiPage = hmiPageMemory;
   }
   if (ts_y > 160 && ts_x > 160){
-      HMI_Page = HMI_PageMemory;
+      hmiPage = hmiPageMemory;
   }
 }
 

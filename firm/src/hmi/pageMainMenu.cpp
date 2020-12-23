@@ -45,14 +45,12 @@ void drawMainMenu (void){
   tft.fillScreen(BLACK);
    
   tft.fillRect     (  0,   0, 320, 34,    DARKGREY); // Header
-  tft.fillRoundRect( 20,  48, 280, 55, 6, WHITE);    // Button 1
-  tft.fillRoundRect( 20, 111, 280, 55, 6, CYAN);     // Button 2
-  tft.fillRoundRect( 20, 174, 280, 55, 6, AQUA);     // Button 3
+  tft.fillRoundRect( 20,  48, 280, 55, 11, WHITE);    // Button 1
+  tft.fillRoundRect( 20, 111, 280, 55, 11, CYAN);     // Button 2
+  tft.fillRoundRect( 20, 174, 280, 55, 11 , AQUA);     // Button 3
 
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
-  // tft.setCursor(10, 10);
-  // tft.print("PLsi v" + String(FIRMWARE));
   tft.setCursor(5, 10);
 
   String str = FILENAME_USER_PROGRAMS[settings.ladder.UserProgram];
@@ -150,9 +148,9 @@ uint16_t ScanTimeChanged(void) {
 
 void touchMainMenu(uint16_t X, uint16_t Y){
   if      (Y <= 40 && X > 200) {changePLCstate();}
-  else if (Y >  40 && Y < 111) {HMI_Page = PAGE_MainLadder;}
-  else if (Y > 111 && Y < 174) {HMI_Page = PAGE_MainHMI   ;}  
-  else if (Y > 174           ) {HMI_Page = PAGE_MainConfig;}
+  else if (Y >  40 && Y < 111) {hmiPage = PAGE_MainLadder;}
+  else if (Y > 111 && Y < 174) {hmiPage = PAGE_MainHMI   ;}  
+  else if (Y > 174           ) {hmiPage = PAGE_MainConfig;}
 }
 
 //--------------------------------------------------------------------------------
@@ -166,14 +164,14 @@ void changePLCstate(void){
     saveSettings();
   }
   else if (settings.ladder.PLCstate == RUNNING){
-    HMI_PageMemory = HMI_Page;
+    hmiPageMemory = hmiPage;
     dialogCode = DIALOG_RUN_STOP;
-    HMI_Page = PAGE_DialogOkCancel;
+    hmiPage = PAGE_DialogOkCancel;
   }
   else if (settings.ladder.PLCstate == STOPPED){
-    HMI_PageMemory = HMI_Page;
+    hmiPageMemory = hmiPage;
     dialogCode = DIALOG_STOP_RUN;
-    HMI_Page = PAGE_DialogOkCancel;
+    hmiPage = PAGE_DialogOkCancel;
   }
 }
 

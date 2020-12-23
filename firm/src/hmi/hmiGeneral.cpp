@@ -1,6 +1,7 @@
 #include <globals.h>
 #include <TFT_eSPI.h>
 #include <hmi.h>
+#include <buttons.h>
 
 //--------------------------------------------------------------------------------
 // Wait for tskDisk to load the User Settings  
@@ -53,14 +54,58 @@ void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y){
   if (ts_y > TFT_PIXELS_Y - BUTTON_H10 - SPACING10){
     if (ts_x < BUTTON_W10 - SPACING10){                    // CANCEL
       editingNetwork = onlineNetwork;
-      HMI_Page = PAGE_MainLadder;
+      hmiPage = PAGE_MainLadder;
     }
     else if (ts_x < BUTTON_W10*2 - SPACING10*2){            // BACK
-      HMI_Page = PAGE_LadderEditor;
+      hmiPage = PAGE_LadderEditor;
     }
     else {                                                  // ACCEPT
       onlineNetwork = editingNetwork;
-      HMI_Page = PAGE_MainLadder;
+      hmiPage = PAGE_MainLadder;
     }
   }
+}
+
+//--------------------------------------------------------------------------------
+// Draw HMI button
+// 
+//    posX and posY --> are are the location index for the button, by design the HMI screen is divided in 40 x 40 pixels matrix
+//    For example, in a 320 x 240 display, where the top 80 Y pixels are used for the menu and page title
+//    and the remaining space is an area of 320 wide in X and 160 height in Y, the matrix will have: 4 rows and 8 columns       
+//
+//    size = 0 --> 32 x 32 pixels button (uses 1 matrix cell)
+//    size = 1 --> 64 x 64 pixels button (uses 4 matrix cells)
+//
+//    color = 0 --> Red
+//    color = 1 --> Green
+//    color = 2 --> Blue
+//    color = 3 --> Yellow
+//--------------------------------------------------------------------------------
+
+void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color){
+  tft.setSwapBytes(true);
+  if (color >= 4){
+    color = 0;
+  } 
+  if (size >= 2){
+    size = 0;
+  } 
+  if (size == 0){
+    //tft.pushImage(4 + posX*HMI_SLOT_W, 4 + posY*HMI_SLOT_H + HMI_SLOTS_Y, 32, 32, buttons32[color]);
+  }
+  else if (size == 1){
+    tft.pushImage(8 + posX*HMI_SLOT_W, 14 + posY*HMI_SLOT_H + HMI_SLOTS_Y, 64, 64, buttons64[color]);
+  }
+}
+
+//--------------------------------------------------------------------------------
+// Draw HMI button text
+// Used for 4 cells buttons (size = 1)
+//--------------------------------------------------------------------------------
+
+void drawHMIbuttonText(uint16_t posX, uint16_t posY, String text){
+  tft.setTextColor(COLOR_HMI_FONT);
+  tft.setTextFont(1);
+  tft.setTextSize(1);
+  tft.drawCentreString(text, posX*HMI_SLOT_W + HMI_SLOT_W, posY*HMI_SLOT_H - 2 + HMI_SLOTS_Y, HMI_FONT_SIZE);
 }

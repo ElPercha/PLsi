@@ -332,8 +332,8 @@ void touchEditLadderInstructions3(uint16_t ts_x, uint16_t ts_y){
 
   // Parse touch of Memory address modification --> call Keyboard
   if(ts_x > DATA_TYPE_PAL_X && ts_y > TOUCH_BAR_Y_HIGH && ts_y < TOUCH_BAR_Y_LOW){
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_InputNumber;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_InputNumber;
   }
 }
 

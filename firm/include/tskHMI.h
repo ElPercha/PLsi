@@ -7,11 +7,12 @@
 
 TFT_eSPI tft = TFT_eSPI();     // TFT Display Instance
 
+uint16_t hmiPage          = 0; // GUI general Page number
+uint16_t hmiPageMemory    = 0; // Used to go back to previous page
+uint8_t hmiPageFirstLoad  = 1; // 1 to force Main Menu Load at fist boot. Used to detect the first "frame" of the current page.
+uint8_t hmiPageUser       = 0; // HMI page number
+uint8_t hmiPageLoaded     = 0;
 uint8_t button[8] = {0,0,0,0,0,0,0,0};
-
-uint16_t HMI_Page         = 0; // Main Menu Page 
-uint16_t HMI_PageMemory   = 0; // Main Menu Page 
-uint16_t HMI_PagePrevious = 1; // To force Main Manu Load at fist boot
 
 uint16_t indexLadderEditor = 0; // Subpage of Ladder Editor
 

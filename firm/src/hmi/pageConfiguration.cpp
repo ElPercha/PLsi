@@ -72,29 +72,29 @@ void drawMainConfig (void){
 void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
   if(ts_y < 80){
     if(ts_x < 160){
-      //HMI_Page = PAGE_ConfigPLC;      
-      HMI_Page = PAGE_ConfigProgram;      
+      //hmiPage = PAGE_ConfigPLC;      
+      hmiPage = PAGE_ConfigProgram;      
     }
     else{
-      HMI_Page = PAGE_ConfigHMI;      
+      hmiPage = PAGE_ConfigHMI;      
     }
   }
   else if(ts_y < 160){
     if(ts_x < 160){
-      HMI_Page = PAGE_ConfigIO;      
+      hmiPage = PAGE_ConfigIO;      
     }
     else{
-      //HMI_Page = PAGE_ConfigNetwork;      
-      HMI_Page = PAGE_ConfigWiFi;      
+      //hmiPage = PAGE_ConfigNetwork;      
+      hmiPage = PAGE_ConfigWiFi;      
     }
   }
   else{
     if(ts_x < 160){
-      // HMI_Page = PAGE_ConfigSystem;      
-      HMI_Page = PAGE_ConfigFirmware;      
+      // hmiPage = PAGE_ConfigSystem;      
+      hmiPage = PAGE_ConfigFirmware;      
     }
     else{
-      HMI_Page = PAGE_MainMenu;
+      hmiPage = PAGE_MainMenu;
     }
   }
 }

@@ -195,7 +195,7 @@ void touchInputText(uint16_t ts_x, uint16_t ts_y){
   else{
     if (ts_x < KEY_TEXT_W * 3){            // ESC
       clearTextKeyboard();  
-      HMI_Page = HMI_PageMemory;
+      hmiPage = hmiPageMemory;
     }    
     else if (ts_x < KEY_TEXT_W * 7){       // SPACE 
       if (textValue.length() < textMaxLength) {
@@ -204,7 +204,7 @@ void touchInputText(uint16_t ts_x, uint16_t ts_y){
     }    
     else{                                  // ENTER 
       textValueAccepted = 1;
-      HMI_Page = HMI_PageMemory;
+      hmiPage = hmiPageMemory;
     }    
   }
 }

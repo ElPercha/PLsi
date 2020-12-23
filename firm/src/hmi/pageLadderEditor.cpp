@@ -261,7 +261,7 @@ void touchLadderEditorNavigation(uint16_t ts_x, uint16_t ts_y){
     else {                                                // ACCEPT
       onlineNetwork = editingNetwork;
     }
-    HMI_Page = PAGE_MainLadder;
+    hmiPage = PAGE_MainLadder;
   }
   else if (ts_y > TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){
     if (ts_x < BUTTON_W2 + SPACING2){                     // LEFT ARROW
@@ -321,13 +321,13 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
                 }
                 else if (editingInstructionCode < 10){ // Boolean instructions
                   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
-                  HMI_Page = PAGE_EditInstructions1;
+                  hmiPage = PAGE_EditInstructions1;
                 }
                 else if (editingInstructionCode < 15){ // Timers and Counters
                   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
                   editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Code = editingInstructionCode | 0x1000;
                   instructionFieldSelection = 1;
-                  HMI_Page = PAGE_EditInstructions2;
+                  hmiPage = PAGE_EditInstructions2;
                 }
                 else if (editingInstructionCode < 29){ // 16 Bit Math instructions
                   editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
@@ -336,7 +336,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
                     editingNetwork.Cells[ladderEditorRow+2][ladderEditorColumn].Code = editingInstructionCode | 0x2000;
                   }
                   instructionFieldSelection = 1;
-                  HMI_Page = PAGE_EditInstructions3;
+                  hmiPage = PAGE_EditInstructions3;
                 }
               }
             }
@@ -431,20 +431,20 @@ uint16_t checkValidEdition(uint16_t selectedInstructionCode){
 
         if (row >= NET_ROWS){
           messageCode = MESSAGE_NO_ROWS;
-          HMI_PageMemory = HMI_Page;
-          HMI_Page = PAGE_DialogMessage;
+          hmiPageMemory = hmiPage;
+          hmiPage = PAGE_DialogMessage;
           return 0;
         }
         if (column >= NET_COLUMNS){
           messageCode = MESSAGE_NO_COLUMNS;
-          HMI_PageMemory = HMI_Page;
-          HMI_Page = PAGE_DialogMessage;
+          hmiPageMemory = hmiPage;
+          hmiPage = PAGE_DialogMessage;
           return 0;
         }
         if (onlineNetwork.Cells[row][column].Code != 0){
           messageCode = MESSAGE_SPACE_USED;
-          HMI_PageMemory = HMI_Page;
-          HMI_Page = PAGE_DialogMessage;
+          hmiPageMemory = hmiPage;
+          hmiPage = PAGE_DialogMessage;
           return 0;
         }       
       }
@@ -499,8 +499,8 @@ void deleteElement(void){
 void copyColumn(void){
   if (columnContainsWideInstruction(ladderEditorColumn)){
     messageCode = MESSAGE_CANNOT_COPY_COLUMN;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   for (uint16_t row = 0; row < NET_ROWS; row++){
@@ -517,8 +517,8 @@ void copyColumn(void){
 void pasteColumn(void){
   if (!columnIsEmpty(ladderEditorColumn)){
     messageCode = MESSAGE_COLUMN_NOT_EMPTY;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   for (uint16_t row = 0; row < NET_ROWS; row++){
@@ -535,15 +535,15 @@ void pasteColumn(void){
 void insertColumn(void){
   if (!columnIsEmpty(NET_COLUMNS-1)){
     messageCode = MESSAGE_CANNOT_INSERT_COLUMN;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   for (uint16_t row = 0; row < NET_ROWS; row++){
     if ((editingNetwork.Cells[row][ladderEditorColumn].Code >> 15) == 1){
       messageCode = MESSAGE_CANNOT_SPLIT_WIDE_INSTR;
-      HMI_PageMemory = HMI_Page;
-      HMI_Page = PAGE_DialogMessage;
+      hmiPageMemory = hmiPage;
+      hmiPage = PAGE_DialogMessage;
       return;
     }
   }
@@ -567,8 +567,8 @@ void insertColumn(void){
 void deleteColumn(void){
   if (columnContainsWideInstruction(ladderEditorColumn)){
     messageCode = MESSAGE_CANNOT_DELETE_COLUMN;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   else if (!columnIsEmpty(ladderEditorColumn)){
@@ -596,8 +596,8 @@ void deleteColumn(void){
 void copyRow(void){
   if (rowContainsHighInstruction(ladderEditorRow)){
     messageCode = MESSAGE_CANNOT_COPY_ROW;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   for (uint16_t col = 0; col < NET_COLUMNS; col++){
@@ -621,8 +621,8 @@ void copyRow(void){
 void pasteRow(void){
   if (!rowIsEmpty(ladderEditorRow)){
     messageCode = MESSAGE_ROW_NOT_EMPTY;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   for (uint16_t col = 0; col < NET_COLUMNS; col++){
@@ -646,15 +646,15 @@ void pasteRow(void){
 void insertRow(void){
   if (!rowIsEmpty(NET_ROWS-1)){
     messageCode = MESSAGE_CANNOT_INSERT_ROW;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   for (uint16_t col = 0; col < NET_ROWS; col++){
     if(((editingNetwork.Cells[ladderEditorRow][col].Code >> 12) & 0x0007) >= 1){ //0x0007 to remove higher bit that represent the width and not the height
       messageCode = MESSAGE_CANNOT_SPLIT_HIGH_INSTR;
-      HMI_PageMemory = HMI_Page;
-      HMI_Page = PAGE_DialogMessage;
+      hmiPageMemory = hmiPage;
+      hmiPage = PAGE_DialogMessage;
       return;
     }
   }
@@ -684,8 +684,8 @@ void insertRow(void){
 void deleteRow(void){
   if (rowContainsHighInstruction(ladderEditorRow)){
     messageCode = MESSAGE_CANNOT_DELETE_ROW;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   else if (!rowIsEmpty(ladderEditorRow)){
@@ -729,8 +729,8 @@ void copyNetwork(void){
 void pasteNetwork(void){
   if (!networkIsEmpty()){
     messageCode = MESSAGE_NETWORK_NOT_EMPTY;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   editingNetwork = copyMemoryNetwork;
@@ -746,8 +746,8 @@ void pasteNetwork(void){
 void insertNetwork(void){
   if (!lastNetworkIsEmpty()){
     messageCode = MESSAGE_CANNOT_INSERT_NETWORK;
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_DialogMessage;
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_DialogMessage;
     return;
   }
   moveNetworksInsert = showingNetwork + 1;
@@ -871,7 +871,7 @@ void deleteGivenRow(uint16_t row){
 
 void elementsEditionAccept(void){
   onlineNetwork = editingNetwork;
-  HMI_Page = PAGE_MainLadder;
+  hmiPage = PAGE_MainLadder;
 }
 
 //--------------------------------------------------------------------------------

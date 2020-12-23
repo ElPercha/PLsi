@@ -17,13 +17,24 @@
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------- useful code ----------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
-  tft.setTextSize(1);                              // Font size multiplier
-  tft.setTextColor(WHITE2);                        // Font Color
-  tft.setFreeFont(FSSB12);                         // Font selection
-  tft.drawCentreString("Test Font", x, y, GFXFF);  // Print command, string will be centered for the given x value
-  tft.drawString("Test Font", x, y, GFXFF);        // Print command, string will be left aligned
-  tft.setTextFont(1);                              // Go back to default font
 
+
+#define GFXFF 1
+#define GLCD  0
+#define FONT2 2
+
+
+  tft.setTextColor(WHITE2);                        // Font Color
+  tft.setTextSize(1);                              // Font size multiplier
+  tft.setTextFont(1);                              // Font type
+  tft.setFreeFont(FSSB12);                         // Special Font selection
+  tft.drawCentreString("Test Font", x, y, 2);      // 2 = size when no Special Font slected. Print command, string will be centered for the given x value
+  tft.drawCentreString("Test Font", x, y, GFXFF);  // GFXFF when setFreeFont performed. Print command, string will be centered for the given x value
+
+  tft.drawString("Test Font", x, y, GFXFF);        // Print command, string will be left aligned
+  tft.drawString("Test Font", x, y, GFXFF);        // Print command, string will be left aligned
+
+  tft.setTextFont(1);                              // Go back to default font
 
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------

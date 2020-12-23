@@ -265,16 +265,16 @@ void touchConfigWiFiNetwork(uint16_t ts_x, uint16_t ts_y){
     }
     // WIFI Scan Networks buton
     else if (ts_y < CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BUTTON_H * 2){
-      HMI_PageMemory =  HMI_Page;        
-      HMI_Page = PAGE_ScanWiFi;
+      hmiPageMemory =  hmiPage;        
+      hmiPage = PAGE_ScanWiFi;
     }
     // BACK button
     else if (ts_y < CONFIG_NETWORK_SPACE * 3 + CONFIG_NETWORK_BUTTON_H * 3){
-      HMI_Page = PAGE_MainConfig;
+      hmiPage = PAGE_MainConfig;
     }
     // HOME button
     else{ 
-      HMI_Page = PAGE_MainMenu;
+      hmiPage = PAGE_MainMenu;
     }
   }
   else {
@@ -283,16 +283,16 @@ void touchConfigWiFiNetwork(uint16_t ts_x, uint16_t ts_y){
       wifiEditionField = EDITING_WIFI_SSID;
       textValue = settings.wifi.ssid;     
       textMaxLength = SSID_LENGTH - 1;     
-      HMI_PageMemory =  HMI_Page;        
-      HMI_Page = PAGE_Keyboard;        
+      hmiPageMemory =  hmiPage;        
+      hmiPage = PAGE_Keyboard;        
     }
     // Password Bar
     else if (ts_y < CONFIG_NETWORK_SPACE * 2 + CONFIG_NETWORK_BUTTON_H * 2){
       wifiEditionField = EDITING_WIFI_PASSWORD;
       textValue = settings.wifi.password;     
       textMaxLength = PASS_LENGTH - 1;     
-      HMI_PageMemory =  HMI_Page;        
-      HMI_Page = PAGE_Keyboard;        
+      hmiPageMemory =  hmiPage;        
+      hmiPage = PAGE_Keyboard;        
     }
     // Status Bar
     else{

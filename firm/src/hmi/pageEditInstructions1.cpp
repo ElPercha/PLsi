@@ -158,7 +158,7 @@ void touchEditLadderInstructions1(uint16_t ts_x, uint16_t ts_y){
     drawInstructionsEditorBooleanBar();
   }
   else if (ts_y < BAR_Y + BAR_H11){
-    HMI_PageMemory = HMI_Page;
-    HMI_Page = PAGE_InputNumber;  
+    hmiPageMemory = hmiPage;
+    hmiPage = PAGE_InputNumber;  
   }
 }
