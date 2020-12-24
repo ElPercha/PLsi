@@ -220,6 +220,11 @@ typedef struct
 typedef struct
 {
   tsCalibration ts;
+  uint16_t      switchesIndex;
+  uint16_t      buttonsIndex;
+  uint16_t      potentiometersIndex;
+  uint16_t      analogIndicatorsIndex;
+  uint16_t      digitalIndicatorsIndex;
 } hmiSettings;
 
 typedef struct

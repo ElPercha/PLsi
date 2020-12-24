@@ -92,6 +92,11 @@ void loadDefaultSettings(void){
   settings.hmi.ts.rightX = TS_RIGHT_X;
   settings.hmi.ts.topY = TS_TOP_Y;
   settings.hmi.ts.bottomY = TS_BOTTOM_Y;
+  settings.hmi.switchesIndex = 500;
+  settings.hmi.buttonsIndex = 510;
+  settings.hmi.potentiometersIndex = 500;
+  settings.hmi.analogIndicatorsIndex = 510;
+  settings.hmi.digitalIndicatorsIndex = 520;
 
   snprintf(settings.wifi.ssid, SSID_LENGTH, WIFI_SSID);
   snprintf(settings.wifi.password, PASS_LENGTH, WIFI_PASS);

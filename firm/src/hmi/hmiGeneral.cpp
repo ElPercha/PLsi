@@ -91,7 +91,7 @@ void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color){
     size = 0;
   } 
   if (size == 0){
-    //tft.pushImage(4 + posX*HMI_SLOT_W, 4 + posY*HMI_SLOT_H + HMI_SLOTS_Y, 32, 32, buttons32[color]);
+    tft.pushImage(4 + posX*HMI_SLOT_W, 4 + posY*HMI_SLOT_H + HMI_SLOTS_Y, 32, 32, buttons32[color]);
   }
   else if (size == 1){
     tft.pushImage(8 + posX*HMI_SLOT_W, 14 + posY*HMI_SLOT_H + HMI_SLOTS_Y, 64, 64, buttons64[color]);
@@ -100,12 +100,45 @@ void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color){
 
 //--------------------------------------------------------------------------------
 // Draw HMI button text
-// Used for 4 cells buttons (size = 1)
+// type = 0 --> Used for text centered on Y and located on the specified cell
+// type = 1 --> Used on 2 x 2 cells objects, location is top-center 
 //--------------------------------------------------------------------------------
 
-void drawHMIbuttonText(uint16_t posX, uint16_t posY, String text){
+void drawHMIbuttonText(uint16_t posX, uint16_t posY, uint16_t type, String text){
   tft.setTextColor(COLOR_HMI_FONT);
   tft.setTextFont(1);
   tft.setTextSize(1);
-  tft.drawCentreString(text, posX*HMI_SLOT_W + HMI_SLOT_W, posY*HMI_SLOT_H - 2 + HMI_SLOTS_Y, HMI_FONT_SIZE);
+
+  if (type == 0){
+    tft.drawString(text, posX*HMI_SLOT_W + 5, posY*HMI_SLOT_H + HMI_SLOTS_Y + 11, HMI_FONT_SIZE);
+  }
+  else if (type == 1){
+    tft.drawCentreString(text, posX*HMI_SLOT_W + HMI_SLOT_W, posY*HMI_SLOT_H - 2 + HMI_SLOTS_Y, HMI_FONT_SIZE);
+  }
+}
+
+//--------------------------------------------------------------------------------
+// Draw HMI analog Indicator
+// type = 0 --> Used for 2 x 2 cells analog potentiometer
+// type = 1 --> Used for 2 x 2 cells analog indicator
+//--------------------------------------------------------------------------------
+
+void drawHMIAnalogIndicator(uint16_t posX, uint16_t posY, uint16_t type, double value){
+  uint32_t color = 0;
+  
+  tft.setTextColor(COLOR_HMI_FONT);
+  tft.setTextFont(1);
+  tft.setTextSize(1);
+
+  if (type == 0){
+    color =  COLOR_HMI_BACK_POTENTIOM;
+  }
+  if (type == 1){
+    color =  COLOR_HMI_BACK_ANA_IND;
+  }
+
+  if (type == 0 || type == 1){
+    tft.fillRect(posX*HMI_SLOT_W + 2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 20, HMI_SLOT_W*2 - 4, HMI_SLOT_H - 5, color);
+    tft.drawCentreString(String(value, 0), posX*HMI_SLOT_W + HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y + 30, HMI_FONT_SIZE);
+  }
 }

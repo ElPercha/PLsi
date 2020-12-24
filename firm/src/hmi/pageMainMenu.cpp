@@ -45,9 +45,9 @@ void drawMainMenu (void){
   tft.fillScreen(BLACK);
    
   tft.fillRect     (  0,   0, 320, 34,    DARKGREY); // Header
-  tft.fillRoundRect( 20,  48, 280, 55, 11, WHITE);    // Button 1
-  tft.fillRoundRect( 20, 111, 280, 55, 11, CYAN);     // Button 2
-  tft.fillRoundRect( 20, 174, 280, 55, 11 , AQUA);     // Button 3
+  tft.fillRoundRect( 20,  48, 280, 55, 11, WHITE);   // Button 1
+  tft.fillRoundRect( 20, 111, 280, 55, 11, CYAN);    // Button 2
+  tft.fillRoundRect( 20, 174, 280, 55, 11, AQUA);    // Button 3
 
   tft.setTextColor(WHITE);
   tft.setTextSize(2);

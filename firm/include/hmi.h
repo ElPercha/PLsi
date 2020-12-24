@@ -13,7 +13,9 @@ extern uint16_t hmiPage;
 extern uint16_t hmiPageMemory;
 extern uint8_t hmiPageUser;
 extern uint8_t hmiPageLoaded;
-extern uint8_t button[8];
+extern uint16_t hmiEditionIndex;
+extern unsigned long timerRefreshHMI;
+
 
 extern uint16_t indexLadderEditor;
 
@@ -334,6 +336,7 @@ extern unsigned long auxTimerFirmwareBar;
 #define HMI_SLOT_2H       HMI_SLOT_W * 2
 #define HMI_SLOT_3H       HMI_SLOT_W * 3
 #define HMI_FONT_SIZE     2  
+#define HMI_FONT_TITLE    4  
 
 //--------------------------------------------------------------------------------
 // Ladder Logic Animation Colors
@@ -430,7 +433,8 @@ extern unsigned long auxTimerFirmwareBar;
 
 #define COLOR_HMI_BACK                        TFT_BLACK
 #define COLOR_HMI_FONT                        TFT_WHITE  
-
+#define COLOR_HMI_BACK_POTENTIOM              TFT_DARKGREEN  
+#define COLOR_HMI_BACK_ANA_IND                TFT_MAGENTA  
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
@@ -467,7 +471,7 @@ void touch_calibrate(void);
 void touchMainMenu(uint16_t ts_x, uint16_t ts_y);
 void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
 void touchHMImenu(uint16_t ts_x, uint16_t ts_y);
-void touchHMImatrix(uint16_t ts_x, uint16_t ts_y, uint16_t value);
+void touchHMImatrix(uint16_t ts_x, uint16_t ts_y, uint16_t touchType);
 
 
 
@@ -540,7 +544,8 @@ void drawMainHMI(void);
   void drawHMImenu(void);
   void drawHMImatrix(void);
   void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color);
-  void drawHMIbuttonText(uint16_t posX, uint16_t posY, String text);
+  void drawHMIbuttonText(uint16_t posX, uint16_t posY, uint16_t type, String text);
+  void drawHMIAnalogIndicator(uint16_t posX, uint16_t posY, uint16_t type, double value);
 
 void drawMainConfig(void);
 void drawMainLadder(void);
@@ -605,8 +610,6 @@ void scanWiFiNetworks(void);
   void drawNetworkInfo(uint16_t netIndex, uint16_t pageIndex);
   void drawNetworksFound(void);
   uint16_t convertDbm(int32_t WiFiPower);
-
-
 void drawDialogOkCancel(void);
   void drawDialogButtons(void);
 void drawDialogMessage(void);
