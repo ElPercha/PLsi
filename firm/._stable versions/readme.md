@@ -1,6 +1,4 @@
-Log changes:
-
-"Version 0.00.00
+**Version 0.00.00**
 - Date: 10:42 AM 12/24/2020
 - Filename: "PLsi v0.00.00.bin"
 - Comment: First stable version
@@ -20,3 +18,5 @@ Main funtionalities:
 
 Bug fixes:
 - none (It's the first version :)
+
+-----------------------------------------------------------------------------------------
