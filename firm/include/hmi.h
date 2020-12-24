@@ -166,7 +166,7 @@ extern unsigned long timerRefreshWifiStatus;
 //--------------------------------------------------------------------------------
 
 extern unsigned long actualScanTime;
-extern uint8_t configFirmwareEnabled;
+extern uint16_t configFirmwareEnabled;
 
 extern unsigned long auxTimerFirmwareBar;
 
@@ -432,9 +432,12 @@ extern unsigned long auxTimerFirmwareBar;
 #define COLOR_FIRMWARE_BAR_FONT               TFT_BLACK
 
 #define COLOR_HMI_BACK                        TFT_BLACK
+#define COLOR_HMI_MENU_BUTTON                 DARKGREY
+#define COLOR_HMI_MENU_BORDER                 TFT_WHITE
 #define COLOR_HMI_FONT                        TFT_WHITE  
 #define COLOR_HMI_BACK_POTENTIOM              TFT_DARKGREEN  
-#define COLOR_HMI_BACK_ANA_IND                TFT_MAGENTA  
+#define COLOR_HMI_BACK_ANA_IND                TFT_VIOLET  
+#define COLOR_HMI_FONT_TITLE_COLOR            WHITE2
 
 //--------------------------------------------------------------------------------
 // Task Functions prototypes

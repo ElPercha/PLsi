@@ -129,6 +129,7 @@ void drawHMIAnalogIndicator(uint16_t posX, uint16_t posY, uint16_t type, double 
   tft.setTextColor(COLOR_HMI_FONT);
   tft.setTextFont(1);
   tft.setTextSize(1);
+  tft.setFreeFont(FSS9);
 
   if (type == 0){
     color =  COLOR_HMI_BACK_POTENTIOM;
@@ -139,6 +140,8 @@ void drawHMIAnalogIndicator(uint16_t posX, uint16_t posY, uint16_t type, double 
 
   if (type == 0 || type == 1){
     tft.fillRect(posX*HMI_SLOT_W + 2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 20, HMI_SLOT_W*2 - 4, HMI_SLOT_H - 5, color);
-    tft.drawCentreString(String(value, 0), posX*HMI_SLOT_W + HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y + 30, HMI_FONT_SIZE);
+    tft.drawCentreString(String(value, 0), posX*HMI_SLOT_W + HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y + 30, GFXFF);
   }
+
+  tft.setTextFont(1); // Go back to default font
 }

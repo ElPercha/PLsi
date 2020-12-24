@@ -5,9 +5,9 @@
 // Global Variables
 //--------------------------------------------------------------------------------
 
-uint8_t configFirmwareEnabled = 0;
-uint8_t configFirmwareSequence = 0;
-uint8_t configFirmwareMemory = 0;
+uint16_t configFirmwareEnabled = 0;
+uint16_t configFirmwareSequence = 0;
+uint16_t configFirmwareMemory = 0;
 
 //--------------------------------------------------------------------------------
 // Web Server Object 

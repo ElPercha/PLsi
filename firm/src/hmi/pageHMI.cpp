@@ -111,8 +111,8 @@ void drawHMImenu(void){
   tft.setTextSize(1);
 
   for (uint16_t i = 0; i < HMI_MENU_BUT; i++){
-    tft.fillRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, DARKGREY);
-    tft.drawRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, TFT_WHITE);
+    tft.fillRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, COLOR_HMI_MENU_BUTTON);
+    tft.drawRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, COLOR_HMI_MENU_BORDER);
 
     if (i == 0){
       drawHomeIcon();
@@ -131,10 +131,10 @@ void drawHMImatrix (void){
   tft.fillRect(0, HMI_MENU_H, TFT_PIXELS_X, TFT_PIXELS_Y - HMI_MENU_H, COLOR_HMI_BACK);
 
   // Draw HMI title  
-  tft.setTextColor(COLOR_HMI_FONT);
+  tft.setTextColor(COLOR_HMI_FONT_TITLE_COLOR);
   tft.setTextFont(1);
   tft.setTextSize(1);
-  String hmiTitle[HMI_MENU_BUT-1] = {"SWITCHES", "BUTTONS", "INPUT ANALOG VALUES", "ANALOG STATUS", "DIGITAL STATUS"};
+  String hmiTitle[HMI_MENU_BUT-1] = {"SWITCHES", "BUTTONS", "INPUT VALUES", "ANALOG STATUS", "DIGITAL STATUS"};
   tft.drawCentreString(hmiTitle[hmiPageUser], TFT_PIXELS_X/2, HMI_MENU_H + 8, HMI_FONT_TITLE);
 
   // 8 switches (size 2x2) retentive 
