@@ -3,8 +3,8 @@
 + Project Name: PLsi  
 + Date: November 1, 2019  
 + email: funnyautomation@gmail.com  
-+ Description: Fully functional PLC based on ESP32 module and 320x240 SPI Touchscreen Display  
-+ Estimated total cost: Less than 20 USD
++ Description: Fully functional -Low Cost- PLC based on ESP32 module and 320x240 Touchscreen Display  
++ Estimated material cost: Less than USD 20 
 
 -----------------------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@
 	+ Row, Column and Network Editor
 	+ Network Navigation
 - PLC performance and control
-	+ Fast Scan time of 2.5ms for 1000 instructions
+	+ Scan time of 2.5ms for 1000 instructions
 	+ RUN/STOP with user confirmation
 - HMI functions:
 	+ "Fix" version implemented (User cannot edit memory areas nor texts)
