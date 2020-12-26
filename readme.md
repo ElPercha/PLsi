@@ -11,31 +11,29 @@
 # Hardware Version 0
 
 - ESP32 Processor
-	+ Dual Core. 
-	+ Ladder Logic runs in a separated Core.
+	+ Dual Core @240MHZ
+	+ Core 1 runs Ladder Logic exclusively
 	+ Wi-Fi connectivity
 - 2.8" Display with Touch interface for:
 	+ PLC Programming and debugging
 	+ HMI Control
 	+ Configuration
-- 8 Hardware Inputs 5-24VDC Isolated
-- 6 Hardware Relay Outputs 
+- 8 Hardware Inputs 5-24VDC Isolated with status led
+- 6 Hardware Relay Outputs with status led. Max 10A, external fuse required
 - Removable Terminal blocks
-- I2C port for hardwired expansions
 - USB 5Vdc main power supply
-- SD Card slot (currently doesn't have implemented functionalities)
+- I2C port for hardwired expansions
+- SD Card slot
+- 3D printed housing model including DIN rail mounting bracket
 
 -----------------------------------------------------------------------------------------
 
 # Firmware Version 0.00.00
 
-- **Date: 10:42 AM 12/24/2020**
-- **Filename: "PLsi v0.00.00.bin"**
-- **Comment: First stable version**
- 
-Software Main functionalities:
+**Main functionalities:**
 
-- PLC Instruction set: 29 instructions
+- PLC Instruction set: 
+	+ 29 instructions
 	+ Boolean instructions full set
 	+ Timers and Counters full set
 	+ 16 bit math functions
@@ -44,20 +42,31 @@ Software Main functionalities:
 	+ 200 Counters (C) 
 	+ 300 Timers (T)
 	+ 10000 Registers 16bits (D)
-- Row, Column and Network Editor
-- Network Navigation
-- Online Edition (with PLC running)
-- RUN/STOP with user confirmation
-- PLC Program space: 400 networks of 6x5 cells (12K boolean instructions)
-- Up to 4 PLC programs stored on internal memory (max. 400 networks each)
-- Fast Scan time of 2.5ms for 1000 instructions
-- HMI "Fix" version implemented (User cannot edit memory areas nor texts)
-- WiFi configuration with SSID scanning functionality.
+- PLC Program size:
+	+ Up to 400 networks of 6x5 cells (12K boolean instructions)
+	+ Up to 4 PLC programs stored on internal memory (max. 400 networks each)
+- PLC Program Editor
+	+ Online Edition (with PLC running)
+	+ Row, Column and Network Editor
+	+ Network Navigation
+- PLC performance and control
+	+ Fast Scan time of 2.5ms for 1000 instructions
+	+ RUN/STOP with user confirmation
+- HMI functions:
+	+ "Fix" version implemented (User cannot edit memory areas nor texts)
+	+ Screen 1: 8 Switches M500 to M507
+	+ Screen 2: 8 Buttons  M510 to M517
+	+ Screen 3: 8 User Input Values D500 to D507 
+	+ Screen 4: 8 Values status D510 to D517
+	+ Screen 5: 8 Indicators M520 to M527
+- Communications:
+	+ WiFi configuration. Only DHCP. 
+	+ SSID scanning functionality
 - Firmware update via Web Page
 
-Bug fixes:
+**Bug fixes:**
 
-- None (It's the first version :)
+- None
 
 -----------------------------------------------------------------------------------------
 
