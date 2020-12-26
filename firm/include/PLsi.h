@@ -100,7 +100,7 @@ const String FILENAME_USER_PROGRAMS[MAX_PROGRAMS] = {"/PROGRAM_1.plsi",
 
 //--------------------------------------------------------------------------------
 // TS Calibration default constants.
-// 2.8" SPI display 
+// 320x240 2.8" SPI display 
 //--------------------------------------------------------------------------------
 
 #define TS_LEFT_X      394
