@@ -73,6 +73,14 @@ Date: 9:02 AM 12/27/2020
 
 -----------------------------------------------------------------------------------------
 
+# PLsi v0 testing setup 
+
+![](./hard/v0/board/pictures/PLsi_04.jpg)
+
+# PLsi v0 housing
+
+![](./hard/v0/housing/pictures/PLsi_v0-Assembly.png)
+![](./hard/v0/housing/pictures/4.png)
 
 
 
