@@ -1,10 +1,8 @@
 # **PLsi General Info**
 
-+ Project Name: PLsi  
-+ Date: November 1, 2019  
-+ email: funnyautomation@gmail.com  
-+ Description: Fully functional -Low Cost- PLC & HMI based on ESP32 module and 320x240 Touchscreen Display  
-+ Estimated material cost: Less than USD 20 
++ Fully functional PLC & HMI based on ESP32 module and 320x240 Touchscreen Display  
++ Low Cost, estimated material cost less than USD 20 
++ Open Source and Open Hardware
 
 Teach yourself and others how to program PLCs :)
 
