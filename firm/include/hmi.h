@@ -16,7 +16,6 @@ extern uint8_t hmiPageLoaded;
 extern uint16_t hmiEditionIndex;
 extern unsigned long timerRefreshHMI;
 
-
 extern uint16_t indexLadderEditor;
 
 extern uint16_t PLCstateOld; 

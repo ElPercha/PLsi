@@ -30,7 +30,8 @@ Teach yourself and others how to program PLCs :)
 
 -----------------------------------------------------------------------------------------
 
-# Firmware Version 0.00.00
+# Firmware Version 0.00.01
+Date: 9:02 AM 12/27/2020
 
 **Main functionalities:**
 

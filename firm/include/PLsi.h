@@ -8,10 +8,10 @@
 //--------------------------------------------------------------------------------
 // Firmware version
 // History:
-//  - Version 0.00.00 - First stable version
+//  - Version 0.00.01 - First stable version
 //--------------------------------------------------------------------------------
 
-#define FIRMWARE  "Version 0.00.00"
+#define FIRMWARE  "Version 0.00.01"
 
 //--------------------------------------------------------------------------------
 // Baud Rate fo Serial console. Mainly for debbuging
