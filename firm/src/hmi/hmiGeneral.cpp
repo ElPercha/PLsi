@@ -57,6 +57,7 @@ void touchEditLadderInstructionsNavigation(uint16_t ts_x, uint16_t ts_y){
       hmiPage = PAGE_MainLadder;
     }
     else if (ts_x < BUTTON_W10*2 - SPACING10*2){            // BACK
+      editingNetwork = onlineNetwork;
       hmiPage = PAGE_LadderEditor;
     }
     else {                                                  // ACCEPT

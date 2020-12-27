@@ -39,7 +39,6 @@ void pageEditLadderInstructions1 (uint16_t firstLoad, uint16_t touchType, uint16
   //-------------------------------
 
   if (touchType == HMI_TOUCHED){
-
     touchEditLadderInstructionsNavigation(ts_x, ts_y);
     touchEditLadderInstructions1(ts_x, ts_y); 
   } 
