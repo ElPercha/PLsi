@@ -18,8 +18,6 @@ unsigned long timerRefreshHMI = 0;
 uint16_t indexLadderEditor = 0; // Subpage of Ladder Editor
 
 uint16_t PLCstateOld = 0; 
-uint16_t userProgramOld = 0;
-
 unsigned long  auxOldScanTime = 0;
 
 int networkColorBack;

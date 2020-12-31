@@ -11,18 +11,25 @@
 
 
 
-
-
-
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------- useful code ----------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
+    
+    // in HMI TASK
+    // Issue #11 - For Screen Saver PC connection
+    // lucas
+    if (I[0]){           
+      screenServer();
+      delay(1000);   
+    }
 
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
 
-#define GFXFF 1
-#define GLCD  0
-#define FONT2 2
-
+  #define GFXFF 1
+  #define GLCD  0
+  #define FONT2 2
 
   tft.setTextColor(WHITE2);                        // Font Color
   tft.setTextSize(1);                              // Font size multiplier
@@ -40,40 +47,36 @@
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 
+  //Update fields periodically
   unsigned long auxloop = millis();
   if (millis() - auxloop > 2000){
     auxloop = millis();
     Serial.println("Loop WIFI");
   }
 
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
-
-To configure logging output per module at runtime, add calls to the function esp_log_level_set() as follows:
-
-esp_log_level_set("*", ESP_LOG_ERROR);        // set all components to ERROR level
-
--------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 
-  //--------------------------------------------------------------------------------
-  // Return True if the User Program Slot has changed
-  //--------------------------------------------------------------------------------
+  unsigned long StartTime = micros();
+      INSTRUCTION TO MEASURE TIME
+  unsigned long CurrentTime = micros();
 
-  uint16_t userProgramChanged(void) {
-    if (userProgramOld != settings.ladder.UserProgram){
-      userProgramOld = settings.ladder.UserProgram;
-      return 1;
-    }
-    else {return 0;}
-  }
+  Serial.print("   - Time taken to Perform XXX Operation: ");
+  Serial.println(CurrentTime - StartTime);
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+
+  // To configure logging output per module at runtime, add calls to the function esp_log_level_set() as follows:
+
+  esp_log_level_set("*", ESP_LOG_ERROR);        // set all components to ERROR level
 
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
-  
+
 //--------------------------------------------------------------------------------
 // WiFi Call back back for disconnection reasons
 // Disconnection Reasons:
@@ -112,31 +115,7 @@ esp_log_level_set("*", ESP_LOG_ERROR);        // set all components to ERROR lev
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 
-  settings.ladder.UserProgram ++;
-  if (settings.ladder.UserProgram > 7){
-    settings.ladder.UserProgram = 0;
-  }
-  saveSettings();
-  loadSelectedProgram = 1;
-  delay(4000);
-  Serial.print("Program changed to: ");
-  Serial.println(settings.ladder.UserProgram);
-
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
-
-unsigned long StartTime = micros();
-    INSTRUCTION TO MEASURE TIME
-unsigned long CurrentTime = micros();
-
-Serial.print("   - Time taken to Perform XXX Operation: ");
-Serial.println(CurrentTime - StartTime);
-
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------
-
+// Get free heap current and historical minimim
 Serial.print("   - Free ESP Miniumn memory ever available: ");
 Serial.println (esp_get_minimum_free_heap_size());
 Serial.print("   - Free ESP memory xPort: ");
@@ -212,10 +191,10 @@ String stringOne =  String(5.698, 3);                   // using a float and the
 	  Adafruit_PWMServoDriver pwm1 = Adafruit_PWMServoDriver(&Wire, 0x40);
 	
 	
-setup	  pwm1.begin();
+  setup	  pwm1.begin();
 	  pwm1.setPWMFreq(1600);  // This is the maximum PWM frequency
 	
-loop	    Val1 += 10;
+      loop	    Val1 += 10;
 	    if(Val1 > 4095){Val1=0;}   
 	    Val2 = 4096 - Val1;
 	
@@ -250,35 +229,16 @@ Serial.println(info->free_blocks);
 Serial.print("   - size_t total_blocks: ");
 Serial.println(info->total_blocks);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //----------------------------------------------------
-// LUCAS TESTING FUNCTIONS
+// TESTING FUNCTIONS IN DISK TASK
 //----------------------------------------------------
 
-#include <TFT_eSPI.h> //lucas to delete
-#include "hmi.h" //lucas to delete
-#include <WiFi.h> //lucas to delete
-#include <WebServer.h> //lucas to delete
-#include <Update.h> //lucas to delete
-#include "wifi_plsi.h" //lucas to delete
-
-
-
+#include <TFT_eSPI.h>
+#include "hmi.h"
+#include <WiFi.h>
+#include <WebServer.h>
+#include <Update.h>
+#include "wifi_plsi.h"
 
     if (I[0] && I[1] && I[2]){
         Serial.println("Formatting FFAT...");
@@ -342,12 +302,71 @@ Serial.println(info->total_blocks);
       delay(1000);
     }
 
-
     //----------------------------------------------------
-    // LUCAS TESTING FUNCTIONS END
+    // TESTING FUNCTIONS END
     //----------------------------------------------------
 
 
+    //--------------------------------------------------
+    // Issue #56 
+    // Prints the program serial port
+    // This is used create an example using the PLsi editor 
+    // and then copy and paste the code to the ladderExample
+    //--------------------------------------------------
+    if(M[510]){
+      for(uint16_t n = 0; n < 20; n++){
+        Serial.println("//--------------------------------------------------");
+        Serial.print("// NETWORK ");
+        Serial.println(n);
+        Serial.println("//--------------------------------------------------");
 
+        for(uint16_t r = 0; r < NET_ROWS; r++){
+          for(uint16_t c = 0; c < NET_COLUMNS; c++){
+            if(Networks[n].Cells[r][c].Code){
+              Serial.print("Networks[");
+              Serial.print(n);
+              Serial.print("].Cells[");
+              Serial.print(r);
+              Serial.print("][");
+              Serial.print(c);
+              Serial.print("].Code = ");
+              Serial.print(Networks[n].Cells[r][c].Code);
+              Serial.println(";");
+
+              Serial.print("Networks[");
+              Serial.print(n);
+              Serial.print("].Cells[");
+              Serial.print(r);
+              Serial.print("][");
+              Serial.print(c);
+              Serial.print("].Data = ");
+              Serial.print(Networks[n].Cells[r][c].Data);
+              Serial.println(";");
+
+              Serial.print("Networks[");
+              Serial.print(n);
+              Serial.print("].Cells[");
+              Serial.print(r);
+              Serial.print("][");
+              Serial.print(c);
+              Serial.print("].Type = ");
+              Serial.print(Networks[n].Cells[r][c].Type);
+              Serial.println(";");
+              Serial.println("");
+            }
+          }
+          if(Networks[n].Bars[r]){
+            Serial.print("Networks[");
+            Serial.print(n);
+            Serial.print("].Bars[");
+            Serial.print(r);
+            Serial.print("] = ");
+            Serial.print(Networks[n].Bars[r]);
+            Serial.println(";");
+            Serial.println("");
+          }
+        }
+      }
+    }
 
 

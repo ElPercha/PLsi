@@ -76,7 +76,7 @@ void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
     if (hmiPageUser == 4){
       for (uint8_t r = 0; r < 4; r++){
         for (uint8_t c = 0; c < 2; c++){
-          drawHMIbutton(c*4, r, 0, M[settings.hmi.digitalIndicatorsIndex + c + r*4]);
+          drawHMIbutton(c*4, r, 0, M[settings.hmi.digitalIndicatorsIndex + c + r*2]);
         }
       }
     }
@@ -181,8 +181,8 @@ void drawHMImatrix (void){
   else if (hmiPageUser == 4){
     for (uint8_t r = 0; r < 4; r++){
       for (uint8_t c = 0; c < 2; c++){
-        drawHMIbutton(c*4, r, 0, M[settings.hmi.digitalIndicatorsIndex + c + r*4]);
-        drawHMIbuttonText(c*4 + 1, r, 0, "M"+ String (settings.hmi.digitalIndicatorsIndex + c + r*4));
+        drawHMIbutton(c*4, r, 0, M[settings.hmi.digitalIndicatorsIndex + c + r*2]);
+        drawHMIbuttonText(c*4 + 1, r, 0, "M"+ String (settings.hmi.digitalIndicatorsIndex + c + r*2));
       }
     }
   }

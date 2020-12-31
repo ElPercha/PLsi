@@ -18,7 +18,7 @@
 //--------------------------------------------------------------------------------
 
 #define BAUD_RATE   115200
-//#define BAUD_RATE   921600 //  Issue #11 - For Screen Saver PC connection
+// #define BAUD_RATE   921600 //  Issue #11 - For Screen Saver PC connection
 
 //--------------------------------------------------------------------------------
 // Total Networks. 

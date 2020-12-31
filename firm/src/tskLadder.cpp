@@ -33,7 +33,7 @@ void TaskLadder(void *pvParameters)
   //--------------------------------------------------
 
   while(1){
-    
+   
     //----------------------------------------------------------------
     // Load saved program indicated in settings.ladder.UserProgram
     //    If file doesnt exist creates the empty file
