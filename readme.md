@@ -4,7 +4,7 @@
 + Low Cost, estimated material cost less than USD 20 
 + Open Source and Open Hardware
 
-Teach yourself and others how to program PLCs :)
+Teach yourself and others how to program a PLC :)
 
 -----------------------------------------------------------------------------------------
 
