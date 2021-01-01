@@ -4,8 +4,6 @@
 + Low Cost, estimated material cost less than USD 20 
 + Open Source and Open Hardware
 
-Teach yourself and others how to program a PLC :)
-
 -----------------------------------------------------------------------------------------
 
 # Hardware Version 0
@@ -103,7 +101,4 @@ Date: 5:30 PM 12/31/2020
 
 ![](./hard/v0/housing/pictures/4.png)
 
-
-
-
-
+Teach yourself and others how to program a PLC :)
