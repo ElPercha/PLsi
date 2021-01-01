@@ -61,7 +61,7 @@ Date: 5:30 PM 12/31/2020
 	+ Screen 4: 8 Values status D510 to D517
 	+ Screen 5: 8 Indicators M520 to M527
 - Communications:
-	+ Wi-Fi configuration. Only DHCP. 
+	+ Wi-Fi configuration. Only DHCP
 	+ SSID scanning functionality
 - Firmware update via Web Page
 
@@ -84,7 +84,7 @@ Date: 5:30 PM 12/31/2020
 	- Modbus TCP [Issue #27](https://github.com/ElPercha/PLsi/issues/27)
  + *3 Not planned yet
  + *4 To be included on Hardware V1 [Issue #35](https://github.com/ElPercha/PLsi/issues/35)
- + *5 The I2C expansion port is available to connect wired expansions.
+ + *5 The I2C expansion port is available to connect wired expansions
  	- Wi-Fi expansion modules are also feasible
 	- Not in the roadmap yet
  + *6 A Web HMI hosted on the PLsi unit is proposed on [Issue #42](https://github.com/ElPercha/PLsi/issues/42)
