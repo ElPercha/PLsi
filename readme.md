@@ -73,19 +73,19 @@ Date: 5:30 PM 12/31/2020
 
 ![](./doc/PLsi_comparison.jpg)
 
- + *1 DIY components pricing is included [here](hard/v0/)
+ 1. DIY components pricing is included [here](hard/v0/)
  	- This pricing considers to purchase some bulk quantities
  	- For this reason, a DIY kit might be available for $40 (no housing)
  	- A complete assembled unit with housing might be avaibale for $70
- + *2 Two industrial protocols are planned to be added in future releases
+ 2. Two industrial protocols are planned to be added in future releases
  	- S7 connection [Issue #26](https://github.com/ElPercha/PLsi/issues/26)
 	- Modbus TCP [Issue #27](https://github.com/ElPercha/PLsi/issues/27)
- + *3 Not planned yet
- + *4 To be included on Hardware V1 [Issue #35](https://github.com/ElPercha/PLsi/issues/35)
- + *5 The I2C expansion port is available to connect wired expansions
+ 3. Not planned yet
+ 4. To be included on Hardware V1 [Issue #35](https://github.com/ElPercha/PLsi/issues/35)
+ 5. The I2C expansion port is available to connect wired expansions
  	- Wi-Fi expansion modules are also feasible
 	- Not in the roadmap yet
- + *6 A Web HMI hosted on the PLsi unit is proposed on [Issue #42](https://github.com/ElPercha/PLsi/issues/42)
+ 6. A Web HMI hosted on the PLsi unit is proposed on [Issue #42](https://github.com/ElPercha/PLsi/issues/42)
 
 -----------------------------------------------------------------------------------------
 
