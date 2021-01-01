@@ -75,11 +75,13 @@ Date: 5:30 PM 12/31/2020
 
 ![](./doc/PLsi_comparison.jpg)
 
- + *1 [DIY components pricing](hard/v0/)
- 	- This pricing considers to purchase bulk quantities to have a better price
+ + *1 DIY components pricing is included [here](hard/v0/)
+ 	- This pricing considers to purchase some bulk quantities
  	- For this reason, a DIY kit might be available for $40 (no housing)
- 	- a complete assembled unit with housing might be avaibale for $70
- + *2 sdfsdf
+ 	- A complete assembled unit with housing might be avaibale for $70
+ + *2  Two industrial protocols are planned to be added in future releases
+ 	- S7 connection #26
+	- Modbus TCP #27
  
 
 
