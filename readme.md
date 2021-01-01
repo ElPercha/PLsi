@@ -75,6 +75,14 @@ Date: 5:30 PM 12/31/2020
 
 ![](./doc/PLsi_comparison.jpg)
 
+ + *1 [DIY components pricing](hard/v0/)
+ 	- This pricing considers to purchase bulk quantities to have a better price
+ 	- For this reason, a DIY kit might be available for $40 (no housing)
+ 	- a complete assembled unit with housing might be avaibale for $70
+ + *2 sdfsdf
+ 
+
+
 -----------------------------------------------------------------------------------------
 
 ## PLsi v0 testing setup 
