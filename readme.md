@@ -71,13 +71,22 @@ Date: 5:30 PM 12/31/2020
 
 -----------------------------------------------------------------------------------------
 
-# PLsi v0 testing setup 
+## PLsi v0 comparison with similar products
+
+![](./doc/PLsi_comparison)
+
+-----------------------------------------------------------------------------------------
+
+## PLsi v0 testing setup 
 
 ![](./hard/v0/board/pictures/PLsi_04.jpg)
 
-# PLsi v0 housing
+## PLsi v0 housing
 
 ![](./hard/v0/housing/pictures/PLsi_v0-Assembly.png)
+
+## PLsi v0 assembled unit
+
 ![](./hard/v0/housing/pictures/4.png)
 
 
