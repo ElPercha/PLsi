@@ -4,12 +4,28 @@
 
 -------------------------------------------------------------------------------------------------------------------------------------
 
-   - Time taken to save 1 Network to FFat: 3993
-   - Time taken to save 1 Network to FFat: 4138
-   - Time taken to save 1 Network to FFat: 4124
+8:47 AM 12/31/2020 Tests
 
+400 nets No Instructions: 1.9ms
+	Matrix evaluation time
 
+400 nets With 12K boolean instructions (MAX): 4.3 ms
+	Time per boolean instruction: 200ns
 
+1K Boolean instructions: 2.1ms scan time
+2K Boolean instructions: 2.3ms scan time
+
+---------------------------------------------------------------------
+
+Partitions paths
+	C:\Users\switc\.platformio\packages\framework-arduinoespressif32
+	C:\Users\switc\.platformio\packages\framework-arduinoespressif32\tools\partitions
+
+Delete a local tag: 
+	git tag -d tagName
+
+Full command: 
+	pio run -v -t upload
 
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------- useful code ----------------------------------------------------------------------------------------------------------
