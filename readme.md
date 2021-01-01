@@ -73,7 +73,7 @@ Date: 5:30 PM 12/31/2020
 
 ## PLsi v0 comparison with similar products
 
-![](./doc/PLsi_comparison)
+![](./doc/PLsi_comparison.jpg)
 
 -----------------------------------------------------------------------------------------
 
