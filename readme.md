@@ -29,7 +29,7 @@ Teach yourself and others how to program PLCs :)
 -----------------------------------------------------------------------------------------
 
 # Firmware Version 0.00.01
-Date: 9:02 AM 12/27/2020
+Date: 5:30 PM 12/31/2020
 
 **Main functionalities:**
 
@@ -51,7 +51,7 @@ Date: 9:02 AM 12/27/2020
 	+ Row, Column and Network Editor
 	+ Network Navigation
 - PLC performance and control
-	+ Scan time of 2.5ms for 1000 instructions
+	+ Scan time of 2.3ms for 2000 Boolean instructions
 	+ RUN/STOP with user confirmation
 - HMI functions:
 	+ "Fix" version implemented (User cannot edit memory areas nor texts)
@@ -61,7 +61,7 @@ Date: 9:02 AM 12/27/2020
 	+ Screen 4: 8 Values status D510 to D517
 	+ Screen 5: 8 Indicators M520 to M527
 - Communications:
-	+ WiFi configuration. Only DHCP. 
+	+ Wi-Fi configuration. Only DHCP. 
 	+ SSID scanning functionality
 - Firmware update via Web Page
 
