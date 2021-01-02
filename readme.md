@@ -71,13 +71,13 @@ Build your own unit: [PLsi v0 Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf
 
 Configure and Program: [PLsi v0 User Manual](./doc/PLsi_v0_User_Manual.pdf)
 
+ <!---
 Or watch the Youtube videos: 
-
- + [Building a PLsi v0 - EN](https://www.youtube.com/watch?v=nipqoYtr0_s)
- + [Building a PLsi v0 - SP](https://www.youtube.com/watch?v=nipqoYtr0_s)
- + [Configuring and Programming a PLsi v0 - EN](https://www.youtube.com/watch?v=nipqoYtr0_s)
- + [Configuring and Programming a PLsi v0 - SP](https://www.youtube.com/watch?v=nipqoYtr0_s)
-
+ + [Building a PLsi v0 - EN](https://www.youtube.com)
+ + [Building a PLsi v0 - SP](https://www.youtube.com)
+ + [Configuring and Programming a PLsi v0 - EN](https://www.youtube.com)
+ + [Configuring and Programming a PLsi v0 - SP](https://www.youtube.com)
+-->
 -----------------------------------------------------------------------------------------
 
 ## PLsi v0 Comparison with similar products
