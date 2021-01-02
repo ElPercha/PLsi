@@ -65,7 +65,22 @@ Date: 5:30 PM 12/31/2020
 
 -----------------------------------------------------------------------------------------
 
-## PLsi v0 comparison with similar products
+## PLsi v0 Documentation
+
+Build your own unit: [PLsi v0 Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf)
+
+Configure and Program: [PLsi v0 User Manual](./doc/PLsi_v0_User_Manual.pdf)
+
+Or watch the Youtube videos: 
+
+ + [Building a PLsi v0 - EN](https://www.youtube.com/watch?v=nipqoYtr0_s)
+ + [Building a PLsi v0 - SP](https://www.youtube.com/watch?v=nipqoYtr0_s)
+ + [Configuring and Programming a PLsi v0 - EN](https://www.youtube.com/watch?v=nipqoYtr0_s)
+ + [Configuring and Programming a PLsi v0 - SP](https://www.youtube.com/watch?v=nipqoYtr0_s)
+
+-----------------------------------------------------------------------------------------
+
+## PLsi v0 Comparison with similar products
 
 ![](./doc/PLsi_comparison.jpg)
 
@@ -119,15 +134,15 @@ Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) 
 
 -----------------------------------------------------------------------------------------
 
-## PLsi v0 testing setup 
+## PLsi v0 Testing setup 
 
 ![](./hard/v0/board/pictures/PLsi_04.jpg)
 
-## PLsi v0 housing
+## PLsi v0 Housing
 
 ![](./hard/v0/housing/pictures/PLsi_v0-Assembly.png)
 
-## PLsi v0 assembled unit
+## PLsi v0 Assembled unit
 
 ![](./hard/v0/housing/pictures/4.png)
 
