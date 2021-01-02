@@ -1,7 +1,7 @@
 # **PLsi General Info**
 
 + Fully functional PLC & HMI based on ESP32 module and 320x240 Touchscreen Display  
-+ Low Cost, estimated material cost less than $20 
++ Low Cost, estimated material cost [less than $20](hard/v0/) 
 + Open Source and Open Hardware
 
 -----------------------------------------------------------------------------------------
