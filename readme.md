@@ -63,10 +63,6 @@ Date: 5:30 PM 12/31/2020
 	+ SSID scanning functionality
 - Firmware update via Web Page
 
-**Bug fixes:**
-
-- None
-
 -----------------------------------------------------------------------------------------
 
 ## PLsi v0 comparison with similar products
@@ -91,7 +87,7 @@ Date: 5:30 PM 12/31/2020
 
 ## PLsi v0 Wiring diagrams
 
-The PLsi board v0 is designed to support both
+The PLsi board v0 is designed to support:
  1. All Digital I/O
  	- 8 Digital Inputs
 	- 6 Digital Relay Outputs
@@ -101,9 +97,7 @@ The PLsi board v0 is designed to support both
  	- 2 Analog Inputs 0-10 V
  	- 2 Analog Outputs 0-5 V
  
-Check the ![drawings](./hard/v0/board/schematic/Schematic_PLsi_0_2020-05-30_21-41-12.pdf) for more details on how to build the 2 diffrent models using the same board
-
-![](./hard/v0/board/pictures/PLsi_board.JPG)
+Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_0_2020-05-30_21-41-12.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0/board/pictures/PLsi_board.JPG)
 
 ### PLsi v0 Digital wiring diagram 
 
