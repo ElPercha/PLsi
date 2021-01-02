@@ -89,9 +89,26 @@ Date: 5:30 PM 12/31/2020
 
 -----------------------------------------------------------------------------------------
 
-## PLsi v0 basic wiring diagram
+# PLsi v0 Wiring diagrams
 
-![](./doc/PLsi_wiring.svg)
+The PLsi board v0 is designed to support both
+ 1. All Digital I/O
+ 	- 8 Digital Inputs
+	- 6 Digital Relay Outputs
+ 2. Digital and Analog I/O
+ 	- 6 Digital Inputs
+	- 4 Digital Relay Outputs
+ 	- 2 Analog Inputs 0-10 V
+ 	- 2 Analog Outputs 0-5 V
+ 
+Check the ![drawings](./hard/v0/board/schematic/Schematic_PLsi_0_2020-05-30_21-41-12.pdf) for more details on how to build the 2 diffrent models using the same board
+
+
+![](./v0/board/pictures/PLsi_board.JPG)
+
+## PLsi v0 Digital wiring diagram 
+
+![](./doc/PLsi_wiring_digital.svg)
 
 + Supply Voltage is 5V 500ma
 	- Standard Micro USB type B connector
@@ -99,7 +116,14 @@ Date: 5:30 PM 12/31/2020
 	- Fuse size has to be calculated considering a total MAX consumtion of 10A
 + SD Card is optional, it has no functionality implemented in Fimware v0.00.01
 + I2C Port is optional, it has no functionality implemented in Fimware v0.00.01
-	
+
+## PLsi v0 Analog wiring diagram
+
+![](./doc/PLsi_wiring_analog.svg)
+
++ Analog Inputs and Outputs are not isolated
++ They will be implemented on Firmware v0.01.00 [Issue #4](https://github.com/ElPercha/PLsi/issues/4) 
+
 -----------------------------------------------------------------------------------------
 
 ## PLsi v0 testing setup 
