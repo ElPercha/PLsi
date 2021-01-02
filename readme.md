@@ -87,7 +87,7 @@ Date: 5:30 PM 12/31/2020
 
 ## PLsi v0 Wiring diagrams
 
-The PLsi board v0 is designed to support:
+The PLsi board v0 is designed to support, at least, 2 different configurations:
  1. All Digital I/O
  	- 8 Digital Inputs
 	- 6 Digital Relay Outputs
