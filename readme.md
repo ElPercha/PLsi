@@ -6,7 +6,7 @@
 
 -----------------------------------------------------------------------------------------
 
-# Hardware Version 0
+## Hardware Version 0
 
 - ESP32 Processor
 	+ Dual Core @240MHZ
@@ -26,7 +26,7 @@
 
 -----------------------------------------------------------------------------------------
 
-# Firmware Version 0.00.01
+## Firmware Version 0.00.01
 Date: 5:30 PM 12/31/2020
 
 **Main functionalities:**
@@ -89,7 +89,7 @@ Date: 5:30 PM 12/31/2020
 
 -----------------------------------------------------------------------------------------
 
-# PLsi v0 Wiring diagrams
+## PLsi v0 Wiring diagrams
 
 The PLsi board v0 is designed to support both
  1. All Digital I/O
@@ -103,10 +103,9 @@ The PLsi board v0 is designed to support both
  
 Check the ![drawings](./hard/v0/board/schematic/Schematic_PLsi_0_2020-05-30_21-41-12.pdf) for more details on how to build the 2 diffrent models using the same board
 
+![](./hard/v0/board/pictures/PLsi_board.JPG)
 
-![](./v0/board/pictures/PLsi_board.JPG)
-
-## PLsi v0 Digital wiring diagram 
+### PLsi v0 Digital wiring diagram 
 
 ![](./doc/PLsi_wiring_digital.svg)
 
@@ -117,7 +116,7 @@ Check the ![drawings](./hard/v0/board/schematic/Schematic_PLsi_0_2020-05-30_21-4
 + SD Card is optional, it has no functionality implemented in Fimware v0.00.01
 + I2C Port is optional, it has no functionality implemented in Fimware v0.00.01
 
-## PLsi v0 Analog wiring diagram
+### PLsi v0 Analog wiring diagram
 
 ![](./doc/PLsi_wiring_analog.svg)
 
