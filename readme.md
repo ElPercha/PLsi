@@ -89,6 +89,19 @@ Date: 5:30 PM 12/31/2020
 
 -----------------------------------------------------------------------------------------
 
+## PLsi v0 basic wiring diagram
+
+![](./doc/PLsi_wiring.svg)
+
++ Supply Voltage is 5V 500ma
+	- Standard Micro USB type B connector
++ External fuse or fuses are required to protect the Outputs circuits
+	- Fuse size has to be calculated considering a total MAX consumtion of 10A
++ SD Card is optional, it has no functionality implemented in Fimware v0.00.01
++ I2C Port is optional, it has no functionality implemented in Fimware v0.00.01
+	
+-----------------------------------------------------------------------------------------
+
 ## PLsi v0 testing setup 
 
 ![](./hard/v0/board/pictures/PLsi_04.jpg)
