@@ -112,7 +112,7 @@ The PLsi board v0 is designed to support, at least, 2 different configurations:
  	- 2 Analog Inputs 0-10 V
  	- 2 Analog Outputs 0-5 V
  
-Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0/board/pictures/PLsi_board.svg)
+Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0/board/pictures/PLsi_board.svg)
 
 ### PLsi v0 Digital wiring diagram 
 
