@@ -10,14 +10,11 @@
 
 - ESP32 Processor
 	+ Dual Core @240MHZ
-	+ Core 1 runs Ladder Logic exclusively
 	+ Wi-Fi connectivity
-- 2.8" Display with Touch interface for:
-	+ PLC Programming and debugging
-	+ HMI Control
-	+ Configuration
+- 2.8" Touchscreen Display
 - 8 Hardware Inputs 5-24VDC Isolated with status led
 - 6 Hardware Relay Outputs with status led. Max 10A, external fuse required
+- Digital and Analog I/O different combinations using the same board
 - Removable Terminal blocks
 - USB 5Vdc main power supply
 - I2C port for hardwired expansions
@@ -50,14 +47,18 @@ Date: 5:30 PM 12/31/2020
 	+ Network Navigation
 - PLC performance and control
 	+ Scan time of 2.3ms for 2000 Boolean instructions
+	+ Processor Core 1 runs Ladder Logic exclusively
 	+ RUN/STOP with user confirmation
-- HMI functions:
-	+ "Fix" version implemented (User cannot edit memory areas nor texts)
-	+ Screen 1: 8 Switches M500 to M507
-	+ Screen 2: 8 Buttons  M510 to M517
-	+ Screen 3: 8 User Input Values D500 to D507 
-	+ Screen 4: 8 Values status D510 to D517
-	+ Screen 5: 8 Indicators M520 to M527
+- Display functions:
+	+ PLC Programming and debugging
+	+ PLsi Configuration
+	+ HMI
+		- "Fix" version implemented (User cannot edit memory areas nor texts)
+		- Screen 1: 8 Switches M500 to M507
+		- Screen 2: 8 Buttons  M510 to M517
+		- Screen 3: 8 User Input Values D500 to D507 
+		- Screen 4: 8 Values status D510 to D517
+		- Screen 5: 8 Indicators M520 to M527
 - Communications:
 	+ Wi-Fi configuration. Only DHCP
 	+ SSID scanning functionality
