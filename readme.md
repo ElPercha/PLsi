@@ -69,7 +69,7 @@ Date: 5:30 PM 12/31/2020
 
 Build your own unit: [PLsi v0 Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf)
 
-Configure and Program: [PLsi v0 User Manual](./doc/PLsi_v0_User_Manual.pdf)
+Wiring, configuration and programming: [PLsi v0 User Manual](./doc/PLsi_v0_User_Manual.pdf)
 
  <!---
 Or watch the Youtube videos: 
