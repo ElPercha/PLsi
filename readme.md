@@ -14,7 +14,7 @@
 - 2.8" Touchscreen Display
 - 8 Hardware Inputs 5-24VDC Isolated with status led
 - 6 Hardware Relay Outputs with status led. Max 10A, external fuse required
-- Digital and Analog I/O different combinations using the same board
+- Different combinations of Digital and Analog I/O using the same board
 - Removable Terminal blocks
 - USB 5Vdc main power supply
 - I2C port for hardwired expansions
