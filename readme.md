@@ -82,7 +82,7 @@ Or watch the Youtube videos:
 
 ## PLsi v0 Comparison with similar products
 
-![](./doc/PLsi_comparison.jpg)
+![](./doc/PLsi_comparison.png)
 
  1. DIY components pricing is included [here](hard/v0/)
  	- This pricing considers to purchase some bulk quantities
