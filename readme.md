@@ -89,7 +89,7 @@ Or watch the Youtube videos:
  1. DIY components pricing is included [here](hard/v0/)
  	- This pricing considers to purchase some bulk quantities
  	- For this reason, a DIY kit might be available for $40 (no housing)
- 	- A complete assembled unit with housing might be avaibale for $70
+ 	- A complete assembled unit with housing might be available for $70
  2. Two industrial protocols are planned to be added in future releases
  	- S7 connection [Issue #26](https://github.com/ElPercha/PLsi/issues/26)
 	- Modbus TCP [Issue #27](https://github.com/ElPercha/PLsi/issues/27)
@@ -120,7 +120,7 @@ Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) 
 
 ![](./doc/PLsi_wiring_digital.svg)
 
-+ Supply Voltage is 5V 2A
++ Supply Voltage: 5V 1A (recommended 2A)
 	- Standard Micro USB type B connector
 + External fuse or fuses are required to protect the Outputs circuits
 	- Fuse size has to be calculated considering a total MAX consumtion of 10A
