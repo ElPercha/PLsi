@@ -120,7 +120,7 @@ Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) 
 
 ![](./doc/PLsi_wiring_digital.svg)
 
-+ Supply Voltage is 5V 500ma
++ Supply Voltage is 5V 2A
 	- Standard Micro USB type B connector
 + External fuse or fuses are required to protect the Outputs circuits
 	- Fuse size has to be calculated considering a total MAX consumtion of 10A
