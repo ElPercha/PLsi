@@ -9,9 +9,10 @@
 // Firmware version
 // History:
 //  - Version 0.00.01 - First stable version
+//  - Version 0.00.02 - Comparison instructions added (16bit)
 //--------------------------------------------------------------------------------
 
-#define FIRMWARE  "Version 0.00.01"
+#define FIRMWARE  "Version 0.00.02"
 
 //--------------------------------------------------------------------------------
 // Baud Rate fo Serial console. Mainly for debbuging

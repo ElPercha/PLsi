@@ -32,7 +32,8 @@ void pageEditLadderInstructions3 (uint16_t firstLoad, uint16_t touchType, uint16
         editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Type = TypeD; //Default to D
       }
       if (instructionHeight[editingInstructionCode] == 2){
-        if (editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type < TypeIW || editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type >= TypeK){
+        if ((editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type < TypeIW || editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type >= TypeK) &&
+           !(editingInstructionCode >= 29 && editingInstructionCode <= 34)){
           editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Type = TypeD; //Default to D - Cannot write a K (constant)
         }
       }
@@ -297,28 +298,28 @@ void touchEditLadderInstructions3(uint16_t ts_x, uint16_t ts_y){
   if (ts_x > DATA_TYPE_PAL_X && ts_y < TOUCH_PALETTE_H*2){
     if(ts_y < TOUCH_PALETTE_H){
       if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W){
-        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[0];
+        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[0]; // D
       }
       else if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W*2){
-        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[1];
+        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[1]; // T
       }
       else if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W*3){
-        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[2];
+        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[2]; // C
       }
     }
     else if(ts_y < TOUCH_PALETTE_H*2){
       if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W){
-        if(instructionFieldSelection != instructionHeight[editingInstructionCode]){  // Don't allow IW Type in output of instruction
-          editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[3];
+        if((instructionFieldSelection != instructionHeight[editingInstructionCode]) || (editingInstructionCode >= 29 && editingInstructionCode <= 34)){  // Don't allow IW Type in output of instruction except dfor comparisons
+          editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[3]; // IW
         }
       }
       else if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W*2){
-        if(instructionFieldSelection != instructionHeight[editingInstructionCode]){  // Don't allow K Type in output of instruction
-          editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[4];
+        if((instructionFieldSelection != instructionHeight[editingInstructionCode]) || (editingInstructionCode >= 29 && editingInstructionCode <= 34)){  // Don't allow K Type in output of instruction except dfor comparisons
+          editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[4]; // K
         }
       }
       else if(ts_x < DATA_TYPE_PAL_X + TOUCH_PALETTE_W*3){
-        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[5];
+        editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Type = menuDataTypes[5]; // QW
       }
     }
     if (editingNetwork.Cells[ladderEditorRow+instructionFieldSelection-1][ladderEditorColumn].Data > getMaxMemoryAddress(editingNetwork.Cells[ladderEditorRow + instructionFieldSelection - 1][ladderEditorColumn].Type)){

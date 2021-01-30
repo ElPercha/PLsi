@@ -38,7 +38,13 @@ void execScanPLC(Network Networks[]){
     execAND,
     execOR,
     execXOR,
-    execNOT
+    execNOT,
+    execEQ,
+    execGT,
+    execGE,
+    execLT,
+    execLE,
+    execNE
   };
   
   for (int n=0; n<settings.ladder.NetworksQuantity; n++){

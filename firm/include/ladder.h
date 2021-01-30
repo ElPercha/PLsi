@@ -69,6 +69,12 @@ void execAND    (int c, int r, int f);
 void execOR     (int c, int r, int f);
 void execXOR    (int c, int r, int f);
 void execNOT    (int c, int r, int f);
+void execEQ     (int c, int r, int f);
+void execGT     (int c, int r, int f);
+void execGE     (int c, int r, int f);
+void execLT     (int c, int r, int f);
+void execLE     (int c, int r, int f);
+void execNE     (int c, int r, int f);
 
 //--------------------------------------------------------------------------------
 // Aux functions for ladder logic instructions data management

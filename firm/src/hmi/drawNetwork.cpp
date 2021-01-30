@@ -40,7 +40,13 @@ void drawNetwork (void){
     drawAnd,
     drawOr,
     drawXor,
-    drawNot
+    drawNot,
+    drawEq,
+    drawGt,
+    drawGe,
+    drawLt,
+    drawLe,
+    drawNe
   };
 
   // Update Power Bar ststus
@@ -717,6 +723,38 @@ void drawCtd(int Row, int Column, int Flag, int Data){
 //--------------------------------------------------------------------------------
 
 void drawMove(int Row, int Column, int Flag, int Data){
+  int BoxColor;
+  if (Flag){BoxColor  = COLOR_ON;}
+  else{BoxColor  = COLOR_OFF;}
+
+  drawBox2(Row, Column, BoxColor);
+  drawBoxTag(Row, Column, COLOR_TAG);
+  drawBox2Tags(Row, Column, COLOR_TAG);
+}
+
+//--------------------------------------------------------------------------------
+// Draw Comparisons
+//--------------------------------------------------------------------------------
+
+void drawEq(int Row, int Column, int Flag, int Data){
+  drawComparison(Row, Column, Flag, Data);
+}
+void drawGt(int Row, int Column, int Flag, int Data){
+  drawComparison(Row, Column, Flag, Data);
+}
+void drawGe(int Row, int Column, int Flag, int Data){
+  drawComparison(Row, Column, Flag, Data);
+}
+void drawLt(int Row, int Column, int Flag, int Data){
+  drawComparison(Row, Column, Flag, Data);
+}
+void drawLe(int Row, int Column, int Flag, int Data){
+  drawComparison(Row, Column, Flag, Data);
+}
+void drawNe(int Row, int Column, int Flag, int Data){
+  drawComparison(Row, Column, Flag, Data);
+}
+void drawComparison(int Row, int Column, int Flag, int Data){
   int BoxColor;
   if (Flag){BoxColor  = COLOR_ON;}
   else{BoxColor  = COLOR_OFF;}

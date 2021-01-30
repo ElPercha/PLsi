@@ -53,8 +53,8 @@ extern uint16_t NetworkFlagsOnline[NET_COLUMNS - 1];
 // Defines the width and height of each instruction
 //----------------------------------------------------
 
-const uint16_t instructionHeight[FIRST_INVALID_CODE] = {1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,2,2,2,2,3,3,3,2};
-const uint16_t instructionWidth[FIRST_INVALID_CODE]  = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+const uint16_t instructionHeight[FIRST_INVALID_CODE] = {1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,2,2,2,2,3,3,3,2,2,2,2,2,2,2};
+const uint16_t instructionWidth[FIRST_INVALID_CODE]  = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 
 //----------------------------------------------------
 // Datatypes and Instructions Strings
@@ -63,7 +63,10 @@ const uint16_t instructionWidth[FIRST_INVALID_CODE]  = {1,1,1,1,1,1,1,1,1,1,1,1,
 const String MnemonicsTypes[FIRST_INVALID_TYPE] = {"M", "Q", "I", "Cd", "Cr", "Td", "Tr", "IW", "QW", "C", "T", "D", "K", "R"};
 const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "CON", "INV", "NO", "NC", "RE", "FE", "C", "L", "U", 
                                                    "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
-                                                   "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT"};
+                                                   "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT", "EQ", "GT", "GE", "LT", "LE", "NE"};
+
+
+
 
 #define BAR_MNEMONIC      "BAR"
 #define BAR_MNEMONIC_LENGTH  3
@@ -86,8 +89,9 @@ const String timerBaseTimeText[5] = {"millisec", "0.01 sec", "0.1 sec", "seconds
 //  We have 2 pages
 //----------------------------------------------------
 
-const uint16_t menuInstructions[2][15] = {{NO, NC, RE, FE, BAR_MNEMONIC_CODE, COIL, COILL, COILU, NEG, CONN, TON, TOFF, TP, CTU, CTD},
-                                          {SUB, ADD, MUL, DIV, MOVE, AND, OR, XOR, NOT, NOPP, MOD, SHL, SHR, ROL, ROR}};
+const uint16_t menuInstructions[3][15] = {{NO, NC, RE, FE, BAR_MNEMONIC_CODE, COIL, COILL, COILU, NEG, CONN, TON, TOFF, TP, CTU, CTD},
+                                          {SUB, ADD, MUL, DIV, MOVE, AND, OR, XOR, NOT, NOPP, MOD, SHL, SHR, ROL, ROR},
+                                          {EQ, GT, GE, LT, LE, NE, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP}};
 
 const String elementsFunctions[4] = {"COPY", "PASTE", "INSERT", "DELETE"};
 const String elementsList[3] = {"COLUMN", "ROW", "NETWORK"};
@@ -203,7 +207,7 @@ extern unsigned long auxTimerFirmwareBar;
 #define PAGE_DialogOkCancel           420
 #define PAGE_DialogMessage            430
 
-#define PAGES_LADDER_EDITOR             5
+#define PAGES_LADDER_EDITOR             6
 
 //--------------------------------------------------------------------------------
 // Define Dialog codes. Used to:
@@ -479,8 +483,6 @@ void touchMainLadder(uint16_t ts_x, uint16_t ts_y);
 void touchHMImenu(uint16_t ts_x, uint16_t ts_y);
 void touchHMImatrix(uint16_t ts_x, uint16_t ts_y, uint16_t touchType);
 
-
-
 void touchMainConfig(uint16_t ts_x, uint16_t ts_y);
 void touchInputNumber(uint16_t ts_x, uint16_t ts_y);
 void touchInputText(uint16_t ts_x, uint16_t ts_y);
@@ -667,6 +669,13 @@ void drawAnd(int Row, int Column, int Flag, int Data);
 void drawOr(int Row, int Column, int Flag, int Data);
 void drawXor(int Row, int Column, int Flag, int Data);
 void drawNot(int Row, int Column, int Flag, int Data);
+void drawEq(int Row, int Column, int Flag, int Data);
+void drawGt(int Row, int Column, int Flag, int Data);
+void drawGe(int Row, int Column, int Flag, int Data);
+void drawLt(int Row, int Column, int Flag, int Data);
+void drawLe(int Row, int Column, int Flag, int Data);
+void drawNe(int Row, int Column, int Flag, int Data);
+void drawComparison(int Row, int Column, int Flag, int Data);
 
 extern void saveSettings(void);
 

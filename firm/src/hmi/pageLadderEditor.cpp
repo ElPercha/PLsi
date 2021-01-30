@@ -17,7 +17,7 @@ void pageLadderEditor (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
   //-------------------------------
     
     if (firstLoad){
-      //Adjust to the first Column and Row of instruction. User can select any of the instructions cells
+      // Adjust to the first Column and Row of instruction. User can select any of the instructions cells
       ladderEditorRow = ladderEditorRow - ((editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code >> 12) & 0x0007);
       ladderEditorColumn = ladderEditorColumn - (editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code >> 15);
 
@@ -64,12 +64,15 @@ void drawLadderEditor (void){
     drawLadderEditorInstructionsMenu();
   }
   if (indexLadderEditor == 2){
-    drawLadderEditorElementsMenu();
+    drawLadderEditorInstructionsMenu();
   }
   if (indexLadderEditor == 3){
     drawLadderEditorElementsMenu();
   }
   if (indexLadderEditor == 4){
+    drawLadderEditorElementsMenu();
+  }
+  if (indexLadderEditor == 5){
     drawLadderEditorElementsMenu();
   }
 }
@@ -295,7 +298,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
   uint16_t halfYpalette = BORDER4V + BUTTON_H4 + SPACING4/2;
 
   if (ts_y < TFT_PIXELS_Y - BUTTON_H1 - SPACING1 - BUTTON_H2 - SPACING2){ // Touch is in the palette area
-    if (indexLadderEditor < 2){                                           // Page 0 and 1 only
+    if (indexLadderEditor < 3){                                           // Page 0 and 1 only
       for (uint16_t row = 0; row < 3; row++){                             // Instruction matrix 3 x 5
         for (uint16_t col = 0; col < 5; col++){
           index = row*5+col;
@@ -338,6 +341,12 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
                   instructionFieldSelection = 1;
                   hmiPage = PAGE_EditInstructions3;
                 }
+                else if (editingInstructionCode < 35){ // 16 Bit Comparisons
+                  editingNetwork.Cells[ladderEditorRow][ladderEditorColumn].Code = editingInstructionCode;
+                  editingNetwork.Cells[ladderEditorRow+1][ladderEditorColumn].Code = editingInstructionCode | 0x1000;
+                  instructionFieldSelection = 1;
+                  hmiPage = PAGE_EditInstructions3;
+                }
               }
             }
             return;
@@ -345,7 +354,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
         }
       }
     }
-    else if (indexLadderEditor == 2){                                     // 2= COLUMN menu 
+    else if (indexLadderEditor == 3){                                     // COLUMN menu 
       if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyColumn();
        }
@@ -359,7 +368,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
         deleteColumn();
       }
     }
-    else if (indexLadderEditor == 3){                                     // 3= ROW menu
+    else if (indexLadderEditor == 4){                                     // ROW menu
       if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyRow();
       }
@@ -373,7 +382,7 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
         deleteRow();
       }
     }
-    else if (indexLadderEditor == 4){                                     // 4= NETWORK menu
+    else if (indexLadderEditor == 5){                                     // NETWORK menu
       if (ts_x < halfXpalette && ts_y < halfYpalette){
         copyNetwork();
       }
@@ -389,7 +398,6 @@ void touchLadderEditor(uint16_t ts_x, uint16_t ts_y){
     }
   }
 }
-
 
 //--------------------------------------------------------------------------------
 // Toggle Bar status, exclude last column and last row              

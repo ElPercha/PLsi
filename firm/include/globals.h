@@ -87,7 +87,13 @@
 #define OR                    26
 #define XOR                   27
 #define NOT                   28
-#define FIRST_INVALID_CODE    29
+#define EQ                    29
+#define GT                    30
+#define GE                    31
+#define LT                    32
+#define LE                    33
+#define NE                    34
+#define FIRST_INVALID_CODE    35
 #define CELL_USED_MASK    0xF000 // Used by an instruction that occupies more than one cell
 #define CELL_CODE_MASK    0x0FFF 
 #define BAR_MNEMONIC_CODE     99

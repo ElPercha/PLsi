@@ -348,6 +348,54 @@ void execNOT (int c, int r, int f){
   }  
 }
 
+void execEQ (int c, int r, int f){
+  if(f){
+    if(GetDataValue (r, c) == GetDataValue (r+1, c)){
+      NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
+    } 
+  } 
+}
+
+void execGT (int c, int r, int f){
+  if(f){
+    if(GetDataValue (r, c) > GetDataValue (r+1, c)){
+      NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
+    } 
+  } 
+}
+
+void execGE (int c, int r, int f){
+  if(f){
+    if(GetDataValue (r, c) >= GetDataValue (r+1, c)){
+      NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
+    } 
+  } 
+}
+
+void execLT (int c, int r, int f){
+  if(f){
+    if(GetDataValue (r, c) < GetDataValue (r+1, c)){
+      NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
+    } 
+  } 
+}
+
+void execLE (int c, int r, int f){
+  if(f){
+    if(GetDataValue (r, c) <= GetDataValue (r+1, c)){
+      NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
+    } 
+  } 
+}
+
+void execNE (int c, int r, int f){
+  if(f){
+    if(GetDataValue (r, c) != GetDataValue (r+1, c)){
+      NetworkFlags[c] = NetworkFlags[c] | FlagsMask[r];
+    } 
+  } 
+}
+
 //--------------------------------------------------------------------------------
 // GET and SET Memory Values
 //--------------------------------------------------------------------------------
