@@ -33,6 +33,7 @@ uint16_t editingInstructionCode = 0;
 uint16_t timerSelected = 0;
 uint16_t instructionFieldSelection = 0;
 unsigned long timerRefreshMainMenu = 0;
+unsigned long timerRefreshIOlocal = 0;
 
 //----------------------------------------------------
 // Network to show under Online animation

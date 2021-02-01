@@ -217,13 +217,13 @@ void drawLadderEditorElementsMenu(void){
   tft.setTextColor(COLOR_BUTTON_FONT_LADDER_EDITOR);
   tft.setTextSize(2);
   
-  if (indexLadderEditor == 2){
+  if (indexLadderEditor == 3){
     auxColor = COLOR_BUTTON_COLUMN;
   }
-  else if (indexLadderEditor == 3){
+  else if (indexLadderEditor == 4){
     auxColor = COLOR_BUTTON_ROW;
   }
-  else if (indexLadderEditor == 4){
+  else if (indexLadderEditor == 5){
     auxColor = COLOR_BUTTON_NETWORK;
   }
 
@@ -239,9 +239,9 @@ void drawLadderEditorElementsMenu(void){
       tft.setCursor(auxX, BUTTON_Y4+BUTTON_H4*row+SPACING4*row + 15);
       tft.print(elementsFunctions[index]);
 
-      auxX = auxXcenter - elementsList[indexLadderEditor-2].length()*6 + 1; // Text length offset. Font size 2 is 10 pixel width and 2 px spacing (6 = (10+2)/2)
+      auxX = auxXcenter - elementsList[indexLadderEditor-3].length()*6 + 1; // Text length offset. Font size 2 is 10 pixel width and 2 px spacing (6 = (10+2)/2)
       tft.setCursor(auxX, BUTTON_Y4+BUTTON_H4*row+SPACING4*row + 37);
-      tft.print(elementsList[indexLadderEditor-2]);
+      tft.print(elementsList[indexLadderEditor-3]);
     }
   }
 }

@@ -124,6 +124,9 @@ void TaskHMI(void *pvParameters)
       case PAGE_ConfigIO:
         pageConfigIO(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
+      case PAGE_ConfigIOlocal:
+        pageConfigIOlocal(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
+        break;
       case PAGE_ConfigHMI:
         pageConfigHMI(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;

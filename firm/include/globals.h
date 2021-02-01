@@ -32,6 +32,14 @@
 #define BOOT_DISK_ERROR                  100
 
 //--------------------------------------------------------------------------------
+// PLC IO Types
+//--------------------------------------------------------------------------------
+
+#define IO_TYPE_DIGITAL                    0
+#define IO_TYPE_ANALOG_0_5                 1
+#define IO_TYPE_ANALOG_0_10                2
+
+//--------------------------------------------------------------------------------
 // PLC Data Types Codes
 // Must match with 'MnemonicsTypes' array
 //--------------------------------------------------------------------------------
@@ -217,6 +225,12 @@ typedef struct
 
 typedef struct
 {
+  uint8_t localInputs[IO_LOCAL_IN_QTY];
+  uint8_t localOutputs[IO_LOCAL_OUT_QTY];
+} ioSettings;
+
+typedef struct
+{
   uint16_t leftX;
   uint16_t rightX;
   uint16_t topY;
@@ -244,6 +258,7 @@ typedef struct
 {
   generalSettings general;
   ladderSettings  ladder;
+  ioSettings      io;
   hmiSettings     hmi;
   wifiSettings    wifi;
 } userSettings;

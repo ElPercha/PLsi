@@ -33,7 +33,6 @@ Full command:
     
     // in HMI TASK
     // Issue #11 - For Screen Saver PC connection
-    // lucas
     if (I[0]){           
       screenServer();
       delay(1000);   

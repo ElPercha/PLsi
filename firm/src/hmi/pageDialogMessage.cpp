@@ -206,6 +206,14 @@ void drawDialogMessage (void){
     tft.setCursor(30, 170);
     tft.print("TOUCH TO CONTINUE...");
   }
+  else if (messageCode == MESSAGE_PLC_MUST_BE_IN_STOP1){
+    tft.setCursor(30, 45);
+    tft.print("PLC MUST BE STOPPED");
+    tft.setCursor(30, 65);
+    tft.print("TOUCH IN THE TOP AREA");
+    tft.setCursor(30, 85);
+    tft.print("TO GO BACK...");
+  }
   else if (messageCode == MESSAGE_OTA_NOT_POSSIBLE){
     tft.setCursor(30, 45);
     tft.print("CONNECT WIFI AND");
@@ -223,6 +231,14 @@ void drawDialogMessage (void){
     tft.print("RUNNING VERSION:");
     tft.setCursor(30, 85);
     tft.print(FIRMWARE);
+    tft.setCursor(30, 170);
+    tft.print("TOUCH TO CONTINUE...");
+  }
+  else if (messageCode == MESSAGE_CHANGE_IO_NOT_POSSIBLE){
+    tft.setCursor(30, 45);
+    tft.print("SELECTED I/O");
+    tft.setCursor(30, 65);
+    tft.print("CANNOT BE MODIFIED");
     tft.setCursor(30, 170);
     tft.print("TOUCH TO CONTINUE...");
   }

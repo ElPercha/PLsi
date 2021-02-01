@@ -12,11 +12,19 @@ void readInputsLocal(void){
   I[3] = !digitalRead(INPUT_03); 
   I[4] = !digitalRead(INPUT_04); 
   I[5] = !digitalRead(INPUT_05); 
-  I[6] = !digitalRead(INPUT_06); 
-  I[7] = !digitalRead(INPUT_07); 
-//  IW[0]= analogRead(AN_INPUT_00);
-//  IW[AN_INPUT_BAT]= uint16_t(float(analogRead(AN_INPUT_BAT_PIN))*330.0/4095.0*2.29); //2.25 because R divisor in circuit / 330 is 3.3V *100 (nominal max voltage of the ADC) / 4095 max of 12bits ADC
-//  IW[AN_INPUT_BAT-1]= uint16_t(analogRead(AN_INPUT_BAT_PIN));
+
+  if (settings.io.localInputs[6] == IO_TYPE_DIGITAL){
+    I[6] = !digitalRead(INPUT_06); 
+  }
+  else{
+    IW[6]= analogRead(AN_INPUT_00);
+  }
+  if (settings.io.localInputs[7] == IO_TYPE_DIGITAL){
+    I[7] = !digitalRead(INPUT_07); 
+  }
+  else{
+    IW[7]= analogRead(AN_INPUT_01);
+  }
 }
 
 //--------------------------------------------------------------------------------
@@ -28,9 +36,20 @@ void writeOutputsLocal(void){
   digitalWrite(OUTPUT_01, Q[1]);
   digitalWrite(OUTPUT_02, Q[2]);
   digitalWrite(OUTPUT_03, Q[3]);
-  digitalWrite(OUTPUT_04, Q[4]);
-  digitalWrite(OUTPUT_05, Q[5]);
-  //dacWrite(AN_OUTPUT_01, QW[0]);
+  
+  if (settings.io.localOutputs[4] == IO_TYPE_DIGITAL){
+    digitalWrite(OUTPUT_04, Q[4]);
+  }
+  else{
+    dacWrite(AN_OUTPUT_00, QW[4]);
+  }
+
+  if (settings.io.localOutputs[5] == IO_TYPE_DIGITAL){
+    digitalWrite(OUTPUT_05, Q[5]);
+  }
+  else{
+    dacWrite(AN_OUTPUT_01, QW[5]);
+  }
 }
 
 //--------------------------------------------------------------------------------

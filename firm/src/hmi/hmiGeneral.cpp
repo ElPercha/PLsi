@@ -90,7 +90,8 @@ void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color){
   } 
   if (size >= 2){
     size = 0;
-  } 
+  }
+ 
   if (size == 0){
     tft.pushImage(4 + posX*HMI_SLOT_W, 4 + posY*HMI_SLOT_H + HMI_SLOTS_Y, 32, 32, buttons32[color]);
   }
@@ -101,8 +102,11 @@ void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color){
 
 //--------------------------------------------------------------------------------
 // Draw HMI button text
-// type = 0 --> Used for text centered on Y and located on the specified cell
+// type = 0 --> Used for text centered on Y and Left aligned on the specified cell
 // type = 1 --> Used on 2 x 2 cells objects, location is top-center 
+// type = 2 --> Used for text centered on Y and Centered on the specified cell
+// type = 3 --> Used for text Top aligned on Y and Centered on the specified cell
+// type = 4 --> Used for text Bottom aligned on Y and Centered on the specified cell
 //--------------------------------------------------------------------------------
 
 void drawHMIbuttonText(uint16_t posX, uint16_t posY, uint16_t type, String text){
@@ -115,6 +119,15 @@ void drawHMIbuttonText(uint16_t posX, uint16_t posY, uint16_t type, String text)
   }
   else if (type == 1){
     tft.drawCentreString(text, posX*HMI_SLOT_W + HMI_SLOT_W, posY*HMI_SLOT_H - 2 + HMI_SLOTS_Y, HMI_FONT_SIZE);
+  }
+  else if (type == 2){
+    tft.drawCentreString(text, posX*HMI_SLOT_W + HMI_SLOT_W/2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 13, HMI_FONT_SIZE);
+  }
+  else if (type == 3){
+    tft.drawCentreString(text, posX*HMI_SLOT_W + HMI_SLOT_W/2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 2, HMI_FONT_SIZE);
+  }
+  else if (type == 4){
+    tft.drawCentreString(text, posX*HMI_SLOT_W + HMI_SLOT_W/2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 23, HMI_FONT_SIZE);
   }
 }
 
@@ -146,3 +159,27 @@ void drawHMIAnalogIndicator(uint16_t posX, uint16_t posY, uint16_t type, double 
 
   tft.setTextFont(1); // Go back to default font
 }
+
+//--------------------------------------------------------------------------------
+// Draw HMI analog Output Indicator
+//    type = not used
+//    IO => Value of the IO address
+//--------------------------------------------------------------------------------
+
+void drawHMIAnalogIO_Indicator(uint16_t posX, uint16_t posY, uint16_t type, double value){
+  tft.setTextColor(COLOR_HMI_FONT);
+  tft.setTextFont(1);
+  tft.setTextSize(1);
+
+  uint16_t auxFull = HMI_SLOT_H * value/4095;
+  uint16_t auxEmpty = HMI_SLOT_H - auxFull;
+
+  tft.fillRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y, HMI_SLOT_W, auxEmpty, COLOR_HMI_AN_INDI_EMPTY); 
+  tft.fillRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y + auxEmpty, HMI_SLOT_W, auxFull, COLOR_HMI_AN_INDI_FULL);
+  tft.drawRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y, HMI_SLOT_W, HMI_SLOT_H, COLOR_HMI_AN_BORDER);
+
+  tft.drawCentreString(String(value, 0), posX*HMI_SLOT_W + HMI_SLOT_W/2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 18, 1);
+  
+  tft.setTextFont(1); // Go back to default font
+}
+

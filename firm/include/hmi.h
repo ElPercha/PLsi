@@ -34,6 +34,7 @@ extern uint16_t editingInstructionCode;
 extern uint16_t timerSelected;
 extern uint16_t instructionFieldSelection;
 extern unsigned long timerRefreshMainMenu;
+extern unsigned long timerRefreshIOlocal;
 
 //----------------------------------------------------
 // Network to show under Online animation
@@ -64,9 +65,6 @@ const String MnemonicsTypes[FIRST_INVALID_TYPE] = {"M", "Q", "I", "Cd", "Cr", "T
 const String MnemonicsCodes[FIRST_INVALID_CODE] = {"", "CON", "INV", "NO", "NC", "RE", "FE", "C", "L", "U", 
                                                    "TON", "TOFF", "TP", "CTU", "CTD", "MOVE", "SUB", "ADD", "MUL", "DIV",
                                                    "MOD", "SHL", "SHR", "ROL", "ROR", "AND", "OR", "XOR", "NOT", "EQ", "GT", "GE", "LT", "LE", "NE"};
-
-
-
 
 #define BAR_MNEMONIC      "BAR"
 #define BAR_MNEMONIC_LENGTH  3
@@ -194,6 +192,7 @@ extern unsigned long auxTimerFirmwareBar;
 #define PAGE_ConfigProgram            121
 
 #define PAGE_ConfigIO                 130
+#define PAGE_ConfigIOlocal            131
 
 #define PAGE_ConfigHMI                140
 
@@ -238,8 +237,10 @@ extern unsigned long auxTimerFirmwareBar;
 #define MESSAGE_CANNOT_SPLIT_WIDE_INSTR    14
 #define MESSAGE_CANNOT_SPLIT_HIGH_INSTR    15
 #define MESSAGE_PLC_MUST_BE_IN_STOP        16
-#define MESSAGE_OTA_NOT_POSSIBLE           17
-#define MESSAGE_FIRMWARE_UPDATED           18
+#define MESSAGE_PLC_MUST_BE_IN_STOP1       17
+#define MESSAGE_OTA_NOT_POSSIBLE           18
+#define MESSAGE_FIRMWARE_UPDATED           19
+#define MESSAGE_CHANGE_IO_NOT_POSSIBLE     20
 
 //--------------------------------------------------------------------------------
 // TFT Display Dimmensions
@@ -441,6 +442,15 @@ extern unsigned long auxTimerFirmwareBar;
 #define COLOR_HMI_BACK_ANA_IND                TFT_VIOLET  
 #define COLOR_HMI_FONT_TITLE_COLOR            WHITE2
 
+#define COLOR_HMI_AN_BORDER                   WHITE1
+#define COLOR_HMI_AN_INDI_FULL                BLUE
+#define COLOR_HMI_AN_INDI_EMPTY               BLACK
+
+#define COLOR_HMI_CONFIG_IO_BACK              BLACK
+#define COLOR_HMI_CONFIG_IO_BACK_TITLE        DARKGREY
+#define COLOR_HMI_CONFIG_IO_FONT              WHITE
+#define COLOR_HMI_CONFIG_IO_BORDER            WHITE
+
 //--------------------------------------------------------------------------------
 // Task Functions prototypes
 //--------------------------------------------------------------------------------
@@ -469,6 +479,7 @@ void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, u
 void pageConfigPLC (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigProgram (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigIO (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigIOlocal (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigFirmware (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
@@ -538,6 +549,7 @@ void touchConfigPLC(uint16_t ts_x, uint16_t ts_y);
 void touchConfigProgram(uint16_t ts_x, uint16_t ts_y);
 void touchConfigHMI(uint16_t ts_x, uint16_t ts_y);
 void touchConfigIO(uint16_t ts_x, uint16_t ts_y);
+void touchConfigIOlocal(uint16_t ts_x, uint16_t ts_y);
 void touchConfigSystem(uint16_t ts_x, uint16_t ts_y);
 void touchConfigFirmware(uint16_t ts_x, uint16_t ts_y);
 void touchConfigScanWiFi(uint16_t ts_x, uint16_t ts_y);
@@ -554,7 +566,7 @@ void drawMainHMI(void);
   void drawHMIbutton(uint16_t posX, uint16_t posY, uint16_t size, uint16_t color);
   void drawHMIbuttonText(uint16_t posX, uint16_t posY, uint16_t type, String text);
   void drawHMIAnalogIndicator(uint16_t posX, uint16_t posY, uint16_t type, double value);
-
+  void drawHMIAnalogIO_Indicator(uint16_t posX, uint16_t posY, uint16_t type, double value);
 void drawMainConfig(void);
 void drawMainLadder(void);
   void drawLadderMenuBut1(void);
@@ -606,6 +618,8 @@ void drawConfigPLC(void);
   void drawConfigProgram(void);
 void drawConfigHMI(void);
 void drawConfigIO(void);
+void drawConfigIOlocal(void);
+void drawConfigIOlocalUpdate (void);
 void drawConfigSystem(void);
   void drawConfigFirmware(void);
   void drawFirmwareEnableButton(void);

@@ -21,7 +21,7 @@ uint16_t getMaxMemoryAddress(uint16_t type){
   if(type == TypeD)  {return QTY_D - 1;}
   if(type == TypeK)  {return 32768;}
   if(type == TypeR)  {return QTY_R - 1;}
-  if(type == TypeKR) {return 0;} // lucas
+  if(type == TypeKR) {return 0;}
   return 0;
 }
 

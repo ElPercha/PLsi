@@ -81,7 +81,8 @@ void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
   }
   else if(ts_y < 160){
     if(ts_x < 160){
-      hmiPage = PAGE_ConfigIO;      
+      //hmiPage = PAGE_ConfigIO;      
+      hmiPage = PAGE_ConfigIOlocal;      
     }
     else{
       //hmiPage = PAGE_ConfigNetwork;      
@@ -90,7 +91,7 @@ void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
   }
   else{
     if(ts_x < 160){
-      // hmiPage = PAGE_ConfigSystem;      
+      //hmiPage = PAGE_ConfigSystem;      
       hmiPage = PAGE_ConfigFirmware;      
     }
     else{

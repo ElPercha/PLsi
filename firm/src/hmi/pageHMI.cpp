@@ -213,7 +213,7 @@ void touchHMImenu (uint16_t ts_x, uint16_t ts_y){
 void touchHMImatrix (uint16_t ts_x, uint16_t ts_y, uint16_t touchType){
   uint16_t column = 0, row = 0, index = 0;
 
-  // Defime column, row and index of the touch event
+  // Define column, row and index of the touch event
   if (ts_y < 160){
     if(ts_x > 240){
       column = 6;

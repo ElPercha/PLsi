@@ -15,13 +15,6 @@
 #define FIRMWARE  "Version 0.00.02"
 
 //--------------------------------------------------------------------------------
-// Baud Rate fo Serial console. Mainly for debbuging
-//--------------------------------------------------------------------------------
-
-#define BAUD_RATE   115200
-// #define BAUD_RATE   921600 //  Issue #11 - For Screen Saver PC connection
-
-//--------------------------------------------------------------------------------
 // Total Networks. 
 //     Max quantity tested = 500 (for 6 x 5 matrix)
 //     Max stable quantity = 400 (for 6 x 5 matrix)
@@ -48,6 +41,19 @@
 #define QTY_T        300    // Timers
 #define QTY_D      10000    // Regular registers (16 bit signed)
 #define QTY_R       2000    // Float or Real registers
+
+//--------------------------------------------------------------------------------
+// PLC IO Quantities
+//    PLsi v0 has
+//         8 inputs
+//         6 outputs
+//--------------------------------------------------------------------------------
+
+#define IO_LOCAL_IN_QTY    8
+#define IO_LOCAL_OUT_QTY   6
+
+const uint8_t configInputCanBeAnalog[IO_LOCAL_IN_QTY] = {0, 0, 0, 0, 0, 0, 1, 1};
+const uint8_t configOutputCanBeAnalog[IO_LOCAL_OUT_QTY] = {0, 0, 0, 0, 1, 1};
 
 //--------------------------------------------------------------------------------
 // PLC Physical I/O assignment. GPIO number on ESP 32 datasheet
@@ -87,6 +93,13 @@
 //--------------------------------------------------------------------------------
 
 #define SD_CS          5
+
+//--------------------------------------------------------------------------------
+// Baud Rate fo Serial console. Mainly for debbuging
+//--------------------------------------------------------------------------------
+
+#define BAUD_RATE   115200
+// #define BAUD_RATE   921600 //  Issue #11 - For Screen Saver PC connection
 
 //--------------------------------------------------------------------------------
 // Default file names and paths

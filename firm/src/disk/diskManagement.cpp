@@ -88,6 +88,21 @@ void loadDefaultSettings(void){
   settings.ladder.PLCstate = STOPPED;
   settings.ladder.UserProgram = DEMO_PROGRAM_SLOT;
 
+  settings.io.localInputs[0] = IO_TYPE_DIGITAL;
+  settings.io.localInputs[1] = IO_TYPE_DIGITAL;
+  settings.io.localInputs[2] = IO_TYPE_DIGITAL;
+  settings.io.localInputs[3] = IO_TYPE_DIGITAL;
+  settings.io.localInputs[4] = IO_TYPE_DIGITAL;
+  settings.io.localInputs[5] = IO_TYPE_DIGITAL;
+  settings.io.localInputs[6] = IO_TYPE_DIGITAL;
+  settings.io.localInputs[7] = IO_TYPE_DIGITAL;
+  settings.io.localOutputs[0] = IO_TYPE_DIGITAL;
+  settings.io.localOutputs[1] = IO_TYPE_DIGITAL;
+  settings.io.localOutputs[2] = IO_TYPE_DIGITAL;
+  settings.io.localOutputs[3] = IO_TYPE_DIGITAL;
+  settings.io.localOutputs[4] = IO_TYPE_DIGITAL;
+  settings.io.localOutputs[5] = IO_TYPE_DIGITAL;
+
   settings.hmi.ts.leftX = TS_LEFT_X;
   settings.hmi.ts.rightX = TS_RIGHT_X;
   settings.hmi.ts.topY = TS_TOP_Y;
