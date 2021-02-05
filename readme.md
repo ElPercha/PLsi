@@ -16,6 +16,7 @@
 - 8 Hardware Inputs 5-24VDC Isolated with status led
 - 6 Hardware Relay Outputs with status led. Max 10A, external fuse required
 - Different combinations of Digital and Analog I/O using the same board
+	+ Analog I/O range: 0-5V 
 - Removable Terminal blocks
 - USB 5Vdc main power supply
 - I2C port for hardwired expansions
@@ -24,15 +25,16 @@
 
 -----------------------------------------------------------------------------------------
 
-## Firmware Version 0.00.01
-Date: 5:30 PM 12/31/2020
+## Firmware Version 0.00.03
+Date: 5:30 PM 2/4/2021
 
 **Main functionalities:**
 
 - PLC Instruction set: 
-	+ 29 instructions
+	+ 35 instructions
 	+ Boolean instructions full set
 	+ Timers and Counters full set
+	+ Comparisons full set
 	+ 16 bit math functions
 - PLC Memory Areas:
 	+ 2000 Marks (M)
@@ -58,12 +60,13 @@ Date: 5:30 PM 12/31/2020
 		- Screen 1: 8 Switches M500 to M507
 		- Screen 2: 8 Buttons  M510 to M517
 		- Screen 3: 8 User Input Values D500 to D507 
-		- Screen 4: 8 Values status D510 to D517
+		- Screen 4: Local I/O visualization
 		- Screen 5: 8 Indicators M520 to M527
 - Communications:
 	+ Wi-Fi configuration. Only DHCP
 	+ SSID scanning functionality
 - Firmware update via Web Page
+- Analog Inputs and Outputs configuration page
 
 -----------------------------------------------------------------------------------------
 
@@ -111,8 +114,8 @@ The PLsi board v0 is designed to support, at least, 2 different configurations:
  2. Digital and Analog I/O
  	- 6 Digital Inputs
 	- 4 Digital Relay Outputs
- 	- 2 Analog Inputs 0-10 V
- 	- 2 Analog Outputs 0-5 V
+ 	- 2 Analog Inputs 0-5V
+ 	- 2 Analog Outputs 0-5V
  
 Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0/board/pictures/PLsi_board.svg)
 
@@ -124,15 +127,14 @@ Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) 
 	- Standard Micro USB type B connector
 + External fuse or fuses are required to protect the Outputs circuits
 	- Fuse size has to be calculated considering a total MAX consumtion of 10A
-+ SD Card is optional, it has no functionality implemented in Fimware v0.00.01
-+ I2C Port is optional, it has no functionality implemented in Fimware v0.00.01
++ SD Card is optional, it has no functionality implemented in Fimware v0.00.03
++ I2C Port is optional, it has no functionality implemented in Fimware v0.00.03
 
 ### PLsi v0 Analog wiring diagram
 
 ![](./doc/PLsi_wiring_analog.svg)
 
 + Analog Inputs and Outputs are not isolated
-+ They will be implemented on Firmware v0.01.00 [Issue #4](https://github.com/ElPercha/PLsi/issues/4) 
 
 -----------------------------------------------------------------------------------------
 
