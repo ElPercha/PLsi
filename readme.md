@@ -66,7 +66,7 @@ Date: 5:30 PM 2/4/2021
 	+ Wi-Fi configuration. Only DHCP
 	+ SSID scanning functionality
 - Firmware update via Web Page
-- Analog Inputs and Outputs implementation
+- Analog Inputs and Outputs
 	+ Selectable via Configuration page
 
 -----------------------------------------------------------------------------------------
