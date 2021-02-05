@@ -171,8 +171,8 @@ void drawHMIAnalogIO_Indicator(uint16_t posX, uint16_t posY, uint16_t type, doub
   tft.setTextFont(1);
   tft.setTextSize(1);
 
-  if (value >= 0 && value <= ANALOG_RESOLUTION){
-    uint16_t auxFull = HMI_SLOT_H * value / ANALOG_RESOLUTION;
+  if (value >= 0 && value <= ANALOG_IN_RESOLUTION){
+    uint16_t auxFull = HMI_SLOT_H * value / ANALOG_IN_RESOLUTION;
     uint16_t auxEmpty = HMI_SLOT_H - auxFull;
 
     tft.fillRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y, HMI_SLOT_W, auxEmpty, COLOR_HMI_AN_INDI_EMPTY); 

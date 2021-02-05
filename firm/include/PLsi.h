@@ -49,9 +49,12 @@
 //         6 outputs
 //--------------------------------------------------------------------------------
 
-#define IO_LOCAL_IN_QTY    8
-#define IO_LOCAL_OUT_QTY   6
-#define ANALOG_RESOLUTION  1024
+#define IO_LOCAL_IN_QTY          8
+#define IO_LOCAL_OUT_QTY         6
+#define ANALOG_IN_RESOLUTION  1024
+#define ANALOG_OUT_RESOLUTION  256
+#define ANALOG_IN_BITS          10 
+#define ANALOG_IN_CALIBRATION  (1024.0/895.0) // 895 is the raw value when reading 5V/3 = 1.66V on ESP32 pin
 
 const uint8_t configInputCanBeAnalog[IO_LOCAL_IN_QTY] = {0, 0, 0, 0, 0, 0, 1, 1};
 const uint8_t configOutputCanBeAnalog[IO_LOCAL_OUT_QTY] = {0, 0, 0, 0, 1, 1};

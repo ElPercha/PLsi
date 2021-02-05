@@ -17,30 +17,40 @@ void readInputsLocal(void){
     I[6] = !digitalRead(INPUT_06); 
   }
   else{
-    IW[6]= analogRead(AN_INPUT_00);
+    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_00)) * ANALOG_IN_CALIBRATION);
 
-
+    if (auxAnalogIn >= ANALOG_IN_RESOLUTION){
+      IW[6] = ANALOG_IN_RESOLUTION - 1;
+    }
+    else{
+      IW[6] = auxAnalogIn;
+    }
+    
     // if (analogRead(AN_INPUT_00) > IW[6]){
     //   IW[6]= uint16_t(IW[6] + double(analogRead(AN_INPUT_00) - IW[6]) * 0.1);
     // }
     // else{
     //   IW[6]= uint16_t(IW[6] - double(IW[6] - analogRead(AN_INPUT_00)) * 0.1);
     // }
-
-
-    // IW_p[6]= uint16_t(double(analogRead(AN_INPUT_00)));
-    // IW[6]= IW_p[6];
   }
   if (settings.io.localInputs[7] == IO_TYPE_DIGITAL){
     I[7] = !digitalRead(INPUT_07); 
   }
   else{
-    IW[7]= analogRead(AN_INPUT_01);
+    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_01)) * ANALOG_IN_CALIBRATION);
+
+    if (auxAnalogIn >= ANALOG_IN_RESOLUTION){
+      IW[7] = ANALOG_IN_RESOLUTION - 1;
+    }
+    else{
+      IW[7] = auxAnalogIn;
+    }
   }
 }
 
 //--------------------------------------------------------------------------------
 // Local Outputs
+// ESP32 dac resolution is 0-255 PLsi standard analog I/O resolution is 0-1024
 //--------------------------------------------------------------------------------
 
 void writeOutputsLocal(void){
@@ -53,24 +63,34 @@ void writeOutputsLocal(void){
     digitalWrite(OUTPUT_04, Q[4]);
   }
   else{
-    dacWrite(AN_OUTPUT_00, QW[4]/4); // ESP32 dac resolution is 0-255 PLsi standard analog I/O resolution is 0-4095
+    dacWrite(AN_OUTPUT_00, QW[4]/(ANALOG_IN_RESOLUTION/ANALOG_OUT_RESOLUTION)); 
   }
 
   if (settings.io.localOutputs[5] == IO_TYPE_DIGITAL){
     digitalWrite(OUTPUT_05, Q[5]);
   }
   else{
-    dacWrite(AN_OUTPUT_01, QW[5]/4); // ESP32 dac resolution is 0-255 PLsi standard analog I/O resolution is 0-4095
+    dacWrite(AN_OUTPUT_01, QW[5]/(ANALOG_IN_RESOLUTION/ANALOG_OUT_RESOLUTION));
   }
 }
 
+
+
+
+
 //--------------------------------------------------------------------------------
 // IO physical assignment 
+// 
+// Attenuation values:
+//    0db   for a full-scale voltage of 1.1V
+//    2.5db for a full-scale voltage of 1.5V
+//    6db   for a full-scale voltage of 2.2V
+//    11db  for a full-scale voltage of 3.9V
 //--------------------------------------------------------------------------------
 
 void configureLocal_IO(void){
   analogSetAttenuation(ADC_6db);
-  analogSetWidth(10);
+  analogSetWidth(ANALOG_IN_BITS);
   analogSetClockDiv(1);
 
   pinMode(INPUT_00, INPUT);
