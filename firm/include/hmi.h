@@ -336,8 +336,8 @@ extern unsigned long auxTimerFirmwareBar;
 #define HMI_SLOT_2W       HMI_SLOT_W * 2
 #define HMI_SLOT_3W       HMI_SLOT_W * 3
 #define HMI_SLOT_4W       HMI_SLOT_W * 4
-#define HMI_SLOT_2H       HMI_SLOT_W * 2
-#define HMI_SLOT_3H       HMI_SLOT_W * 3
+#define HMI_SLOT_2H       HMI_SLOT_H * 2
+#define HMI_SLOT_3H       HMI_SLOT_H * 3
 #define HMI_FONT_SIZE     2  
 #define HMI_FONT_TITLE    4  
 
