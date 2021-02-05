@@ -54,7 +54,8 @@
 #define ANALOG_IN_RESOLUTION  1024
 #define ANALOG_OUT_RESOLUTION  256
 #define ANALOG_IN_BITS          10 
-#define ANALOG_IN_CALIBRATION  (1024.0/895.0) // 895 is the raw value when reading 5V/3 = 1.66V on ESP32 pin
+#define ANALOG_IN_ZERO_OFFSET   35  // Offset near 0 volts in ESP32
+#define ANALOG_IN_CALIBRATION  850  // Raw value + ZERO_OFFSET when reading 5V/3 = 1.66V on ESP32 pin
 
 const uint8_t configInputCanBeAnalog[IO_LOCAL_IN_QTY] = {0, 0, 0, 0, 0, 0, 1, 1};
 const uint8_t configOutputCanBeAnalog[IO_LOCAL_OUT_QTY] = {0, 0, 0, 0, 1, 1};

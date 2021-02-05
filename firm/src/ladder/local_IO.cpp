@@ -17,7 +17,11 @@ void readInputsLocal(void){
     I[6] = !digitalRead(INPUT_06); 
   }
   else{
-    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_00)) * ANALOG_IN_CALIBRATION);
+    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_00)) * ANALOG_IN_RESOLUTION/ANALOG_IN_CALIBRATION);
+
+    if (auxAnalogIn != 0){
+      auxAnalogIn = auxAnalogIn + ANALOG_IN_ZERO_OFFSET;
+    }
 
     if (auxAnalogIn >= ANALOG_IN_RESOLUTION){
       IW[6] = ANALOG_IN_RESOLUTION - 1;
@@ -25,19 +29,17 @@ void readInputsLocal(void){
     else{
       IW[6] = auxAnalogIn;
     }
-    
-    // if (analogRead(AN_INPUT_00) > IW[6]){
-    //   IW[6]= uint16_t(IW[6] + double(analogRead(AN_INPUT_00) - IW[6]) * 0.1);
-    // }
-    // else{
-    //   IW[6]= uint16_t(IW[6] - double(IW[6] - analogRead(AN_INPUT_00)) * 0.1);
-    // }
   }
+
   if (settings.io.localInputs[7] == IO_TYPE_DIGITAL){
     I[7] = !digitalRead(INPUT_07); 
   }
   else{
-    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_01)) * ANALOG_IN_CALIBRATION);
+    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_01)) * ANALOG_IN_RESOLUTION/ANALOG_IN_CALIBRATION);
+
+    if (auxAnalogIn != 0){
+      auxAnalogIn = auxAnalogIn + ANALOG_IN_ZERO_OFFSET;
+    }
 
     if (auxAnalogIn >= ANALOG_IN_RESOLUTION){
       IW[7] = ANALOG_IN_RESOLUTION - 1;
