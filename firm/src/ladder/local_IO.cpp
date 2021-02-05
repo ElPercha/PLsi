@@ -27,7 +27,7 @@ void readInputsLocal(void){
       IW[6] = ANALOG_IN_RESOLUTION - 1;
     }
     else{
-      IW[6] = auxAnalogIn;
+      IW[6] = analogInfilter(0, auxAnalogIn);
     }
   }
 
@@ -45,7 +45,7 @@ void readInputsLocal(void){
       IW[7] = ANALOG_IN_RESOLUTION - 1;
     }
     else{
-      IW[7] = auxAnalogIn;
+      IW[7] = analogInfilter(1, auxAnalogIn);
     }
   }
 }
@@ -76,10 +76,6 @@ void writeOutputsLocal(void){
   }
 }
 
-
-
-
-
 //--------------------------------------------------------------------------------
 // IO physical assignment 
 // 
@@ -93,7 +89,7 @@ void writeOutputsLocal(void){
 void configureLocal_IO(void){
   analogSetAttenuation(ADC_6db);
   analogSetWidth(ANALOG_IN_BITS);
-  analogSetClockDiv(1);
+  analogSetClockDiv(ANALOG_CLOCK_DIVIDER);
 
   pinMode(INPUT_00, INPUT);
   pinMode(INPUT_01, INPUT);
@@ -123,3 +119,23 @@ void configureLocal_IO(void){
     pinMode(AN_OUTPUT_01, ANALOG);
   }
 }
+
+//--------------------------------------------------------------------------------
+// Analog inputs moving average filter
+//--------------------------------------------------------------------------------
+
+uint16_t analogInfilter(uint16_t index, uint16_t value){
+  analogInFilter[index][analogInFilterPointer[index]] = value;
+  analogInFilterPointer[index]++;
+
+  if (analogInFilterPointer[index] >= ANALOG_FILTER_SAMPLES){
+    analogInFilterPointer[index] = 0;
+  }
+
+  double average = 0;
+  for (uint16_t i= 0; i < ANALOG_FILTER_SAMPLES; i++){
+    average += analogInFilter[index][i];
+  }
+  return uint16_t(average/ANALOG_FILTER_SAMPLES);
+}
+

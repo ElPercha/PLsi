@@ -10,6 +10,7 @@
 // History:
 //  - Version 0.00.01 - First stable version
 //  - Version 0.00.02 - Comparison instructions added (16bit)
+//  - Version 0.00.03 - Analog I/O support
 //--------------------------------------------------------------------------------
 
 #define FIRMWARE  "Version 0.00.03"
@@ -51,11 +52,16 @@
 
 #define IO_LOCAL_IN_QTY          8
 #define IO_LOCAL_OUT_QTY         6
+#define IO_LOCAL_IN_ANALOG_QTY   2
+#define IO_LOCAL_OUT_ANALOG_QTY  2
+
 #define ANALOG_IN_RESOLUTION  1024
 #define ANALOG_OUT_RESOLUTION  256
 #define ANALOG_IN_BITS          10 
+#define ANALOG_CLOCK_DIVIDER     2
 #define ANALOG_IN_ZERO_OFFSET   35  // Offset near 0 volts in ESP32
 #define ANALOG_IN_CALIBRATION  850  // Raw value + ZERO_OFFSET when reading 5V/3 = 1.66V on ESP32 pin
+#define ANALOG_FILTER_SAMPLES   20
 
 const uint8_t configInputCanBeAnalog[IO_LOCAL_IN_QTY] = {0, 0, 0, 0, 0, 0, 1, 1};
 const uint8_t configOutputCanBeAnalog[IO_LOCAL_OUT_QTY] = {0, 0, 0, 0, 1, 1};

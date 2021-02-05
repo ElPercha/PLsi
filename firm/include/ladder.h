@@ -8,9 +8,11 @@
 extern uint16_t NetworkFlags[NET_COLUMNS - 1];
 extern unsigned long actualScanTime;
 extern unsigned long startTime;
+extern uint16_t analogInFilter[IO_LOCAL_IN_ANALOG_QTY][ANALOG_FILTER_SAMPLES]; // lucas constants
+extern uint16_t analogInFilterPointer[IO_LOCAL_IN_ANALOG_QTY];
 
 //--------------------------------------------------------------------------------
-// Used Global variables in ladder scope, declared in another task
+// Globals variables from other tasks
 //--------------------------------------------------------------------------------
 
 extern uint16_t NetworkFlagsOnline [NET_COLUMNS - 1];
@@ -23,6 +25,7 @@ extern uint16_t editionMode;
 void ladderWaitSettings(void);
 
 void configureLocal_IO(void);
+uint16_t analogInfilter(uint16_t index, uint16_t value);
 void clearMemory(void);
 
 void readInputsLocal(void);
