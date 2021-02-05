@@ -436,6 +436,7 @@ extern unsigned long auxTimerFirmwareBar;
 
 #define COLOR_HMI_BACK                        TFT_BLACK
 #define COLOR_HMI_MENU_BUTTON                 DARKGREY
+#define COLOR_HMI_MENU_BUTTON_ON              TFT_DARKCYAN
 #define COLOR_HMI_MENU_BORDER                 TFT_WHITE
 #define COLOR_HMI_FONT                        TFT_WHITE  
 #define COLOR_HMI_BACK_POTENTIOM              TFT_DARKGREEN  
@@ -619,7 +620,8 @@ void drawConfigPLC(void);
 void drawConfigHMI(void);
 void drawConfigIO(void);
 void drawConfigIOlocal(void);
-void drawConfigIOlocalUpdate (void);
+void drawConfigIOlocalElements(void);
+void drawConfigIOlocalUpdate(void);
 void drawConfigSystem(void);
   void drawConfigFirmware(void);
   void drawFirmwareEnableButton(void);

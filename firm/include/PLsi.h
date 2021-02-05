@@ -12,7 +12,7 @@
 //  - Version 0.00.02 - Comparison instructions added (16bit)
 //--------------------------------------------------------------------------------
 
-#define FIRMWARE  "Version 0.00.02"
+#define FIRMWARE  "Version 0.00.03"
 
 //--------------------------------------------------------------------------------
 // Total Networks. 
@@ -51,6 +51,7 @@
 
 #define IO_LOCAL_IN_QTY    8
 #define IO_LOCAL_OUT_QTY   6
+#define ANALOG_RESOLUTION  1024
 
 const uint8_t configInputCanBeAnalog[IO_LOCAL_IN_QTY] = {0, 0, 0, 0, 0, 0, 1, 1};
 const uint8_t configOutputCanBeAnalog[IO_LOCAL_OUT_QTY] = {0, 0, 0, 0, 1, 1};

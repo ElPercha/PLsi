@@ -18,6 +18,18 @@ void readInputsLocal(void){
   }
   else{
     IW[6]= analogRead(AN_INPUT_00);
+
+
+    // if (analogRead(AN_INPUT_00) > IW[6]){
+    //   IW[6]= uint16_t(IW[6] + double(analogRead(AN_INPUT_00) - IW[6]) * 0.1);
+    // }
+    // else{
+    //   IW[6]= uint16_t(IW[6] - double(IW[6] - analogRead(AN_INPUT_00)) * 0.1);
+    // }
+
+
+    // IW_p[6]= uint16_t(double(analogRead(AN_INPUT_00)));
+    // IW[6]= IW_p[6];
   }
   if (settings.io.localInputs[7] == IO_TYPE_DIGITAL){
     I[7] = !digitalRead(INPUT_07); 
@@ -41,14 +53,14 @@ void writeOutputsLocal(void){
     digitalWrite(OUTPUT_04, Q[4]);
   }
   else{
-    dacWrite(AN_OUTPUT_00, QW[4]);
+    dacWrite(AN_OUTPUT_00, QW[4]/4); // ESP32 dac resolution is 0-255 PLsi standard analog I/O resolution is 0-4095
   }
 
   if (settings.io.localOutputs[5] == IO_TYPE_DIGITAL){
     digitalWrite(OUTPUT_05, Q[5]);
   }
   else{
-    dacWrite(AN_OUTPUT_01, QW[5]);
+    dacWrite(AN_OUTPUT_01, QW[5]/4); // ESP32 dac resolution is 0-255 PLsi standard analog I/O resolution is 0-4095
   }
 }
 
@@ -57,19 +69,35 @@ void writeOutputsLocal(void){
 //--------------------------------------------------------------------------------
 
 void configureLocal_IO(void){
-  pinMode( INPUT_00,  INPUT);
-  pinMode( INPUT_01,  INPUT);
-  pinMode( INPUT_02,  INPUT);
-  pinMode( INPUT_03,  INPUT);
-  pinMode( INPUT_04,  INPUT);
-  pinMode( INPUT_05,  INPUT);
-  pinMode( INPUT_06,  INPUT);
-  pinMode( INPUT_07,  INPUT);
+  analogSetAttenuation(ADC_6db);
+  analogSetWidth(10);
+  analogSetClockDiv(1);
+
+  pinMode(INPUT_00, INPUT);
+  pinMode(INPUT_01, INPUT);
+  pinMode(INPUT_02, INPUT);
+  pinMode(INPUT_03, INPUT);
+  pinMode(INPUT_04, INPUT);
+  pinMode(INPUT_05, INPUT);
+  pinMode(INPUT_06, INPUT);
+  pinMode(INPUT_07, INPUT);
   
   pinMode(OUTPUT_00, OUTPUT);
   pinMode(OUTPUT_01, OUTPUT);
   pinMode(OUTPUT_02, OUTPUT);
   pinMode(OUTPUT_03, OUTPUT);
-  pinMode(OUTPUT_04, OUTPUT);
-  pinMode(OUTPUT_05, OUTPUT);
+  
+  if (settings.io.localOutputs[4] == IO_TYPE_DIGITAL){
+    pinMode(OUTPUT_04, OUTPUT);
+  }
+  else{
+    pinMode(AN_OUTPUT_00, ANALOG);
+  }
+
+  if (settings.io.localOutputs[5] == IO_TYPE_DIGITAL){
+    pinMode(OUTPUT_05, OUTPUT);
+  }
+  else{
+    pinMode(AN_OUTPUT_01, ANALOG);
+  }
 }

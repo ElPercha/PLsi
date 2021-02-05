@@ -185,7 +185,7 @@ extern byte           Trh   [QTY_T];
 extern byte           Tdh   [QTY_T];
 
 // Registers declaration
-extern uint16_t       IW    [QTY_IW];  // Analog Inputs  (word)
+extern uint16_t       IW    [QTY_IW];  // Analog Inputs (word)
 extern uint16_t       QW    [QTY_QW];  // Analog Outputs (word)
 extern uint16_t       C     [QTY_C];   // Counter registers (16 bits)
 extern int16_t        D     [QTY_D];   // Regular registers (signed 16 bits)

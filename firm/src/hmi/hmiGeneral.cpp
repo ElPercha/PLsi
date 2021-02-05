@@ -171,15 +171,21 @@ void drawHMIAnalogIO_Indicator(uint16_t posX, uint16_t posY, uint16_t type, doub
   tft.setTextFont(1);
   tft.setTextSize(1);
 
-  uint16_t auxFull = HMI_SLOT_H * value/4095;
-  uint16_t auxEmpty = HMI_SLOT_H - auxFull;
+  if (value >= 0 && value <= ANALOG_RESOLUTION){
+    uint16_t auxFull = HMI_SLOT_H * value / ANALOG_RESOLUTION;
+    uint16_t auxEmpty = HMI_SLOT_H - auxFull;
 
-  tft.fillRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y, HMI_SLOT_W, auxEmpty, COLOR_HMI_AN_INDI_EMPTY); 
-  tft.fillRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y + auxEmpty, HMI_SLOT_W, auxFull, COLOR_HMI_AN_INDI_FULL);
-  tft.drawRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y, HMI_SLOT_W, HMI_SLOT_H, COLOR_HMI_AN_BORDER);
+    tft.fillRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y, HMI_SLOT_W, auxEmpty, COLOR_HMI_AN_INDI_EMPTY); 
+    tft.fillRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y + auxEmpty, HMI_SLOT_W, auxFull, COLOR_HMI_AN_INDI_FULL);
+    tft.drawRect(posX*HMI_SLOT_W, posY*HMI_SLOT_H + HMI_SLOTS_Y, HMI_SLOT_W, HMI_SLOT_H, COLOR_HMI_AN_BORDER);
 
-  tft.drawCentreString(String(value, 0), posX*HMI_SLOT_W + HMI_SLOT_W/2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 18, 1);
-  
+    tft.drawCentreString(String(value, 0), posX*HMI_SLOT_W + HMI_SLOT_W/2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 18, 1);
+  }
+  else{
+    tft.drawCentreString("ERR", posX*HMI_SLOT_W + HMI_SLOT_W/2, posY*HMI_SLOT_H + HMI_SLOTS_Y + 18, 1);
+    Serial.println("TaskHMI - Error in drawHMIAnalogIO_Indicator Parameter value out of range");
+  }
+
   tft.setTextFont(1); // Go back to default font
 }
 

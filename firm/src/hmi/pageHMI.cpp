@@ -64,12 +64,17 @@ void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
     }
 
     // Update analog indicators 
+    // if (hmiPageUser == 3){
+    //   for (uint8_t r = 0; r < 2; r++){
+    //     for (uint8_t c = 0; c < 4; c++){
+    //       drawHMIAnalogIndicator(c*2, r*2, 1, double(D[settings.hmi.analogIndicatorsIndex + c + r*4]));
+    //     }
+    //   }
+    // }
+
+    // Update I/O View 
     if (hmiPageUser == 3){
-      for (uint8_t r = 0; r < 2; r++){
-        for (uint8_t c = 0; c < 4; c++){
-          drawHMIAnalogIndicator(c*2, r*2, 1, double(D[settings.hmi.analogIndicatorsIndex + c + r*4]));
-        }
-      }
+      drawConfigIOlocalUpdate();
     }
 
     // Update digital indicators (Leds)
@@ -104,14 +109,20 @@ void pageMainHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_
 //--------------------------------------------------------------------------------
 
 void drawHMImenu(void){
-  String hmiMenu[HMI_MENU_BUT-1] = {"SWI", "BUT", "POT", "STAT", "LEDS"};
+  String hmiMenu[HMI_MENU_BUT-1] = {"SWI", "BUT", "POT", "I/O", "LEDS"};
 
   tft.setTextColor(COLOR_HMI_FONT);
   tft.setTextFont(1);
   tft.setTextSize(1);
 
   for (uint16_t i = 0; i < HMI_MENU_BUT; i++){
-    tft.fillRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, COLOR_HMI_MENU_BUTTON);
+    if (i > 0 && i == hmiPageUser + 1){
+      tft.fillRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, COLOR_HMI_MENU_BUTTON_ON);
+    }
+    else{
+      tft.fillRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, COLOR_HMI_MENU_BUTTON);
+    }
+    
     tft.drawRect(HMI_MENU_W*i, 0, HMI_MENU_W, HMI_MENU_H, COLOR_HMI_MENU_BORDER);
 
     if (i == 0){
@@ -134,7 +145,7 @@ void drawHMImatrix (void){
   tft.setTextColor(COLOR_HMI_FONT_TITLE_COLOR);
   tft.setTextFont(1);
   tft.setTextSize(1);
-  String hmiTitle[HMI_MENU_BUT-1] = {"SWITCHES", "BUTTONS", "INPUT VALUES", "ANALOG STATUS", "DIGITAL STATUS"};
+  String hmiTitle[HMI_MENU_BUT-1] = {"SWITCHES", "BUTTONS", "INPUT VALUES", "LOCAL I/O STATUS", "DIGITAL STATUS"};
   tft.drawCentreString(hmiTitle[hmiPageUser], TFT_PIXELS_X/2, HMI_MENU_H + 8, HMI_FONT_TITLE);
 
   // 8 switches (size 2x2) retentive 
@@ -168,13 +179,26 @@ void drawHMImatrix (void){
   }
   
   // 8 analog indicators (2 x 2) + text 
+  // else if (hmiPageUser == 3){
+  //   for (uint8_t r = 0; r < 2; r++){
+  //     for (uint8_t c = 0; c < 4; c++){
+  //       drawHMIbuttonText(c*2, r*2, 1, "D"+ String (settings.hmi.analogIndicatorsIndex + c + r*4));
+  //       drawHMIAnalogIndicator(c*2, r*2, 1, double(D[settings.hmi.analogIndicatorsIndex + c + r*4]));
+  //     }
+  //   }
+  // }
+
+  // 8 analog indicators (2 x 2) + text 
   else if (hmiPageUser == 3){
-    for (uint8_t r = 0; r < 2; r++){
-      for (uint8_t c = 0; c < 4; c++){
-        drawHMIbuttonText(c*2, r*2, 1, "D"+ String (settings.hmi.analogIndicatorsIndex + c + r*4));
-        drawHMIAnalogIndicator(c*2, r*2, 1, double(D[settings.hmi.analogIndicatorsIndex + c + r*4]));
-      }
-    }
+
+  tft.setTextColor(COLOR_HMI_CONFIG_IO_FONT);
+  tft.setTextFont(1);
+  tft.setTextSize(1);
+  tft.drawCentreString("PLsi " + String(FIRMWARE), TFT_PIXELS_X/2, 153, 2);   
+  
+  drawConfigIOlocalElements();
+  drawConfigIOlocalUpdate();
+
   }
   
   // 8 indicators (size 1x4) 32 x 32 pixels indicator + text
@@ -200,6 +224,7 @@ void touchHMImenu (uint16_t ts_x, uint16_t ts_y){
       }
       else{
         hmiPageUser = i - 1;
+        drawHMImenu();
         drawHMImatrix();
       }
     }
@@ -290,6 +315,7 @@ void touchHMImatrix (uint16_t ts_x, uint16_t ts_y, uint16_t touchType){
   }
   
   // Page 3 - Status of analog values 
+  // Replaced by I/O view
   // Don't use touch functions, just visualization
   else if (hmiPageUser == 3){
     // nop
