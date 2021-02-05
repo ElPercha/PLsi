@@ -8,7 +8,7 @@
 extern uint16_t NetworkFlags[NET_COLUMNS - 1];
 extern unsigned long actualScanTime;
 extern unsigned long startTime;
-extern uint16_t analogInFilter[IO_LOCAL_IN_ANALOG_QTY][ANALOG_FILTER_SAMPLES]; // lucas constants
+extern uint16_t analogInFilter[IO_LOCAL_IN_ANALOG_QTY][ANALOG_FILTER_SAMPLES]; 
 extern uint16_t analogInFilterPointer[IO_LOCAL_IN_ANALOG_QTY];
 
 //--------------------------------------------------------------------------------
