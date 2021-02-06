@@ -321,11 +321,11 @@ extern unsigned long auxTimerFirmwareBar;
 // HMI Screens definitions
 //--------------------------------------------------------------------------------
 
-#define HMI_MENU_H       40
-#define HMI_TITLE_H      40
-#define HMI_MENU_BUT      6
-#define HMI_SLOT_W       40
-#define HMI_SLOT_H       40
+#define HMI_MENU_H        40
+#define HMI_TITLE_H       40
+#define HMI_MENU_BUT       6
+#define HMI_SLOT_W        40
+#define HMI_SLOT_H        40
 
 #define HMI_COLUMNS       TFT_PIXELS_X / HMI_SLOT_W
 #define HMI_ROWS          (TFT_PIXELS_Y - HMI_MENU_H - HMI_TITLE_H) / HMI_SLOT_H
