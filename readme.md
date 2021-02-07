@@ -30,7 +30,7 @@ February 4, 2021
 
 **Main functionalities:**
 
-- PLC Instruction set: 
+- PLC Ladder Logic Instruction set: 
 	+ 35 instructions
 	+ Boolean instructions full set
 	+ Timers and Counters full set
