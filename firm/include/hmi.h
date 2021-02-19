@@ -456,11 +456,6 @@ extern unsigned long auxTimerFirmwareBar;
 // Task Functions prototypes
 //--------------------------------------------------------------------------------
 
-boolean screenServer(void);                   //  Issue #11 - For Screen Saver PC connection
-boolean screenServer(String filename);        //  Issue #11 - For Screen Saver PC connection
-boolean serialScreenServer(String filename);  //  Issue #11 - For Screen Saver PC connection
-void sendParameters(String filename);         //  Issue #11 - For Screen Saver PC connection
-
 void hmiWaitSettings (void);
 void pageMainMenu(uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
   void changePLCstate(void);

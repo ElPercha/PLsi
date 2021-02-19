@@ -2,8 +2,6 @@
 #include <TFT_eSPI.h>
 #include <hmi.h>
 
-// Issue #11 to delete this file from the project once it is fully documented
-
 // Reads a screen image off the TFT and send it to a processing client sketch
 // over the serial port. Use a high baud rate, e.g. for an ESP8266:
 // Serial.begin(921600);
@@ -22,12 +20,28 @@
 
 // MIT licence applies, all text above must be included in derivative works
 
+//====================================================================================
+//====================================================================================
+//====================================================================================
+
+// Issue #11 to delete this file from the project once it is fully documented
 // Issue #11 - Create user manual
 
-boolean screenServer(void);  
-boolean screenServer(String filename); 
-boolean serialScreenServer(String filename); 
-void sendParameters(String filename); 
+// Move to hmi.h to capture screen
+
+    // boolean screenServer(void);                   //  Issue #11 - For Screen Saver PC connection
+    // boolean screenServer(String filename);        //  Issue #11 - For Screen Saver PC connection
+    // boolean serialScreenServer(String filename);  //  Issue #11 - For Screen Saver PC connection
+    // void sendParameters(String filename);         //  Issue #11 - For Screen Saver PC connection
+
+
+// Move to HMI TASK for screen capture
+// Issue #11 - For Screen Saver PC connection
+
+    // if (I[0]){           
+    //   screenServer();
+    //   delay(1000);   
+    // }
 
 
 //====================================================================================

@@ -27,7 +27,7 @@ void TaskLadder(void *pvParameters)
   clearProgram(Networks);      
 
   configureLocal_IO();
-  
+
   //--------------------------------------------------
   // Task Main Loop
   //--------------------------------------------------

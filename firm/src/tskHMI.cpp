@@ -1,8 +1,8 @@
 #include <globals.h>
 #include <plsi.h>
 #include <TFT_eSPI.h>
-#include <hmi.h>
 #include <tskHMI.h>
+#include <hmi.h>
 
 //--------------------------------------------------------------------------------
 // HMI Task 
@@ -174,7 +174,6 @@ void TaskHMI(void *pvParameters)
       hmiPageMemory = PAGE_MainMenu;
       hmiPage = PAGE_DialogMessage;
     }
-
     delay(5); 
   }
 }

@@ -12,7 +12,7 @@ uint16_t hmiPageMemory        = 0; // Used to go back to previous page
 uint16_t hmiPageFirstLoad     = 1; // 1 to force Main Menu Load at fist boot. Used to detect the first "frame" of the current page.
 uint8_t hmiPageUser           = 0; // HMI page number
 uint8_t hmiPageLoaded         = 0;
-uint16_t hmiEditionIndex      = 0; //HMI modifies a D value using this index
+uint16_t hmiEditionIndex      = 0; // HMI modifies a D value using this index
 unsigned long timerRefreshHMI = 0;
 
 uint16_t indexLadderEditor = 0; // Subpage of Ladder Editor
