@@ -32,28 +32,28 @@ Full command:
 -------------------------------------------------------------------------------------------------------------------------------------
 
 header
-#include <Wire.h> //lucas
-#include <Adafruit_PWMServoDriver.h> //lucas
+#include <Wire.h> //
+#include <Adafruit_PWMServoDriver.h> //
 
 
-en TSKladder.h
-Adafruit_PWMServoDriver pwm1 = Adafruit_PWMServoDriver(0x40, Wire); //lucas
-//Adafruit_PWMServoDriver pwm1 = Adafruit_PWMServoDriver(); //lucas
+TSKladder.h
+Adafruit_PWMServoDriver pwm1 = Adafruit_PWMServoDriver(0x40, Wire); //
+//Adafruit_PWMServoDriver pwm1 = Adafruit_PWMServoDriver(); //
 
-en TSKladder.cpp
+TSKladder.cpp
 
   //----------------------------------------------------
-  // PCA CARD PWM lucas
+  // PCA CARD PWM 
   //----------------------------------------------------
  
   pwm1.begin();
   pwm1.setPWMFreq(50);  
 
-  en el loop
+  main loop
 
     if(M[517]){
-    pwm1.setPWM(15, D[504], D[505]); //lucas
-    pwm1.setPWM(0, D[504], D[505]); //lucas
+    pwm1.setPWM(15, D[504], D[505]); //
+    pwm1.setPWM(0, D[504], D[505]); //
   }
 
 -------------------------------------------------------------------------------------------------------------------------------------
