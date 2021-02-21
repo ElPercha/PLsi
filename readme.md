@@ -1,9 +1,9 @@
 # **PLsi General Info**
 
 + Fully functional PLC & HMI based on ESP32 module and 320x240 Touchscreen Display  
-+ Low Cost, estimated material cost less than [$20](hard/v0/)
-+ Easy to build, no SMD components
 + Open Source and Open Hardware
++ DIY. Easy to build, no SMD components
++ Low Cost, estimated in less than [$20](hard/v0/)
 
 -----------------------------------------------------------------------------------------
 
