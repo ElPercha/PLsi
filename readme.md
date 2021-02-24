@@ -3,7 +3,7 @@
 + Fully functional PLC & HMI based on ESP32 module and 320x240 Touchscreen Display  
 + Open Source and Open Hardware
 + DIY. Easy to build, no SMD components
-+ Low Cost, estimated in less than [$20](hard/v0/)
++ Low Cost, estimated in less than [$20](hard/v0-CPU/)
 
 -----------------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ Or watch the Youtube videos:
 
 ![](./doc/PLsi_comparison.png)
 
- 1. DIY components pricing is included [here](hard/v0/)
+ 1. DIY components pricing is included [here](hard/v0-CPU/)
  	- This pricing considers to purchase some bulk quantities
  	- For this reason, a DIY kit might be available for $40 (no housing)
  	- A complete assembled unit with housing might be available for $70
@@ -118,7 +118,7 @@ The PLsi board v0 is designed to support, at least, 2 different configurations:
  	- 2 Analog Inputs 0-5V
  	- 2 Analog Outputs 0-5V
  
-Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0/board/pictures/PLsi_board.svg)
+Check the [drawing](./hard/v0-CPU/board/schematic/Schematic_PLsi_v0.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0-CPU/board/pictures/PLsi_board.svg)
 
 ### PLsi v0 Digital wiring diagram 
 
@@ -141,15 +141,15 @@ Check the [drawing](./hard/v0/board/schematic/Schematic_PLsi_v0_2021-01-02.pdf) 
 
 ## PLsi v0 Testing setup 
 
-![](./hard/v0/board/pictures/PLsi_04.jpg)
+![](./hard/v0-CPU/board/pictures/PLsi_04.jpg)
 
 ## PLsi v0 Housing
 
-![](./hard/v0/housing/pictures/PLsi_v0-Assembly.png)
+![](./hard/v0-CPU/housing/pictures/PLsi_v0-Assembly.png)
 
 ## PLsi v0 Assembled unit
 
-![](./hard/v0/housing/pictures/4.png)
+![](./hard/v0-CPU/housing/pictures/4.png)
 
 -----------------------------------------------------------------------------------------
 
