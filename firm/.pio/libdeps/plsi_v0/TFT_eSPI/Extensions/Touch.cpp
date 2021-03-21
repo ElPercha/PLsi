@@ -160,13 +160,13 @@ uint8_t TFT_eSPI::validTouch(uint16_t *x, uint16_t *y, uint16_t threshold){
 ** Description:             read callibrated position. Return false if not pressed. 
 ***************************************************************************************/
 #define Z_THRESHOLD 350 // Touch pressure threshold for validating touches
-uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold){
+uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold, uint16_t filter){
   uint16_t x_tmp, y_tmp;
   
   if (threshold<20) threshold = 20;
   if (_pressTime > millis()) threshold=20;
 
-  uint8_t n = 10; // ElPercha - was n = 5
+  uint8_t n = filter; // ElPercha - was n = 5 and n = 10 with better results
   uint8_t valid = 0;
   while (n--)
   {

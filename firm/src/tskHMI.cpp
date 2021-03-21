@@ -62,7 +62,7 @@ void TaskHMI(void *pvParameters)
     // Touch Screen press type detection
     //----------------------------------------------------
 
-    pressed = tft.getTouch(&ts_x, &ts_y);   
+    pressed = tft.getTouch(&ts_x, &ts_y, 350, 10);   
     touchType = HMI_IDLE;
 
     if (pressed && !pressedAux){
