@@ -34,14 +34,14 @@ void readInputsLocal(void){
     I[6] = !digitalRead(INPUT_06); 
   }
   else{
-    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_00)) * ANALOG_IN_RESOLUTION/ANALOG_IN_CALIBRATION);
+    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_00)) * ANALOG_RESOLUTION/ANALOG_IN_CALIBRATION);
 
     if (auxAnalogIn != 0){
       auxAnalogIn = auxAnalogIn + ANALOG_IN_ZERO_OFFSET;
     }
 
-    if (auxAnalogIn >= ANALOG_IN_RESOLUTION){
-      IW[6] = ANALOG_IN_RESOLUTION - 1;
+    if (auxAnalogIn >= ANALOG_RESOLUTION){
+      IW[6] = ANALOG_RESOLUTION - 1;
     }
     else{
       IW[6] = analogInfilter(0, auxAnalogIn);
@@ -52,14 +52,14 @@ void readInputsLocal(void){
     I[7] = !digitalRead(INPUT_07); 
   }
   else{
-    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_01)) * ANALOG_IN_RESOLUTION/ANALOG_IN_CALIBRATION);
+    uint16_t auxAnalogIn= uint16_t(double(analogRead(AN_INPUT_01)) * ANALOG_RESOLUTION/ANALOG_IN_CALIBRATION);
 
     if (auxAnalogIn != 0){
       auxAnalogIn = auxAnalogIn + ANALOG_IN_ZERO_OFFSET;
     }
 
-    if (auxAnalogIn >= ANALOG_IN_RESOLUTION){
-      IW[7] = ANALOG_IN_RESOLUTION - 1;
+    if (auxAnalogIn >= ANALOG_RESOLUTION){
+      IW[7] = ANALOG_RESOLUTION - 1;
     }
     else{
       IW[7] = analogInfilter(1, auxAnalogIn);
@@ -82,14 +82,14 @@ void writeOutputsLocal(void){
     digitalWrite(OUTPUT_04, Q[4]);
   }
   else{
-    dacWrite(AN_OUTPUT_00, QW[4]/(ANALOG_IN_RESOLUTION/ANALOG_OUT_RESOLUTION)); 
+    dacWrite(AN_OUTPUT_00, QW[4] * ANALOG_OUT_CALIBRATION/ANALOG_RESOLUTION /(ANALOG_RESOLUTION/ANALOG_OUT_RESOLUTION));
   }
 
   if (settings.io.localOutputs[5] == IO_TYPE_DIGITAL){
     digitalWrite(OUTPUT_05, Q[5]);
   }
   else{
-    dacWrite(AN_OUTPUT_01, QW[5]/(ANALOG_IN_RESOLUTION/ANALOG_OUT_RESOLUTION));
+    dacWrite(AN_OUTPUT_01, QW[5] * ANALOG_OUT_CALIBRATION/ANALOG_RESOLUTION /(ANALOG_RESOLUTION/ANALOG_OUT_RESOLUTION));
   }
 }
 

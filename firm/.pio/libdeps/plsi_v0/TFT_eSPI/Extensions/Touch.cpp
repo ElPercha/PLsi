@@ -166,7 +166,7 @@ uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold){
   if (threshold<20) threshold = 20;
   if (_pressTime > millis()) threshold=20;
 
-  uint8_t n = 10; // lucas - was n = 5
+  uint8_t n = 10; // ElPercha - was n = 5
   uint8_t valid = 0;
   while (n--)
   {
