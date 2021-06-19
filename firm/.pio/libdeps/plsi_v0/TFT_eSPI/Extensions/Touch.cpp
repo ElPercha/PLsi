@@ -38,7 +38,7 @@ inline void TFT_eSPI::end_touch_read_write(void){
   #else
     spi.setFrequency(SPI_FREQUENCY);
   #endif
-  SET_BUS_WRITE_MODE;
+  //SET_BUS_WRITE_MODE;
 }
 
 /***************************************************************************************
@@ -160,20 +160,22 @@ uint8_t TFT_eSPI::validTouch(uint16_t *x, uint16_t *y, uint16_t threshold){
 ** Description:             read callibrated position. Return false if not pressed. 
 ***************************************************************************************/
 #define Z_THRESHOLD 350 // Touch pressure threshold for validating touches
-uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold, uint16_t filter){
+// uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold){ // el percha
+uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold, uint16_t filter){ // el percha
   uint16_t x_tmp, y_tmp;
   
   if (threshold<20) threshold = 20;
   if (_pressTime > millis()) threshold=20;
 
-  uint8_t n = filter; // ElPercha - was n = 5 and n = 10 with better results
+  // uint8_t n = 5; // elpercha
+  uint8_t n = filter; // elpercha -  n = 10 have better results with 3.2" display
   uint8_t valid = 0;
   while (n--)
   {
     if (validTouch(&x_tmp, &y_tmp, threshold)) valid++;;
   }
 
-  if (valid<1) { _pressTime = 0; return false; } 
+  if (valid<1) { _pressTime = 0; return false; }
   
   _pressTime = millis() + 50;
 

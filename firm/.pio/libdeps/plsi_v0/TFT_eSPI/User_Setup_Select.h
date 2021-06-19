@@ -66,7 +66,7 @@
 //#include <User_Setups/Setup34_ILI9481_Parallel_STM32.h> // Setup for Nucleo board and parallel display
 //#include <User_Setups/Setup35_ILI9341_STM32_Port_Bus.h> // Setup for STM32 port A parallel display
 
-//#include <User_Setups/Setup36_RPi_touch_ILI9341.h>      // Setup file configured for ESP32 and RPi TFT with touch
+//#include <User_Setups/Setup36_RPi_touch_ST7796.h>      // Setup file configured for ESP32 and RPi ST7796 TFT with touch
 
 //#include <User_Setups/Setup43_ST7735.h>            // Setup file configured for my ST7735S 80x160
 //#include <User_Setups/Setup44_TTGO_CameraPlus.h>   // Setup file for ESP32 and TTGO T-CameraPlus ST7789 SPI bus TFT    240x240
@@ -76,7 +76,19 @@
 
 //#include <User_Setups/Setup50_SSD1963_Parallel.h>  // Setup file for ESP32 and SSD1963 TFT display
 
+//#include <User_Setups/Setup51_LilyPi_ILI9481.h>    // Setup file for LilyGo LilyPi with ILI9481 display
+
+//#include <User_Setups/Setup60_RP2040_ILI9341.h>    // Setup file for Raspberry Pi Pico with SPI ILI9341
+
 //#include <User_Setups/Setup135_ST7789.h>           // Setup file for ESP8266 and ST7789 135 x 240 TFT
+
+//#include <User_Setups/Setup136_LilyGo_TTV.h>       // Setup file for ESP32 and Lilygo TTV ST7789 SPI bus TFT  135x240
+
+//#include <User_Setups/Setup200_GC9A01.h>           // Setup file for ESP32 and GC9A01 240 x 240 TFT
+
+//#include <User_Setups/Setup201_WT32_SC01.h>        // Setup file for ESP32 based WT32_SC01 from Seeed
+
+//#include <User_Setups/Setup202_SSD1351_128.h>      // Setup file for ESP32/ESP8266 based SSD1351 128x128 1.5inch OLED display
 
 //#include <User_Setups/SetupX_Template.h>
 
@@ -116,12 +128,14 @@
 #endif
 
 // Invoke 18 bit colour for selected displays
-#if (defined (ILI9481_DRIVER) || defined (ILI9486_DRIVER) || defined (ILI9488_DRIVER)) && !defined (TFT_PARALLEL_8_BIT) && !defined (ESP32_PARALLEL)
-  #define SPI_18BIT_DRIVER
+#if !defined (RPI_DISPLAY_TYPE) && !defined (TFT_PARALLEL_8_BIT) && !defined (ESP32_PARALLEL)
+  #if defined (ILI9481_DRIVER) || defined (ILI9486_DRIVER) || defined (ILI9488_DRIVER)
+    #define SPI_18BIT_DRIVER
+  #endif
 #endif
 
 // Load the right driver definition - do not tinker here !
-#if   defined (ILI9341_DRIVER)
+#if   defined (ILI9341_DRIVER) || defined(ILI9341_2_DRIVER)
      #include <TFT_Drivers/ILI9341_Defines.h>
      #define  TFT_DRIVER 0x9341
 #elif defined (ST7735_DRIVER)
@@ -163,6 +177,9 @@
 #elif defined (RM68140_DRIVER)
      #include "TFT_Drivers/RM68140_Defines.h"
      #define  TFT_DRIVER 0x6814
+#elif defined (SSD1351_DRIVER)
+     #include "TFT_Drivers/SSD1351_Defines.h"
+     #define  TFT_DRIVER 0x1351
 #elif defined (SSD1963_480_DRIVER)
      #include "TFT_Drivers/SSD1963_Defines.h"
      #define  TFT_DRIVER 0x1963
