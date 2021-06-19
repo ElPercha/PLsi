@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Update.h>
+#include <ModbusIP_ESP8266.h> // elpercha
 #include <tskWiFi.h>
 #include <wifi_plsi.h>
 #include <disk.h>
@@ -47,7 +48,7 @@ void TaskWiFi(void *pvParameters)
   //----------------------------------------------------
 
   uint16_t WiFiPreviousStatus = !settings.wifi.enabled;
-  
+
   //--------------------------------------------------
   // Web server for OTA updates. Two pages:
   //    serverIndex - For *.bin file selection and Update
@@ -140,12 +141,39 @@ void TaskWiFi(void *pvParameters)
         WiFi.setHostname(WIFI_HOSTNAME);
         WiFi.begin(settings.wifi.ssid, settings.wifi.password);
         WiFi.setSleep(false);
-        server.begin();        
+        server.begin();
+
+        mb.server();                       // elpercha
+        mb.addHreg(TEST_HREG, 0, 10);      // elpercha
+
       }
       else{
         WiFi.disconnect();
       }
       WiFiPreviousStatus = settings.wifi.enabled;
+    }
+
+    //--------------------------------------------------
+    // Modbus TCP comm
+    // elpercha
+    //--------------------------------------------------
+ 
+    mb.task();
+
+    if (I[4]){
+      unsigned long StartTime = micros();
+      mb.Hreg(100,D[500]);
+      // mb.Hreg(101,D[501]);
+      // mb.Hreg(102,D[502]);
+      // mb.Hreg(103,D[503]);
+      // mb.Hreg(104,D[504]);
+      // mb.Hreg(105,D[505]);
+      // mb.Hreg(106,D[506]);
+      // mb.Hreg(107,D[507]);
+      unsigned long CurrentTime = micros();
+
+      Serial.print("   - Time taken to Perform Local Modbus register WRITE Operation: ");
+      Serial.println(CurrentTime - StartTime);
     }
 
     //--------------------------------------------------

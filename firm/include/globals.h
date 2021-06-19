@@ -90,7 +90,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define NC                     4
 #define RE                     5
 #define FE                     6
-#define COIL                   7
+#define COIL_                  7
 #define COILL                  8
 #define COILU                  9
 #define TON                   10

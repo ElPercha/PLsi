@@ -104,7 +104,7 @@ const String timerBaseTimeText[5] = {"millisec", "0.01 sec", "0.1 sec", "seconds
 //  We have 2 pages
 //----------------------------------------------------
 
-const uint16_t menuInstructions[3][15] = {{NO, NC, RE, FE, BAR_MNEMONIC_CODE, COIL, COILL, COILU, NEG, CONN, TON, TOFF, TP, CTU, CTD},
+const uint16_t menuInstructions[3][15] = {{NO, NC, RE, FE, BAR_MNEMONIC_CODE, COIL_, COILL, COILU, NEG, CONN, TON, TOFF, TP, CTU, CTD},
                                           {SUB, ADD, MUL, DIV, MOVE, AND, OR, XOR, NOT, NOPP, MOD, SHL, SHR, ROL, ROR},
                                           {EQ, GT, GE, LT, LE, NE, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP, NOPP}};
 
