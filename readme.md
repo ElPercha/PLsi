@@ -92,8 +92,6 @@ Or watch the Youtube videos:
 
  1. DIY components pricing is included [here](hard/v0-CPU/)
  	- This pricing considers to purchase some bulk quantities
- 	- For this reason, a DIY kit might be available for $40 (no housing)
- 	- A complete assembled unit with housing might be available for $70
  2. Two industrial protocols are planned to be added in future releases
  	- S7 connection [Issue #26](https://github.com/ElPercha/PLsi/issues/26)
 	- Modbus TCP [Issue #27](https://github.com/ElPercha/PLsi/issues/27)
