@@ -5,7 +5,7 @@
 	https://github.com/emelianov/modbus-esp8266
 	This code is licensed under the BSD New License. See LICENSE.txt for more info.
 */
-#pragma once
+//#pragma once //elpercha
 #include "ModbusRTU.h"
 
 // Table of CRC values
@@ -104,7 +104,7 @@ uint16_t ModbusRTUTemplate::send(uint8_t slaveId, TAddress startreg, cbTransacti
 
 void ModbusRTUTemplate::task() {
 	#if defined(ESP32)
-	taskENTER_CRITICAL(&mux);
+	portENTER_CRITICAL(&mux); // was taskEXIT_CRITICAL elpercha
 	#endif
     if (_port->available() > _len) {
         _len = _port->available();
@@ -112,7 +112,7 @@ void ModbusRTUTemplate::task() {
     }
 	if (_len == 0) {
 		#if defined(ESP32)
-    	taskEXIT_CRITICAL(&mux);
+    	portEXIT_CRITICAL(&mux); // was taskEXIT_CRITICAL elpercha
  		#endif
 		if (isMaster) cleanup();
 		return;
@@ -120,7 +120,7 @@ void ModbusRTUTemplate::task() {
 	if (isMaster) {
 		if (millis() - t < _t) {
 			#if defined(ESP32)
-    		taskEXIT_CRITICAL(&mux);
+    		portEXIT_CRITICAL(&mux); // was taskEXIT_CRITICAL elpercha
  			#endif
 			return;
 		}
@@ -134,14 +134,14 @@ void ModbusRTUTemplate::task() {
 			}
 			if (millis() - taskStart > MODBUSRTU_MAX_READMS) { // Prevent from task() executed too long
 				#if defined(ESP32)
-    			taskEXIT_CRITICAL(&mux);
+    			portEXIT_CRITICAL(&mux); // was taskEXIT_CRITICAL elpercha
  				#endif
 				return;
 			}
 		}
 	}
 	#if defined(ESP32)
-    taskEXIT_CRITICAL(&mux);
+    portEXIT_CRITICAL(&mux); // was taskEXIT_CRITICAL elpercha
  	#endif
 
     uint8_t address = _port->read(); //first byte of frame = address

@@ -30,14 +30,14 @@ uint16_t configFirmwareMemory = 0;
 // Web Server Object 
 //--------------------------------------------------------------------------------
 
-WebServer server(80);
+WebServer server(80); 
 
 //--------------------------------------------------------------------------------
 // Modbus TCP object
 //--------------------------------------------------------------------------------
 
-const int TEST_HREG = 100; // elpercha
-ModbusIP mb;               // elpercha 
+ModbusIP mb;//elpercha
+//IPAddress remote(192, 168, 30,,,,, 13);  // Address of Modbus Slave device
 
 //--------------------------------------------------------------------------------
 // Server Index Page and Style

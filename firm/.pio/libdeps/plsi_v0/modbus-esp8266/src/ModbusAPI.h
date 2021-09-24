@@ -168,11 +168,12 @@ IMPLEMENT_READREGS(readHreg, HREG, FC_READ_REGS, 0x007D, uint16_t)
 IMPLEMENT_READREGS(readIsts, ISTS, FC_READ_INPUT_STAT, 0x07D0, bool)
 IMPLEMENT_READREGS(readIreg, IREG, FC_READ_INPUT_REGS, 0x007D, uint16_t)
 
-#if defined(MODBUS_ADD_REG)
-#define ADDREG this->addReg(REG(to), 0, numregs); \
-#else
-#define ADDREG
-#endif
+//#if defined(MODBUS_ADD_REG) // elpercha
+//#define ADDREG this->addReg(REG(to), 0, numregs); \ // elpercha   
+//#else // elpercha
+#define ADDREG // elpercha
+//#endif // elpercha
+
 #define IMPLEMENT_PULL(FNAME, REG, FUNC, MAXNUM) \
 template <class T> \
 template <typename TYPEID> \

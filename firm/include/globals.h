@@ -273,14 +273,62 @@ typedef struct
 
 typedef struct
 {
+  uint16_t        enabled;
+  uint16_t        offset_0x;
+  uint16_t        length_0x;
+  uint16_t        plsiOffset_0x;
+  uint16_t        offset_1x;
+  uint16_t        length_1x;
+  uint16_t        plsiOffset_1x;
+  uint16_t        offset_3x;
+  uint16_t        length_3x;
+  uint16_t        plsiOffset_3x;
+  uint16_t        offset_4x;
+  uint16_t        length_4x;
+  uint16_t        plsiOffset_4x;
+} modbusTCPserverSettings;
+
+typedef struct
+{
+  uint16_t        enabled;
+  uint16_t        offset_0x;
+  uint16_t        length_0x;
+  uint16_t        plsiOffset_0x;
+  uint16_t        offset_1x;
+  uint16_t        length_1x;
+  uint16_t        plsiOffset_1x;
+  uint16_t        offset_3x;
+  uint16_t        length_3x;
+  uint16_t        plsiOffset_3x;
+  uint16_t        offset_4x;
+  uint16_t        length_4x;
+  uint16_t        plsiOffset_4x;
+} modbusTCPclientSettings;
+
+typedef struct
+{
+  uint16_t        enabled;
+} s7Settings;
+
+typedef struct
+{
+  modbusTCPserverSettings  modbusTCPserver;
+  modbusTCPclientSettings  modbusTCPclient[4];
+  s7Settings               s7;
+} commSettings;
+
+typedef struct
+{
   generalSettings general;
   ladderSettings  ladder;
   ioSettings      io;
   hmiSettings     hmi;
   wifiSettings    wifi;
+  commSettings    comm;
 } userSettings;
 
 extern userSettings settings;
+
 
 //--------------------------------------------------------------------------------
 // Manage the boot secuence between tasks.

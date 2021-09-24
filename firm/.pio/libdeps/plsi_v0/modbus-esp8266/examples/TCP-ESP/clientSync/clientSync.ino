@@ -42,6 +42,11 @@ void loop() {
   uint16_t res = 0;
   if (mb.isConnected(remote)) {   // Check if connection to Modbus Slave is established
     uint16_t trans = mb.readHreg(remote, REG, &res);  // Initiate Read Hreg from Modbus Server
+    
+
+    uint16_t readHreg<TYPEID>(TYPEID id, uint16_t offset, uint16_t *value, uint16_t numregs, cbTransaction cb, uint8_t unit)
+
+
     while(mb.isTransaction(trans)) {  // Check if transaction is active
       mb.task();
       delay(10);

@@ -134,6 +134,20 @@ void loadDefaultSettings(void){
   snprintf(settings.wifi.password, PASS_LENGTH, WIFI_PASS);
   settings.wifi.enabled = 0;
 
+  settings.comm.modbusTCPserver.enabled = 1;
+  settings.comm.modbusTCPserver.offset_0x = 0;
+  settings.comm.modbusTCPserver.offset_1x = 0;
+  settings.comm.modbusTCPserver.offset_3x = 0;
+  settings.comm.modbusTCPserver.offset_4x = 0;
+  settings.comm.modbusTCPserver.plsiOffset_0x = 0;
+  settings.comm.modbusTCPserver.plsiOffset_1x = 0;
+  settings.comm.modbusTCPserver.plsiOffset_3x = 0;
+  settings.comm.modbusTCPserver.plsiOffset_4x = 0;
+  settings.comm.modbusTCPserver.length_0x = 10;
+  settings.comm.modbusTCPserver.length_1x = 10;
+  settings.comm.modbusTCPserver.length_3x = 10;
+  settings.comm.modbusTCPserver.length_4x = 10;
+
   saveSettings();
 } 
 
