@@ -36,7 +36,7 @@ WebServer server(80);
 // Modbus TCP object
 //--------------------------------------------------------------------------------
 
-// ModbusIP mb;//elpercha
+ModbusIP mb;//elpercha
 //IPAddress remote(192, 168, 30,,,,, 13);  // Address of Modbus Slave device
 
 //--------------------------------------------------------------------------------
