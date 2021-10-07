@@ -204,6 +204,9 @@ extern unsigned long auxTimerFirmwareBar;
 #define PAGE_ConfigNetwork            110
 #define PAGE_ConfigWiFi               111
 #define PAGE_ScanWiFi                 112
+#define PAGE_ConfigModbusTCP          113
+#define PAGE_ConfigS7                 114
+#define PAGE_ConfigWebServer          115
 
 #define PAGE_ConfigPLC                120
 #define PAGE_ConfigProgram            121
@@ -497,6 +500,9 @@ void pageConfigSystem (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, ui
 void pageConfigFirmware (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigScanWiFi (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigModbusTCP (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigS7 (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
+void pageConfigWebServer (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 void pageConfigHMI (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y);
 
 
@@ -566,7 +572,9 @@ void touchConfigIOlocal(uint16_t ts_x, uint16_t ts_y);
 void touchConfigSystem(uint16_t ts_x, uint16_t ts_y);
 void touchConfigFirmware(uint16_t ts_x, uint16_t ts_y);
 void touchConfigScanWiFi(uint16_t ts_x, uint16_t ts_y);
-
+void touchConfigModbusTCP(uint16_t ts_x, uint16_t ts_y);
+void touchConfigS7(uint16_t ts_x, uint16_t ts_y);
+void touchConfigWebServer(uint16_t ts_x, uint16_t ts_y);
 
 void drawInstructionsEditorBooleanBar(void);
   uint16_t getMaxMemoryAddress(uint16_t type);
@@ -627,6 +635,9 @@ void drawConfigWiFiNetwork(void);
   void drawWiFiNetworkConfigStatus(void);
   void drawNetworkConfigButtons(void);
   void drawNetworkWifiOnOffButton(void);
+void drawConfigModbusTCP(void);
+void drawConfigS7(void);
+void drawConfigWebServer(void);
 void drawConfigPLC(void);
   void drawConfigProgram(void);
 void drawConfigHMI(void);

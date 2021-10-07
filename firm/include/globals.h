@@ -286,6 +286,7 @@ typedef struct
   uint16_t        offset_4x;
   uint16_t        length_4x;
   uint16_t        plsiOffset_4x;
+  uint16_t        port;
 } modbusTCPserverSettings;
 
 typedef struct
@@ -303,6 +304,8 @@ typedef struct
   uint16_t        offset_4x;
   uint16_t        length_4x;
   uint16_t        plsiOffset_4x;
+  IPAddress       ip;
+  uint16_t        port;
 } modbusTCPclientSettings;
 
 typedef struct
@@ -328,7 +331,6 @@ typedef struct
 } userSettings;
 
 extern userSettings settings;
-
 
 //--------------------------------------------------------------------------------
 // Manage the boot secuence between tasks.

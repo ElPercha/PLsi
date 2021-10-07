@@ -129,6 +129,15 @@ void TaskHMI(void *pvParameters)
       case PAGE_ConfigWiFi:
         pageConfigWiFi(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;
+      case PAGE_ConfigModbusTCP:
+        pageConfigModbusTCP(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
+        break;
+      case PAGE_ConfigS7:
+        pageConfigS7(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
+        break;
+      case PAGE_ConfigWebServer:
+        pageConfigWebServer(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
+        break;
       case PAGE_ScanWiFi:
         pageConfigScanWiFi(firstLoad, touchType, ts_pressed_x, ts_pressed_y, ts_actual_x, ts_actual_y);
         break;

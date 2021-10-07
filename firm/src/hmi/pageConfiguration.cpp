@@ -102,8 +102,7 @@ void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
       hmiPage = PAGE_ConfigIOlocal;      
     }
     else{
-      //hmiPage = PAGE_ConfigNetwork;      
-      hmiPage = PAGE_ConfigWiFi;      
+      hmiPage = PAGE_ConfigNetwork;      
     }
   }
   else{

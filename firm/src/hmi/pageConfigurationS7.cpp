@@ -15,41 +15,60 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef WIFI_PLSI_H
-#define WIFI_PLSI_H
+#include <globals.h>
+#include <TFT_eSPI.h>
+#include <hmi.h>
 
 //--------------------------------------------------------------------------------
-// Globals variables for WiFi task
+// ModbusTCP Main Configuration Page
 //--------------------------------------------------------------------------------
 
-extern uint16_t configFirmwareEnabled;
-extern uint16_t configFirmwareSequence;
-extern uint16_t configFirmwareMemory;
+void pageConfigS7 (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
+{
+  //-------------------------------
+  // draw full Page on first load
+  //-------------------------------
+    
+    if(firstLoad){
+      drawConfigS7();
+    }
+    
+  //-------------------------------
+  // update required fields
+  //-------------------------------
 
-extern uint32_t previousFreeMemory;
+    //Nothing to update
+
+  //-------------------------------
+  // Parse touch screen
+  //-------------------------------
+
+  if (touchType == HMI_TOUCHED){
+
+    touchConfigS7(ts_x, ts_y); 
+  } 
+}
 
 //--------------------------------------------------------------------------------
-// Web Server Object 
+// S7 Configuration draw 
 //--------------------------------------------------------------------------------
 
-extern WebServer server; 
+void drawConfigS7 (void){
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(WHITE);
+  tft.setTextSize(2);
+  tft.setCursor(10, 10);
+  tft.print("S7 config");
+  tft.setCursor(10, 30);
+  tft.print("not yet available!");
+}
 
 //--------------------------------------------------------------------------------
-// Modbus TCP 
+// S7 configuration page
+// Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-extern ModbusIP modbusTCP;
-extern IPAddress remote;  // Address of Modbus Slave device
+void touchConfigS7(uint16_t ts_x, uint16_t ts_y){
+  hmiPage = PAGE_ConfigNetwork;
+}
 
-//--------------------------------------------------------------------------------
-// Wifi task main functions
-//--------------------------------------------------------------------------------
-
-void wifiWaitSettings(void);
-void printAvailableMemory(void);
-
-void modbusTCPConfigure (void);
-void modbusTCPUnconfigure (void);
-void modbusTCPManager (void);
-
-#endif

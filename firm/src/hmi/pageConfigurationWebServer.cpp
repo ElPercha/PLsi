@@ -15,41 +15,60 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef WIFI_PLSI_H
-#define WIFI_PLSI_H
+#include <globals.h>
+#include <TFT_eSPI.h>
+#include <hmi.h>
 
 //--------------------------------------------------------------------------------
-// Globals variables for WiFi task
+// WebServer Main Configuration Page
 //--------------------------------------------------------------------------------
 
-extern uint16_t configFirmwareEnabled;
-extern uint16_t configFirmwareSequence;
-extern uint16_t configFirmwareMemory;
+void pageConfigWebServer (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, uint16_t ts_y, uint16_t ts_actual_x, uint16_t ts_actual_y)
+{
+  //-------------------------------
+  // draw full Page on first load
+  //-------------------------------
+    
+    if(firstLoad){
+      drawConfigWebServer ();
+    }
+    
+  //-------------------------------
+  // update required fields
+  //-------------------------------
 
-extern uint32_t previousFreeMemory;
+    //Nothing to update
+
+  //-------------------------------
+  // Parse touch screen
+  //-------------------------------
+
+  if (touchType == HMI_TOUCHED){
+
+    touchConfigWebServer(ts_x, ts_y); 
+  } 
+}
 
 //--------------------------------------------------------------------------------
-// Web Server Object 
+// WebServer Configuration draw 
 //--------------------------------------------------------------------------------
 
-extern WebServer server; 
+void drawConfigWebServer (void){
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(WHITE);
+  tft.setTextSize(2);
+  tft.setCursor(10, 10);
+  tft.print("WebServer config");
+  tft.setCursor(10, 30);
+  tft.print("not yet available!");
+}
 
 //--------------------------------------------------------------------------------
-// Modbus TCP 
+// WebServer configuration page
+// Touch Screen parsing
 //--------------------------------------------------------------------------------
 
-extern ModbusIP modbusTCP;
-extern IPAddress remote;  // Address of Modbus Slave device
+void touchConfigWebServer(uint16_t ts_x, uint16_t ts_y){
+  hmiPage = PAGE_ConfigNetwork;
+}
 
-//--------------------------------------------------------------------------------
-// Wifi task main functions
-//--------------------------------------------------------------------------------
-
-void wifiWaitSettings(void);
-void printAvailableMemory(void);
-
-void modbusTCPConfigure (void);
-void modbusTCPUnconfigure (void);
-void modbusTCPManager (void);
-
-#endif

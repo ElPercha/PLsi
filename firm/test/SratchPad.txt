@@ -148,6 +148,8 @@ TSKladder.cpp
 -------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------
 
+printAvailableMemory();
+  
 // Get free heap current and historical minimim
 Serial.print("   - Free ESP Miniumn memory ever available: ");
 Serial.println (esp_get_minimum_free_heap_size());

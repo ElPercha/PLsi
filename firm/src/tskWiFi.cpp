@@ -16,26 +16,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include <globals.h>
+#include <plsi.h>
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Update.h>
-#include <ModbusIP.h> //elpercha
+#include <ModbusIP.h>
+#include <disk.h>
 #include <tskWiFi.h>
 #include <wifi_plsi.h>
-#include <disk.h>
-
-// Callback function for client connect. Returns true to allow connection.
-// elpercha
-// bool cbConn(IPAddress ip) {
-//   Serial.print("Se Conecto el cliente: ");
-//   Serial.println(ip);
-//   return true;
-// }
-// bool cbDisconn(IPAddress ip) {
-//   Serial.println(ip);
-//   Serial.println("Se Desconecto el cliente: ");
-//   return true;
-// }
 
 //--------------------------------------------------------------------------------
 // WiFi Task 
@@ -163,74 +151,22 @@ void TaskWiFi(void *pvParameters)
     }
 
     //--------------------------------------------------
-    // Modbus TCP Server control
+    // Modbus TCP Server & client management
     //--------------------------------------------------
-    // elpercha
 
     if ((settings.comm.modbusTCPserver.enabled != modbusTCPserverPreviousStatus) && WiFi.isConnected()){
       if (settings.comm.modbusTCPserver.enabled){
-
-        mb.server();
-        // mb.onConnect(cbConn);         // Add callback on connection event
-        // mb.onDisconnect(cbDisconn);   // Add callback on connection event
-  
-        mb.addIsts(0, 0, 10);
-        mb.addIreg(0, 0, 10);
-        mb.addHreg(0, 0, 100);
-        mb.addCoil(0, 0, 100);
-
-        Serial.print("Tsk WiFi - Modbus TCP server Started");
+        modbusTCPConfigure();
       }
       else{
-        //mb. close?
-        // mb.connect(ip, 502);
-
-        // mb.readHreg()
-
-        //mb.
-
-        Serial.print("Tsk WiFi - Modbus TCP server Closed");
+        modbusTCPUnconfigure();
       }
       modbusTCPserverPreviousStatus = settings.comm.modbusTCPserver.enabled;
     }
 
     if (WiFi.isConnected() && settings.comm.modbusTCPserver.enabled){
-    
-      mb.task(); //elpercha debug
-
-      mb.Ists(0, I[0]);
-      mb.Ists(1, I[1]);
-      mb.Ists(2, I[2]);
-      mb.Ists(3, I[3]);
-      mb.Ists(4, I[4]);
-      mb.Ists(5, I[5]);
-      mb.Ists(6, I[6]);
-      mb.Ists(7, I[7]);
-      mb.Ireg(0, IW[0]);
-      mb.Ireg(1, IW[1]);
-      mb.Ireg(2, IW[2]);
-      mb.Ireg(3, IW[3]);
-      mb.Ireg(4, IW[4]);
-      mb.Ireg(5, IW[5]);
-      mb.Ireg(6, IW[6]);
-      mb.Ireg(7, IW[7]);
+      modbusTCPManager();
     } 
-
-    if (I[4]){
-      unsigned long StartTime = micros();
-      mb.Hreg(10,D[500]);
-      mb.Hreg(11,D[501]);
-      mb.Hreg(12,D[502]);
-      mb.Hreg(13,D[503]);
-      mb.Hreg(14,D[504]);
-      mb.Hreg(15,D[505]);
-      mb.Hreg(16,D[506]);
-      mb.Hreg(17,D[507]);
-      unsigned long CurrentTime = micros();
-
-      Serial.print("   - Time taken to Perform Local Modbus register WRITE Operation: ");
-      Serial.println(CurrentTime - StartTime);
-    }
 
     //--------------------------------------------------
     // Firmware update (OTA)

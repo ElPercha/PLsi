@@ -53,6 +53,31 @@ void pageConfigNetwork (uint16_t firstLoad, uint16_t touchType, uint16_t ts_x, u
 //--------------------------------------------------------------------------------
 
 void drawConfigNetwork (void){
+  #define CONFIG_BUTTON_ROW          3
+  #define CONFIG_BUTTON_COL          2          
+  #define CONFIG_BUTTON_SPACE        5           
+  #define CONFIG_BUTTON_W           (TFT_PIXELS_X - (CONFIG_BUTTON_SPACE * (CONFIG_BUTTON_COL + 1))) / CONFIG_BUTTON_COL
+  #define CONFIG_BUTTON_H           (TFT_PIXELS_Y - (CONFIG_BUTTON_SPACE * (CONFIG_BUTTON_ROW + 1))) / CONFIG_BUTTON_ROW
+
+  const String configLabels[6] = {"Wi-Fi","Modbus TCP","Web Server","S7","Back","Home"};
+
+  tft.fillScreen(COLOR_CONFIG_MAIN_BACK);
+  tft.setTextSize(1);
+  tft.setTextColor(COLOR_CONFIG_MAIN_TEXT);
+
+  for (uint16_t row = 0; row < CONFIG_BUTTON_ROW; row++){
+    for (uint16_t col = 0; col < CONFIG_BUTTON_COL; col++){
+      uint16_t i = col + row * CONFIG_BUTTON_COL;
+      uint16_t x = CONFIG_BUTTON_SPACE + col * (CONFIG_BUTTON_W + CONFIG_BUTTON_SPACE);
+      uint16_t y = CONFIG_BUTTON_SPACE + row * (CONFIG_BUTTON_H + CONFIG_BUTTON_SPACE);
+      
+      tft.drawRoundRect(x, y, CONFIG_BUTTON_W, CONFIG_BUTTON_H, 10, COLOR_CONFIG_MAIN_BORDER);
+
+      tft.setFreeFont(FSS12);
+      tft.drawCentreString(configLabels[i], x + CONFIG_BUTTON_W/2, y + 28, GFXFF);
+    }
+  }
+  tft.setTextFont(1);
 
 }
 
@@ -62,5 +87,28 @@ void drawConfigNetwork (void){
 //--------------------------------------------------------------------------------
 
 void touchConfigNetwork(uint16_t ts_x, uint16_t ts_y){
-
+  if(ts_y < 80){
+    if(ts_x < 160){
+      hmiPage = PAGE_ConfigWiFi;      
+    }
+    else{
+      hmiPage = PAGE_ConfigModbusTCP;      
+    }
+  }
+  else if(ts_y < 160){
+    if(ts_x < 160){
+      hmiPage = PAGE_ConfigWebServer;      
+    }
+    else{
+      hmiPage = PAGE_ConfigS7;      
+    }
+  }
+  else{
+    if(ts_x < 160){
+      hmiPage = PAGE_MainConfig;      
+    }
+    else{
+      hmiPage = PAGE_MainMenu;
+    }
+  }
 }

@@ -16,9 +16,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include <globals.h>
+#include <plsi.h>
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Update.h>
+#include <ModbusIP.h>
+#include <disk.h>
 #include <wifi_plsi.h>
 
 //--------------------------------------------------------------------------------
@@ -31,4 +34,19 @@ void wifiWaitSettings (void){
     delay(10); // forces to update bootSequence global variable
   }
   Serial.println("TaskWifi - Task Unlocked");
+}
+
+//--------------------------------------------------------------------------------
+// Get free heap current and historical minimim
+//--------------------------------------------------------------------------------
+
+void printAvailableMemory (void){
+  Serial.print("      - Free ESP Miniumn memory ever available: ");
+  Serial.println (esp_get_minimum_free_heap_size());
+  Serial.print("      - Free ESP memory xPort: ");
+  Serial.println(xPortGetFreeHeapSize());
+  Serial.print("      - Memory allocated: ");
+  Serial.println(previousFreeMemory - xPortGetFreeHeapSize());
+
+  previousFreeMemory = xPortGetFreeHeapSize(); 
 }

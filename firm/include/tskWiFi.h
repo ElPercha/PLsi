@@ -26,6 +26,8 @@ uint16_t configFirmwareEnabled = 0;
 uint16_t configFirmwareSequence = 0;
 uint16_t configFirmwareMemory = 0;
 
+uint32_t previousFreeMemory = 0;
+
 //--------------------------------------------------------------------------------
 // Web Server Object 
 //--------------------------------------------------------------------------------
@@ -36,8 +38,8 @@ WebServer server(80);
 // Modbus TCP object
 //--------------------------------------------------------------------------------
 
-ModbusIP mb;//elpercha
-//IPAddress remote(192, 168, 30,,,,, 13);  // Address of Modbus Slave device
+ModbusIP modbusTCP;//elpercha
+IPAddress remote(192, 168, 1, 121);  // Address of Modbus Slave device
 
 //--------------------------------------------------------------------------------
 // Server Index Page and Style
