@@ -15,7 +15,7 @@ Create a PLC & HMI with the following main characteristics:
 - ESP32 Processor
 	+ Dual Core @240MHZ
 	+ Wi-Fi connectivity
-- 2.8" Touchscreen Display
+- 2.8" 320x240 Touchscreen Display
 - 8 Hardware Inputs 5-24VDC Isolated with status led
 - 6 Hardware Relay Outputs with status led. Max 10A, external fuse required
 - Different combinations of Digital and Analog I/O using the same board
