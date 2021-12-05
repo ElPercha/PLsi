@@ -30,11 +30,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //--------------------------------------------------------------------------------
 
 // elpercha
-// bool cbConn(IPAddress ip) {
-//   Serial.print("Se Conecto el cliente: ");
-//   Serial.println(ip);
-//   return true;
-// }
+bool cbConn(IPAddress ip) {
+  Serial.print("Se Conecto el cliente: ");
+  Serial.println(ip);
+  return true;
+}
 // bool cbDisconn(IPAddress ip) {
 //   Serial.println(ip);
 //   Serial.println("Se Desconecto el cliente: ");
@@ -55,7 +55,7 @@ void modbusTCPConfigure (void){
 
     modbusTCP.client(); // only when enabled
 
-    // mb.onConnect(cbConn);         // Add callback on connection event
+    modbusTCP.onConnect(cbConn);         // Add callback on connection event
     // mb.onDisconnect(cbDisconn);   // Add callback on connection event
 
     printAvailableMemory();
@@ -107,7 +107,7 @@ void modbusTCPManager (void){
     modbusTCP.Ireg(7, IW[7]);
 
 
-    if (I[7]){
+    if (I[7] && 0){
 
       if (modbusTCP.isConnected(remote)) {   // Check if connection to Modbus Slave is established
         // modbusTCP.readHreg(remote, REG, &res);  // Initiate Read Coil from Modbus Slave
@@ -128,7 +128,7 @@ void modbusTCPManager (void){
 
     }
 
-    if (I[6]){
+    if (I[6] && 0){
     // type == COIL;
     // type == ISTS;
     // type == IREG;
