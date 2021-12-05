@@ -1,21 +1,17 @@
 # **PLsi Project Objective**
 
-Create an PLC + HMI with the following main characteristics:
+Create a PLC & HMI with the following main characteristics:
 + Does not require external systems such us Laptops or Cellphones to be programmed
 + To be used on Classroom for educational purposes, IOT applications or industrial low risk applications
 + Software and Hardware with Industrial performance and features
-
-# **PLsi General Info**
-
-+ Fully functional PLC & HMI based on ESP32 module and 320x240 Touchscreen Display  
-+ Open Source and Open Hardware
-+ DIY. Easy to build, no SMD components
-+ Low Cost, estimated in less than [$20](hard/v0-CPU/)
++ Forever Open Source and Open Hardware
++ Focus on Low Cost, V0 hardware estimated in less than [$20](hard/v0-CPU/)
 
 -----------------------------------------------------------------------------------------
 
 ## Hardware Version 0
 
+- Easy to build, no SMD components. DIY!
 - ESP32 Processor
 	+ Dual Core @240MHZ
 	+ Wi-Fi connectivity
