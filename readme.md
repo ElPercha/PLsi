@@ -1,7 +1,7 @@
-# **PLsi Project Objective**
+# **PLsi Project Objectives**
 
 Create a PLC & HMI with the following main characteristics:
-+ Does not require external systems such us Laptops or Cellphones to be programmed
++ To not require external systems such us Laptops or Cellphones to be programmed
 + To be used on Classroom for educational purposes, IOT applications or industrial low risk applications
 + Software and Hardware with Industrial performance and features
 + Forever Open Source and Open Hardware
