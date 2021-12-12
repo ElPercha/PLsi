@@ -5,7 +5,7 @@ Create a PLC & HMI with the following main characteristics:
 + To be used on Classroom for educational purposes, IOT applications or industrial low risk applications
 + Software and Hardware with Industrial performance and features
 + Forever Open Source and Open Hardware
-+ Focus on Low Cost, V0 hardware estimated in less than [$20](hard/v0-CPU/)
++ Focus on Low Cost, V0 hardware estimated in less than [$20](hard/CPU/v0/)
 
 -----------------------------------------------------------------------------------------
 
@@ -94,7 +94,7 @@ Or watch the Youtube videos:
 
 ![](./doc/PLsi_comparison.png)
 
- 1. DIY components pricing is included [here](hard/v0-CPU/)
+ 1. DIY components pricing is included [here](hard/CPU/v0/)
  	- This pricing considers to purchase some bulk quantities
  2. Two industrial protocols are planned to be added in future releases
  	- S7 connection [Issue #26](https://github.com/ElPercha/PLsi/issues/26)
@@ -120,7 +120,7 @@ The PLsi board v0 is designed to support, at least, 2 different configurations:
  	- 2 Analog Inputs 0-5V
  	- 2 Analog Outputs 0-5V
  
-Check the [drawing](./hard/v0-CPU/board/schematic/PLsi_v0_Schematic.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0-CPU/board/pictures/PLsi_board.svg)
+Check the [drawing](./hard/CPU/v0/board/schematic/PLsi_v0_Schematic.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/CPU/v0/board/pictures/PLsi_board.svg)
 
 ### PLsi v0 Digital wiring diagram 
 
@@ -143,11 +143,11 @@ Check the [drawing](./hard/v0-CPU/board/schematic/PLsi_v0_Schematic.pdf) and the
 
 ## PLsi v0 Testing setup 
 
-![](./hard/v0-CPU/board/pictures/PLsi_04.jpg)
+![](./hard/CPU/v0/board/pictures/PLsi_04.jpg)
 
 ## PLsi v0 Housing
 
-![](./hard/v0-CPU/housing/pictures/PLsi_v0-Assembly.png)
+![](./hard/CPU/v0/housing/pictures/PLsi_v0-Assembly.png)
 
 ## PLsi v0 Demo Panel
 
