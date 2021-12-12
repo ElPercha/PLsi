@@ -124,7 +124,7 @@ Check the [drawing](./hard/v0-CPU/board/schematic/PLsi_v0_Schematic.pdf) and the
 
 ### PLsi v0 Digital wiring diagram 
 
-![](./doc/PLsi_v0_wiring_digital.svg)
+![](./doc/wiring/PLsi_v0_wiring_digital.svg)
 
 + Supply Voltage: 5V 1A (recommended 2A)
 	- Standard Micro USB type B connector
@@ -135,7 +135,7 @@ Check the [drawing](./hard/v0-CPU/board/schematic/PLsi_v0_Schematic.pdf) and the
 
 ### PLsi v0 Analog wiring diagram
 
-![](./doc/PLsi_v0_wiring_analog.svg)
+![](./doc/wiring/PLsi_v0_wiring_analog.svg)
 
 + Analog Inputs and Outputs are not isolated
 
