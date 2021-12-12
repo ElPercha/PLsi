@@ -11,6 +11,8 @@ Create a PLC & HMI with the following main characteristics:
 
 ## Hardware Version 0
 
+**Main characteristics:**
+
 - Easy to build, no SMD components. DIY!
 - ESP32 Processor
 	+ Dual Core @240MHZ
@@ -29,7 +31,6 @@ Create a PLC & HMI with the following main characteristics:
 -----------------------------------------------------------------------------------------
 
 ## Firmware Version 0.00.03
-February 4, 2021
 
 **Main functionalities:**
 
@@ -119,11 +120,11 @@ The PLsi board v0 is designed to support, at least, 2 different configurations:
  	- 2 Analog Inputs 0-5V
  	- 2 Analog Outputs 0-5V
  
-Check the [drawing](./hard/v0-CPU/board/schematic/Schematic_PLsi_v0.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0-CPU/board/pictures/PLsi_board.svg)
+Check the [drawing](./hard/v0-CPU/board/schematic/PLsi_v0_Schematic.pdf) and the [Hardware Manual](./doc/PLsi_v0_Hardware_Manual.pdf) for more details on how to build the 2 different models using the same [board](./hard/v0-CPU/board/pictures/PLsi_board.svg)
 
 ### PLsi v0 Digital wiring diagram 
 
-![](./doc/PLsi_wiring_digital.svg)
+![](./doc/PLsi_v0_wiring_digital.svg)
 
 + Supply Voltage: 5V 1A (recommended 2A)
 	- Standard Micro USB type B connector
@@ -134,7 +135,7 @@ Check the [drawing](./hard/v0-CPU/board/schematic/Schematic_PLsi_v0.pdf) and the
 
 ### PLsi v0 Analog wiring diagram
 
-![](./doc/PLsi_wiring_analog.svg)
+![](./doc/PLsi_v0_wiring_analog.svg)
 
 + Analog Inputs and Outputs are not isolated
 
@@ -148,9 +149,9 @@ Check the [drawing](./hard/v0-CPU/board/schematic/Schematic_PLsi_v0.pdf) and the
 
 ![](./hard/v0-CPU/housing/pictures/PLsi_v0-Assembly.png)
 
-## PLsi v0 Assembled unit
+## PLsi v0 Demo Panel
 
-![](./hard/v0-CPU/housing/pictures/4.png)
+![](./doc/demo_panel/demo_panel.jpg)
 
 -----------------------------------------------------------------------------------------
 
