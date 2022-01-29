@@ -1,4 +1,4 @@
-# **PLsi Project Objectives**
+## **PLsi Project Objectives**
 
 Create a PLC & HMI with the following main characteristics:
 + To not require external systems such us Laptops or Cellphones to be programmed
