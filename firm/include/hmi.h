@@ -19,19 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #define HMI_H
 
 #include <Free_Fonts.h>
- 
-
-// Issue #11 to delete this file from the project once it is fully documented
-// Issue #11 - Create user manual
-
-// Move to hmi.h to capture screen
-
-    boolean screenServer(void);                   //  Issue #11 - For Screen Saver PC connection
-    boolean screenServer(String filename);        //  Issue #11 - For Screen Saver PC connection
-    boolean serialScreenServer(String filename);  //  Issue #11 - For Screen Saver PC connection
-    void sendParameters(String filename);         //  Issue #11 - For Screen Saver PC connection
-
-
 
 //--------------------------------------------------------------------------------
 // Globals variables for HMI 

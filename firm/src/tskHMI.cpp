@@ -201,15 +201,6 @@ void TaskHMI(void *pvParameters)
       hmiPage = PAGE_DialogMessage;
     }
 
-
-
-    // Move to HMI TASK for screen capture
-    // Issue #11 - For Screen Saver PC connection
-
-    if (I[3]){           
-      screenServer();
-      delay(1000);   
-    }
     delay(5); 
   }
 }
