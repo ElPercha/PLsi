@@ -102,8 +102,7 @@ void touchMainConfig(uint16_t ts_x, uint16_t ts_y){
       hmiPage = PAGE_ConfigIOlocal;      
     }
     else{
-      //hmiPage = PAGE_ConfigNetwork; // Full Network configuration menu. Not enabled since most features are not available. Only WiFi for V0.00.03
-      hmiPage = PAGE_ConfigWiFi;
+      hmiPage = PAGE_ConfigNetwork;
     }
   }
   else{

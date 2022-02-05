@@ -29,10 +29,10 @@
 
 // Move to hmi.h to capture screen
 
-    boolean screenServer(void);                   //  Issue #11 - For Screen Saver PC connection
-    boolean screenServer(String filename);        //  Issue #11 - For Screen Saver PC connection
-    boolean serialScreenServer(String filename);  //  Issue #11 - For Screen Saver PC connection
-    void sendParameters(String filename);         //  Issue #11 - For Screen Saver PC connection
+    // boolean screenServer(void);                   //  Issue #11 - For Screen Saver PC connection
+    // boolean screenServer(String filename);        //  Issue #11 - For Screen Saver PC connection
+    // boolean serialScreenServer(String filename);  //  Issue #11 - For Screen Saver PC connection
+    // void sendParameters(String filename);         //  Issue #11 - For Screen Saver PC connection
 
 
 // Move to HMI TASK for screen capture
@@ -45,12 +45,10 @@
 
 
 
+// Move to PLsi.h
 // Define the following baudrate
 // Issue #11 - For Screen Saver PC connection
 //#define BAUD_RATE          921600 //  Issue #11 - For Screen Saver PC connection
-
-
-
 
 
 //====================================================================================
