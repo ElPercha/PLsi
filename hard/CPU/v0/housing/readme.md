@@ -23,7 +23,7 @@ For each part, 3 files are included in the "cura-slicer" folder:
 
 3D Print details:
 
-	Housing Base material usage:
+	Housing Base:
 		Printing Time: 5h
 
 	Housing Cover:
@@ -31,6 +31,9 @@ For each part, 3 files are included in the "cura-slicer" folder:
 
 	Housing Cover with Pen:
 		Printing Time: 9.5h
+
+	Housing Din Rail Brackets:
+		Printing Time: 10h
 
 	3D Printer used:
 		Creality3D Upgraded Ender-3 V2
