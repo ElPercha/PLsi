@@ -35,10 +35,21 @@ extern uint32_t previousFreeMemory;
 extern WebServer server; 
 
 //--------------------------------------------------------------------------------
+// Modbus TCP 
+//--------------------------------------------------------------------------------
+
+extern ModbusIP modbusTCP;
+extern IPAddress remote;  // Address of Modbus Slave device
+
+//--------------------------------------------------------------------------------
 // Wifi task main functions
 //--------------------------------------------------------------------------------
 
 void wifiWaitSettings(void);
 void printAvailableMemory(void);
+
+void modbusTCPConfigure (void);
+void modbusTCPUnconfigure (void);
+void modbusTCPManager (void);
 
 #endif

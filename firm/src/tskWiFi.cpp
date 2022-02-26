@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Update.h>
+#include <ModbusIP.h>
 #include <disk.h>
 #include <tskWiFi.h>
 #include <wifi_plsi.h>
@@ -48,6 +49,7 @@ void TaskWiFi(void *pvParameters)
   //----------------------------------------------------
 
   uint16_t WiFiPreviousStatus = !settings.wifi.enabled;
+  uint16_t modbusTCPserverPreviousStatus = !settings.comm.modbusTCPserver.enabled; 
   
   //--------------------------------------------------
   // Web server for OTA updates. Two pages:
@@ -147,6 +149,24 @@ void TaskWiFi(void *pvParameters)
       }
       WiFiPreviousStatus = settings.wifi.enabled;
     }
+
+    //--------------------------------------------------
+    // Modbus TCP Server & client management
+    //--------------------------------------------------
+
+    if ((settings.comm.modbusTCPserver.enabled != modbusTCPserverPreviousStatus) && WiFi.isConnected()){
+      if (settings.comm.modbusTCPserver.enabled){
+        modbusTCPConfigure();
+      }
+      else{
+        modbusTCPUnconfigure();
+      }
+      modbusTCPserverPreviousStatus = settings.comm.modbusTCPserver.enabled;
+    }
+
+    if (WiFi.isConnected() && settings.comm.modbusTCPserver.enabled){
+      modbusTCPManager();
+    } 
 
     //--------------------------------------------------
     // Firmware update (OTA)
