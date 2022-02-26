@@ -170,6 +170,7 @@ uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold, uint16_
   // uint8_t n = 5; // elpercha
   uint8_t n = filter; // elpercha -  n = 10 have better results with 3.2" display
   uint8_t valid = 0;
+
   while (n--)
   {
     if (validTouch(&x_tmp, &y_tmp, threshold)) valid++;;

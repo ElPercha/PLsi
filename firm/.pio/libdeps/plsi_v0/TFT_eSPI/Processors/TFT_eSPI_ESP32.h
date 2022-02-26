@@ -12,16 +12,69 @@
 #include "soc/spi_reg.h"
 #include "driver/spi_master.h"
 
+#if !defined(CONFIG_IDF_TARGET_ESP32C3) && !defined(CONFIG_IDF_TARGET_ESP32C2) && !defined(CONFIG_IDF_TARGET_ESP32)
+  #define CONFIG_IDF_TARGET_ESP32
+#endif
+
+// Fix IDF problems with ESP32C3
+#if CONFIG_IDF_TARGET_ESP32C3
+  // Fix ESP32C3 IDF bug for missing definition
+  #ifndef REG_SPI_BASE
+    #define REG_SPI_BASE(i)     (DR_REG_SPI1_BASE + (((i)>1) ? (((i)* 0x1000) + 0x20000) : (((~(i)) & 1)* 0x1000 )))
+  #endif
+
+  // Fix ESP32C3 IDF bug for name change
+  #ifndef SPI_MOSI_DLEN_REG
+    #define SPI_MOSI_DLEN_REG(x) SPI_MS_DLEN_REG(x)
+  #endif
+
+  // Fix ESP32C3 specific register reference
+  #define out_w1tc out_w1tc.val
+  #define out_w1ts out_w1ts.val
+#endif
+
 // SUPPORT_TRANSACTIONS is mandatory for ESP32 so the hal mutex is toggled
 #if !defined (SUPPORT_TRANSACTIONS)
   #define SUPPORT_TRANSACTIONS
 #endif
 
+/*
+ESP32:
+FSPI not defined
+HSPI = 2, uses SPI2
+VSPI = 3, uses SPI3
+
+ESP32-S2:
+FSPI = 1, uses SPI2
+HSPI = 2, uses SPI3
+VSPI not defined
+
+ESP32 C3:
+FSPI = 0, uses SPI2 ???? To be checked
+HSPI = 1, uses SPI3 ???? To be checked
+VSPI not defined
+
+For ESP32/S2/C3:
+SPI1_HOST = 0
+SPI2_HOST = 1
+SPI3_HOST = 2
+*/
+
 // ESP32 specific SPI port selection
 #ifdef USE_HSPI_PORT
-  #define SPI_PORT HSPI
+  #ifdef CONFIG_IDF_TARGET_ESP32
+    #define SPI_PORT HSPI  //HSPI is port 2 on ESP32
+  #else
+    #define SPI_PORT 3     //HSPI is port 3 on ESP32 S2
+  #endif
+#elif defined(USE_FSPI_PORT)
+    #define SPI_PORT 2 //FSPI(ESP32 S2)
 #else
-  #define SPI_PORT VSPI
+  #ifdef CONFIG_IDF_TARGET_ESP32
+    #define SPI_PORT VSPI
+  #else
+    #define SPI_PORT 2 //FSPI(ESP32 S2)
+  #endif
 #endif
 
 #ifdef RPI_DISPLAY_TYPE
@@ -275,7 +328,7 @@
 
   // Create a bit set lookup table for data bus - wastes 1kbyte of RAM but speeds things up dramatically
   // can then use e.g. GPIO.out_w1ts = set_mask(0xFF); to set data bus to 0xFF
-  #define CONSTRUCTOR_INIT_TFT_DATA_BUS            \
+  #define PARALLEL_INIT_TFT_DATA_BUS               \
   for (int32_t c = 0; c<256; c++)                  \
   {                                                \
     xset_mask[c] = 0;                              \
@@ -373,6 +426,10 @@
       #define RD_L
       #define RD_H
     #endif
+  #else
+    #define TFT_RD -1
+    #define RD_L
+    #define RD_H
   #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -501,6 +558,10 @@
   #define tft_Write_32D(C) TFT_WRITE_BITS((uint16_t)((C)<<8 | (C)>>8)<<16 | (uint16_t)((C)<<8 | (C)>>8), 32)
 
 //*/
+#endif
+
+#ifndef tft_Write_16N
+  #define tft_Write_16N tft_Write_16
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////

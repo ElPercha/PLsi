@@ -170,6 +170,13 @@
       // The DMA hard-coding for SPI2 is in TFT_eSPI_STM32.c as follows:
       //     DMA_CHANNEL_4 
       //     DMA1_Stream4_IRQn and DMA1_Stream4_IRQHandler()
+    #elif (TFT_SPI_PORT == 3)
+      // Initialise processor specific SPI and DMA instances - used by init()
+      #define INIT_TFT_DATA_BUS spiHal.Instance = SPI3; \
+                                dmaHal.Instance = DMA1_Stream5
+      // The DMA hard-coding for SPI3 is in TFT_eSPI_STM32.c as follows:
+      //     DMA_CHANNEL_4 
+      //     DMA1_Stream5_IRQn and DMA1_Stream5_IRQHandler()
     #endif
 
   #elif defined (STM32F1xx)
@@ -301,7 +308,7 @@
   // Mask for the 8 data bits to set pin directions (not used)
   #define dir_mask 0
 
-  #define CONSTRUCTOR_INIT_TFT_DATA_BUS // None
+  #define PARALLEL_INIT_TFT_DATA_BUS // None
 
   #define INIT_TFT_DATA_BUS // Setup built into TFT_eSPI.cpp
 
@@ -1053,6 +1060,10 @@
   { spiBuffer[0] = spiBuffer[2] = (C)>>8; spiBuffer[1] = spiBuffer[3] = C; \
   HAL_SPI_Transmit(&spiHal, spiBuffer, 4, 10); }
 
+#endif
+
+#ifndef tft_Write_16N
+  #define tft_Write_16N tft_Write_16
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////

@@ -12,8 +12,8 @@
            // if the touch coordinates are off screen then x and y are not updated
            // The returned value can be treated as a bool type, false or 0 means touch not detected
            // In future the function may return an 8 "quality" (jitter) value.
-  //uint8_t  getTouch(uint16_t *x, uint16_t *y, uint16_t threshold = 600); // elpercha 
-  uint8_t  getTouch(uint16_t *x, uint16_t *y, uint16_t threshold = 600, uint16_t filter = 10); // elpercha 
+  uint8_t  getTouch(uint16_t *x, uint16_t *y, uint16_t threshold = 600, uint16_t filter = 10); // elpercha
+
            // Run screen calibration and test, report calibration values to the serial port
   void     calibrateTouch(uint16_t *data, uint32_t color_fg, uint32_t color_bg, uint8_t size);
            // Set the screen calibration values
