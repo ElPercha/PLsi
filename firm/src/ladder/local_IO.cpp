@@ -104,19 +104,31 @@ void writeOutputsLocal(void){
 //--------------------------------------------------------------------------------
 
 void configureLocal_IO(void){
-  analogSetAttenuation(ADC_6db);
   analogSetWidth(ANALOG_IN_BITS);
   analogSetClockDiv(ANALOG_CLOCK_DIVIDER);
-
+ 
   pinMode(INPUT_00, INPUT);
   pinMode(INPUT_01, INPUT);
   pinMode(INPUT_02, INPUT);
   pinMode(INPUT_03, INPUT);
   pinMode(INPUT_04, INPUT);
   pinMode(INPUT_05, INPUT);
-  pinMode(INPUT_06, INPUT);
-  pinMode(INPUT_07, INPUT);
   
+  if (settings.io.localInputs[6] == IO_TYPE_DIGITAL){
+    pinMode(INPUT_06, INPUT);
+  }
+  else{
+    pinMode(INPUT_06, ANALOG);
+    analogSetPinAttenuation(INPUT_06, ADC_6db);
+  }
+  if (settings.io.localInputs[7] == IO_TYPE_DIGITAL){
+    pinMode(INPUT_07, INPUT);
+  }
+  else{
+    pinMode(INPUT_07, ANALOG);
+    analogSetPinAttenuation(INPUT_07, ADC_6db);
+  }
+
   pinMode(OUTPUT_00, OUTPUT);
   pinMode(OUTPUT_01, OUTPUT);
   pinMode(OUTPUT_02, OUTPUT);

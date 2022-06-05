@@ -67,19 +67,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //         6 outputs
 //--------------------------------------------------------------------------------
 
-#define IO_LOCAL_IN_QTY          8
-#define IO_LOCAL_OUT_QTY         6
-#define IO_LOCAL_IN_ANALOG_QTY   2
-#define IO_LOCAL_OUT_ANALOG_QTY  2
+#define IO_LOCAL_IN_QTY           8
+#define IO_LOCAL_OUT_QTY          6
+#define IO_LOCAL_IN_ANALOG_QTY    2
+#define IO_LOCAL_OUT_ANALOG_QTY   2
 
-#define ANALOG_RESOLUTION     1024 
-#define ANALOG_OUT_RESOLUTION  256
-#define ANALOG_IN_BITS          10 
-#define ANALOG_CLOCK_DIVIDER     1
-#define ANALOG_IN_ZERO_OFFSET   35  // Offset near 0 volts in ESP32
-#define ANALOG_IN_CALIBRATION  850  // Raw value + ZERO_OFFSET when reading 5V/3 = 1.66V on ESP32 pin
-#define ANALOG_FILTER_SAMPLES   20  // Samples number for moving average Analog inputs filter
-#define ANALOG_OUT_CALIBRATION 970  // It should be: 1024 * ((5v / (1 + R1=3300/R2=5100)) / 3v3) plus DAC deviations
+#define ANALOG_RESOLUTION      4096 
+#define ANALOG_OUT_RESOLUTION   256
+#define ANALOG_IN_BITS           12 
+#define ANALOG_CLOCK_DIVIDER      1
+#define ANALOG_IN_ZERO_OFFSET   140  // Offset near 0 volts in ESP32
+#define ANALOG_IN_CALIBRATION  3550  // Raw value + ZERO_OFFSET when reading 5V/3 = 1.66V on ESP32 pin
+#define ANALOG_FILTER_SAMPLES    20  // Samples number for moving average Analog inputs filter
+#define ANALOG_OUT_CALIBRATION 3950  // It should be: 4096 * ((5v / (1 + R1=3300/R2=5100)) / 3v3) plus DAC deviations
 
 const uint8_t configInputCanBeAnalog[IO_LOCAL_IN_QTY] = {0, 0, 0, 0, 0, 0, 1, 1};
 const uint8_t configOutputCanBeAnalog[IO_LOCAL_OUT_QTY] = {0, 0, 0, 0, 1, 1};

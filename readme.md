@@ -2,7 +2,7 @@
 
 Create a PLC & HMI with the following main characteristics:
 + To not require external systems such us Laptops or Cellphones to be programmed
-+ To be used on Classroom for educational purposes, IOT applications or industrial low risk applications
++ To be used on Classroom for educational purposes, IoT applications or industrial low risk applications
 + Software and Hardware with Industrial performance and features
 + Forever Open Source and Open Hardware
 + Focus on Low Cost, V0 hardware estimated in less than [$20](hard/CPU/v0/)
