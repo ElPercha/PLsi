@@ -1,6 +1,6 @@
 /*
 Copyright (c) 2019 Prieto Lucas. All rights reserved.
-This file is part of the PLsi project.
+This file is part of the PLsi project. 
 
 PLsi is free software and hardware: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
