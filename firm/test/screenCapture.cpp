@@ -27,7 +27,7 @@
 // Issue #11 to delete this file from the project once it is fully documented
 // Issue #11 - Create user manual
 
-// Move to hmi.h to capture screen
+// Move to hmi.h to capture screen // elpercha
 
     // boolean screenServer(void);                   //  Issue #11 - For Screen Saver PC connection
     // boolean screenServer(String filename);        //  Issue #11 - For Screen Saver PC connection
@@ -36,7 +36,7 @@
 
 
 // Move to HMI TASK for screen capture
-// Issue #11 - For Screen Saver PC connection
+// Issue #11 - For Screen Saver PC connection // elpercha
 
     // if (I[0]){           
     //   screenServer();
@@ -48,7 +48,7 @@
 // Move to PLsi.h
 // Define the following baudrate
 // Issue #11 - For Screen Saver PC connection
-//#define BAUD_RATE          921600 //  Issue #11 - For Screen Saver PC connection
+//#define BAUD_RATE          921600 //  Issue #11 - For Screen Saver PC connection // elpercha
 
 
 //====================================================================================
