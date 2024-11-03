@@ -201,6 +201,6 @@ void TaskHMI(void *pvParameters)
       hmiPage = PAGE_DialogMessage;
     }
 
-    delay(5); 
+   delay(5); 
   }
 }

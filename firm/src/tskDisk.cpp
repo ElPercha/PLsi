@@ -74,6 +74,54 @@ void TaskDisk(void *pvParameters)
       updateSelectedProgramDisk = 0;
     }
 
+    //----------------------------------------------------
+    // PLC >> SD card programs transfer
+    // Development ongoing
+    //----------------------------------------------------
+
+    if (D[507] == 1){
+      copyProgramFromPLCtoSD(0);
+      D[507] = 101;
+    }
+
+    if (D[507] == 2){
+      copyProgramFromPLCtoSD(1);
+      D[507] = 102;
+    }
+    if (D[507] == 3){
+      copyProgramFromPLCtoSD(2);
+      D[507] = 103;
+    }
+    if (D[507] == 4){
+      copyProgramFromPLCtoSD(3);
+      D[507] = 104;
+    }
+
+    //----------------------------------------------------
+    // SD >> PLC card programs transfer
+    // Development ongoing
+    //----------------------------------------------------
+
+    if (D[507] == 11){
+      copyProgramFromSDtoPLC(0);
+      D[507] = 1011;
+    }
+
+    if (D[507] == 12){
+      copyProgramFromSDtoPLC(1);
+      D[507] = 1012;
+    }
+
+    if (D[507] == 13){
+      copyProgramFromSDtoPLC(2);
+      D[507] = 1013;
+    }
+
+    if (D[507] == 14){
+      copyProgramFromSDtoPLC(3);
+      D[507] = 1014;
+    }
+
     delay(5);
  }
 }

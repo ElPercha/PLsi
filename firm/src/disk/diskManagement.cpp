@@ -162,3 +162,114 @@ void saveSettings(void){
   settingsFile.close();
   FFat.end();
 }
+
+//--------------------------------------------------------------------------------
+// Copy user program from PLC to SD
+//--------------------------------------------------------------------------------
+
+void copyProgramFromPLCtoSD(uint16_t programNumber){
+  if (!SD.begin (SD_CS)){
+    Serial.println("Card not present");
+  }
+  else{
+    Serial.println("Card is present");
+    
+    File sourceFile;
+    File destFile;
+
+    FFat.begin(false,"/ffat",1);
+
+    if (FFat.exists(FILENAME_USER_PROGRAMS[programNumber])){
+      Serial.print("TaskLadder - File ");
+      Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+      Serial.println(" exists. Will be used to transfer to SD");
+
+      sourceFile = FFat.open(FILENAME_USER_PROGRAMS[programNumber],"r");
+
+      destFile  = SD.open(FILENAME_USER_PROGRAMS[programNumber], FILE_WRITE);
+            
+      static uint8_t buf[512];
+      while( sourceFile.read( buf, 512) ) {
+      destFile.write( buf, 512 );
+      }
+      Serial.print("User Program: ");
+      Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+      Serial.print(" transferred from PLC to SD");
+    }
+    else{
+      Serial.print("TaskDisk - File: ");
+      Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+      Serial.println(" does not exists in PLC. Use first the file in PLC by selecting it in the configuration menu before transfer to SD");
+    }
+
+    destFile.close();
+    sourceFile.close();
+    FFat.end();
+  }
+  SD.end();
+}
+
+//--------------------------------------------------------------------------------
+// Copy user program from SD to PLC
+//--------------------------------------------------------------------------------
+
+void copyProgramFromSDtoPLC(uint16_t programNumber){
+  if (!SD.begin (SD_CS)){
+    Serial.println("Card not present");
+  }
+  else{
+    Serial.println("Card is present");
+    
+    File sourceFile;
+    File destFile;
+
+    FFat.begin(false,"/ffat",1);
+
+    if (SD.exists(FILENAME_USER_PROGRAMS[programNumber])){
+      Serial.print("TaskDisk - Backup Files exists in SD, can be transferred to PLC: ");
+      Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+
+      sourceFile = SD.open(FILENAME_USER_PROGRAMS[programNumber],"r");
+    
+      if (FFat.exists(FILENAME_USER_PROGRAMS[programNumber])){
+        Serial.print("TaskDisk - File ");
+        Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+        Serial.println(" exists. Will be used to transfer from SD to PLC");
+
+        destFile = FFat.open(FILENAME_USER_PROGRAMS[programNumber],"w");
+
+        static uint8_t buf[512];
+        while( sourceFile.read( buf, 512) ) {
+        destFile.write( buf, 512 );
+        }
+
+        Serial.print("User Program: ");
+        Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+        Serial.print(" transferred from SD to PLC");
+      }
+      else{
+        Serial.print("TaskDisk - File: ");
+        Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+        Serial.println(" does not exists in PLC. Use first the file in PLC by selecting it in the configuration menu before transfer from SD to PLC");
+      }
+    }
+    else{
+      Serial.print("Backup Files does not exists in SD, will NOT be transferred to PLC: ");
+      Serial.print(FILENAME_USER_PROGRAMS[programNumber]);
+    }
+    destFile.close();
+    sourceFile.close();
+    FFat.end();
+  }
+  SD.end();
+}
+
+
+
+
+
+
+
+
+
+

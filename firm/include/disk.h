@@ -39,5 +39,11 @@ void loadSettings(void);
 void loadDefaultSettings(void);
 void saveSettings(void);
 
+//--------------------------------------------------------------------------------
+// User programs transfer from PLC <> SD
+//--------------------------------------------------------------------------------
+
+void copyProgramFromPLCtoSD(uint16_t programNumber);
+void copyProgramFromSDtoPLC(uint16_t programNumber);
 
 #endif
