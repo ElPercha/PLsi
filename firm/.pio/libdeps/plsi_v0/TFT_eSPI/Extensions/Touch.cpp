@@ -10,6 +10,11 @@
 
 // See license in root directory.
 
+// Define a default pressure threshold
+#ifndef Z_THRESHOLD
+  #define Z_THRESHOLD 350 // Touch pressure threshold for validating touches
+#endif
+
 /***************************************************************************************
 ** Function name:           begin_touch_read_write - was spi_begin_touch
 ** Description:             Start transaction and select touch controller
@@ -107,6 +112,8 @@ uint16_t TFT_eSPI::getTouchRawZ(void){
 
   end_touch_read_write();
 
+  if (tz == 4095) tz = 0;
+
   return (uint16_t)tz;
 }
 
@@ -162,8 +169,10 @@ uint8_t TFT_eSPI::validTouch(uint16_t *x, uint16_t *y, uint16_t threshold){
 #define Z_THRESHOLD 350 // Touch pressure threshold for validating touches
 // uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold){ // elpercha
 uint8_t TFT_eSPI::getTouch(uint16_t *x, uint16_t *y, uint16_t threshold, uint16_t filter){ // elpercha
+
+
   uint16_t x_tmp, y_tmp;
-  
+ 
   if (threshold<20) threshold = 20;
   if (_pressTime > millis()) threshold=20;
 

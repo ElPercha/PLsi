@@ -1,11 +1,11 @@
 
 // This is the command sequence that initialises the ILI9341 driver
 //
-// This setup information uses simple 8 bit SPI writecommand() and writedata() functions
+// This setup information uses simple 8-bit SPI writecommand() and writedata() functions
 //
 // See ST7735_Setup.h file for an alternative format
 
-#if defined (ILI9341_DRIVER)
+#if defined (ILI9341_DRIVER) || defined (ILI9342_DRIVER)
 {
   writecommand(0xEF);
   writedata(0x03);

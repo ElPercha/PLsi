@@ -2,6 +2,7 @@
         ///////////////////////////////////////////////////
         //  Setup for STM32 Nucleo and ILI9341 display   //
         ///////////////////////////////////////////////////
+#define USER_SETUP_ID 29
 
 // Last update by Bodmer: 28/11/19
 
@@ -82,7 +83,7 @@
 #define SMOOTH_FONT
 
 
-// Nucleo-F767ZI has a ~216MHZ CPU clock, this is divided by 4, 8, 16 etc
+// Nucleo-F767ZI has a ~216MHZ CPU clock, this is divided by 4, 8, 16 etc.
 
 #define SPI_FREQUENCY  27000000   // 27MHz SPI clock
 //#define SPI_FREQUENCY  55000000   // 55MHz is over-clocking ILI9341 but seems to work reliably!
