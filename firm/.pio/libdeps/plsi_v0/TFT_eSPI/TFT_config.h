@@ -240,7 +240,7 @@
     #endif
 
     #if CONFIG_TFT_MISO != -1
-        #define TFT_MISO      CONFIG_TFT_MISO
+        #define       CONFIG_TFT_MISO
     #endif
 
     #if CONFIG_TFT_MOSI == -1

@@ -74,6 +74,9 @@ void TaskDisk(void *pvParameters)
       updateSelectedProgramDisk = 0;
     }
 
+    
+    
+    /*
     //----------------------------------------------------
     // PLC >> SD card programs transfer
     // Development ongoing
@@ -120,7 +123,7 @@ void TaskDisk(void *pvParameters)
     if (D[507] == 14){
       copyProgramFromSDtoPLC(3);
       D[507] = 1014;
-    }
+    }*/
 
     delay(5);
  }

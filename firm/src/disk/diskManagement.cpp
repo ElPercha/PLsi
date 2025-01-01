@@ -214,7 +214,7 @@ void copyProgramFromPLCtoSD(uint16_t programNumber){
 //--------------------------------------------------------------------------------
 
 void copyProgramFromSDtoPLC(uint16_t programNumber){
-  if (!SD.begin (SD_CS)){
+  if (!SD.begin (SD_CS)){   
     Serial.println("Card not present");
   }
   else{

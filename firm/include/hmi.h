@@ -718,4 +718,11 @@ void drawComparison(int Row, int Column, int Flag, int Data);
 
 extern void saveSettings(void);
 
+//-------------------------------------------------------------------------------- // elpercha
+// User programs transfer from PLC <> SD
+//--------------------------------------------------------------------------------
+
+extern void copyProgramFromPLCtoSD(uint16_t programNumber); // elpercha
+extern void copyProgramFromSDtoPLC(uint16_t programNumber); // elpercha
+
 #endif
